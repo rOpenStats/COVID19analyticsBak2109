@@ -40,25 +40,32 @@ library(magrittr)
 rg <- ReportGeneratorEnhanced$new(force.download = FALSE)
 rg$preprocess()
 ggplot <- rg$ggplotTopCountriesPie()
+ggsave(file.path(data.dir, paste("top-countries-pie-", Sys.Date(), ".png", sep ="")), ggplot,
+       width = 7, height = 5, dpi = 120)
 
-ggsave(file.path(data.dir, paste("top-countries-pie-", Sys.Date(), ".png", sep ="")), ggplot)
 ggplot <- rg$ggplotTopCountriesBarPlots()
-ggsave(file.path(data.dir, paste("top-countries-bar-plot-", Sys.Date(), ".png", sep ="")), ggplot)
-
+ggsave(file.path(data.dir, paste("top-countries-bar-plot-", Sys.Date(), ".png", sep ="")), ggplot,
+       width = 7, height = 5, dpi = 120)
 
 ggplot <- rg$ggplotTopCountriesPie(excluded.countries = c("World", "Mainland China"))
-ggsave(file.path(data.dir, paste("top-countries-pie-wo-china", Sys.Date(), ".png", sep ="")), ggplot)
-ggplot <- rg$ggplotTopCountriesBarPlots(excluded.countries = c("World", "Mainland China"))
-ggsave(file.path(data.dir, paste("top-countries-bar-plot-wo-china", Sys.Date(), ".png", sep ="")), ggplot)
+ggsave(file.path(data.dir, paste("top-countries-pie-wo-china", Sys.Date(), ".png", sep ="")), ggplot,
+       width = 7, height = 5, dpi = 120)
 
+ggplot <- rg$ggplotTopCountriesBarPlots(excluded.countries = c("World", "Mainland China"))
+ggsave(file.path(data.dir, paste("top-countries-bar-plot-wo-china", Sys.Date(), ".png", sep ="")), ggplot,
+       width = 7, height = 5, dpi = 120)
 
 ggplot <- rg$ggplotCountriesBarGraphs(selected.country = "Australia")
-ggsave(file.path(data.dir, paste("countries-bar-plot-australia", Sys.Date(), ".png", sep ="")), ggplot)
+ggsave(file.path(data.dir, paste("countries-bar-plot-australia", Sys.Date(), ".png", sep ="")), ggplot,
+       width = 7, height = 5, dpi = 120)
+
 ggplot <- rg$ggplotCountriesBarGraphs(selected.country = "Argentina")
-ggsave(file.path(data.dir, paste("countries-bar-plot-argentina", Sys.Date(), ".png", sep ="")), ggplot)
+ggsave(file.path(data.dir, paste("countries-bar-plot-argentina", Sys.Date(), ".png", sep ="")), ggplot,
+       width = 7, height = 5, dpi = 120)
 
 ggplot <- rg$ggplotConfirmedCases()
-ggsave(file.path(data.dir, paste("confirmed-cases", Sys.Date(), ".png", sep ="")), ggplot)
+ggsave(file.path(data.dir, paste("confirmed-cases", Sys.Date(), ".png", sep ="")), ggplot,
+       width = 7, height = 5, dpi = 120)
 
 ggplot <- rg$ggplotTopCountriesStackedBarPlots()
 ggsave(file.path(data.dir, paste("top-countries-daily-increment", Sys.Date(), ".png", sep ="")), ggplot,
