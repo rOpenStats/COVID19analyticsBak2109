@@ -1,4 +1,3 @@
-data.dir <<- "~/dataCOVID19"
 
 
 
@@ -6,6 +5,8 @@ data.dir <<- "~/dataCOVID19"
 #' ReportGenerator
 #' @importFrom R6 R6Class
 #' @import magrittr
+#' @import lubridate
+#' @import ggplot2
 #' @export
 ReportGenerator <- R6Class("ReportGenerator",
   public = list(

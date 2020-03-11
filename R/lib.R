@@ -45,6 +45,7 @@ cleanData <- function(data) {
 }
 
 #' For copying generated graph to package
+#' @noRd
 copyPNG2package <- function(){
   data.dir.files <- dir(data.dir)
   data.dir.files <- data.dir.files[grep("\\.png", data.dir.files)]

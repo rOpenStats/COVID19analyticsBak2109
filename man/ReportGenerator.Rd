@@ -13,9 +13,18 @@ ReportGenerator
 \itemize{
 \item \href{#method-new}{\code{ReportGenerator$new()}}
 \item \href{#method-generateReport}{\code{ReportGenerator$generateReport()}}
+\item \href{#method-preprocess}{\code{ReportGenerator$preprocess()}}
 \item \href{#method-downloadData}{\code{ReportGenerator$downloadData()}}
 \item \href{#method-loadData}{\code{ReportGenerator$loadData()}}
 \item \href{#method-cleanData}{\code{ReportGenerator$cleanData()}}
+\item \href{#method-consolidate}{\code{ReportGenerator$consolidate()}}
+\item \href{#method-calculateRates}{\code{ReportGenerator$calculateRates()}}
+\item \href{#method-calculateTopCountries}{\code{ReportGenerator$calculateTopCountries()}}
+\item \href{#method-ggplotTopCountriesPie}{\code{ReportGenerator$ggplotTopCountriesPie()}}
+\item \href{#method-ggplotTopCountriesBarPlots}{\code{ReportGenerator$ggplotTopCountriesBarPlots()}}
+\item \href{#method-ggplotCountriesBarGraphs}{\code{ReportGenerator$ggplotCountriesBarGraphs()}}
+\item \href{#method-ggplotConfirmedCases}{\code{ReportGenerator$ggplotConfirmedCases()}}
+\item \href{#method-generateTex}{\code{ReportGenerator$generateTex()}}
 \item \href{#method-clone}{\code{ReportGenerator$clone()}}
 }
 }
@@ -32,6 +41,14 @@ ReportGenerator
 \subsection{Method \code{generateReport()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$generateReport(output.file, overwrite = FALSE)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-preprocess"></a>}}
+\subsection{Method \code{preprocess()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$preprocess()}\if{html}{\out{</div>}}
 }
 
 }
@@ -56,6 +73,70 @@ ReportGenerator
 \subsection{Method \code{cleanData()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$cleanData()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-consolidate"></a>}}
+\subsection{Method \code{consolidate()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$consolidate()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-calculateRates"></a>}}
+\subsection{Method \code{calculateRates()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$calculateRates()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-calculateTopCountries"></a>}}
+\subsection{Method \code{calculateTopCountries()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$calculateTopCountries()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ggplotTopCountriesPie"></a>}}
+\subsection{Method \code{ggplotTopCountriesPie()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$ggplotTopCountriesPie(excluded.countries = "World")}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ggplotTopCountriesBarPlots"></a>}}
+\subsection{Method \code{ggplotTopCountriesBarPlots()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$ggplotTopCountriesBarPlots(excluded.countries = "World")}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ggplotCountriesBarGraphs"></a>}}
+\subsection{Method \code{ggplotCountriesBarGraphs()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$ggplotCountriesBarGraphs(selected.country = "Australia")}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ggplotConfirmedCases"></a>}}
+\subsection{Method \code{ggplotConfirmedCases()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$ggplotConfirmedCases()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-generateTex"></a>}}
+\subsection{Method \code{generateTex()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$generateTex(output.file)}\if{html}{\out{</div>}}
 }
 
 }
