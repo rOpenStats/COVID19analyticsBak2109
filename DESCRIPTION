@@ -1,0 +1,32 @@
+Package: COVID19
+Type: Package
+Title: COVID-19 data processing
+Version: 0.1.0
+Language: en-US
+Authors@R: c(
+    person(,"Yanchang Zhao",, "yanchang@RDataMining.com", c("cph")),
+    person("Alejandro", "Baranek",,"abaranek@dc.uba.ar", c("aut","com","cre"))
+    )
+Maintainer: Alejandro Baranek <abaranek@dc.uba.ar>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: NO
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.2
+Suggests: knitr, rmarkdown,
+    covr
+VignetteBuilder: knitr
+Depends: R (>= 3.5.0)
+Imports: magrittr,
+         lubridate,
+         tidyverse,
+         gridExtra,
+         kableExtra,
+         R6
+Collate:
+  'lib.R'
+  'report.R'
+BugReports: https://github.com/kenarab/COVID19/issues
+URL: https://github.com/kenarab/COVID19
+StagedInstall: FALSE

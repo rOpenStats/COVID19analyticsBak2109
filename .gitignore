@@ -1,0 +1,7 @@
+Meta
+doc
+.Rproj.user
+.Rhistory
+.RData*
+
+R/dev/*
