@@ -34,9 +34,10 @@ library(lubridate)
 library(knitr)
 library(ggplot2)
 library(gridExtra)
+library(magrittr)
 
 # if want to switch to fullDB in user filespace, it will download the full database
-rg <- ReportGenerator$new()
+rg <- ReportGeneratorEnhanced$new(force.download = FALSE)
 rg$preprocess()
 ggplot <- rg$ggplotTopCountriesPie()
 
@@ -58,6 +59,10 @@ ggsave(file.path(data.dir, paste("countries-bar-plot-argentina", Sys.Date(), ".p
 
 ggplot <- rg$ggplotConfirmedCases()
 ggsave(file.path(data.dir, paste("confirmed-cases", Sys.Date(), ".png", sep ="")), ggplot)
+
+ggplot <- rg$ggplotTopCountriesStackedBarPlots()
+ggsave(file.path(data.dir, paste("top-countries-daily-increment", Sys.Date(), ".png", sep ="")), ggplot,
+       width = 7, height = 5, dpi = 120)
 
 # Make a latex graph
 rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%

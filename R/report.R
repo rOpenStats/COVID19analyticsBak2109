@@ -223,8 +223,47 @@ ReportGenerator <- R6Class("ReportGenerator",
 
    ))
 
-
-
+#' New dataviz for reportGenerator by
+#' @kenarab
+#' @export
+ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
+ inherit = ReportGenerator,
+   public = list(
+     initialize = function(force.download = FALSE){
+       super$initialize(force.download = force.download)
+     },
+     ggplotTopCountriesStackedBarPlots = function(excluded.countries = "World"){
+       #Page 7
+       ## convert from wide to long format, for purpose of drawing a area plot
+       data.long <- self$data %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
+         select(c(country, date, confirmed.inc)) %>%
+         gather(key=type, value=count, -c(country, date))
+       ## set factor levels to show them in a desirable order
+       data.long %<>% mutate(type = factor(type, c('confirmed.inc')))
+       ## cases by type
+       df <- data.long %>% filter(country %in% self$top.countries)
+       df <- df %>% filter(!country %in% excluded.countries)
+       df %<>%
+         mutate(country=country %>% factor(levels=c(self$top.countries)))
+       df %>% filter(country != 'World') %>%
+         ggplot(aes(x=date, y=count, fill=country)) +
+         geom_bar(stat = "identity") + xlab('Date') + ylab('Count') +
+         labs(title='Daily new Confirmed Cases around the World') +
+         theme(legend.title=element_blank())
+         # theme(legend.title=element_blank(),
+         #   #legend.position = c(.05, .05),
+         #   legend.position = "bottom",
+         #   #legend.justification = c("left", "bottom"),
+         #   #legend.box.just = "left",
+         #   #legend.margin = margin(6, 6, 6, 6),
+         #   legend.spacing.y = unit(0.5, "mm"),
+         #   #legend.spacing = unit(0.5, 'lines'),
+         #   legend.key = element_rect(size = 5),
+         #   legend.key.size = unit(0.5, 'lines'),
+         #   axis.text.x = element_text(angle = 90)
+       #
+     }
+   ))
 
 #' TexBuilder
 #' @importFrom R6 R6Class
