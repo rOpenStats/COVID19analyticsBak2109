@@ -7,7 +7,13 @@ downloadCOVID19 <- function(url.path, filename) {
  if (download.flag){
   url <- file.path(url.path, filename)
   dest <- file.path(data.dir, filename)
-  if (!file.exists(dest)){
+
+  file.info <- file.info(dest)
+  #If is it expected to have updated data, download
+  update.time <- as.Date(file.info$mtime)+1
+  current.time <- with_tz(Sys.time(), tz = "greenwich")
+
+  if (!file.exists(dest) | current.time > update.time){
    download.file(url, dest)
   }
  }
