@@ -18,6 +18,7 @@ This package is based on this [blogpost](https://www.r-bloggers.com/coronavirus-
 Install the R package using the following commands on the R console:
 
 ```R
+# install.packages("devtools")
 devtools::install_github("kenarab/COVID19", build_opts = NULL)
 ```
 
@@ -25,6 +26,14 @@ devtools::install_github("kenarab/COVID19", build_opts = NULL)
 ```R
 library(COVID19)
 library(dplyr)
+library(dplyr)
+library(tidyverse)
+library(kableExtra)
+library(lubridate)
+library(knitr)
+library(ggplot2)
+library(gridExtra)
+
 # if want to switch to fullDB in user filespace, it will download the full database
 rg <- ReportGenerator$new()
 rg$preprocess()
