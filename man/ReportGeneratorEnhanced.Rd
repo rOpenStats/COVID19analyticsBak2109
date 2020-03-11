@@ -15,7 +15,7 @@ New dataviz for reportGenerator by
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{ReportGeneratorEnhanced$new()}}
-\item \href{#method-ggplotTopCountriesStackedBarPlots}{\code{ReportGeneratorEnhanced$ggplotTopCountriesStackedBarPlots()}}
+\item \href{#method-ggplotTopCountriesStackedBarDailyInc}{\code{ReportGeneratorEnhanced$ggplotTopCountriesStackedBarDailyInc()}}
 \item \href{#method-clone}{\code{ReportGeneratorEnhanced$clone()}}
 }
 }
@@ -47,10 +47,10 @@ New dataviz for reportGenerator by
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ggplotTopCountriesStackedBarPlots"></a>}}
-\subsection{Method \code{ggplotTopCountriesStackedBarPlots()}}{
+\if{html}{\out{<a id="method-ggplotTopCountriesStackedBarDailyInc"></a>}}
+\subsection{Method \code{ggplotTopCountriesStackedBarDailyInc()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorEnhanced$ggplotTopCountriesStackedBarPlots(
+\if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorEnhanced$ggplotTopCountriesStackedBarDailyInc(
   excluded.countries = "World"
 )}\if{html}{\out{</div>}}
 }

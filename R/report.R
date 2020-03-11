@@ -105,6 +105,8 @@ ReportGenerator <- R6Class("ReportGenerator",
     self$data %<>% mutate(rate.lower = (100 * deaths / confirmed) %>% round(1))
     ## death rate based on the number of death/cured on every single day
     self$data %<>% mutate(rate.daily = (100 * deaths.inc / (deaths.inc + recovered.inc)) %>% round(1))
+    self$data %<>% mutate(rate.inc.daily = (confirmed.inc/(confirmed-confirmed.inc)) %>% round(2))
+
     self$data %<>% mutate(remaining.confirmed = (confirmed - deaths - recovered))
     names(self$data)
     self$data
@@ -232,7 +234,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
      initialize = function(force.download = FALSE){
        super$initialize(force.download = force.download)
      },
-     ggplotTopCountriesStackedBarPlots = function(excluded.countries = "World"){
+     ggplotTopCountriesStackedBarDailyInc = function(excluded.countries = "World"){
        #Page 7
        ## convert from wide to long format, for purpose of drawing a area plot
        data.long <- self$data %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
