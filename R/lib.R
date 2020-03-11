@@ -2,7 +2,7 @@
 
 #'
 #' @export
-downloadCOVID19 <- function(url.path, filename) {
+downloadCOVID19 <- function(url.path, filename, force = FALSE) {
  download.flag <- createDataDir()
  if (download.flag){
   url <- file.path(url.path, filename)
@@ -13,7 +13,7 @@ downloadCOVID19 <- function(url.path, filename) {
   update.time <- as.Date(file.info$mtime)+1
   current.time <- with_tz(Sys.time(), tz = "greenwich")
 
-  if (!file.exists(dest) | current.time > update.time){
+  if (!file.exists(dest) | current.time > update.time | force){
    download.file(url, dest)
   }
  }

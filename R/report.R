@@ -10,6 +10,7 @@
 #' @export
 ReportGenerator <- R6Class("ReportGenerator",
   public = list(
+   force.download = FALSE,
    filenames = NA,
    data.confirmed = NA,
    data.deaths    = NA,
@@ -24,7 +25,8 @@ ReportGenerator <- R6Class("ReportGenerator",
    top.countries  = NA,
    min.date = NA,
    max.date = NA,
-   initialize = function(){
+   initialize = function(force.download = FALSE){
+     self$force.download <- force.download
      self$tex.builder <- TexBuilder$new()
      self
    },
@@ -59,7 +61,7 @@ ReportGenerator <- R6Class("ReportGenerator",
     # url.path <- 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_'
     #url.path <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series"
     url.path <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
-    bin <- lapply(self$filenames, FUN = function(...){downloadCOVID19(url.path = url.path, ...)})
+    bin <- lapply(self$filenames, FUN = function(...){downloadCOVID19(url.path = url.path, force = self$force.download, ...)})
    },
    loadData = function(){
     ## load data into R

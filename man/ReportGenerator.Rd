@@ -32,7 +32,7 @@ ReportGenerator
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$new()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$new(force.download = FALSE)}\if{html}{\out{</div>}}
 }
 
 }
