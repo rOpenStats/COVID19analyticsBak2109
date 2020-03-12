@@ -36,6 +36,11 @@ library(ggplot2)
 library(gridExtra)
 library(magrittr)
 
+
+rg <- ReportGeneratorEnhanced$new(force.download = FALSE)
+self <- rg
+rg$preprocess()
+
 ggplot <- rg$ggplotTopCountriesPie()
 ggsave(file.path(data.dir, paste("top-countries-pie-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)

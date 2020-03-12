@@ -316,6 +316,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          labs(title = plot.title) +
          theme(legend.title=element_blank())
        if (log.scale){
+         #ret <- ret + scale_y_log10(labels = scales::comma)
          ret <- ret + scale_y_log10()
        }
          # theme(legend.title=element_blank(),
