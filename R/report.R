@@ -291,12 +291,18 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
      initialize = function(force.download = FALSE){
        super$initialize(force.download = force.download)
      },
-     ggplotTopCountriesStackedBarDailyInc = function(excluded.countries = "World"){
+     ggplotTopCountriesStackedBarDailyInc = function(excluded.countries = "World", log.scale = FALSE){
        #Page 7
        ## convert from wide to long format, for purpose of drawing a area plot
        data.long <- self$data %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
          select(c(country, date, confirmed.inc)) %>%
          gather(key=type, value=count, -c(country, date))
+
+
+       plot.title <- 'Daily new Confirmed Cases around the World'
+       if (log.scale){
+         plot.title <- paste(plot.title, "\n(LOG scale)")
+       }
        ## set factor levels to show them in a desirable order
        data.long %<>% mutate(type = factor(type, c('confirmed.inc')))
        ## cases by type
@@ -304,11 +310,14 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        df <- df %>% filter(!country %in% excluded.countries)
        df %<>%
          mutate(country=country %>% factor(levels=c(self$top.countries)))
-       df %>% filter(country != 'World') %>%
+       ret <- df %>% filter(country != 'World') %>%
          ggplot(aes(x=date, y=count, fill=country)) +
          geom_bar(stat = "identity") + xlab('Date') + ylab('Count') +
-         labs(title='Daily new Confirmed Cases around the World') +
+         labs(title = plot.title) +
          theme(legend.title=element_blank())
+       if (log.scale){
+         ret <- ret + scale_y_log10()
+       }
          # theme(legend.title=element_blank(),
          #   #legend.position = c(.05, .05),
          #   legend.position = "bottom",
@@ -321,6 +330,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          #   legend.key.size = unit(0.5, 'lines'),
          #   axis.text.x = element_text(angle = 90)
        #
+       ret
      }
    ))
 
