@@ -98,6 +98,7 @@ rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
 
 # ![top-countries-lines-daily-increment-log-2020-03-12.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-lines-daily-increment-log-2020-03-12.png)
 
+
 # ![top-countries-daily-increment-log-2020-03-12.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment-log-2020-03-12.png)
 
 Carefull with this graph. The size of each bar can be compared intra and/or inter panel, but as log(a) + log(b) = log(a*b), the height and the evolution of the stacked bars has no direct interpretation. 
