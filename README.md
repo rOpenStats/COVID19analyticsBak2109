@@ -76,10 +76,11 @@ rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
 
 # ![top-countries-daily-increment-2020-03-12.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment-2020-03-12.png)
 
+# ![top-countries-daily-increment-log-2020-03-12.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment-log-2020-03-12.png)
+
 # Dataviz from blogpost
 
 # ![top-countries-bar-plot-2020-03-12.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-pie-2020-03-12.png)
-# ![top-countries-daily-increment-log-2020-03-12.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment-log-2020-03-12.png)
 # ![top-countries-bar-plot-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot-2020-03-12.png)
 # ![top-countries-pie-wo-china-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-pie-wo-china-2020-03-12.png)
 # ![top-countries-bar-plot-wo-china-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot-wo-china-2020-03-12.png)
