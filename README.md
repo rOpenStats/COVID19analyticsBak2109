@@ -2,12 +2,14 @@
 
  <!-- . -->
 
-This package is based on this [blogpost](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/) from [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/)
+This package include several visualizations of the COVID-19 international outbreak is based on this [blogpost](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/) from [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/)
 
 
 Yanchang Zhao, COVID-19 Data Analysis with Tidyverse and Ggplot2 - China. RDataMining.com, 2020.
 URL: http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf.
 
+* The original process and visualizations are included in ReportGenerator R6 object 
+* More process and visualization included int ReportGeneratorEnhanced R6 object
 
 | Release | Usage | Development |
 |:--------|:------|:------------|
@@ -40,8 +42,22 @@ library(magrittr)
 
 
 rg <- ReportGeneratorEnhanced$new(force.download = FALSE)
-self <- rg
 rg$preprocess()
+
+
+ggplot <- rg$ggplotTopCountriesStackedBarDailyInc()
+ggsave(file.path(data.dir, paste("top-countries-daily-increment-", Sys.Date(), ".png", sep ="")), ggplot,
+       width = 7, height = 5, dpi = 300)
+
+ggplot <- rg$ggplotTopCountriesStackedBarDailyInc(log.scale = TRUE)
+ggsave(file.path(data.dir, paste("top-countries-daily-increment-log-", Sys.Date(), ".png", sep ="")), ggplot,
+       width = 7, height = 5, dpi = 300)
+
+ggplot <- rg$ggplotTopCountriesLinesDailyInc(log.scale = TRUE)
+ggsave(file.path(data.dir, paste("top-countries-lines-daily-increment-log-", Sys.Date(), ".png", sep ="")), ggplot,
+       width = 7, height = 5, dpi = 300)
+
+# Selected Yanchang Zhao visualizations
 
 ggplot <- rg$ggplotTopCountriesPie()
 ggsave(file.path(data.dir, paste("top-countries-pie-", Sys.Date(), ".png", sep ="")), ggplot,
@@ -69,9 +85,6 @@ ggplot <- rg$ggplotConfirmedCases()
 ggsave(file.path(data.dir, paste("confirmed-cases-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
 
-ggplot <- rg$ggplotTopCountriesStackedBarDailyInc()
-ggsave(file.path(data.dir, paste("top-countries-daily-increment-", Sys.Date(), ".png", sep ="")), ggplot,
-       width = 7, height = 5, dpi = 300)
 
 # Make a latex graph
 rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
@@ -83,7 +96,12 @@ rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
 
 # ![top-countries-daily-increment-2020-03-12.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment-2020-03-12.png)
 
+# ![top-countries-lines-daily-increment-log-2020-03-12.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-lines-daily-increment-log-2020-03-12)
+
 # ![top-countries-daily-increment-log-2020-03-12.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment-log-2020-03-12.png)
+
+Carefull with this graph. The size of each bar can be compared intra and/or inter panel, but as log(a) + log(b) = log(a*b), the height and the evolution of the stacked bars has no direct interpretation. 
+
 
 # Dataviz from blogpost
 

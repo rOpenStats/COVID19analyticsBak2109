@@ -283,7 +283,7 @@ ReportGenerator <- R6Class("ReportGenerator",
    ))
 
 #' New dataviz for reportGenerator by
-#' @kenarab
+#' @author kenarab
 #' @export
 ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
  inherit = ReportGenerator,
@@ -330,6 +330,51 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          #   legend.key = element_rect(size = 5),
          #   legend.key.size = unit(0.5, 'lines'),
          #   axis.text.x = element_text(angle = 90)
+       #
+       ret
+     },
+     ggplotTopCountriesLinesDailyInc = function(excluded.countries = "World", log.scale = FALSE){
+       #Page 7
+       ## convert from wide to long format, for purpose of drawing a area plot
+       data.long <- self$data %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
+         filter(confirmed >= 100) %>%
+         select(c(country, date, confirmed.inc)) %>%
+         gather(key=type, value=count, -c(country, date))
+
+
+       plot.title <- 'Daily new Confirmed Cases around the World \nwith > 100 confirmed'
+       count.label <- 'Count'
+       if (log.scale){
+         plot.title <- paste(plot.title, "(LOG scale)")
+         count.label <- paste(count.label, "(log)")
+       }
+       ## set factor levels to show them in a desirable order
+       data.long %<>% mutate(type = factor(type, c('confirmed.inc')))
+       ## cases by type
+       df <- data.long %>% filter(country %in% self$top.countries)
+       df <- df %>% filter(!country %in% excluded.countries)
+       df %<>%
+         mutate(country=country %>% factor(levels=c(self$top.countries)))
+       ret <- df %>% filter(country != 'World') %>%
+         ggplot(aes(x=date, y=count, colour=country)) +
+         geom_line() + xlab('Date') + ylab(count.label) +
+         labs(title = plot.title) +
+         theme(legend.title=element_blank())
+       if (log.scale){
+         #ret <- ret + scale_y_log10(labels = scales::comma)
+         ret <- ret + scale_y_log10()
+       }
+       # theme(legend.title=element_blank(),
+       #   #legend.position = c(.05, .05),
+       #   legend.position = "bottom",
+       #   #legend.justification = c("left", "bottom"),
+       #   #legend.box.just = "left",
+       #   #legend.margin = margin(6, 6, 6, 6),
+       #   legend.spacing.y = unit(0.5, "mm"),
+       #   #legend.spacing = unit(0.5, 'lines'),
+       #   legend.key = element_rect(size = 5),
+       #   legend.key.size = unit(0.5, 'lines'),
+       #   axis.text.x = element_text(angle = 90)
        #
        ret
      }
