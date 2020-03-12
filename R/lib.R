@@ -2,18 +2,25 @@
 
 #'
 #' @export
-downloadCOVID19 <- function(url.path, filename, force = FALSE) {
+downloadCOVID19 <- function(url.path, filename, force = FALSE,
+                            download.freq = 60*60*24 #daily
+                            ) {
  download.flag <- createDataDir()
  if (download.flag){
   url <- file.path(url.path, filename)
   dest <- file.path(data.dir, filename)
 
-  file.info <- file.info(dest)
-  #If is it expected to have updated data, download
-  update.time <- as.Date(file.info$mtime)+1
-  current.time <- with_tz(Sys.time(), tz = "greenwich")
+  if (file.exists(dest)){
 
-  if (!file.exists(dest) | current.time > update.time | force){
+    file.info <- file.info(dest)
+    #If is it expected to have updated data, download
+    update.time <- file.info$mtime + download.freq
+    current.time <- Sys.time()
+    if (current.time > update.time){
+      force <- TRUE
+    }
+  }
+  if (!file.exists(dest) | force){
    download.file(url, dest)
   }
  }
