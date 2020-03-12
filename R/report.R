@@ -20,6 +20,7 @@ ReportGenerator <- R6Class("ReportGenerator",
    data.recovered.original = NA,
    tex.builder    = NA,
    # consolidated
+   data.na        = NA,
    data           = NA,
    data.latest    = NA,
    top.countries  = NA,
@@ -47,9 +48,13 @@ ReportGenerator <- R6Class("ReportGenerator",
 
     self$cleanData()
 
+    nrow(self$data.confirmed)
     self$consolidate()
-
+    nrow(self$data)
+    max(self$data$date)
     self$calculateRates()
+
+    self$makeImputation()
 
     self$calculateTopCountries()
     self
@@ -85,9 +90,61 @@ ReportGenerator <- R6Class("ReportGenerator",
    consolidate = function(){
     ## merge above 3 datasets into one, by country and date
     self$data <- self$data.confirmed %>% merge(self$data.deaths) %>% merge(self$data.recovered)
+    self$data.na <- self$data %>% filter(is.na(confirmed))
+    #self$data <- self$data %>% filter(is.na(confirmed))
     self$min.date <- min(self$data$date)
-    self$max.date <- min(self$data$date)
+    self$max.date <- max(self$data$date)
     self$data
+   },
+   makeImputation = function(){
+
+     rows.imputation <- which(is.na(self$data$confirmed) & self$data$date == self$max.date)
+     self$data[rows.imputation,]
+     #data.imputation <- self$data.na %>% filter(date == self$max.date)
+     for (i in rows.imputation){
+       #debug
+       print(i)
+
+       country.imputation <- self$data[i,]
+       last.country.data <- country.imputation
+
+       country.imputation <<- country.imputation
+       i <<- i
+       last.country.data <<- last.country.data
+
+       while(is.na(last.country.data$confirmed)){
+         last.country.data <- self$data %>% filter(country == country.imputation$country & date == self$max.date-1)
+       }
+       if (last.country.data$confirmed < 100){
+         confirmed.imputation <- last.country.data$confirmed
+         recovered.imputation <- last.country.data$recovered
+         deaths.imputation    <- last.country.data$deaths
+       }
+       else{
+         self$data %<>% filter(confirmed > 100) %>% mutate(dif = abs(log(confirmed/last.country.data$confirmed)))
+         similar.trajectories <- self$data %>% filter(confirmed > 100) %>% filter(dif < log(1.3)) #%>% select(confirmed, dif)
+         #similar.trajectories %>% filter(is.na(rate.inc.daily))
+
+         summary((similar.trajectories %>%
+                   filter(is.finite(rate.inc.daily)))$rate.inc.daily)
+
+         trajectories.agg <-
+           similar.trajectories %>%
+             filter(is.finite(rate.inc.daily)) %>%
+             summarize(mean = mean(rate.inc.daily),
+                     mean.trim.3 = mean(rate.inc.daily, trim = 0.3),
+                     cv   = sd(rate.inc.daily),
+                     min  = min(rate.inc.daily),
+                     max  = max(rate.inc.daily))
+
+         confirmed.imputation <- last.country.data$confirmed *(1+trajectories.agg$mean.trim.3)
+         recovered.imputation <- last.country.data$recovered
+         deaths.imputation    <- last.country.data$deaths
+       }
+       self$data[i,]$confirmed  <- confirmed.imputation
+       self$data[i,]$recovered  <- recovered.imputation
+       self$data[i,]$deaths     <- deaths.imputation
+     }
    },
    calculateRates = function(){
     ## sort by country and date

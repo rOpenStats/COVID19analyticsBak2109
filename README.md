@@ -36,7 +36,6 @@ library(ggplot2)
 library(gridExtra)
 library(magrittr)
 
-# if want to switch to fullDB in user filespace, it will download the full database
 ggplot <- rg$ggplotTopCountriesPie()
 ggsave(file.path(data.dir, paste("top-countries-pie-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
@@ -78,9 +77,11 @@ rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
 
 # ![top-countries-bar-plot-2020-03-11.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-pie-2020-03-11.png)
 # ![top-countries-bar-plot-2020-03-11](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot-2020-03-11.png)
-# ![top-countries-pie-wo-china2020-03-11](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-pie-wo-china2020-03-11.png)
-# ![top-countries-bar-plot-wo-china2020-03-11](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot-wo-china2020-03-11.png)
-# ![countries-bar-plot-australia2020-03-11](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-australia2020-03-11.png)
-# ![countries-bar-plot-argentina2020-03-11](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-argentina2020-03-11.png)
-# ![confirmed-cases2020-03-11](https://github.com/kenarab/COVID19/blob/master/inst/extdata/confirmed-cases2020-03-11.png)
+# ![top-countries-pie-wo-china-2020-03-11](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-pie-wo-china-2020-03-11.png)
+# ![top-countries-bar-plot-wo-china-2020-03-11](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot-wo-china-2020-03-11.png)
+# ![countries-bar-plot-australia-2020-03-11](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-australia-2020-03-11.png)
+# ![countries-bar-plot-argentina-2020-03-11](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-argentina-2020-03-11.png)
+# ![confirmed-cases-2020-03-11](https://github.com/kenarab/COVID19/blob/master/inst/extdata/confirmed-cases2020-03-11.png)
+
+# ![top-countries-daily-increment-2020-03-12.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment-2020-03-12.png)
 
