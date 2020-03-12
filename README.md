@@ -3,8 +3,10 @@
  <!-- . -->
 
 This package is based on this [blogpost](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/) from [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/)
-[Here](https://78462f86-a-e2d7344e-s-sites.googlegroups.com/a/rdatamining.com/www/docs/Coronavirus-data-analysis-world.pdf?attachauth=ANoY7cpG0jhQX4KQkAGcfnXtNxalgBn3uGcezFmRFwSB5SUumv6PPgxE3E7Vr0Td5nYYXh8tJShzfrT5p3PtIJgbpMEyx0YsQzAP0-r8MudNWb8nUGRQxF2BNfWTzJztSDb-X7hmjSDQW8rws8_xt5KHlmjSCd21rm--gYFFJb0OpgfPMsMVgkG8hfHxLmNznz6hU7VoJFesrX3FXNRO_Rr1tTJz3VLRBwOIiJ1UdPjXMp06XQIdn3Q%3D&attredirects=3) is the report made by Yanchang Zhao 
 
+
+Yanchang Zhao, COVID-19 Data Analysis with Tidyverse and Ggplot2 - China. RDataMining.com, 2020.
+URL: http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf.
 
 
 | Release | Usage | Development |
@@ -91,6 +93,5 @@ rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
 # ![top-countries-bar-plot-wo-china-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot-wo-china-2020-03-12.png)
 # ![countries-bar-plot-australia-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-australia-2020-03-12.png)
 # ![countries-bar-plot-argentina-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-argentina-2020-03-12.png)
-# ![confirmed-cases-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/confirmed-cases2020-03-12.png)
+# ![confirmed-cases-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/confirmed-cases-2020-03-12.png)
 
-x
