@@ -3,24 +3,31 @@
 #'
 #' @export
 downloadCOVID19 <- function(url.path, filename, force = FALSE,
-                            download.freq = 60*60*24 #daily
+                            download.freq = 60*60*24, #daily
+                            check.remote = TRUE,
+                            archive = TRUE
                             ) {
  download.flag <- createDataDir()
  if (download.flag){
   url <- file.path(url.path, filename)
   dest <- file.path(data.dir, filename)
 
-  if (file.exists(dest)){
-
-    file.info <- file.info(dest)
-    #If is it expected to have updated data, download
-    update.time <- file.info$mtime + download.freq
-    current.time <- Sys.time()
-    if (current.time > update.time){
-      force <- TRUE
+  download <- !file.exists(dest) | force
+  if (!download & file.exists(dest)){
+    if(check.remote){
+      #TODO git2r
+    }
+    else{
+      file.info <- file.info(dest)
+      #If is it expected to have updated data, download
+      update.time <- file.info$mtime + download.freq
+      current.time <- Sys.time()
+      if (current.time > update.time){
+        download.flag <- TRUE
+      }
     }
   }
-  if (!file.exists(dest) | force){
+  if (download){
    download.file(url, dest)
   }
  }

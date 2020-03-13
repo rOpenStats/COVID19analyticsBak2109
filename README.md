@@ -49,10 +49,6 @@ ggplot <- rg$ggplotTopCountriesStackedBarDailyInc()
 ggsave(file.path(data.dir, paste("top-countries-daily-increment-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 7, height = 5, dpi = 300)
 
-ggplot <- rg$ggplotTopCountriesStackedBarDailyInc(log.scale = TRUE)
-ggsave(file.path(data.dir, paste("top-countries-daily-increment-log-", Sys.Date(), ".png", sep ="")), ggplot,
-       width = 7, height = 5, dpi = 300)
-
 ggplot <- rg$ggplotTopCountriesLinesDailyInc(log.scale = TRUE)
 ggsave(file.path(data.dir, paste("top-countries-lines-daily-increment-log-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 7, height = 5, dpi = 300)
@@ -96,12 +92,11 @@ rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
 
 # ![top-countries-daily-increment-2020-03-12.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment-2020-03-12.png)
 
-# ![top-countries-lines-daily-increment-log-2020-03-12.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-lines-daily-increment-log-2020-03-12.png)
+# ![top-countries-daily-conf-inc-log-2020-03-13.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-conf-inc-log-2020-03-13.png)
+
+# ![top-countries-lines-rate-daily-inc-2020-03-13.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-lines-rate-daily-inc-2020-03-13.png)
 
 
-# ![top-countries-daily-increment-log-2020-03-12.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment-log-2020-03-12.png)
-
-Carefull with this graph. The size of each bar can be compared intra and/or inter panel, but as log(a) + log(b) = log(a*b), the height and the evolution of the stacked bars has no direct interpretation. 
 
 
 # Dataviz from blogpost
@@ -112,5 +107,11 @@ Carefull with this graph. The size of each bar can be compared intra and/or inte
 # ![top-countries-bar-plot-wo-china-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot-wo-china-2020-03-12.png)
 # ![countries-bar-plot-australia-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-australia-2020-03-12.png)
 # ![countries-bar-plot-argentina-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-argentina-2020-03-12.png)
-# ![confirmed-cases-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/confirmed-cases-2020-03-12.png)
+
+# Sources of code and information
+
+* [https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/)
+
+* [https://www.repidemicsconsortium.org/](https://www.repidemicsconsortium.org/)
+* [https://rviews.rstudio.com/2020/03/05/covid-19-epidemiology-with-r/](https://rviews.rstudio.com/2020/03/05/covid-19-epidemiology-with-r/)
 

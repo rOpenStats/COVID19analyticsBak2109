@@ -292,8 +292,6 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        super$initialize(force.download = force.download)
      },
      ggplotTopCountriesStackedBarDailyInc = function(excluded.countries = "World", log.scale = FALSE){
-       #Page 7
-       ## convert from wide to long format, for purpose of drawing a area plot
        data.long <- self$data %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
          select(c(country, date, confirmed.inc)) %>%
          gather(key=type, value=count, -c(country, date))
@@ -333,20 +331,20 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        #
        ret
      },
-     ggplotTopCountriesLinesDailyInc = function(excluded.countries = "World", log.scale = FALSE){
-       #Page 7
-       ## convert from wide to long format, for purpose of drawing a area plot
+     ggplotTopCountriesLines = function(excluded.countries = "World", field = "confirmed.inc", log.scale = FALSE,
+                                        min.confirmed = 100){
+
        data.long <- self$data %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
-         filter(confirmed >= 100) %>%
-         select(c(country, date, confirmed.inc)) %>%
-         gather(key=type, value=count, -c(country, date))
+         filter(confirmed >= min.confirmed) %>%
+         filter(confirmed.inc > 0)
+       data.long <- data.long[,c("country", "date", field)] %>% gather(key=type, value=count, -c(country, date))
 
 
        plot.title <- 'Daily new Confirmed Cases around the World \nwith > 100 confirmed'
-       count.label <- 'Count'
+       y.label <- field
        if (log.scale){
          plot.title <- paste(plot.title, "(LOG scale)")
-         count.label <- paste(count.label, "(log)")
+         y.label <- paste(y.label, "(log)")
        }
        ## set factor levels to show them in a desirable order
        data.long %<>% mutate(type = factor(type, c('confirmed.inc')))
@@ -357,7 +355,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          mutate(country=country %>% factor(levels=c(self$top.countries)))
        ret <- df %>% filter(country != 'World') %>%
          ggplot(aes(x=date, y=count, colour=country)) +
-         geom_line() + xlab('Date') + ylab(count.label) +
+         geom_line() + xlab('Date') + ylab(y.label) +
          labs(title = plot.title) +
          theme(legend.title=element_blank())
        if (log.scale){
