@@ -71,6 +71,43 @@ copyPNG2package <- function(){
   data.dir.files <- data.dir.files[grep("\\.png", data.dir.files)]
   data.dir.files <- data.dir.files[grep(as.character(Sys.Date()), data.dir.files)]
   for (cf in data.dir.files){
-    file.copy(file.path(data.dir, cf), "inst/extdata/")
+    dest.filename <- cf
+    dest.filename <- gsub(paste("-", Sys.Date(), sep = ""), "", dest.filename)
+    file.copy(file.path(data.dir, cf), file.path("inst/extdata/", dest.filename))
   }
+}
+
+#' Diagnostic update situation of source repository
+#' @export
+sourceRepoDiagnostic <- function(min.confirmed = 20){
+  rg <- ReportGeneratorEnhanced$new(force.download = FALSE)
+  rg$preprocess()
+  all.countries <- rg$data %>% group_by(country) %>% summarize(n = n(),
+                                                                 total.confirmed = max(confirmed))
+
+
+  all.countries$last.update <- vapply(all.countries$country,
+                                      FUN = function(x){
+                                        data.country <- rg$data[rg$data$country == x,]
+                                        #ret <- data.country %>% filter(confirmed.inc > 0) %>% summarize(max.date = max(date))
+                                        data.country <- data.country %>% filter(confirmed.inc > 0)
+                                        ret <- max(data.country$date)
+                                        ret <- as.character(ret)
+                                        ret
+                                      },
+                                      FUN.VAL = character(1))
+  all.countries <- all.countries[all.countries$total.confirmed > min.confirmed,]
+  repo.diagnostic <- all.countries %>%
+                      group_by(last.update) %>%
+                      summarize(n = n(), total.confirmed = sum(total.confirmed)) %>%
+                      arrange(desc(last.update))
+  repo.diagnostic[, "countries (confirmed)"] <- vapply(repo.diagnostic$last.update,
+                                      FUN = function(x){
+                                        data.last.update <- all.countries[all.countries$last.update == x,]
+                                        data.last.update <- data.last.update %>% arrange(desc(total.confirmed))
+                                        paste(data.last.update$country, "(", data.last.update$total.confirmed, ")", sep = "",collapse =", ")
+                                      },
+                                      FUN.VALUE = character(1))
+
+  repo.diagnostic
 }

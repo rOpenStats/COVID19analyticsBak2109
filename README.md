@@ -11,11 +11,25 @@ URL: http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf.
 * The original process and visualizations are included in ReportGenerator R6 object 
 * More process and visualization included int ReportGeneratorEnhanced R6 object
 
+# Source Repository Status
+
+|last.update |  n| total.confirmed|countries (confirmed)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+|:-----------|--:|---------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|2020-03-13  | 63|          143808|China(80945), Italy(17660), Iran(11364), Korea, South(7979), Spain(5232), Germany(3675), France(3667), US(2179), Switzerland(1139), Norway(996), Sweden(814), Denmark(804), Netherlands(804), United Kingdom(801), Japan(701), Belgium(559), Austria(504), Qatar(320), Australia(200), Singapore(200), Malaysia(197), Canada(193), Greece(190), Israel(161), Finland(155), Brazil(151), Czechia(141), Slovenia(141), Iceland(134), Portugal(112), Iraq(101), Ireland(90), Romania(89), Saudi Arabia(86), India(82), Egypt(80), San Marino(80), Estonia(79), Lebanon(77), Thailand(75), Indonesia(69), Poland(68), Philippines(64), Taiwan*(50), Vietnam(47), Russia(45), Chile(43), Brunei(37), Serbia(35), Luxembourg(34), Albania(33), Croatia(32), Slovakia(32), Argentina(31), Pakistan(28), Peru(28), Belarus(27), Panama(27), Algeria(26), Georgia(25), South Africa(24), Bulgaria(23), Costa Rica(23) |
+|2020-03-12  |  2|             165|United Arab Emirates(85), Kuwait(80)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+|2020-03-11  |  1|             195|Bahrain(195)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+|2020-03-03  |  1|             706|Cruise Ship(706)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+
+
+# Package
+
 | Release | Usage | Development |
 |:--------|:------|:------------|
 | | [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-blue.svg)](https://cran.r-project.org/) | [![Travis](https://travis-ci.org/kenarab/COVID19.svg?branch=master)](https://travis-ci.org/kenarab/COVID19) |
 | [![CRAN](http://www.r-pkg.org/badges/version/COVID19)](https://cran.r-project.org/package=COVID19) | | [![codecov](https://codecov.io/gh/kenarab/COVID19/branch/master/graph/badge.svg)](https://codecov.io/gh/kenarab/COVID19) |
 |||[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)|
+
+
 
 
 # How to get started (Development version)
@@ -90,7 +104,7 @@ rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
 
 # Dataviz
 
-# ![top-countries-daily-increment-2020-03-12.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment-2020-03-12.png)
+# ![top-countries-daily-increment.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment.png)
 
 # ![top-countries-daily-conf-inc-log-2020-03-13.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-conf-inc-log-2020-03-13.png)
 
@@ -101,12 +115,12 @@ rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
 
 # Dataviz from blogpost
 
-# ![top-countries-bar-plot-2020-03-12.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-pie-2020-03-12.png)
-# ![top-countries-bar-plot-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot-2020-03-12.png)
-# ![top-countries-pie-wo-china-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-pie-wo-china-2020-03-12.png)
-# ![top-countries-bar-plot-wo-china-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot-wo-china-2020-03-12.png)
-# ![countries-bar-plot-australia-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-australia-2020-03-12.png)
-# ![countries-bar-plot-argentina-2020-03-12](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-argentina-2020-03-12.png)
+# ![top-countries-bar-plot.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-pie.png)
+# ![top-countries-bar-plot](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot.png)
+# ![top-countries-pie-wo-china](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-pie-wo-china.png)
+# ![top-countries-bar-plot-wo-china](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot-wo-china.png)
+# ![countries-bar-plot-australia](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-australia.png)
+# ![countries-bar-plot-argentina](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-argentina.png)
 
 # Sources of code and information
 

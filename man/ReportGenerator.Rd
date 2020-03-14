@@ -18,6 +18,7 @@ ReportGenerator
 \item \href{#method-loadData}{\code{ReportGenerator$loadData()}}
 \item \href{#method-cleanData}{\code{ReportGenerator$cleanData()}}
 \item \href{#method-consolidate}{\code{ReportGenerator$consolidate()}}
+\item \href{#method-makeImputation}{\code{ReportGenerator$makeImputation()}}
 \item \href{#method-calculateRates}{\code{ReportGenerator$calculateRates()}}
 \item \href{#method-calculateTopCountries}{\code{ReportGenerator$calculateTopCountries()}}
 \item \href{#method-ggplotTopCountriesPie}{\code{ReportGenerator$ggplotTopCountriesPie()}}
@@ -25,6 +26,7 @@ ReportGenerator
 \item \href{#method-ggplotCountriesBarGraphs}{\code{ReportGenerator$ggplotCountriesBarGraphs()}}
 \item \href{#method-ggplotConfirmedCases}{\code{ReportGenerator$ggplotConfirmedCases()}}
 \item \href{#method-generateTex}{\code{ReportGenerator$generateTex()}}
+\item \href{#method-getXLabelsTheme}{\code{ReportGenerator$getXLabelsTheme()}}
 \item \href{#method-clone}{\code{ReportGenerator$clone()}}
 }
 }
@@ -85,6 +87,14 @@ ReportGenerator
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-makeImputation"></a>}}
+\subsection{Method \code{makeImputation()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$makeImputation()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-calculateRates"></a>}}
 \subsection{Method \code{calculateRates()}}{
 \subsection{Usage}{
@@ -137,6 +147,14 @@ ReportGenerator
 \subsection{Method \code{generateTex()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$generateTex(output.file)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getXLabelsTheme"></a>}}
+\subsection{Method \code{getXLabelsTheme()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$getXLabelsTheme(ggplot, x.values)}\if{html}{\out{</div>}}
 }
 
 }

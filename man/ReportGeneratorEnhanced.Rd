@@ -8,6 +8,9 @@ New dataviz for reportGenerator by
 
 New dataviz for reportGenerator by
 }
+\author{
+kenarab
+}
 \section{Super class}{
 \code{\link[COVID19:ReportGenerator]{COVID19::ReportGenerator}} -> \code{ReportGeneratorEnhanced}
 }
@@ -16,6 +19,7 @@ New dataviz for reportGenerator by
 \itemize{
 \item \href{#method-new}{\code{ReportGeneratorEnhanced$new()}}
 \item \href{#method-ggplotTopCountriesStackedBarDailyInc}{\code{ReportGeneratorEnhanced$ggplotTopCountriesStackedBarDailyInc()}}
+\item \href{#method-ggplotTopCountriesLines}{\code{ReportGeneratorEnhanced$ggplotTopCountriesLines()}}
 \item \href{#method-clone}{\code{ReportGeneratorEnhanced$clone()}}
 }
 }
@@ -29,11 +33,13 @@ New dataviz for reportGenerator by
 \item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="downloadData">}\href{../../COVID19/html/ReportGenerator.html#method-downloadData}{\code{COVID19::ReportGenerator$downloadData()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="generateReport">}\href{../../COVID19/html/ReportGenerator.html#method-generateReport}{\code{COVID19::ReportGenerator$generateReport()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="generateTex">}\href{../../COVID19/html/ReportGenerator.html#method-generateTex}{\code{COVID19::ReportGenerator$generateTex()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="getXLabelsTheme">}\href{../../COVID19/html/ReportGenerator.html#method-getXLabelsTheme}{\code{COVID19::ReportGenerator$getXLabelsTheme()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="ggplotConfirmedCases">}\href{../../COVID19/html/ReportGenerator.html#method-ggplotConfirmedCases}{\code{COVID19::ReportGenerator$ggplotConfirmedCases()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="ggplotCountriesBarGraphs">}\href{../../COVID19/html/ReportGenerator.html#method-ggplotCountriesBarGraphs}{\code{COVID19::ReportGenerator$ggplotCountriesBarGraphs()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="ggplotTopCountriesBarPlots">}\href{../../COVID19/html/ReportGenerator.html#method-ggplotTopCountriesBarPlots}{\code{COVID19::ReportGenerator$ggplotTopCountriesBarPlots()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="ggplotTopCountriesPie">}\href{../../COVID19/html/ReportGenerator.html#method-ggplotTopCountriesPie}{\code{COVID19::ReportGenerator$ggplotTopCountriesPie()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="loadData">}\href{../../COVID19/html/ReportGenerator.html#method-loadData}{\code{COVID19::ReportGenerator$loadData()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="makeImputation">}\href{../../COVID19/html/ReportGenerator.html#method-makeImputation}{\code{COVID19::ReportGenerator$makeImputation()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="preprocess">}\href{../../COVID19/html/ReportGenerator.html#method-preprocess}{\code{COVID19::ReportGenerator$preprocess()}}\out{</span>}
 }
 \out{</details>}
@@ -51,7 +57,21 @@ New dataviz for reportGenerator by
 \subsection{Method \code{ggplotTopCountriesStackedBarDailyInc()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorEnhanced$ggplotTopCountriesStackedBarDailyInc(
-  excluded.countries = "World"
+  excluded.countries = "World",
+  log.scale = FALSE
+)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ggplotTopCountriesLines"></a>}}
+\subsection{Method \code{ggplotTopCountriesLines()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorEnhanced$ggplotTopCountriesLines(
+  excluded.countries = "World",
+  field = "confirmed.inc",
+  log.scale = FALSE,
+  min.confirmed = 100
 )}\if{html}{\out{</div>}}
 }
 

@@ -10,6 +10,8 @@
 #' @export
 ReportGenerator <- R6Class("ReportGenerator",
   public = list(
+    # parameters
+   top.countries.count = 11,
    force.download = FALSE,
    filenames = NA,
    data.confirmed = NA,
@@ -173,8 +175,11 @@ ReportGenerator <- R6Class("ReportGenerator",
      select(country, date, confirmed, deaths, recovered, remaining.confirmed) %>%
      mutate(ranking = dense_rank(desc(confirmed)))
     ## top 10 countries: 12 incl. 'World' and 'Others'
-    self$top.countries <- self$data.latest %>% filter(ranking <= 12) %>%
+    self$top.countries <- self$data.latest %>% filter(ranking <= self$top.countries.count) %>%
      arrange(ranking) %>% pull(country) %>% as.character()
+
+    self$top.countries
+
     ## move 'Others' to the end
     self$top.countries %<>% setdiff('Others') %>% c('Others')
     ## [1] "World" "Mainland China"
@@ -183,14 +188,14 @@ ReportGenerator <- R6Class("ReportGenerator",
     ## [7] "Spain" "US"
     ## [9] "Germany" "Japan"
     ## [11] "Switzerland" "Others"
-
+    self$top.countries
    },
    ggplotTopCountriesPie = function(excluded.countries = "World"){
     #Page 6
     # a <- data %>% group_by(country) %>% tally()
     ## put all others in a single group of 'Others'
     df <- self$data.latest %>% filter(!is.na(country) & !country %in% excluded.countries) %>%
-     mutate(country=ifelse(ranking <= 12, as.character(country), 'Others')) %>%
+     mutate(country=ifelse(ranking <= self$top.countries.count, as.character(country), 'Others')) %>%
      mutate(country=country %>% factor(levels=c(self$top.countries)))
     df %<>% group_by(country) %>% summarise(confirmed=sum(confirmed))
     ## precentage and label
@@ -217,10 +222,15 @@ ReportGenerator <- R6Class("ReportGenerator",
     df <- df %>% filter(!country %in% excluded.countries)
     df %<>%
      mutate(country=country %>% factor(levels=c(self$top.countries)))
-    df %>% filter(country != 'World') %>%
+    df %<>% filter(country != 'World')
+    x.values <- sort(unique(df$date))
+
+    plot <-  df %>%
      ggplot(aes(x=date, y=count, fill=country)) +
      geom_area() + xlab('Date') + ylab('Count') +
-     labs(title='Cases around the World') +
+     labs(title='Cases around the World')
+    plot <- self$getXLabelsTheme(plot, x.values)
+    plot <- plot +
      theme(legend.title=element_blank()) +
      facet_wrap(~type, ncol=2, scales='free_y')
    },
@@ -241,22 +251,34 @@ ReportGenerator <- R6Class("ReportGenerator",
      df <- data.long
     }
     ## cases by country
-    df %>% filter(type != 'confirmed') %>%
+    df %<>% filter(type != 'confirmed')
+    x.values <- sort(unique(df$date))
+
+    plot <- df %>%
      ggplot(aes(x=date, y=count, fill=type)) +
      geom_area(alpha=0.5) + xlab('Date') + ylab('Count') +
      labs(title=paste0('COVID-19 Cases by Country (', self$max.date, ')')) +
-     scale_fill_manual(values=c('red', 'green', 'black')) +
+     scale_fill_manual(values=c('red', 'green', 'black'))
+    plot <- self$getXLabelsTheme(plot, x.values)
+    plot <- plot +
      theme(legend.title=element_blank(), legend.position='bottom') +
      facet_wrap(~country, ncol=3, scales='free_y')
    },
    ggplotConfirmedCases = function(){
      ## current confirmed and its increase
+     x.values <- sort(unique(df$date))
      plot1 <- ggplot(self$data, aes(x=date, y=remaining.confirmed)) +
        geom_point() + geom_smooth() +
        xlab('Date') + ylab('Count') + labs(title='Current Confirmed Cases')
+     plot1 <- self$getXLabelsTheme(plot1, x.values)
+
+
      plot2 <- ggplot(self$data, aes(x=date, y=confirmed.inc)) +
        geom_point() + geom_smooth() +
        xlab('Date') + ylab('Count') + labs(title='Increase in Current Confirmed')
+     plot2 <- self$getXLabelsTheme(plot2, x.values)
+
+
      # + ylim(0, 4500)
      grid.arrange(plot1, plot2, ncol=2)
      ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
@@ -278,8 +300,12 @@ ReportGenerator <- R6Class("ReportGenerator",
     writeLines(table.2)
     self$tex.builder$endTex()
 
+   },
+   getXLabelsTheme = function(ggplot, x.values){
+     ggplot +
+       #scale_x_discrete(name = "date", breaks = x.values, labels = as.character(x.values)) +
+       theme(axis.text.x = element_text(angle = 90, hjust = 1))
    }
-
    ))
 
 #' New dataviz for reportGenerator by
@@ -292,6 +318,14 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        super$initialize(force.download = force.download)
      },
      ggplotTopCountriesStackedBarDailyInc = function(excluded.countries = "World", log.scale = FALSE){
+       if (log.scale){
+         message("***WARNING***")
+         message("*")
+         message("*")
+         message("* As log(a)+log(b) = log(a*b), stacked bar total height is confusing for log scales")
+         message("*")
+         message("*")
+       }
        data.long <- self$data %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
          select(c(country, date, confirmed.inc)) %>%
          gather(key=type, value=count, -c(country, date))
@@ -299,8 +333,11 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
 
        plot.title <- 'Daily new Confirmed Cases around the World'
        if (log.scale){
-         plot.title <- paste(plot.title, "\n(LOG scale)")
+         plot.title <- paste(plot.title, "\n(LOG scale)\n",
+                             "[WARNING] As log(a)+log(b) = log(a*b), stacked bar total height is confusing for log scales")
        }
+       plot.title
+
        ## set factor levels to show them in a desirable order
        data.long %<>% mutate(type = factor(type, c('confirmed.inc')))
        ## cases by type
@@ -308,10 +345,15 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        df <- df %>% filter(!country %in% excluded.countries)
        df %<>%
          mutate(country=country %>% factor(levels=c(self$top.countries)))
+
+       x.values <- sort(unique(data.long$date))
+
        ret <- df %>% filter(country != 'World') %>%
          ggplot(aes(x=date, y=count, fill=country)) +
          geom_bar(stat = "identity") + xlab('Date') + ylab('Count') +
-         labs(title = plot.title) +
+         labs(title = plot.title)
+       ret <- self$getXLabelsTheme(ret, x.values)
+       ret <- ret +
          theme(legend.title=element_blank())
        if (log.scale){
          #ret <- ret + scale_y_log10(labels = scales::comma)
@@ -348,6 +390,8 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        }
        ## set factor levels to show them in a desirable order
        data.long %<>% mutate(type = factor(type, c('confirmed.inc')))
+       x.values <- sort(unique(data.long$date))
+
        ## cases by type
        df <- data.long %>% filter(country %in% self$top.countries)
        df <- df %>% filter(!country %in% excluded.countries)
@@ -356,8 +400,9 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        ret <- df %>% filter(country != 'World') %>%
          ggplot(aes(x=date, y=count, colour=country)) +
          geom_line() + xlab('Date') + ylab(y.label) +
-         labs(title = plot.title) +
-         theme(legend.title=element_blank())
+         labs(title = plot.title)
+       ret <- self$getXLabelsTheme(ret, x.values)
+       ret <- ret + theme(legend.title=element_blank())
        if (log.scale){
          #ret <- ret + scale_y_log10(labels = scales::comma)
          ret <- ret + scale_y_log10()
