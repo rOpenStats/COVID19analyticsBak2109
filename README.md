@@ -11,6 +11,9 @@ URL: http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf.
 * The original process and visualizations are included in ReportGenerator R6 object 
 * More process and visualization included int ReportGeneratorEnhanced R6 object
 
+# Consideration
+Data is a noisy because of lack of missing data imputation. We are working on in it.
+
 # Source Repository Status
 
 |last.update |  n| total.confirmed|countries (confirmed)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
@@ -129,10 +132,12 @@ rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
 # Including Argentina
 # ![countries-bar-plot-argentina](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-argentina.png)
 
-# Sources of code and information
+# Sources of code, data and information
 
-* [https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/)
+* [https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/) Original blogpost which inspired this package
+* [http://www.rdatamining.com/docs/Coronavirus-data-analysis-world.pdf](http://www.rdatamining.com/docs/Coronavirus-data-analysis-world.pdf) Original blogpost dialy updated report
+* [https://https://github.com/CSSEGISandData/COVID-19/](https://https://github.com/CSSEGISandData/COVID-19/) Johns Hopkins data source updated almost daily
 
-* [https://www.repidemicsconsortium.org/](https://www.repidemicsconsortium.org/)
-* [https://rviews.rstudio.com/2020/03/05/covid-19-epidemiology-with-r/](https://rviews.rstudio.com/2020/03/05/covid-19-epidemiology-with-r/)
+* [https://www.repidemicsconsortium.org/](https://www.repidemicsconsortium.org/) RECON page with R sources for epidemic analysis
+* [https://rviews.rstudio.com/2020/03/05/covid-19-epidemiology-with-r/](https://rviews.rstudio.com/2020/03/05/covid-19-epidemiology-with-r/) COVID-19 research using R tools from Rstudio
 
