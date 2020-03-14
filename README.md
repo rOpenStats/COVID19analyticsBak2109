@@ -63,9 +63,14 @@ ggplot <- rg$ggplotTopCountriesStackedBarDailyInc()
 ggsave(file.path(data.dir, paste("top-countries-daily-increment-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 7, height = 5, dpi = 300)
 
-ggplot <- rg$ggplotTopCountriesLinesDailyInc(log.scale = TRUE)
-ggsave(file.path(data.dir, paste("top-countries-lines-daily-increment-log-", Sys.Date(), ".png", sep ="")), ggplot,
+ggplot <- rg$ggplotTopCountriesLines(field = "confirmed.inc", log.scale = TRUE)
+ggsave(file.path(data.dir, paste("top-countries-daily-conf-inc-log-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 7, height = 5, dpi = 300)
+
+ggplot <- rg$ggplotTopCountriesLines(field = "rate.inc.daily", log.scale = FALSE)
+ggsave(file.path(data.dir, paste("top-countries-lines-rate-daily-inc-", Sys.Date(), ".png", sep ="")), ggplot,
+       width = 7, height = 5, dpi = 300)
+
 
 # Selected Yanchang Zhao visualizations
 
