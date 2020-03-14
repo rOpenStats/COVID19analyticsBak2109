@@ -2,7 +2,9 @@
 
  <!-- . -->
 
-This package include several visualizations of the COVID-19 international outbreak is based on this [blogpost](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/) from [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/)
+This package downloads, clean and consolidate [data from Johns Hokpins](https://https://github.com/CSSEGISandData/COVID-19/) for analysing international outbreak of COVID-19. 
+ 
+It includes several visualizations of the COVID-19 international outbreak, some of them taken from this [blogpost](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/) from [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/)
 
 
 Yanchang Zhao, COVID-19 Data Analysis with Tidyverse and Ggplot2 - China. RDataMining.com, 2020.
@@ -12,7 +14,7 @@ URL: http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf.
 * More process and visualization included int ReportGeneratorEnhanced R6 object
 
 # Consideration
-Data is a noisy because of lack of missing data imputation. We are working on in it.
+Data is still noisy because there are missing data from some regions in some days. We are working on in it.
 
 # Source Repository Status
 
