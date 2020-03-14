@@ -124,7 +124,9 @@ rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
 # ![top-countries-bar-plot](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot.png)
 # ![top-countries-pie-wo-china](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-pie-wo-china.png)
 # ![top-countries-bar-plot-wo-china](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot-wo-china.png)
+# Including Australia
 # ![countries-bar-plot-australia](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-australia.png)
+# Including Argentina
 # ![countries-bar-plot-argentina](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-argentina.png)
 
 # Sources of code and information
