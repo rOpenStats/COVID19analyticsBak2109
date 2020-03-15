@@ -2,7 +2,7 @@
 
  <!-- . -->
 
-This package downloads, clean and consolidate [data from Johns Hokpins](https://https://github.com/CSSEGISandData/COVID-19/) for analysing international outbreak of COVID-19. 
+This package downloads, clean and consolidate [data from Johns Hokpins](https://github.com/CSSEGISandData/COVID-19/) for analysing international outbreak of COVID-19. 
  
 It includes several visualizations of the COVID-19 international outbreak, some of them taken from this [blogpost](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/) from [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/)
 
@@ -138,7 +138,7 @@ rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
 
 * [https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/) Original blogpost which inspired this package
 * [http://www.rdatamining.com/docs/Coronavirus-data-analysis-world.pdf](http://www.rdatamining.com/docs/Coronavirus-data-analysis-world.pdf) Original blogpost dialy updated report
-* [https://https://github.com/CSSEGISandData/COVID-19/](https://https://github.com/CSSEGISandData/COVID-19/) Johns Hopkins data source updated almost daily
+* [https://github.com/CSSEGISandData/COVID-19/](https://github.com/CSSEGISandData/COVID-19/) Johns Hopkins data source updated almost daily
 
 * [https://www.repidemicsconsortium.org/](https://www.repidemicsconsortium.org/) RECON page with R sources for epidemic analysis
 * [https://rviews.rstudio.com/2020/03/05/covid-19-epidemiology-with-r/](https://rviews.rstudio.com/2020/03/05/covid-19-epidemiology-with-r/) COVID-19 research using R tools from Rstudio
