@@ -54,9 +54,13 @@ ReportGenerator <- R6Class("ReportGenerator",
     self$consolidate()
     nrow(self$data)
     max(self$data$date)
-    self$calculateRates()
 
-    self$makeImputation()
+    self$calculateRates()
+    nrow(self$data)
+
+    # TODO imputation. By now remove rows with no confirmed data
+    self$data <- self$data[!is.na(self$data$confirmed),]
+    #self$makeImputation()
 
     self$calculateTopCountries()
     self
@@ -99,7 +103,7 @@ ReportGenerator <- R6Class("ReportGenerator",
     self$data
    },
    makeImputation = function(){
-
+     stop("Under construction")
      rows.imputation <- which(is.na(self$data$confirmed) & self$data$date == self$max.date)
      self$data[rows.imputation,]
      #data.imputation <- self$data.na %>% filter(date == self$max.date)
