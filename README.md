@@ -86,10 +86,10 @@ ggplot <- rg$ggplotTopCountriesBarPlots()
 ggsave(file.path(data.dir, paste("top-countries-bar-plot-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
 
-ggplot <- rg$ggplotTopCountriesPie(excluded.countries = c("World", "Mainland China"))
+ggplot <- rg$ggplotTopCountriesPie(excluded.countries = c("World", "China"))
 ggsave(file.path(data.dir, paste("top-countries-pie-wo-china-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
-ggplot <- rg$ggplotTopCountriesBarPlots(excluded.countries = c("World", "Mainland China"))
+ggplot <- rg$ggplotTopCountriesBarPlots(excluded.countries = c("World", "China"))
 ggsave(file.path(data.dir, paste("top-countries-bar-plot-wo-china-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
 

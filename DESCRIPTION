@@ -23,10 +23,11 @@ Imports: magrittr,
          tidyverse,
          gridExtra,
          kableExtra,
-         R6,
+         R6
 Collate:
-  'lib.R'
-  'report.R'
+  'util-lib.R'
+  'data-lib.R'
+  'report-lib.R'
   'zzz.R'
 BugReports: https://github.com/kenarab/COVID19/issues
 URL: https://github.com/kenarab/COVID19

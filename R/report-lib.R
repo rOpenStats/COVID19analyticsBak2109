@@ -10,200 +10,29 @@
 #' @export
 ReportGenerator <- R6Class("ReportGenerator",
   public = list(
-    # parameters
-   top.countries.count = 11,
-   force.download = FALSE,
-   filenames = NA,
-   data.confirmed = NA,
-   data.deaths    = NA,
-   data.recovered = NA,
-   data.confirmed.original = NA,
-   data.deaths.original    = NA,
-   data.recovered.original = NA,
+   data.processor = NA,
    tex.builder    = NA,
-   # consolidated
-   data.na        = NA,
-   data           = NA,
-   data.latest    = NA,
-   top.countries  = NA,
-   min.date = NA,
-   max.date = NA,
    initialize = function(force.download = FALSE){
-     self$force.download <- force.download
+     self$data.processor <- COVID19DataProcessor$new(force.download = force.download)
      self$tex.builder <- TexBuilder$new()
      self
    },
-   generateReport = function(output.file, overwrite = FALSE){
-    self$preprocess()
-    self$generateTopCountriesGGplot()
-
-    self$generateTex(output.file)
-
-   },
    preprocess = function(){
-    self$downloadData()
-    self$loadData()
-    n.col <- ncol(self$data.confirmed)
-    ## get dates from column names
-    dates <- names(self$data.confirmed)[5:n.col] %>% substr(2,8) %>% mdy()
-    range(dates)
-
-    self$cleanData()
-
-    nrow(self$data.confirmed)
-    self$consolidate()
-    nrow(self$data)
-    max(self$data$date)
-
-    self$calculateRates()
-    nrow(self$data)
-
-    # TODO imputation. By now remove rows with no confirmed data
-    self$makeImputations()
-
-    self$calculateTopCountries()
-    self
+     self$data.processor$preprocess()
    },
-   downloadData = function(){
-    self$filenames <- c('time_series_19-covid-Confirmed.csv',
-                   'time_series_19-covid-Deaths.csv',
-                   'time_series_19-covid-Recovered.csv')
-    # url.path <- 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_'
-    #url.path <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series"
-    url.path <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
-    bin <- lapply(self$filenames, FUN = function(...){downloadCOVID19(url.path = url.path, force = self$force.download, ...)})
-   },
-   loadData = function(){
-    ## load data into R
-     self$data.confirmed <- read.csv(file.path(data.dir, 'time_series_19-covid-Confirmed.csv'))
-     self$data.deaths <- read.csv(file.path(data.dir,'time_series_19-covid-Deaths.csv'))
-     self$data.recovered <- read.csv(file.path(data.dir,'time_series_19-covid-Recovered.csv'))
-
-     dim(self$data.confirmed)
-     ## [1] 347 53
-     self
-   },
-   cleanData = function(){
-    self$data.confirmed.original <- self$data.confirmed
-    self$data.deaths.original    <- self$data.deaths
-    self$data.recovered.original <- self$data.recovered
-    self$data.confirmed <- self$data.confirmed %<>% cleanData() %>% rename(confirmed=count)
-    self$data.deaths    <- self$data.deaths %<>% cleanData() %>% rename(deaths=count)
-    self$data.recovered <- self$data.recovered %<>% cleanData() %>% rename(recovered=count)
-    self
-   },
-   consolidate = function(){
-    ## merge above 3 datasets into one, by country and date
-    self$data <- self$data.confirmed %>% merge(self$data.deaths) %>% merge(self$data.recovered)
-    self$data.na <- self$data %>% filter(is.na(confirmed))
-    #self$data <- self$data %>% filter(is.na(confirmed))
-    self$min.date <- min(self$data$date)
-    self$max.date <- max(self$data$date)
-    self$data
-   },
-   makeImputations = function(){
-     # TODO imputation. By now remove rows with no confirmed data
-     self$data <- self$data[!is.na(self$data$confirmed),]
-   },
-   makeImputationsNew = function(){
-     stop("Under construction")
-     rows.imputation <- which(is.na(self$data$confirmed) & self$data$date == self$max.date)
-     self$data[rows.imputation,]
-     #data.imputation <- self$data.na %>% filter(date == self$max.date)
-     for (i in rows.imputation){
-       #debug
-       print(i)
-
-       country.imputation <- self$data[i,]
-       last.country.data <- country.imputation
-
-       country.imputation <<- country.imputation
-       i <<- i
-       last.country.data <<- last.country.data
-
-       while(is.na(last.country.data$confirmed)){
-         last.country.data <- self$data %>% filter(country == country.imputation$country & date == self$max.date-1)
-       }
-       if (last.country.data$confirmed < 100){
-         confirmed.imputation <- last.country.data$confirmed
-         recovered.imputation <- last.country.data$recovered
-         deaths.imputation    <- last.country.data$deaths
-       }
-       else{
-         self$data %<>% filter(confirmed > 100) %>% mutate(dif = abs(log(confirmed/last.country.data$confirmed)))
-         similar.trajectories <- self$data %>% filter(confirmed > 100) %>% filter(dif < log(1.3)) #%>% select(confirmed, dif)
-         #similar.trajectories %>% filter(is.na(rate.inc.daily))
-
-         summary((similar.trajectories %>%
-                   filter(is.finite(rate.inc.daily)))$rate.inc.daily)
-
-         trajectories.agg <-
-           similar.trajectories %>%
-             filter(is.finite(rate.inc.daily)) %>%
-             summarize(mean = mean(rate.inc.daily),
-                     mean.trim.3 = mean(rate.inc.daily, trim = 0.3),
-                     cv   = sd(rate.inc.daily),
-                     min  = min(rate.inc.daily),
-                     max  = max(rate.inc.daily))
-
-         confirmed.imputation <- last.country.data$confirmed *(1+trajectories.agg$mean.trim.3)
-         recovered.imputation <- last.country.data$recovered
-         deaths.imputation    <- last.country.data$deaths
-       }
-       self$data[i,]$confirmed  <- confirmed.imputation
-       self$data[i,]$recovered  <- recovered.imputation
-       self$data[i,]$deaths     <- deaths.imputation
-     }
-   },
-   calculateRates = function(){
-    ## sort by country and date
-    self$data %<>% arrange(country, date)
-    ## daily increases of deaths and cured cases
-    ## set NA to the increases on day1
-    n <- nrow(self$data)
-    day1 <- min(self$data$date)
-    self$data %<>% mutate(confirmed.inc = ifelse(date == day1, NA, confirmed - lag(confirmed, n=1)),
-                     deaths.inc = ifelse(date == day1, NA, deaths - lag(deaths, n=1)),
-                     recovered.inc = ifelse(date == day1, NA, recovered - lag(recovered, n=1)))
-    ## death rate based on total deaths and cured cases
-    self$data %<>% mutate(rate.upper = (100 * deaths / (deaths + recovered)) %>% round(1))
-    ## lower bound: death rate based on total confirmed cases
-    self$data %<>% mutate(rate.lower = (100 * deaths / confirmed) %>% round(1))
-    ## death rate based on the number of death/cured on every single day
-    self$data %<>% mutate(rate.daily = (100 * deaths.inc / (deaths.inc + recovered.inc)) %>% round(1))
-    self$data %<>% mutate(rate.inc.daily = (confirmed.inc/(confirmed-confirmed.inc)) %>% round(2))
-
-    self$data %<>% mutate(remaining.confirmed = (confirmed - deaths - recovered))
-    names(self$data)
-    self$data
-   },
-   calculateTopCountries = function(){
-    self$data.latest <- self$data %>% filter(date == max(date)) %>%
-     select(country, date, confirmed, deaths, recovered, remaining.confirmed) %>%
-     mutate(ranking = dense_rank(desc(confirmed)))
-    ## top 10 countries: 12 incl. 'World' and 'Others'
-    self$top.countries <- self$data.latest %>% filter(ranking <= self$top.countries.count) %>%
-     arrange(ranking) %>% pull(country) %>% as.character()
-
-    self$top.countries
-
-    ## move 'Others' to the end
-    self$top.countries %<>% setdiff('Others') %>% c('Others')
-    ## [1] "World" "Mainland China"
-    ## [3] "Italy" "Iran (Islamic Republic of)"
-    ## [5] "Republic of Korea" "France"
-    ## [7] "Spain" "US"
-    ## [9] "Germany" "Japan"
-    ## [11] "Switzerland" "Others"
-    self$top.countries
+   generateReport = function(output.file, overwrite = FALSE){
+    message("Not working yet")
+    self$data.procesor$preprocess()
+    self$generateTopCountriesGGplot()
+    self$generateTex(output.file)
    },
    ggplotTopCountriesPie = function(excluded.countries = "World"){
     #Page 6
     # a <- data %>% group_by(country) %>% tally()
     ## put all others in a single group of 'Others'
-    df <- self$data.latest %>% filter(!is.na(country) & !country %in% excluded.countries) %>%
-     mutate(country=ifelse(ranking <= self$top.countries.count, as.character(country), 'Others')) %>%
-     mutate(country=country %>% factor(levels=c(self$top.countries)))
+    df <- self$data.processor$data.latest %>% filter(!is.na(country) & !country %in% excluded.countries) %>%
+     mutate(country=ifelse(ranking <= self$data.processor$top.countries.count, as.character(country), 'Others')) %>%
+     mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
     df %<>% group_by(country) %>% summarise(confirmed=sum(confirmed))
     ## precentage and label
     df %<>% mutate(per = (100*confirmed/sum(confirmed)) %>% round(1)) %>%
@@ -213,22 +42,22 @@ ReportGenerator <- R6Class("ReportGenerator",
      geom_bar(aes(x='', y=per), stat='identity') +
      coord_polar("y", start=0) +
      xlab('') + ylab('Percentage (%)') +
-     labs(title=paste0('Top 10 Countries with Most Confirmed Cases (', self$max.date, ')')) +
+     labs(title=paste0('Top 10 Countries with Most Confirmed Cases (', self$data.processor$max.date, ')')) +
      scale_fill_discrete(name='Country', labels=df$txt)
 
    },
    ggplotTopCountriesBarPlots = function(excluded.countries = "World"){
     #Page 7
     ## convert from wide to long format, for purpose of drawing a area plot
-    data.long <- self$data %>% select(c(country, date, confirmed, remaining.confirmed, recovered, deaths)) %>%
+    data.long <- self$data.processor$data %>% select(c(country, date, confirmed, remaining.confirmed, recovered, deaths)) %>%
      gather(key=type, value=count, -c(country, date))
     ## set factor levels to show them in a desirable order
     data.long %<>% mutate(type = factor(type, c('confirmed', 'remaining.confirmed', 'recovered', 'deaths')))
     ## cases by type
-    df <- data.long %>% filter(country %in% self$top.countries)
+    df <- data.long %>% filter(country %in% self$data.processor$top.countries)
     df <- df %>% filter(!country %in% excluded.countries)
     df %<>%
-     mutate(country=country %>% factor(levels=c(self$top.countries)))
+     mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
     df %<>% filter(country != 'World')
     x.values <- sort(unique(df$date))
 
@@ -243,12 +72,12 @@ ReportGenerator <- R6Class("ReportGenerator",
    },
    ggplotCountriesBarGraphs = function(selected.country = "Australia"){
     ## convert from wide to long format, for purpose of drawing a area plot
-    data.long <- self$data %>% select(c(country, date, confirmed, remaining.confirmed, recovered, deaths)) %>%
+    data.long <- self$data.processor$data %>% select(c(country, date, confirmed, remaining.confirmed, recovered, deaths)) %>%
      gather(key=type, value=count, -c(country, date))
     ## set factor levels to show them in a desirable order
     data.long %<>% mutate(type = factor(type, c('confirmed', 'remaining.confirmed', 'recovered', 'deaths')))
 
-    top.countries <- self$top.countries
+    top.countries <- self$data.processor$top.countries
     if(!(selected.country %in% top.countries)) {
      top.countries %<>% setdiff('Others') %>% c(selected.country)
      df <- data.long %>% filter(country %in% top.countries) %<>%
@@ -264,7 +93,7 @@ ReportGenerator <- R6Class("ReportGenerator",
     plot <- df %>%
      ggplot(aes(x=date, y=count, fill=type)) +
      geom_area(alpha=0.5) + xlab('Date') + ylab('Count') +
-     labs(title=paste0('COVID-19 Cases by Country (', self$max.date, ')')) +
+     labs(title=paste0('COVID-19 Cases by Country (', self$data.processor$max.date, ')')) +
      scale_fill_manual(values=c('red', 'green', 'black'))
     plot <- self$getXLabelsTheme(plot, x.values)
     plot <- plot +
@@ -274,13 +103,13 @@ ReportGenerator <- R6Class("ReportGenerator",
    ggplotConfirmedCases = function(){
      ## current confirmed and its increase
      x.values <- sort(unique(df$date))
-     plot1 <- ggplot(self$data, aes(x=date, y=remaining.confirmed)) +
+     plot1 <- ggplot(self$data.processor$data, aes(x=date, y=remaining.confirmed)) +
        geom_point() + geom_smooth() +
        xlab('Date') + ylab('Count') + labs(title='Current Confirmed Cases')
      plot1 <- self$getXLabelsTheme(plot1, x.values)
 
 
-     plot2 <- ggplot(self$data, aes(x=date, y=confirmed.inc)) +
+     plot2 <- ggplot(self$data.processor$data, aes(x=date, y=confirmed.inc)) +
        geom_point() + geom_smooth() +
        xlab('Date') + ylab('Count') + labs(title='Increase in Current Confirmed')
      plot2 <- self$getXLabelsTheme(plot2, x.values)
@@ -299,7 +128,7 @@ ReportGenerator <- R6Class("ReportGenerator",
     self$tex.builder$initTex(output.file)
     ## first 10 records when it first broke out in China
     table.2 <-
-     self$data %>% filter(country=='Mainland China') %>% head(10) %>%
+     self$data.processor$data %>% filter(country=='Mainland China') %>% head(10) %>%
      kable("latex", booktabs=T, caption="Raw Data (with first 10 Columns Only)",
            format.args=list(big.mark=",")) %>%
      kable_styling(latex_options = c("striped", "hold_position", "repeat_header"))
@@ -333,7 +162,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          message("*")
          message("*")
        }
-       data.long <- self$data %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
+       data.long <- self$data.processor$data %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
          select(c(country, date, confirmed.inc)) %>%
          gather(key=type, value=count, -c(country, date))
 
@@ -348,10 +177,10 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        ## set factor levels to show them in a desirable order
        data.long %<>% mutate(type = factor(type, c('confirmed.inc')))
        ## cases by type
-       df <- data.long %>% filter(country %in% self$top.countries)
+       df <- data.long %>% filter(country %in% self$data.processor$top.countries)
        df <- df %>% filter(!country %in% excluded.countries)
        df %<>%
-         mutate(country=country %>% factor(levels=c(self$top.countries)))
+         mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
 
        x.values <- sort(unique(data.long$date))
 
@@ -383,7 +212,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
      ggplotTopCountriesLines = function(excluded.countries = "World", field = "confirmed.inc", log.scale = FALSE,
                                         min.confirmed = 100){
 
-       data.long <- self$data %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
+       data.long <- self$data.processor$data %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
          filter(confirmed >= min.confirmed) %>%
          filter(confirmed.inc > 0)
        data.long <- data.long[,c("country", "date", field)] %>% gather(key=type, value=count, -c(country, date))
@@ -400,10 +229,10 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        x.values <- sort(unique(data.long$date))
 
        ## cases by type
-       df <- data.long %>% filter(country %in% self$top.countries)
+       df <- data.long %>% filter(country %in% self$data.processor$top.countries)
        df <- df %>% filter(!country %in% excluded.countries)
        df %<>%
-         mutate(country=country %>% factor(levels=c(self$top.countries)))
+         mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
        ret <- df %>% filter(country != 'World') %>%
          ggplot(aes(x=date, y=count, colour=country)) +
          geom_line() + xlab('Date') + ylab(y.label) +
