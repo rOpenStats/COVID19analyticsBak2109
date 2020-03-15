@@ -21,6 +21,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    data           = NA,
    data.latest    = NA,
    top.countries  = NA,
+   imputation.summary = NA,
    min.date = NA,
    max.date = NA,
    initialize = function(force.download = FALSE){
@@ -90,15 +91,36 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     ## merge above 3 datasets into one, by country and date
     self$data <- self$data.confirmed %>% merge(self$data.deaths) %>% merge(self$data.recovered)
     self$data.na <- self$data %>% filter(is.na(confirmed))
+    self$data$imputation <- ""
+    self$data[which(is.na(self$data$confirmed)), "imputation"] <- "NA"
     #self$data <- self$data %>% filter(is.na(confirmed))
     self$min.date <- min(self$data$date)
     self$max.date <- max(self$data$date)
+
     self$data
    },
    makeImputations = function(){
+    self$data[which(self$data$confirmed > 10 & self$data$confirmed.inc == 0), "imputation"] <- "0inc"
+
+    self$imputation.summary <- self$data %>%
+                          filter(imputation != "") %>%
+                          group_by(country, imputation) %>%
+                        summarize(n =n(),
+                                  confirmed = max(confirmed),
+                                  min.date = min(date),
+                                  max.date = max(date)) %>%
+                        arrange(desc(confirmed))
+
+    self$data %>% filter(country == "China")
+    # This is strange
+    # 2   China 2020-02-12     44759   1117      5082                      373          5           446       18.0
+    # 23   China 2020-02-13     59895   1369      6217                    15136        252          1135       18.0
+
+    self$data %>% group_by(imputation) %>% summarize(n = n())
+
     # TODO imputation. By now remove rows with no confirmed data
     nrow(self$data)
-    self$data <- self$data[!is.na(self$data$confirmed),]
+    #self$data <- self$data[!is.na(self$data$confirmed),]
     nrow(self$data)
    },
    makeImputationsNew = function(){
