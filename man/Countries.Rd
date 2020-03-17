@@ -15,7 +15,8 @@ kenarab
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{Countries$new()}}
-\item \href{#method-getContinentCountries}{\code{Countries$getContinentCountries()}}
+\item \href{#method-setup}{\code{Countries$setup()}}
+\item \href{#method-getCountries}{\code{Countries$getCountries()}}
 \item \href{#method-clone}{\code{Countries$clone()}}
 }
 }
@@ -29,11 +30,20 @@ kenarab
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getContinentCountries"></a>}}
-\if{latex}{\out{\hypertarget{method-getContinentCountries}{}}}
-\subsection{Method \code{getContinentCountries()}}{
+\if{html}{\out{<a id="method-setup"></a>}}
+\if{latex}{\out{\hypertarget{method-setup}{}}}
+\subsection{Method \code{setup()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Countries$getContinentCountries(cont)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Countries$setup()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getCountries"></a>}}
+\if{latex}{\out{\hypertarget{method-getCountries}{}}}
+\subsection{Method \code{getCountries()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Countries$getCountries(division, name)}\if{html}{\out{</div>}}
 }
 
 }

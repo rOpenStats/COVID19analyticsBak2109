@@ -20,7 +20,7 @@ kenarab
 \item \href{#method-loadData}{\code{COVID19DataProcessor$loadData()}}
 \item \href{#method-cleanData}{\code{COVID19DataProcessor$cleanData()}}
 \item \href{#method-consolidate}{\code{COVID19DataProcessor$consolidate()}}
-\item \href{#method-makeDataComparation}{\code{COVID19DataProcessor$makeDataComparation()}}
+\item \href{#method-makeDataComparison}{\code{COVID19DataProcessor$makeDataComparison()}}
 \item \href{#method-makeImputationsRemoveNA}{\code{COVID19DataProcessor$makeImputationsRemoveNA()}}
 \item \href{#method-makeImputations}{\code{COVID19DataProcessor$makeImputations()}}
 \item \href{#method-smoothSeries}{\code{COVID19DataProcessor$smoothSeries()}}
@@ -87,11 +87,11 @@ kenarab
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-makeDataComparation"></a>}}
-\if{latex}{\out{\hypertarget{method-makeDataComparation}{}}}
-\subsection{Method \code{makeDataComparation()}}{
+\if{html}{\out{<a id="method-makeDataComparison"></a>}}
+\if{latex}{\out{\hypertarget{method-makeDataComparison}{}}}
+\subsection{Method \code{makeDataComparison()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeDataComparation()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeDataComparison()}\if{html}{\out{</div>}}
 }
 
 }

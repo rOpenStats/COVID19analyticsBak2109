@@ -35,8 +35,8 @@ kenarab
 \subsection{Method \code{ggplotComparisonExponentialGrowth()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorDataComparison$ggplotComparisonExponentialGrowth(
-  included.countries = c(self$data.processor$top.countries,
-    self$countries$getRegionCountries(region = "Latam"))
+  included.countries,
+  min.cases = 20
 )}\if{html}{\out{</div>}}
 }
 
