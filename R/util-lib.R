@@ -146,3 +146,10 @@ typeCheck <- function(object, class.name){
   stopifnot(object == class.name)
 }
 
+
+#' smooth a serie averaging last n values
+#' @import smooth
+#' @export
+smoothSerie <- function(serie, n){
+#serie %>%
+}

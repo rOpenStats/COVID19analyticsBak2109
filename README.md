@@ -2,14 +2,17 @@
 
  <!-- . -->
 
-This package downloads, clean and consolidate [data from Johns Hokpins](https://github.com/CSSEGISandData/COVID-19/) for analysing international outbreak of COVID-19. 
+This package curate (downloads, clean, consolidate, smooth) [data from Johns Hokpins](https://github.com/CSSEGISandData/COVID-19/) for analysing international outbreak of COVID-19. 
  
-It includes several visualizations of the COVID-19 international outbreak, some of them taken from this [blogpost](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/) from [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/)
+It includes several visualizations of the COVID-19 international outbreak.
+
+The package was inspired by [this blogpost](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/) from [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/)
 
 
 Yanchang Zhao, COVID-19 Data Analysis with Tidyverse and Ggplot2 - China. RDataMining.com, 2020.
 URL: http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf.
 
+* COVID19DataProcessor generates curated series
 * The original process and visualizations are included in ReportGenerator R6 object 
 * More process and visualization included int ReportGeneratorEnhanced R6 object
 

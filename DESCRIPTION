@@ -23,6 +23,7 @@ Imports: magrittr,
          tidyverse,
          gridExtra,
          kableExtra,
+         smooth,
          R6,
          lgr
 Collate:

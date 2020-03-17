@@ -12,6 +12,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    imputation.method = NA,
    filenames         = NA,
    indicators = c("confirmed", "recovered", "deaths"),
+   smooth.n = 3,
    #state
    state             = NA,
    data.confirmed    = NA,
@@ -74,10 +75,10 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
 
     self$makeImputations()
     self$state <- "1st-imputation"
-    # TODO
-    #self$smoothSeries()
-    #self$state <- "1st-imputation-smoothed"
+    self$smoothSeries()
+    self$state <- "1st-imputation-smoothed"
 
+    # TODO
     #self$makeDataComparation()
     #self$state <- "data-comparation-smoothed"
 
@@ -85,6 +86,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     #self$state <- "2nd-imputation"
     #self$smoothSeries()
     #self$state <- "2st-imputation-smoothed"
+    #self$makeDataComparation()
 
     self$calculateTopCountries()
     self
@@ -179,55 +181,14 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     logger$debug("Imputating", country = imputation.df$country, date = imputation.df$date)
 
    },
-   makeImputationsNew2 = function(){
-    stop("Under construction")
-    rows.imputation <- which(is.na(self$data$confirmed) & self$data$date == self$max.date)
-    self$data[rows.imputation,]
-    #data.imputation <- self$data.na %>% filter(date == self$max.date)
-    for (i in rows.imputation){
-     #debug
-     print(i)
-
-     country.imputation <- self$data[i,]
-     last.country.data <- country.imputation
-
-     country.imputation <<- country.imputation
-     i <<- i
-     last.country.data <<- last.country.data
-
-     while(is.na(last.country.data$confirmed)){
-      last.country.data <- self$data %>% filter(country == country.imputation$country & date == self$max.date-1)
+   smoothSeries = function(old.serie.sufix = "original"){
+     for (indicator in self$indicators){
+      old.indicator <- paste(indicator, old.serie.sufix, sep ="_")
+      stopifnot(!old.indicators %in% names(self$data))
+      self$data[, old.indicator] <- self$data[, indicator]
+      self$data[, indicator]     <- smoothSerie(self$data[,indicator], n = self$smooth.n)
      }
-     if (last.country.data$confirmed < 100){
-      confirmed.imputation <- last.country.data$confirmed
-      recovered.imputation <- last.country.data$recovered
-      deaths.imputation    <- last.country.data$deaths
-     }
-     else{
-      self$data %<>% filter(confirmed > 100) %>% mutate(dif = abs(log(confirmed/last.country.data$confirmed)))
-      similar.trajectories <- self$data %>% filter(confirmed > 100) %>% filter(dif < log(1.3)) #%>% select(confirmed, dif)
-      #similar.trajectories %>% filter(is.na(rate.inc.daily))
 
-      summary((similar.trajectories %>%
-                filter(is.finite(rate.inc.daily)))$rate.inc.daily)
-
-      trajectories.agg <-
-       similar.trajectories %>%
-       filter(is.finite(rate.inc.daily)) %>%
-       summarize(mean = mean(rate.inc.daily),
-                 mean.trim.3 = mean(rate.inc.daily, trim = 0.3),
-                 cv   = sd(rate.inc.daily),
-                 min  = min(rate.inc.daily),
-                 max  = max(rate.inc.daily))
-
-      confirmed.imputation <- last.country.data$confirmed *(1+trajectories.agg$mean.trim.3)
-      recovered.imputation <- last.country.data$recovered
-      deaths.imputation    <- last.country.data$deaths
-     }
-     self$data[i,]$confirmed  <- confirmed.imputation
-     self$data[i,]$recovered  <- recovered.imputation
-     self$data[i,]$deaths     <- deaths.imputation
-    }
    },
    calculateRates = function(){
     ## sort by country and date
