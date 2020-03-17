@@ -19,6 +19,7 @@ ImputationMethod
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ImputationMethod$new()}\if{html}{\out{</div>}}
@@ -27,6 +28,7 @@ ImputationMethod
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-setup"></a>}}
+\if{latex}{\out{\hypertarget{method-setup}{}}}
 \subsection{Method \code{setup()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ImputationMethod$setup(data.comparation)}\if{html}{\out{</div>}}
@@ -35,14 +37,16 @@ ImputationMethod
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getImputationValue"></a>}}
+\if{latex}{\out{\hypertarget{method-getImputationValue}{}}}
 \subsection{Method \code{getImputationValue()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImputationMethod$getImputationValue(current.data, field)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ImputationMethod$getImputationValue(current.data, prev.data, field)}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

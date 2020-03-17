@@ -25,6 +25,7 @@ ReportGenerator
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$new(data.processor)}\if{html}{\out{</div>}}
@@ -33,6 +34,7 @@ ReportGenerator
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-preprocess"></a>}}
+\if{latex}{\out{\hypertarget{method-preprocess}{}}}
 \subsection{Method \code{preprocess()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$preprocess()}\if{html}{\out{</div>}}
@@ -41,6 +43,7 @@ ReportGenerator
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-generateReport"></a>}}
+\if{latex}{\out{\hypertarget{method-generateReport}{}}}
 \subsection{Method \code{generateReport()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$generateReport(output.file, overwrite = FALSE)}\if{html}{\out{</div>}}
@@ -49,6 +52,7 @@ ReportGenerator
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ggplotTopCountriesPie"></a>}}
+\if{latex}{\out{\hypertarget{method-ggplotTopCountriesPie}{}}}
 \subsection{Method \code{ggplotTopCountriesPie()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$ggplotTopCountriesPie(excluded.countries = "World")}\if{html}{\out{</div>}}
@@ -57,6 +61,7 @@ ReportGenerator
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ggplotTopCountriesBarPlots"></a>}}
+\if{latex}{\out{\hypertarget{method-ggplotTopCountriesBarPlots}{}}}
 \subsection{Method \code{ggplotTopCountriesBarPlots()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$ggplotTopCountriesBarPlots(excluded.countries = "World")}\if{html}{\out{</div>}}
@@ -65,6 +70,7 @@ ReportGenerator
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ggplotCountriesBarGraphs"></a>}}
+\if{latex}{\out{\hypertarget{method-ggplotCountriesBarGraphs}{}}}
 \subsection{Method \code{ggplotCountriesBarGraphs()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$ggplotCountriesBarGraphs(selected.country = "Australia")}\if{html}{\out{</div>}}
@@ -73,6 +79,7 @@ ReportGenerator
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ggplotConfirmedCases"></a>}}
+\if{latex}{\out{\hypertarget{method-ggplotConfirmedCases}{}}}
 \subsection{Method \code{ggplotConfirmedCases()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$ggplotConfirmedCases()}\if{html}{\out{</div>}}
@@ -81,6 +88,7 @@ ReportGenerator
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-generateTex"></a>}}
+\if{latex}{\out{\hypertarget{method-generateTex}{}}}
 \subsection{Method \code{generateTex()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$generateTex(output.file)}\if{html}{\out{</div>}}
@@ -89,6 +97,7 @@ ReportGenerator
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getXLabelsTheme"></a>}}
+\if{latex}{\out{\hypertarget{method-getXLabelsTheme}{}}}
 \subsection{Method \code{getXLabelsTheme()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$getXLabelsTheme(ggplot, x.values)}\if{html}{\out{</div>}}
@@ -97,6 +106,7 @@ ReportGenerator
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

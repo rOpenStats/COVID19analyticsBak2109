@@ -1,6 +1,8 @@
 #' COVID19DataProcessor
 #' @importFrom R6 R6Class
 #' @import magrittr
+#' @import dplyr
+#' @import tidyr
 #' @import lubridate
 #' @import lgr
 #' @export
@@ -39,10 +41,12 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self
    },
    curate = function(){
+    logger <- getLogger(self)
     self$downloadData()
     self$state <- "downloaded"
     self$loadData()
     self$state <- "loaded"
+    logger$info("", stage = "data loaded")
 
     n.col <- ncol(self$data.confirmed)
     ## get dates from column names
@@ -57,6 +61,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     nrow(self$data.confirmed)
     self$consolidate()
     self$state <- "consolidated"
+    logger$info("", stage = "consolidated")
 
     #Remove Cruise Ship
     self$data %<>% filter(country != "Cruise Ship")
@@ -73,21 +78,26 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self$makeDataComparation()
     self$state <- "data-comparation"
 
+    logger$info("", stage = "Starting first imputation")
+
     self$makeImputations()
     self$state <- "1st-imputation"
-    self$smoothSeries()
+
+    self$smoothSeries(old.serie.sufix = "original")
     self$state <- "1st-imputation-smoothed"
 
-    # TODO
-    #self$makeDataComparation()
-    #self$state <- "data-comparation-smoothed"
+    self$makeDataComparation()
+    self$state <- "data-comparation-smoothed"
 
-    #self$makeImputations()
-    #self$state <- "2nd-imputation"
-    #self$smoothSeries()
-    #self$state <- "2st-imputation-smoothed"
-    #self$makeDataComparation()
+    logger$info("", stage = "Starting second imputation")
 
+    self$makeImputations()
+    self$state <- "2nd-imputation"
+    self$smoothSeries(old.serie.sufix = "imp1")
+    self$state <- "2st-imputation-smoothed"
+    self$makeDataComparation()
+
+    logger$info("", stage = "Calculating top countries")
     self$calculateTopCountries()
     self
    },
@@ -132,11 +142,11 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    makeDataComparation = function(){
     self$data.comparation <- COVID19DataComparation$new(data.processor = self)
     self$data.comparation$process()
+    self$imputation.method$setup(self$data.comparation)
+    self$data.comparation
    },
-   makeImputationsOld = function(){
-    # TODO imputation. By now remove rows with no confirmed data
+   makeImputationsRemoveNA = function(){
     self$data <- self$data[!is.na(self$data$confirmed),]
-
    },
    makeImputations = function(){
     logger <- getLogger(self)
@@ -168,11 +178,10 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     for (r in rows.imputation){
      imputation.df <- self$data[r,]
      imputation.df$country <- as.character(imputation.df$country)
-     imputation.relatives <- self$data.comparation$getImputationRelative(imputation.df)
+
      prev.data <- self$data %>% filter(country == imputation.df$country & date == imputation.df$date -1)
      for (indicator in self$indicators){
-      self$data[r, indicator] <- prev.data[,indicator] *
-       imputation.relatives[, paste(indicator, "rel", sep = ".")]
+      self$data[r, indicator] <- self$imputation.method$getImputationValue(imputation.df, prev.data, indicator)
      }
      self$data[r, "imputation"] <- "I"
     }
@@ -182,13 +191,22 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
 
    },
    smoothSeries = function(old.serie.sufix = "original"){
-     for (indicator in self$indicators){
-      old.indicator <- paste(indicator, old.serie.sufix, sep ="_")
-      stopifnot(!old.indicators %in% names(self$data))
-      self$data[, old.indicator] <- self$data[, indicator]
-      self$data[, indicator]     <- smoothSerie(self$data[,indicator], n = self$smooth.n)
-     }
+    new.data <- NULL
+    for (current.country in sort(unique((self$data$country)))){
+      for (indicator in self$indicators){
 
+       old.indicator <- paste(indicator, old.serie.sufix, sep ="_")
+       stopifnot(!old.indicator %in% names(self$data))
+        serie.name  <- paste(current.country, indicator, sep = "-")
+        data.country <- self$data %>% filter(country == current.country)
+        data.country[, old.indicator] <- data.country[, indicator]
+
+        data.country[, indicator]     <- smoothSerie(serie.name = serie.name,
+                                                     data.country[,indicator], n = self$smooth.n)
+       }
+       new.data <- rbind(new.data, data.country)
+     }
+    self$data <- new.data
    },
    calculateRates = function(){
     ## sort by country and date
@@ -345,8 +363,8 @@ ImputationMethod <- R6Class("ImputationMethod",
     typeCheck(data.comparation, "COVID19DataComparation")
     self$data.comparation <- data.comparation
    },
-   getImputationValue = function(current.data, field){
-     stop("Abastract class")
+   getImputationValue = function(current.data, prev.data, field){
+    stop("Abastract class")
    }))
 
 
@@ -354,18 +372,16 @@ ImputationMethod <- R6Class("ImputationMethod",
 #' @importFrom R6 R6Class
 #' @export
 ImputationMethodMean <- R6Class("ImputationMethodMean",
+  inherit = ImputationMethod,
   public = list(
-   data.comparation = NA,
    initialize = function(){
     self
    },
-   setup = function(data.comparation){
-    stopifnot(class(data.comparation)[1] == "COVID19DataComparation")
-    self$data.comparation <- data.comparation
-   },
-   getImputationValue = function(current.data, field){
-    #TODO
-    stop("Under construction")
-    current.data[,field]
+   getImputationValue = function(current.data, prev.data, field){
+    #debug
+    self.debug <<- self
+    current.data <<- current.data
+    imputation.relatives <- self$data.comparation$getImputationRelative(current.data)
+    prev.data[, field] * imputation.relatives[, paste(field, "rel", sep = ".")]
    }))
 

@@ -143,13 +143,26 @@ getLogger <- function(r6.object){
 #' kind of type checking
 #' @export
 typeCheck <- function(object, class.name){
-  stopifnot(object == class.name)
+  stopifnot(class(object)[[1]] == class.name)
 }
 
 
 #' smooth a serie averaging last n values
+#' @import dplyr
+#' @import zoo
+#' @export
+smoothSerie <- function(serie.name, serie, n){
+  n <- min(length(serie), n)
+  rollmeanr(serie, n, fill = NA)
+}
+
+
+#' smooth a serie applying smooth package
 #' @import smooth
 #' @export
-smoothSerie <- function(serie, n){
-#serie %>%
+smoothSerie2 <- function(serie.name, serie, n){
+  stop("Under construction")
+  model <- auto.ces(serie)
+  summary(model)
+  plot(model)
 }

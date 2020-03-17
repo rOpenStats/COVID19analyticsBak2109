@@ -39,6 +39,7 @@ kenarab
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorEnhanced$new(data.processor)}\if{html}{\out{</div>}}
@@ -47,6 +48,7 @@ kenarab
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ggplotTopCountriesStackedBarDailyInc"></a>}}
+\if{latex}{\out{\hypertarget{method-ggplotTopCountriesStackedBarDailyInc}{}}}
 \subsection{Method \code{ggplotTopCountriesStackedBarDailyInc()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorEnhanced$ggplotTopCountriesStackedBarDailyInc(
@@ -58,6 +60,7 @@ kenarab
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ggplotTopCountriesLines"></a>}}
+\if{latex}{\out{\hypertarget{method-ggplotTopCountriesLines}{}}}
 \subsection{Method \code{ggplotTopCountriesLines()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorEnhanced$ggplotTopCountriesLines(
@@ -71,6 +74,7 @@ kenarab
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

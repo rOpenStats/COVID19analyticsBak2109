@@ -8,17 +8,27 @@ ImputationMethodMean
 
 ImputationMethodMean
 }
+\section{Super class}{
+\code{\link[COVID19:ImputationMethod]{COVID19::ImputationMethod}} -> \code{ImputationMethodMean}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{ImputationMethodMean$new()}}
-\item \href{#method-setup}{\code{ImputationMethodMean$setup()}}
 \item \href{#method-getImputationValue}{\code{ImputationMethodMean$getImputationValue()}}
 \item \href{#method-clone}{\code{ImputationMethodMean$clone()}}
 }
 }
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ImputationMethod" data-id="setup">}\href{../../COVID19/html/ImputationMethod.html#method-setup}{\code{COVID19::ImputationMethod$setup()}}\out{</span>}
+}
+\out{</details>}
+}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ImputationMethodMean$new()}\if{html}{\out{</div>}}
@@ -26,23 +36,17 @@ ImputationMethodMean
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setup"></a>}}
-\subsection{Method \code{setup()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImputationMethodMean$setup(data.comparation)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getImputationValue"></a>}}
+\if{latex}{\out{\hypertarget{method-getImputationValue}{}}}
 \subsection{Method \code{getImputationValue()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImputationMethodMean$getImputationValue(current.data, field)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ImputationMethodMean$getImputationValue(current.data, prev.data, field)}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

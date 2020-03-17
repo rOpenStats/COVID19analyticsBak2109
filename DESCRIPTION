@@ -13,12 +13,14 @@ Description: More about what it does (maybe more than one line)
 License: NO
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Suggests: knitr, rmarkdown,
     covr
 VignetteBuilder: knitr
 Depends: R (>= 3.5.0)
 Imports: magrittr,
+         dplyr,
+         tidyr,
          lubridate,
          tidyverse,
          gridExtra,

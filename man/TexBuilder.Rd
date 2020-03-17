@@ -19,6 +19,7 @@ TexBuilder
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TexBuilder$new()}\if{html}{\out{</div>}}
@@ -27,6 +28,7 @@ TexBuilder
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-initTex"></a>}}
+\if{latex}{\out{\hypertarget{method-initTex}{}}}
 \subsection{Method \code{initTex()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TexBuilder$initTex(output.file)}\if{html}{\out{</div>}}
@@ -35,6 +37,7 @@ TexBuilder
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-endTex"></a>}}
+\if{latex}{\out{\hypertarget{method-endTex}{}}}
 \subsection{Method \code{endTex()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TexBuilder$endTex()}\if{html}{\out{</div>}}
@@ -43,6 +46,7 @@ TexBuilder
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

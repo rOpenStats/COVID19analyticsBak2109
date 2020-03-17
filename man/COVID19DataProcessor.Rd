@@ -18,9 +18,9 @@ COVID19DataProcessor
 \item \href{#method-cleanData}{\code{COVID19DataProcessor$cleanData()}}
 \item \href{#method-consolidate}{\code{COVID19DataProcessor$consolidate()}}
 \item \href{#method-makeDataComparation}{\code{COVID19DataProcessor$makeDataComparation()}}
-\item \href{#method-makeImputationsOld}{\code{COVID19DataProcessor$makeImputationsOld()}}
+\item \href{#method-makeImputationsRemoveNA}{\code{COVID19DataProcessor$makeImputationsRemoveNA()}}
 \item \href{#method-makeImputations}{\code{COVID19DataProcessor$makeImputations()}}
-\item \href{#method-makeImputationsNew2}{\code{COVID19DataProcessor$makeImputationsNew2()}}
+\item \href{#method-smoothSeries}{\code{COVID19DataProcessor$smoothSeries()}}
 \item \href{#method-calculateRates}{\code{COVID19DataProcessor$calculateRates()}}
 \item \href{#method-calculateTopCountries}{\code{COVID19DataProcessor$calculateTopCountries()}}
 \item \href{#method-clone}{\code{COVID19DataProcessor$clone()}}
@@ -28,6 +28,7 @@ COVID19DataProcessor
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$new(
@@ -39,6 +40,7 @@ COVID19DataProcessor
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-curate"></a>}}
+\if{latex}{\out{\hypertarget{method-curate}{}}}
 \subsection{Method \code{curate()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$curate()}\if{html}{\out{</div>}}
@@ -47,6 +49,7 @@ COVID19DataProcessor
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-downloadData"></a>}}
+\if{latex}{\out{\hypertarget{method-downloadData}{}}}
 \subsection{Method \code{downloadData()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$downloadData()}\if{html}{\out{</div>}}
@@ -55,6 +58,7 @@ COVID19DataProcessor
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-loadData"></a>}}
+\if{latex}{\out{\hypertarget{method-loadData}{}}}
 \subsection{Method \code{loadData()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$loadData()}\if{html}{\out{</div>}}
@@ -63,6 +67,7 @@ COVID19DataProcessor
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-cleanData"></a>}}
+\if{latex}{\out{\hypertarget{method-cleanData}{}}}
 \subsection{Method \code{cleanData()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$cleanData()}\if{html}{\out{</div>}}
@@ -71,6 +76,7 @@ COVID19DataProcessor
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-consolidate"></a>}}
+\if{latex}{\out{\hypertarget{method-consolidate}{}}}
 \subsection{Method \code{consolidate()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$consolidate()}\if{html}{\out{</div>}}
@@ -79,6 +85,7 @@ COVID19DataProcessor
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-makeDataComparation"></a>}}
+\if{latex}{\out{\hypertarget{method-makeDataComparation}{}}}
 \subsection{Method \code{makeDataComparation()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeDataComparation()}\if{html}{\out{</div>}}
@@ -86,15 +93,17 @@ COVID19DataProcessor
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-makeImputationsOld"></a>}}
-\subsection{Method \code{makeImputationsOld()}}{
+\if{html}{\out{<a id="method-makeImputationsRemoveNA"></a>}}
+\if{latex}{\out{\hypertarget{method-makeImputationsRemoveNA}{}}}
+\subsection{Method \code{makeImputationsRemoveNA()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeImputationsOld()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeImputationsRemoveNA()}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-makeImputations"></a>}}
+\if{latex}{\out{\hypertarget{method-makeImputations}{}}}
 \subsection{Method \code{makeImputations()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeImputations()}\if{html}{\out{</div>}}
@@ -102,15 +111,17 @@ COVID19DataProcessor
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-makeImputationsNew2"></a>}}
-\subsection{Method \code{makeImputationsNew2()}}{
+\if{html}{\out{<a id="method-smoothSeries"></a>}}
+\if{latex}{\out{\hypertarget{method-smoothSeries}{}}}
+\subsection{Method \code{smoothSeries()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeImputationsNew2()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$smoothSeries(old.serie.sufix = "original")}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-calculateRates"></a>}}
+\if{latex}{\out{\hypertarget{method-calculateRates}{}}}
 \subsection{Method \code{calculateRates()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$calculateRates()}\if{html}{\out{</div>}}
@@ -119,6 +130,7 @@ COVID19DataProcessor
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-calculateTopCountries"></a>}}
+\if{latex}{\out{\hypertarget{method-calculateTopCountries}{}}}
 \subsection{Method \code{calculateTopCountries()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$calculateTopCountries()}\if{html}{\out{</div>}}
@@ -127,6 +139,7 @@ COVID19DataProcessor
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
