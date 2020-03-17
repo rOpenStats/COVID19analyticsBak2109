@@ -1,7 +1,8 @@
 
 
-#'
+#' download COVID-19 data from Johns Hopkins University
 #' @export
+#' @author kenarab
 downloadCOVID19 <- function(url.path, filename, force = FALSE,
                             download.freq = 60*60*24, #daily
                             check.remote = TRUE,
@@ -33,8 +34,9 @@ downloadCOVID19 <- function(url.path, filename, force = FALSE,
  }
 }
 
-#'
-#'
+#' Creates data dir for proessing
+#' @author kenarab
+#' @export
 createDataDir <- function(){
  download.flag <- TRUE
  if (!dir.exists(data.dir)){
@@ -50,6 +52,10 @@ createDataDir <- function(){
  download.flag
 }
 
+
+
+#' clean irrelevant data from source
+#' @author kenarab
 #'
 #' @export
 cleanData <- function(data) {
@@ -64,8 +70,11 @@ cleanData <- function(data) {
  return(data)
 }
 
-#' For copying generated graph to package
+
+#' For copying generated graph to package folder
+#' @author kenarab
 #' @noRd
+#'
 copyPNG2package <- function(){
   data.dir.files <- dir(data.dir)
   data.dir.files <- data.dir.files[grep("\\.png", data.dir.files)]
@@ -78,6 +87,7 @@ copyPNG2package <- function(){
 }
 
 #' Diagnostic update situation of source repository
+#' @author kenarab
 #' @export
 sourceRepoDiagnostic <- function(min.confirmed = 20){
   rg <- ReportGeneratorEnhanced$new(force.download = FALSE)
@@ -115,12 +125,14 @@ sourceRepoDiagnostic <- function(min.confirmed = 20){
 
 
 #' genLogger
+#' @author kenarab
 #' @export
 genLogger <- function(r6.object){
   lgr::get_logger(class(r6.object)[[1]])
 }
 
 #' getLogger
+#' @author kenarab
 #' @export
 getLogger <- function(r6.object){
   #debug
@@ -141,6 +153,7 @@ getLogger <- function(r6.object){
 }
 
 #' kind of type checking
+#' @author kenarab
 #' @export
 typeCheck <- function(object, class.name){
   stopifnot(class(object)[[1]] == class.name)
@@ -148,6 +161,7 @@ typeCheck <- function(object, class.name){
 
 
 #' smooth a serie averaging last n values
+#' @author kenarab
 #' @import dplyr
 #' @import zoo
 #' @export
@@ -157,7 +171,8 @@ smoothSerie <- function(serie.name, serie, n){
 }
 
 
-#' smooth a serie applying smooth package
+#' smooth a serie applying smooth package. Currently under construction
+#' @author kenarab
 #' @import smooth
 #' @export
 smoothSerie2 <- function(serie.name, serie, n){
@@ -166,3 +181,47 @@ smoothSerie2 <- function(serie.name, serie, n){
   summary(model)
   plot(model)
 }
+
+
+#' New dataviz for reportGenerator by
+#' @author kenarab
+#' @import countrycode
+#' @import dplyr
+#' @export
+Countries <- R6Class("Countries",
+  public = list(
+   data.processor = NA,
+   countries.df = NA,
+   initialize = function(countries){
+     self
+   },
+   setup = function(){
+     countries.legal <- countries[-which(countries =="Kosovo")]
+     self$countries.df <- data.frame(country = countries.legal,
+                                      continent = vapply(countries.legal,
+                                                         FUN = function(x)countrycode(x, origin =  "country.name", destination = "continent"),
+                                                         FUN.VALUE = character(1)),
+                                     stringsAsFactors = FALSE)
+    self$countries.df$sub.continent <- self$countries.df$continent
+
+    self$countries.df[self$countries.df$country %in% c("Argentina", "Bolivia", "Brazil", "Chile", "Colombia", "Ecuador", "French Guiana", "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela")
+                      , "sub.continent"] <- "South America"
+    self$countries.df[self$countries.df$country %in%   c("Costa Rica", "Guatemala", "Honduras", "Panama"), "sub.continent"] <- "Central America"
+
+    self$countries.df[self$countries.df$country %in% c("Antigua and Barbuda","Aruba",  "Cuba", "Dominican Republic", "Guadeloupe", "Jamaica", "Martinique", "Puerto Rico", "Saint Lucia", "Saint Vincent and the Grenadines", "The Bahamas", "Trinidad and Tobago"),
+                      "sub.continent"] <- "Caribe"
+
+    self$countries.df[self$countries.df$country %in% c("Canada", "Greenland", "Mexico", "US"),
+                      "sub.continent"] <- "North America"
+   },
+   getCountries = function(division, name){
+     ret <- self$countries.df[self$countries.df[, division] %in% name, "country"]
+     ret
+   }
+  ))
+
+
+
+
+library(countrycode)
+countrycode::codelist

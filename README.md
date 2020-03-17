@@ -140,6 +140,16 @@ rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
 # Including Argentina
 # ![countries-bar-plot-argentina](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-argentina.png)
 
+# Comparation by epidemy day
+rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
+countries.plot <- unique(c(data.processor$top.countries,
+                           "Japan", "Singapur", "Hong Kong",
+                           data.processor$countries$getCountries(division = "sub.continent", name = "South America")))
+
+ggplot <- rc$ggplotComparisonExponentialGrowth(included.countries = countries.plot, min.cases = 20)
+ggsave(file.path(data.dir, paste("exponential-growth-", Sys.Date(), ".png", sep ="")), ggplot,
+       width = 7, height = 5, dpi = 300)
+
 # Sources of code, data and information
 
 * [https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/) Original blogpost which inspired this package

@@ -2,10 +2,13 @@
 % Please edit documentation in R/util-lib.R
 \name{smoothSerie2}
 \alias{smoothSerie2}
-\title{smooth a serie applying smooth package}
+\title{smooth a serie applying smooth package. Currently under construction}
 \usage{
 smoothSerie2(serie.name, serie, n)
 }
 \description{
-smooth a serie applying smooth package
+smooth a serie applying smooth package. Currently under construction
+}
+\author{
+kenarab
 }

@@ -31,7 +31,7 @@ ImputationMethod
 \if{latex}{\out{\hypertarget{method-setup}{}}}
 \subsection{Method \code{setup()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImputationMethod$setup(data.comparation)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ImputationMethod$setup(data.comparison)}\if{html}{\out{</div>}}
 }
 
 }

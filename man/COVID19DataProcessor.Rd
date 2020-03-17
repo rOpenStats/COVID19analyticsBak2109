@@ -8,6 +8,9 @@ COVID19DataProcessor
 
 COVID19DataProcessor
 }
+\author{
+kenarab
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{

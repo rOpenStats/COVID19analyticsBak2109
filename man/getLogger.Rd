@@ -9,3 +9,6 @@ getLogger(r6.object)
 \description{
 getLogger
 }
+\author{
+kenarab
+}

@@ -1,4 +1,5 @@
 #' COVID19DataProcessor
+#' @author kenarab
 #' @importFrom R6 R6Class
 #' @import magrittr
 #' @import dplyr
@@ -26,18 +27,21 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    # consolidated
    data.na        = NA,
    data           = NA,
+   countries      = NA,
    min.date       = NA,
    max.date       = NA,
    data.latest    = NA,
    top.countries  = NA,
    #imputation
-   data.comparation = NA,
+   data.comparison = NA,
    imputation.summary = NA,
+
    logger         = NA,
    initialize = function(force.download = FALSE, imputation.method = ImputationMethodMean$new()){
     self$force.download <- force.download
     self$imputation.method <- imputation.method
     self$logger <- genLogger(self)
+
     self
    },
    curate = function(){
@@ -75,8 +79,8 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     nrow(self$data)
 
     # TODO imputation. By now remove rows with no confirmed data
-    self$makeDataComparation()
-    self$state <- "data-comparation"
+    self$makeDataComparison()
+    self$state <- "data-comparison"
 
     logger$info("", stage = "Starting first imputation")
 
@@ -86,8 +90,8 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self$smoothSeries(old.serie.sufix = "original")
     self$state <- "1st-imputation-smoothed"
 
-    self$makeDataComparation()
-    self$state <- "data-comparation-smoothed"
+    self$makeDataComparison()
+    self$state <- "data-comparison-smoothed"
 
     logger$info("", stage = "Starting second imputation")
 
@@ -95,7 +99,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self$state <- "2nd-imputation"
     self$smoothSeries(old.serie.sufix = "imp1")
     self$state <- "2st-imputation-smoothed"
-    self$makeDataComparation()
+    self$makeDataComparison()
 
     logger$info("", stage = "Calculating top countries")
     self$calculateTopCountries()
@@ -137,13 +141,16 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self$min.date <- min(self$data$date)
     self$max.date <- max(self$data$date)
 
+    self$countries <- Countries$new(sort(unique(self$data$country)))
+    self$countries$setup()
+
     self$data
    },
-   makeDataComparation = function(){
-    self$data.comparation <- COVID19DataComparation$new(data.processor = self)
-    self$data.comparation$process()
-    self$imputation.method$setup(self$data.comparation)
-    self$data.comparation
+   makeDataComparison = function(){
+    self$data.comparison <- COVID19DataComparison$new(data.processor = self)
+    self$data.comparison$process()
+    self$imputation.method$setup(self$data.comparison)
+    self$data.comparison
    },
    makeImputationsRemoveNA = function(){
     self$data <- self$data[!is.na(self$data$confirmed),]
@@ -259,7 +266,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
 #' @import lubridate
 #' @import ggplot2
 #' @export
-COVID19DataComparation <- R6Class("COVID19DataComparation",
+COVID19DataComparison <- R6Class("COVID19DataComparison",
   public = list(
     # parameter
     min.reference.cases = NA,
@@ -269,7 +276,7 @@ COVID19DataComparation <- R6Class("COVID19DataComparation",
     countries.agg  = NULL,
     epidemic.stats = NULL,
   initialize = function(data.processor,
-                        min.reference.cases = 100){
+                        min.reference.cases = 20){
    self$data.processor <- data.processor
    self$min.reference.cases <- min.reference.cases
    self
@@ -355,13 +362,13 @@ COVID19DataComparation <- R6Class("COVID19DataComparation",
 #' @export
 ImputationMethod <- R6Class("ImputationMethod",
   public = list(
-   data.comparation = NA,
+   data.comparison = NA,
    initialize = function(){
     self
    },
-   setup = function(data.comparation){
-    typeCheck(data.comparation, "COVID19DataComparation")
-    self$data.comparation <- data.comparation
+   setup = function(data.comparison){
+    typeCheck(data.comparison, "COVID19DataComparison")
+    self$data.comparison <- data.comparison
    },
    getImputationValue = function(current.data, prev.data, field){
     stop("Abastract class")
@@ -381,7 +388,7 @@ ImputationMethodMean <- R6Class("ImputationMethodMean",
     #debug
     self.debug <<- self
     current.data <<- current.data
-    imputation.relatives <- self$data.comparation$getImputationRelative(current.data)
+    imputation.relatives <- self$data.comparison$getImputationRelative(current.data)
     prev.data[, field] * imputation.relatives[, paste(field, "rel", sep = ".")]
    }))
 

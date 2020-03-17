@@ -9,3 +9,6 @@ typeCheck(object, class.name)
 \description{
 kind of type checking
 }
+\author{
+kenarab
+}

@@ -9,3 +9,6 @@ smoothSerie(serie.name, serie, n)
 \description{
 smooth a serie averaging last n values
 }
+\author{
+kenarab
+}

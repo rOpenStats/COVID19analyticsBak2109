@@ -9,3 +9,6 @@ sourceRepoDiagnostic(min.confirmed = 20)
 \description{
 Diagnostic update situation of source repository
 }
+\author{
+kenarab
+}

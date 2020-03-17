@@ -262,6 +262,70 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
      }
    ))
 
+#' New dataviz for reportGenerator by
+#' @author kenarab
+#' @export
+ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
+ public = list(
+   data.processor = NA,
+   initialize = function(data.processor){
+     self$data.processor <- data.processor
+     self
+   },
+   ggplotComparisonExponentialGrowth = function(included.countries, min.cases = 20){
+
+     data.comparison <- self$data.processor$data.comparison$data.compared
+     names(data.comparison)
+     data.long <- data.comparison %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
+       select(c(country, epidemy.day, confirmed)) %>%
+       gather(key=type, value=count, -c(country, epidemy.day))
+
+
+
+     plot.title <- "COVID-19 Exponential growth \n(LOG scale)\n"
+
+     ## set factor levels to show them in a desirable order
+     data.long %<>% mutate(type = factor(type, c('confirmed')))
+     ## cases by type
+     df <- data.long %>% filter(country %in% included.countries)
+     unique(df$country)
+     df <- df %>% filter(count >= min.cases)
+     # df %<>%
+     #   mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
+
+
+     ret <- df %>% filter(country != 'World') %>%
+       ggplot(aes(x=epidemy.day, y=count, colour = country)) +
+       geom_line() + xlab('Epidemy day (0 when confirmed >100)') + ylab('Confirmed Cases') +
+       labs(title = plot.title)
+     ret <- self$getXLabelsTheme(ret, x.values)
+     ret <- ret +
+       theme(legend.title=element_blank())
+       #ret <- ret + scale_y_log10(labels = scales::comma)
+     ret <- ret + scale_y_log10()
+     # theme(legend.title=element_blank(),
+     #   #legend.position = c(.05, .05),
+     #   legend.position = "bottom",
+     #   #legend.justification = c("left", "bottom"),
+     #   #legend.box.just = "left",
+     #   #legend.margin = margin(6, 6, 6, 6),
+     #   legend.spacing.y = unit(0.5, "mm"),
+     #   #legend.spacing = unit(0.5, 'lines'),
+     #   legend.key = element_rect(size = 5),
+     #   legend.key.size = unit(0.5, 'lines'),
+     #   axis.text.x = element_text(angle = 90)
+     #
+     ret
+   },
+   getXLabelsTheme = function(ggplot, x.values){
+     ggplot +
+       #scale_x_discrete(name = "date", breaks = x.values, labels = as.character(x.values)) +
+       theme(axis.text.x = element_text(angle = 90, hjust = 1))
+   }
+   ))
+
+
+
 #' TexBuilder
 #' @importFrom R6 R6Class
 #' @export
