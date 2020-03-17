@@ -60,8 +60,11 @@ library(gridExtra)
 library(magrittr)
 
 
-rg <- ReportGeneratorEnhanced$new(force.download = FALSE)
-rg$preprocess()
+data.processor <- COVID19DataProcessor$new(force.download = FALSE)
+data.processor$curate()
+
+rg <- ReportGeneratorEnhanced$new(data.processor)
+
 
 
 ggplot <- rg$ggplotTopCountriesStackedBarDailyInc()

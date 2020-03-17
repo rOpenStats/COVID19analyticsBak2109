@@ -41,7 +41,7 @@ kenarab
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorEnhanced$new(force.download = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorEnhanced$new(data.processor)}\if{html}{\out{</div>}}
 }
 
 }

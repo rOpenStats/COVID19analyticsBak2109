@@ -12,8 +12,11 @@ ReportGenerator <- R6Class("ReportGenerator",
   public = list(
    data.processor = NA,
    tex.builder    = NA,
-   initialize = function(force.download = FALSE){
-     self$data.processor <- COVID19DataProcessor$new(force.download = force.download)
+   initialize = function(data.processor){
+     # Manual type check
+     stopifnot(class(data.processor)[1] == "COVID19DataProcessor")
+
+     self$data.processor <- data.processor
      self$tex.builder <- TexBuilder$new()
      self
    },
@@ -150,8 +153,8 @@ ReportGenerator <- R6Class("ReportGenerator",
 ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
  inherit = ReportGenerator,
    public = list(
-     initialize = function(force.download = FALSE){
-       super$initialize(force.download = force.download)
+     initialize = function(data.processor){
+       super$initialize(data.processor = data.processor)
      },
      ggplotTopCountriesStackedBarDailyInc = function(excluded.countries = "World", log.scale = FALSE){
        if (log.scale){

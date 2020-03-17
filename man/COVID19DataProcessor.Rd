@@ -12,15 +12,14 @@ COVID19DataProcessor
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{COVID19DataProcessor$new()}}
-\item \href{#method-generateReport}{\code{COVID19DataProcessor$generateReport()}}
-\item \href{#method-preprocess}{\code{COVID19DataProcessor$preprocess()}}
+\item \href{#method-curate}{\code{COVID19DataProcessor$curate()}}
 \item \href{#method-downloadData}{\code{COVID19DataProcessor$downloadData()}}
 \item \href{#method-loadData}{\code{COVID19DataProcessor$loadData()}}
 \item \href{#method-cleanData}{\code{COVID19DataProcessor$cleanData()}}
 \item \href{#method-consolidate}{\code{COVID19DataProcessor$consolidate()}}
 \item \href{#method-makeDataComparation}{\code{COVID19DataProcessor$makeDataComparation()}}
+\item \href{#method-makeImputationsOld}{\code{COVID19DataProcessor$makeImputationsOld()}}
 \item \href{#method-makeImputations}{\code{COVID19DataProcessor$makeImputations()}}
-\item \href{#method-makeImputationsNew}{\code{COVID19DataProcessor$makeImputationsNew()}}
 \item \href{#method-makeImputationsNew2}{\code{COVID19DataProcessor$makeImputationsNew2()}}
 \item \href{#method-calculateRates}{\code{COVID19DataProcessor$calculateRates()}}
 \item \href{#method-calculateTopCountries}{\code{COVID19DataProcessor$calculateTopCountries()}}
@@ -39,18 +38,10 @@ COVID19DataProcessor
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-generateReport"></a>}}
-\subsection{Method \code{generateReport()}}{
+\if{html}{\out{<a id="method-curate"></a>}}
+\subsection{Method \code{curate()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$generateReport(output.file, overwrite = FALSE)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-preprocess"></a>}}
-\subsection{Method \code{preprocess()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$preprocess()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$curate()}\if{html}{\out{</div>}}
 }
 
 }
@@ -95,18 +86,18 @@ COVID19DataProcessor
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-makeImputations"></a>}}
-\subsection{Method \code{makeImputations()}}{
+\if{html}{\out{<a id="method-makeImputationsOld"></a>}}
+\subsection{Method \code{makeImputationsOld()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeImputations()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeImputationsOld()}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-makeImputationsNew"></a>}}
-\subsection{Method \code{makeImputationsNew()}}{
+\if{html}{\out{<a id="method-makeImputations"></a>}}
+\subsection{Method \code{makeImputations()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeImputationsNew()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeImputations()}\if{html}{\out{</div>}}
 }
 
 }

@@ -139,3 +139,10 @@ getLogger <- function(r6.object){
   }
   ret
 }
+
+#' kind of type checking
+#' @export
+typeCheck <- function(object, class.name){
+  stopifnot(object == class.name)
+}
+

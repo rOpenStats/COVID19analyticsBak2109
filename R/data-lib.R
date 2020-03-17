@@ -2,6 +2,7 @@
 #' @importFrom R6 R6Class
 #' @import magrittr
 #' @import lubridate
+#' @import lgr
 #' @export
 COVID19DataProcessor <- R6Class("COVID19DataProcessor",
   public = list(
@@ -10,6 +11,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    force.download = FALSE,
    imputation.method = NA,
    filenames         = NA,
+   indicators = c("confirmed", "recovered", "deaths"),
    #state
    state             = NA,
    data.confirmed    = NA,
@@ -35,14 +37,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self$logger <- genLogger(self)
     self
    },
-   generateReport = function(output.file, overwrite = FALSE){
-    self$preprocess()
-    self$generateTopCountriesGGplot()
-
-    self$generateTex(output.file)
-
-   },
-   preprocess = function(){
+   curate = function(){
     self$downloadData()
     self$state <- "downloaded"
     self$loadData()
@@ -53,6 +48,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     dates <- names(self$data.confirmed)[5:n.col] %>% substr(2,8) %>% mdy()
     range(dates)
 
+
     self$cleanData()
     self$state <- "cleaned"
 
@@ -60,6 +56,9 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     nrow(self$data.confirmed)
     self$consolidate()
     self$state <- "consolidated"
+
+    #Remove Cruise Ship
+    self$data %<>% filter(country != "Cruise Ship")
 
     nrow(self$data)
     max(self$data$date)
@@ -132,19 +131,19 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self$data.comparation <- COVID19DataComparation$new(data.processor = self)
     self$data.comparation$process()
    },
-   makeImputations = function(){
+   makeImputationsOld = function(){
     # TODO imputation. By now remove rows with no confirmed data
     self$data <- self$data[!is.na(self$data$confirmed),]
 
    },
-   makeImputationsNew = function(){
+   makeImputations = function(){
     logger <- getLogger(self)
+    self$data$imputation.case <- ""
+    self$data[which(is.na(self$data$confirmed)), "imputation.case"] <- "NA"
+    self$data[which(self$data$confirmed > 20 & self$data$confirmed.inc == 0), "imputation.case"] <- "0inc"
     self$data$imputation <- ""
-    self$data[which(is.na(self$data$confirmed)), "imputation"] <- "NA"
-    self$data[which(self$data$confirmed > 20 & self$data$confirmed.inc == 0), "imputation"] <- "0inc"
-
     self$imputation.summary <- self$data %>%
-                          filter(imputation != "") %>%
+                          filter(imputation.case != "") %>%
                           group_by(country, imputation) %>%
                         summarize(n =n(),
                                   confirmed = max(confirmed),
@@ -162,16 +161,22 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     nrow(self$data)
     nrow(self$data)
 
-    rows.imputation <- which(self$data$imputation!= "")
+    rows.imputation <- which(self$data$imputation.case !=  "")
     length(rows.imputation)
     for (r in rows.imputation){
      imputation.df <- self$data[r,]
-     logger$debug("Imputating", country = imputation.df$country, date = imputation.df$date)
-
-     self$data[r,]
+     imputation.df$country <- as.character(imputation.df$country)
+     imputation.relatives <- self$data.comparation$getImputationRelative(imputation.df)
+     prev.data <- self$data %>% filter(country == imputation.df$country & date == imputation.df$date -1)
+     for (indicator in self$indicators){
+      self$data[r, indicator] <- prev.data[,indicator] *
+       imputation.relatives[, paste(indicator, "rel", sep = ".")]
+     }
+     self$data[r, "imputation"] <- "I"
     }
     self$data[rows.imputation,]
     #data.imputation <- self$data.na %>% filter(date == self$max.date)
+    logger$debug("Imputating", country = imputation.df$country, date = imputation.df$date)
 
    },
    makeImputationsNew2 = function(){
@@ -297,10 +302,12 @@ COVID19DataComparation <- R6Class("COVID19DataComparation",
   },
   buildData = function(){
    self$data.compared <- NULL
-   all.countries <- sort(unique(self$data.processor$data$country))
+   data <- self$data.processor$data
+   all.countries <- sort(unique(data$country))
    for (current.country in all.countries){
     data.country <- data %>% filter(country == current.country)
-    if (max(data.country$confirmed) >= self$min.reference.cases){
+    max.cases <- max(data.country$confirmed, na.rm = TRUE)
+    if (max.cases >= self$min.reference.cases){
       n <- nrow(data.country)
       day.zero <- which(data.country$confirmed >= self$min.reference.cases)[1]
       data.country$epidemy.day <- c(1:n-day.zero)
@@ -325,7 +332,8 @@ COVID19DataComparation <- R6Class("COVID19DataComparation",
                                     recovered.sd = sd(recovered))
   },
   getEpidemyDay = function(data.country.date){
-    epidemy.day.df <- self$data.compared %>% filter(country == data.country.date$country & date == data.country.date$date)
+   data.country.date$country <- as.character(data.country.date$country)
+   epidemy.day.df <- self$data.compared %>% filter(country == data.country.date$country & date == data.country.date$date)
     if (nrow(epidemy.day.df) == 1){
       ret <- epidemy.day.df$epidemy.day
     }
@@ -373,7 +381,7 @@ ImputationMethod <- R6Class("ImputationMethod",
     self
    },
    setup = function(data.comparation){
-    stopifnot(class(data.comparation)[1] == "COVID19DataComparation")
+    typeCheck(data.comparation, "COVID19DataComparation")
     self$data.comparation <- data.comparation
    },
    getImputationValue = function(current.data, field){
