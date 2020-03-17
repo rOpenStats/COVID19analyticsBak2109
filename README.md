@@ -10,6 +10,7 @@ The package was inspired by [this blogpost](https://www.r-bloggers.com/coronavir
 
 
 Yanchang Zhao, COVID-19 Data Analysis with Tidyverse and Ggplot2 - China. RDataMining.com, 2020.
+
 URL: http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf.
 
 * COVID19DataProcessor generates curated series
