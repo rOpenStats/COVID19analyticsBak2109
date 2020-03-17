@@ -12,6 +12,7 @@ ReportGenerator
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{ReportGenerator$new()}}
+\item \href{#method-preprocess}{\code{ReportGenerator$preprocess()}}
 \item \href{#method-generateReport}{\code{ReportGenerator$generateReport()}}
 \item \href{#method-ggplotTopCountriesPie}{\code{ReportGenerator$ggplotTopCountriesPie()}}
 \item \href{#method-ggplotTopCountriesBarPlots}{\code{ReportGenerator$ggplotTopCountriesBarPlots()}}
@@ -27,6 +28,14 @@ ReportGenerator
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$new(force.download = FALSE)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-preprocess"></a>}}
+\subsection{Method \code{preprocess()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ReportGenerator$preprocess()}\if{html}{\out{</div>}}
 }
 
 }

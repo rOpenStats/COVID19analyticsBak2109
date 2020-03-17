@@ -18,16 +18,12 @@ COVID19DataProcessor
 \item \href{#method-loadData}{\code{COVID19DataProcessor$loadData()}}
 \item \href{#method-cleanData}{\code{COVID19DataProcessor$cleanData()}}
 \item \href{#method-consolidate}{\code{COVID19DataProcessor$consolidate()}}
+\item \href{#method-makeDataComparation}{\code{COVID19DataProcessor$makeDataComparation()}}
 \item \href{#method-makeImputations}{\code{COVID19DataProcessor$makeImputations()}}
 \item \href{#method-makeImputationsNew}{\code{COVID19DataProcessor$makeImputationsNew()}}
+\item \href{#method-makeImputationsNew2}{\code{COVID19DataProcessor$makeImputationsNew2()}}
 \item \href{#method-calculateRates}{\code{COVID19DataProcessor$calculateRates()}}
 \item \href{#method-calculateTopCountries}{\code{COVID19DataProcessor$calculateTopCountries()}}
-\item \href{#method-ggplotTopCountriesPie}{\code{COVID19DataProcessor$ggplotTopCountriesPie()}}
-\item \href{#method-ggplotTopCountriesBarPlots}{\code{COVID19DataProcessor$ggplotTopCountriesBarPlots()}}
-\item \href{#method-ggplotCountriesBarGraphs}{\code{COVID19DataProcessor$ggplotCountriesBarGraphs()}}
-\item \href{#method-ggplotConfirmedCases}{\code{COVID19DataProcessor$ggplotConfirmedCases()}}
-\item \href{#method-generateTex}{\code{COVID19DataProcessor$generateTex()}}
-\item \href{#method-getXLabelsTheme}{\code{COVID19DataProcessor$getXLabelsTheme()}}
 \item \href{#method-clone}{\code{COVID19DataProcessor$clone()}}
 }
 }
@@ -35,7 +31,10 @@ COVID19DataProcessor
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$new(force.download = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$new(
+  force.download = FALSE,
+  imputation.method = ImputationMethodMean$new()
+)}\if{html}{\out{</div>}}
 }
 
 }
@@ -88,6 +87,14 @@ COVID19DataProcessor
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-makeDataComparation"></a>}}
+\subsection{Method \code{makeDataComparation()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeDataComparation()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-makeImputations"></a>}}
 \subsection{Method \code{makeImputations()}}{
 \subsection{Usage}{
@@ -104,6 +111,14 @@ COVID19DataProcessor
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-makeImputationsNew2"></a>}}
+\subsection{Method \code{makeImputationsNew2()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeImputationsNew2()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-calculateRates"></a>}}
 \subsection{Method \code{calculateRates()}}{
 \subsection{Usage}{
@@ -116,54 +131,6 @@ COVID19DataProcessor
 \subsection{Method \code{calculateTopCountries()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$calculateTopCountries()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ggplotTopCountriesPie"></a>}}
-\subsection{Method \code{ggplotTopCountriesPie()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$ggplotTopCountriesPie(excluded.countries = "World")}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ggplotTopCountriesBarPlots"></a>}}
-\subsection{Method \code{ggplotTopCountriesBarPlots()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$ggplotTopCountriesBarPlots(excluded.countries = "World")}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ggplotCountriesBarGraphs"></a>}}
-\subsection{Method \code{ggplotCountriesBarGraphs()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$ggplotCountriesBarGraphs(selected.country = "Australia")}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ggplotConfirmedCases"></a>}}
-\subsection{Method \code{ggplotConfirmedCases()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$ggplotConfirmedCases()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-generateTex"></a>}}
-\subsection{Method \code{generateTex()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$generateTex(output.file)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getXLabelsTheme"></a>}}
-\subsection{Method \code{getXLabelsTheme()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$getXLabelsTheme(ggplot, x.values)}\if{html}{\out{</div>}}
 }
 
 }

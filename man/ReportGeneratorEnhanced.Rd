@@ -33,6 +33,7 @@ kenarab
 \item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="ggplotCountriesBarGraphs">}\href{../../COVID19/html/ReportGenerator.html#method-ggplotCountriesBarGraphs}{\code{COVID19::ReportGenerator$ggplotCountriesBarGraphs()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="ggplotTopCountriesBarPlots">}\href{../../COVID19/html/ReportGenerator.html#method-ggplotTopCountriesBarPlots}{\code{COVID19::ReportGenerator$ggplotTopCountriesBarPlots()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="ggplotTopCountriesPie">}\href{../../COVID19/html/ReportGenerator.html#method-ggplotTopCountriesPie}{\code{COVID19::ReportGenerator$ggplotTopCountriesPie()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="preprocess">}\href{../../COVID19/html/ReportGenerator.html#method-preprocess}{\code{COVID19::ReportGenerator$preprocess()}}\out{</span>}
 }
 \out{</details>}
 }

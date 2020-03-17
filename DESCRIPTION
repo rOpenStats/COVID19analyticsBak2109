@@ -23,7 +23,8 @@ Imports: magrittr,
          tidyverse,
          gridExtra,
          kableExtra,
-         R6
+         R6,
+         lgr
 Collate:
   'util-lib.R'
   'data-lib.R'

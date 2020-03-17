@@ -111,3 +111,31 @@ sourceRepoDiagnostic <- function(min.confirmed = 20){
 
   repo.diagnostic
 }
+
+
+
+#' genLogger
+#' @export
+genLogger <- function(r6.object){
+  lgr::get_logger(class(r6.object)[[1]])
+}
+
+#' getLogger
+#' @export
+getLogger <- function(r6.object){
+  #debug
+  #r6.object <<- r6.object
+  #TODO check if not a better solution
+  ret <- r6.object$logger
+  if (is.null(ret)){
+    class <- class(r6.object)[[1]]
+    stop(paste("Class", class, "don't seems to have a configured logger"))
+  }
+  else{
+    ret.class <- class(ret)[[1]]
+    if (ret.class == "logical"){
+      stop(paste("Class", class, "needs to initialize logger: self$logger <- genLogger(self)"))
+    }
+  }
+  ret
+}
