@@ -168,6 +168,7 @@ ggsave(file.path(data.dir, paste("confirmed-cases-", Sys.Date(), ".png", sep =""
 
 
 # Make a latex graph
+```
 rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
   kable("latex", booktabs=T, caption="Raw Data (Confirmed, First 10 Columns only)") %>%
   kable_styling(font_size=6, latex_options = c("striped", "hold_position", "repeat_header"))
