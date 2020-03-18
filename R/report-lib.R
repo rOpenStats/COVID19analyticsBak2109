@@ -70,7 +70,6 @@ ReportGenerator <- R6Class("ReportGenerator",
      labs(title='Cases around the World')
     plot <- self$getXLabelsTheme(plot, x.values)
     plot <- plot +
-     theme(legend.title=element_blank()) +
      facet_wrap(~type, ncol=2, scales='free_y')
    },
    ggplotCountriesBarGraphs = function(selected.country = "Australia"){
@@ -147,6 +146,15 @@ ReportGenerator <- R6Class("ReportGenerator",
    }
    ))
 
+#' setup Dataviz theme
+#' @export
+setupTheme = function(ggplot){
+  ggplot + labs(caption = getCitationNote()) +
+    theme(legend.title=element_blank(),
+          #TODO caption size is not working. Fix it
+          plot.caption = element_text(size =8))
+}
+
 #' New dataviz for reportGenerator by
 #' @author kenarab
 #' @export
@@ -192,6 +200,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          geom_bar(stat = "identity") + xlab('Date') + ylab('Count') +
          labs(title = plot.title)
        ret <- self$getXLabelsTheme(ret, x.values)
+       ret <- setupTheme(ret)
        ret <- ret +
          theme(legend.title=element_blank())
        if (log.scale){
@@ -241,6 +250,8 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          geom_line() + xlab('Date') + ylab(y.label) +
          labs(title = plot.title)
        ret <- self$getXLabelsTheme(ret, x.values)
+       ret <- setupTheme(ret)
+
        ret <- ret + theme(legend.title=element_blank())
        if (log.scale){
          #ret <- ret + scale_y_log10(labels = scales::comma)
@@ -299,8 +310,11 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
        geom_line() + xlab('Epidemy day (0 when confirmed >100)') + ylab('Confirmed Cases') +
        labs(title = plot.title)
      ret <- self$getXLabelsTheme(ret, x.values)
+     ret <- setupTheme(ret)
      ret <- ret +
-       theme(legend.title=element_blank())
+       theme(legend.title=element_blank(),
+             plot.caption = element_text(size = 6)
+             )
        #ret <- ret + scale_y_log10(labels = scales::comma)
      ret <- ret + scale_y_log10()
      # theme(legend.title=element_blank(),
@@ -325,9 +339,22 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
    ))
 
 
+#'
+#'@noRd
+getCitationNote <- function(add.date = TRUE){
+  ret <- "Credit @ken4rab"
+  if (add.date){
+    ret <- paste(ret, Sys.Date())
+  }
+  ret <- paste(ret, "\nSource: https://github.com/rOpenStats/COVID19/ based on JHU")
+  ret
+}
 
-#' TexBuilder
+labs(caption = "(Pauloo, et al. 2017)")
+
+#' TexBuilder (Not functional Yet)
 #' @importFrom R6 R6Class
+#'
 #' @export
 TexBuilder <- R6Class("TexBuilder",
    public = list(
