@@ -119,7 +119,9 @@ rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
 ```
 
 # Dataviz
+# ![top-countries-daily-increment.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment.png)
 
+inst/extdata/covid-19-exponential-growth.png
 # ![top-countries-daily-increment.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment.png)
 
 # ![top-countries-daily-conf-inc-log.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-conf-inc-log.png)

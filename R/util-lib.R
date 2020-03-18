@@ -90,17 +90,17 @@ copyPNG2package <- function(){
 #' @author kenarab
 #' @export
 sourceRepoDiagnostic <- function(min.confirmed = 20){
-  rg <- ReportGeneratorEnhanced$new(force.download = FALSE)
-  rg$preprocess()
-  all.countries <- rg$data %>% group_by(country) %>% summarize(n = n(),
+  data.processor <- COVID19DataProcessor$new(force.download = FALSE)
+  data.processor$curate()
+  all.countries <- data.processor$data %>% group_by(country) %>% summarize(n = n(),
                                                                  total.confirmed = max(confirmed))
 
 
   all.countries$last.update <- vapply(all.countries$country,
                                       FUN = function(x){
-                                        data.country <- rg$data[rg$data$country == x,]
+                                        data.country <- data.processor$data[data.processor$data$country == x,]
                                         #ret <- data.country %>% filter(confirmed.inc > 0) %>% summarize(max.date = max(date))
-                                        data.country <- data.country %>% filter(confirmed.inc > 0)
+                                        data.country <- data.country %>% filter(imputation != "")
                                         ret <- max(data.country$date)
                                         ret <- as.character(ret)
                                         ret
@@ -115,7 +115,7 @@ sourceRepoDiagnostic <- function(min.confirmed = 20){
                                       FUN = function(x){
                                         data.last.update <- all.countries[all.countries$last.update == x,]
                                         data.last.update <- data.last.update %>% arrange(desc(total.confirmed))
-                                        paste(data.last.update$country, "(", data.last.update$total.confirmed, ")", sep = "",collapse =", ")
+                                        paste(data.last.update$country, "(", round(data.last.update$total.confirmed), ")", sep = "",collapse =", ")
                                       },
                                       FUN.VALUE = character(1))
 
