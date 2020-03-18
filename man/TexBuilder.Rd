@@ -2,11 +2,11 @@
 % Please edit documentation in R/report-lib.R
 \name{TexBuilder}
 \alias{TexBuilder}
-\title{TexBuilder}
+\title{TexBuilder (Not functional Yet)}
 \description{
-TexBuilder
+TexBuilder (Not functional Yet)
 
-TexBuilder
+TexBuilder (Not functional Yet)
 }
 \section{Methods}{
 \subsection{Public methods}{

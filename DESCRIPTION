@@ -28,6 +28,8 @@ Imports: magrittr,
          kableExtra,
          smooth,
          R6,
+         ggplot2,
+         zoo,
          lgr
 Collate:
   'util-lib.R'

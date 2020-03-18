@@ -209,7 +209,7 @@ Countries <- R6Class("Countries",
     self$countries.df[self$countries.df$country %in%   c("Costa Rica", "Guatemala", "Honduras", "Panama"), "sub.continent"] <- "Central America"
 
     self$countries.df[self$countries.df$country %in% c("Antigua and Barbuda","Aruba",  "Cuba", "Dominican Republic", "Guadeloupe", "Jamaica", "Martinique", "Puerto Rico", "Saint Lucia", "Saint Vincent and the Grenadines", "The Bahamas", "Trinidad and Tobago"),
-                      "sub.continent"] <- "Caribe"
+                      "sub.continent"] <- "Caribbean"
 
     self$countries.df[self$countries.df$country %in% c("Canada", "Greenland", "Mexico", "US"),
                       "sub.continent"] <- "North America"
