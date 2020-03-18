@@ -22,6 +22,8 @@ Data is still noisy because there are missing data from some regions in some day
 
 # Source Repository Status
 
+Updated up to 2020-03-15
+
 |last.update |  n| total.confirmed|countries (confirmed)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 |:-----------|--:|---------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |2020-03-13  | 63|          143808|China(80945), Italy(17660), Iran(11364), Korea, South(7979), Spain(5232), Germany(3675), France(3667), US(2179), Switzerland(1139), Norway(996), Sweden(814), Denmark(804), Netherlands(804), United Kingdom(801), Japan(701), Belgium(559), Austria(504), Qatar(320), Australia(200), Singapore(200), Malaysia(197), Canada(193), Greece(190), Israel(161), Finland(155), Brazil(151), Czechia(141), Slovenia(141), Iceland(134), Portugal(112), Iraq(101), Ireland(90), Romania(89), Saudi Arabia(86), India(82), Egypt(80), San Marino(80), Estonia(79), Lebanon(77), Thailand(75), Indonesia(69), Poland(68), Philippines(64), Taiwan*(50), Vietnam(47), Russia(45), Chile(43), Brunei(37), Serbia(35), Luxembourg(34), Albania(33), Croatia(32), Slovakia(32), Argentina(31), Pakistan(28), Peru(28), Belarus(27), Panama(27), Algeria(26), Georgia(25), South Africa(24), Bulgaria(23), Costa Rica(23) |
@@ -70,47 +72,97 @@ data.processor$curate()
 rg <- ReportGeneratorEnhanced$new(data.processor)
 
 
+rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
+
 
 ggplot <- rg$ggplotTopCountriesStackedBarDailyInc()
 ggsave(file.path(data.dir, paste("top-countries-daily-increment-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 7, height = 5, dpi = 300)
+```
+# ![top-countries-daily-increment.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment.png)
 
+
+```
+# Comparation by epidemy day
+countries.plot <- unique(c(data.processor$top.countries,
+                           "Japan", "Singapur", "Hong Kong",
+                           data.processor$countries$getCountries(division = "sub.continent", name = "South America")))
+
+ggplot <- rc$ggplotComparisonExponentialGrowth(included.countries = countries.plot, min.cases = 20)
+ggsave(file.path(data.dir, paste("exponential-growth-", Sys.Date(), ".png", sep ="")), ggplot,
+       width = 7, height = 5, dpi = 300)
+```
+
+# ![top-countries-daily-conf-inc-log.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-conf-inc-log.png)
+
+```
 ggplot <- rg$ggplotTopCountriesLines(field = "confirmed.inc", log.scale = TRUE)
 ggsave(file.path(data.dir, paste("top-countries-daily-conf-inc-log-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 7, height = 5, dpi = 300)
+```
 
+
+```
 ggplot <- rg$ggplotTopCountriesLines(field = "rate.inc.daily", log.scale = FALSE)
 ggsave(file.path(data.dir, paste("top-countries-lines-rate-daily-inc-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 7, height = 5, dpi = 300)
+```
+# ![top-countries-lines-rate-daily-inc.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-lines-rate-daily-inc.png)
 
 
 # Selected Yanchang Zhao visualizations
 
+```
 ggplot <- rg$ggplotTopCountriesPie()
 ggsave(file.path(data.dir, paste("top-countries-pie-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
+```
+# ![top-countries-bar-plot.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-pie.png)
+
+
+
+```
 ggplot <- rg$ggplotTopCountriesBarPlots()
 ggsave(file.path(data.dir, paste("top-countries-bar-plot-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
+```
+# ![top-countries-bar-plot](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot.png)
 
+```
 ggplot <- rg$ggplotTopCountriesPie(excluded.countries = c("World", "China"))
 ggsave(file.path(data.dir, paste("top-countries-pie-wo-china-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
+```
+# ![top-countries-pie-wo-china](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-pie-wo-china.png)
+
+```
 ggplot <- rg$ggplotTopCountriesBarPlots(excluded.countries = c("World", "China"))
 ggsave(file.path(data.dir, paste("top-countries-bar-plot-wo-china-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
+```
+# ![top-countries-bar-plot-wo-china](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot-wo-china.png)
 
+```
+# Including Australia
 ggplot <- rg$ggplotCountriesBarGraphs(selected.country = "Australia")
 ggsave(file.path(data.dir, paste("countries-bar-plot-australia-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
+```
+# ![countries-bar-plot-australia](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-australia.png)
 
+```
+# Including Argentina
 ggplot <- rg$ggplotCountriesBarGraphs(selected.country = "Argentina")
 ggsave(file.path(data.dir, paste("countries-bar-plot-argentina-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
+```
+# ![countries-bar-plot-argentina](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-argentina.png)
 
+```
 ggplot <- rg$ggplotConfirmedCases()
 ggsave(file.path(data.dir, paste("confirmed-cases-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
+```
 
 
 # Make a latex graph
@@ -119,38 +171,15 @@ rg$data.confirmed.original[, 1:10] %>% sample_n(10) %>%
   kable_styling(font_size=6, latex_options = c("striped", "hold_position", "repeat_header"))
 ```
 
-# Dataviz
-# ![top-countries-daily-increment.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment.png)
-
-# ![covid-19-exponential-growth.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/covid-19-exponential-growth.png)
-
-# ![top-countries-daily-conf-inc-log.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-conf-inc-log.png)
-
-# ![top-countries-lines-rate-daily-inc.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-lines-rate-daily-inc.png)
 
 
 
 
-# Dataviz from blogpost
 
-# ![top-countries-bar-plot.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-pie.png)
-# ![top-countries-bar-plot](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot.png)
-# ![top-countries-pie-wo-china](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-pie-wo-china.png)
-# ![top-countries-bar-plot-wo-china](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-bar-plot-wo-china.png)
-# Including Australia
-# ![countries-bar-plot-australia](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-australia.png)
-# Including Argentina
-# ![countries-bar-plot-argentina](https://github.com/kenarab/COVID19/blob/master/inst/extdata/countries-bar-plot-argentina.png)
 
-# Comparation by epidemy day
-rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
-countries.plot <- unique(c(data.processor$top.countries,
-                           "Japan", "Singapur", "Hong Kong",
-                           data.processor$countries$getCountries(division = "sub.continent", name = "South America")))
 
-ggplot <- rc$ggplotComparisonExponentialGrowth(included.countries = countries.plot, min.cases = 20)
-ggsave(file.path(data.dir, paste("exponential-growth-", Sys.Date(), ".png", sep ="")), ggplot,
-       width = 7, height = 5, dpi = 300)
+
+
 
 # Sources of code, data and information
 
