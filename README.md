@@ -93,7 +93,8 @@ ggsave(file.path(data.dir, paste("exponential-growth-", Sys.Date(), ".png", sep 
        width = 7, height = 5, dpi = 300)
 ```
 
-# ![top-countries-daily-conf-inc-log.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-conf-inc-log.png)
+# ![covid-19-exponential-growth.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/covid-19-exponential-growth.png)
+
 
 ```
 ggplot <- rg$ggplotTopCountriesLines(field = "confirmed.inc", log.scale = TRUE)
@@ -101,6 +102,7 @@ ggsave(file.path(data.dir, paste("top-countries-daily-conf-inc-log-", Sys.Date()
        width = 7, height = 5, dpi = 300)
 ```
 
+# ![top-countries-daily-conf-inc-log.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-conf-inc-log.png)
 
 ```
 ggplot <- rg$ggplotTopCountriesLines(field = "rate.inc.daily", log.scale = FALSE)
