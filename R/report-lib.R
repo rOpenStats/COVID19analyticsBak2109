@@ -41,13 +41,14 @@ ReportGenerator <- R6Class("ReportGenerator",
     df %<>% mutate(per = (100*confirmed/sum(confirmed)) %>% round(1)) %>%
      mutate(txt = paste0(country, ': ', confirmed, ' (', per, '%)'))
     # pie(df$confirmed, labels=df$txt, cex=0.7)
-    df %>% ggplot(aes(fill=country)) +
+    ret <- df %>% ggplot(aes(fill=country)) +
      geom_bar(aes(x='', y=per), stat='identity') +
      coord_polar("y", start=0) +
      xlab('') + ylab('Percentage (%)') +
      labs(title=paste0('Top 10 Countries with Most Confirmed Cases (', self$data.processor$max.date, ')')) +
      scale_fill_discrete(name='Country', labels=df$txt)
-
+    ret <- setupTheme(ret)
+    ret
    },
    ggplotTopCountriesBarPlots = function(excluded.countries = "World"){
     #Page 7
@@ -64,12 +65,14 @@ ReportGenerator <- R6Class("ReportGenerator",
     df %<>% filter(country != 'World')
     x.values <- sort(unique(df$date))
 
-    plot <-  df %>%
-     ggplot(aes(x=date, y=count, fill=country)) +
+    ret <-  df %>%
+     ggret(aes(x=date, y=count, fill=country)) +
      geom_area() + xlab('Date') + ylab('Count') +
      labs(title='Cases around the World')
-    plot <- self$getXLabelsTheme(plot, x.values)
-    plot <- plot +
+    ret <- self$getXLabelsTheme(ret, x.values)
+    ret <- setupTheme(ret)
+
+    ret <- ret +
      facet_wrap(~type, ncol=2, scales='free_y')
    },
    ggplotCountriesBarGraphs = function(selected.country = "Australia"){
@@ -92,14 +95,17 @@ ReportGenerator <- R6Class("ReportGenerator",
     df %<>% filter(type != 'confirmed')
     x.values <- sort(unique(df$date))
 
-    plot <- df %>%
+    ret <- df %>%
      ggplot(aes(x=date, y=count, fill=type)) +
      geom_area(alpha=0.5) + xlab('Date') + ylab('Count') +
      labs(title=paste0('COVID-19 Cases by Country (', self$data.processor$max.date, ')')) +
      scale_fill_manual(values=c('red', 'green', 'black'))
-    plot <- self$getXLabelsTheme(plot, x.values)
-    plot <- plot +
-     theme(legend.title=element_blank(), legend.position='bottom') +
+    ret <- self$getXLabelsTheme(ret, x.values)
+    # ret <- ret +
+    #  theme(legend.title=element_blank(), legend.position='bottom')
+    ret <- setupTheme(ret)
+
+
      facet_wrap(~country, ncol=3, scales='free_y')
    },
    ggplotConfirmedCases = function(){
@@ -118,7 +124,9 @@ ReportGenerator <- R6Class("ReportGenerator",
 
 
      # + ylim(0, 4500)
-     grid.arrange(plot1, plot2, ncol=2)
+     ret <- grid.arrange(plot1, plot2, ncol=2)
+     ret <- setupTheme(ret)
+
      ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
      ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
    },
@@ -252,7 +260,6 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        ret <- self$getXLabelsTheme(ret, x.values)
        ret <- setupTheme(ret)
 
-       ret <- ret + theme(legend.title=element_blank())
        if (log.scale){
          #ret <- ret + scale_y_log10(labels = scales::comma)
          ret <- ret + scale_y_log10()
