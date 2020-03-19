@@ -14,6 +14,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    force.download = FALSE,
    imputation.method = NA,
    filenames         = NA,
+   irrelevant.countries = "Cruise Ship",
    indicators = c("confirmed", "recovered", "deaths"),
    smooth.n = 3,
    #state
@@ -68,7 +69,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     logger$info("", stage = "consolidated")
 
     #Remove Cruise Ship
-    self$data %<>% filter(country != "Cruise Ship")
+    self$data %<>% filter(!country %in% self$irrelevant.countries)
 
     nrow(self$data)
     max(self$data$date)
@@ -87,19 +88,23 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self$makeImputations()
     self$state <- "1st-imputation"
 
-    self$smoothSeries(old.serie.sufix = "original")
-    self$state <- "1st-imputation-smoothed"
+
+    # self$smoothSeries(old.serie.sufix = "original")
+    # self$state <- "1st-imputation-smoothed"
+    self$calculateRates()
 
     self$makeDataComparison()
     self$state <- "data-comparison-smoothed"
 
-    logger$info("", stage = "Starting second imputation")
+    # logger$info("", stage = "Starting second imputation")
+    #
+    # self$makeImputations()
+    # self$state <- "2nd-imputation"
+    # self$smoothSeries(old.serie.sufix = "imp1")
+    #self$calculateRates()
 
-    self$makeImputations()
-    self$state <- "2nd-imputation"
-    self$smoothSeries(old.serie.sufix = "imp1")
-    self$state <- "2st-imputation-smoothed"
-    self$makeDataComparison()
+    # self$state <- "2st-imputation-smoothed"
+    # self$makeDataComparison()
 
     logger$info("", stage = "Calculating top countries")
     self$calculateTopCountries()
@@ -152,13 +157,14 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self$imputation.method$setup(self$data.comparison)
     self$data.comparison
    },
+   #deprecated
    makeImputationsRemoveNA = function(){
     self$data <- self$data[!is.na(self$data$confirmed),]
    },
    makeImputations = function(){
     logger <- getLogger(self)
     self$data$imputation.case <- ""
-    self$data[which(is.na(self$data$confirmed)), "imputation.case"] <- "NA"
+    self$data[which(is.na(self$data$confirmed)), "imputation.case"] <- "N/A"
     self$data[which(self$data$confirmed > 20 & self$data$confirmed.inc == 0), "imputation.case"] <- "0inc"
     self$data$imputation <- ""
     self$imputation.summary <- self$data %>%
@@ -177,8 +183,6 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
 
     self$data %>% group_by(imputation) %>% summarize(n = n())
 
-    nrow(self$data)
-    nrow(self$data)
 
     rows.imputation <- which(self$data$imputation.case !=  "")
     length(rows.imputation)
@@ -192,9 +196,14 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
      }
      self$data[r, "imputation"] <- "I"
     }
+    #debug
     self$data[rows.imputation,]
+
+    self$data[rows.imputation,] %>% filter(country == "US")
+    self$data[9006,] %>% filter(country == "US")
+
     #data.imputation <- self$data.na %>% filter(date == self$max.date)
-    logger$debug("Imputating", country = imputation.df$country, date = imputation.df$date)
+    logger$debug("Imputing", country = imputation.df$country, date = imputation.df$date)
 
    },
    smoothSeries = function(old.serie.sufix = "original"){
@@ -313,12 +322,12 @@ COVID19DataComparison <- R6Class("COVID19DataComparison",
    self$epidemic.stats <- self$data.compared %>%
                           group_by(epidemy.day) %>%
                           summarize(n = n(),
-                                    confirmed.mean = mean(confirmed),
-                                    confirmed.sd = sd(confirmed),
-                                    deaths.mean = mean(deaths),
-                                    deaths.sd = sd(deaths),
-                                    recovered.mean = mean(recovered),
-                                    recovered.sd = sd(recovered))
+                                    confirmed.mean = mean(confirmed, na.rm = TRUE),
+                                    confirmed.sd = sd(confirmed, na.rm = TRUE),
+                                    deaths.mean = mean(deaths, na.rm = TRUE),
+                                    deaths.sd = sd(deaths, na.rm = TRUE),
+                                    recovered.mean = mean(recovered, na.rm = TRUE),
+                                    recovered.sd = sd(recovered, na.rm = TRUE))
   },
   getEpidemyDay = function(data.country.date){
    data.country.date$country <- as.character(data.country.date$country)
@@ -366,6 +375,7 @@ COVID19DataComparison <- R6Class("COVID19DataComparison",
 ImputationMethod <- R6Class("ImputationMethod",
   public = list(
    data.comparison = NA,
+   indicators.imputation = c("confirmed"),
    initialize = function(){
     self
    },
@@ -388,10 +398,15 @@ ImputationMethodMean <- R6Class("ImputationMethodMean",
     self
    },
    getImputationValue = function(current.data, prev.data, field){
-    #debug
-    self.debug <<- self
-    current.data <<- current.data
     imputation.relatives <- self$data.comparison$getImputationRelative(current.data)
-    prev.data[, field] * imputation.relatives[, paste(field, "rel", sep = ".")]
+    if (field %in% self$indicators.imputation){
+     rel <- imputation.relatives[, paste(field, "rel", sep = ".")]
+    }
+    else{
+     rel <- 1
+    }
+    #debug
+    print(rel)
+    round(prev.data[, field] * rel)
    }))
 

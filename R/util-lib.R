@@ -167,7 +167,7 @@ typeCheck <- function(object, class.name){
 #' @export
 smoothSerie <- function(serie.name, serie, n){
   n <- min(length(serie), n)
-  rollmeanr(serie, n, fill = NA)
+  round(rollmeanr(serie, n, fill = NA))
 }
 
 
