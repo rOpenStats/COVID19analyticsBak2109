@@ -405,8 +405,6 @@ ImputationMethodMean <- R6Class("ImputationMethodMean",
     else{
      rel <- 1
     }
-    #debug
-    print(rel)
     round(prev.data[, field] * rel)
    }))
 

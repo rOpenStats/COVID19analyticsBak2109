@@ -66,7 +66,7 @@ ReportGenerator <- R6Class("ReportGenerator",
     x.values <- sort(unique(df$date))
 
     ret <-  df %>%
-     ggret(aes(x=date, y=count, fill=country)) +
+     ggplot(aes(x=date, y=count, fill=country)) +
      geom_area() + xlab('Date') + ylab('Count') +
      labs(title='Cases around the World')
     ret <- self$getXLabelsTheme(ret, x.values)
@@ -103,10 +103,7 @@ ReportGenerator <- R6Class("ReportGenerator",
     ret <- self$getXLabelsTheme(ret, x.values)
     # ret <- ret +
     #  theme(legend.title=element_blank(), legend.position='bottom')
-    ret <- setupTheme(ret)
-
-
-     facet_wrap(~country, ncol=3, scales='free_y')
+    ret <- setupTheme(ret) + facet_wrap(~country, ncol=3, scales='free_y')
    },
    ggplotConfirmedCases = function(){
      ## current confirmed and its increase
