@@ -75,13 +75,13 @@ cleanData <- function(data) {
 #' @author kenarab
 #' @noRd
 #'
-copyPNG2package <- function(){
+copyPNG2package <- function(current.date = Sys.Date()){
   data.dir.files <- dir(data.dir)
   data.dir.files <- data.dir.files[grep("\\.png", data.dir.files)]
-  data.dir.files <- data.dir.files[grep(as.character(Sys.Date()), data.dir.files)]
+  data.dir.files <- data.dir.files[grep(as.character(current.date), data.dir.files)]
   for (cf in data.dir.files){
     dest.filename <- cf
-    dest.filename <- gsub(paste("-", Sys.Date(), sep = ""), "", dest.filename)
+    dest.filename <- gsub(paste("-", current.date, sep = ""), "", dest.filename)
     file.copy(file.path(data.dir, cf), file.path("inst/extdata/", dest.filename))
   }
 }
