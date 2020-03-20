@@ -63,6 +63,17 @@ rg <- ReportGeneratorEnhanced$new(data.processor)
 
 
 rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
+
+top.countries <- data.processor$top.countries
+international.countries <- unique(c(data.processor$top.countries,
+                                    "Japan", "Singapur", "Hong Kong"))
+
+latam.countries <- sort(c("Mexico",
+                     data.processor$countries$getCountries(division = "sub.continent", name = "Caribbean"),
+                     data.processor$countries$getCountries(division = "sub.continent", name = "Central America"),
+                     data.processor$countries$getCountries(division = "sub.continent", name = "South America")))
+
+
 ```
 
 
