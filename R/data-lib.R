@@ -63,13 +63,13 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self$state <- "cleaned"
 
 
+
+
     nrow(self$data.confirmed)
     self$consolidate()
     self$state <- "consolidated"
     logger$info("", stage = "consolidated")
 
-    #Remove Cruise Ship
-    self$data %<>% filter(!country %in% self$irrelevant.countries)
 
     nrow(self$data)
     max(self$data$date)
@@ -141,6 +141,9 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    consolidate = function(){
     ## merge above 3 datasets into one, by country and date
     self$data <- self$data.confirmed %>% merge(self$data.deaths) %>% merge(self$data.recovered)
+    #Remove Cruise Ship
+    self$data %<>% filter(!country %in% self$irrelevant.countries)
+
     self$data.na <- self$data %>% filter(is.na(confirmed))
     #self$data <- self$data %>% filter(is.na(confirmed))
     self$min.date <- min(self$data$date)

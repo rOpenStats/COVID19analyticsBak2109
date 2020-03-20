@@ -191,14 +191,16 @@ smoothSerie2 <- function(serie.name, serie, n){
 Countries <- R6Class("Countries",
   public = list(
    data.processor = NA,
+   countries = NA,
    countries.df = NA,
    initialize = function(countries){
+     self$countries <- countries
      self
    },
    setup = function(){
-     countries.legal <- countries[-which(countries =="Kosovo")]
-     self$countries.df <- data.frame(country = countries.legal,
-                                      continent = vapply(countries.legal,
+     countries.accepted <- self$countries[-which(self$countries =="Kosovo")]
+     self$countries.df <- data.frame(country = countries.accepted,
+                                      continent = vapply(countries.accepted,
                                                          FUN = function(x)countrycode(x, origin =  "country.name", destination = "continent"),
                                                          FUN.VALUE = character(1)),
                                      stringsAsFactors = FALSE)
