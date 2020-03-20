@@ -65,7 +65,6 @@ rg <- ReportGeneratorEnhanced$new(data.processor)
 rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
 ```
 
-# ![top-countries-daily-increment.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/top-countries-daily-increment.png)
 
 ```
 
@@ -82,6 +81,7 @@ ggplot <- rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.cou
 ggsave(file.path(data.dir, paste("latam-daily-increment-", dataviz.date, ".png", sep ="")), ggplot,
        width = 7, height = 5, dpi = 300)
 ```
+# ![top-countries-daily-increment.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/latam-daily-increment.png)
 
 
 ```
