@@ -93,7 +93,7 @@ ggsave(file.path(data.dir, paste("exponential-growth-", Sys.Date(), ".png", sep 
        width = 7, height = 5, dpi = 300)
 ```
 
-# ![covid-19-exponential-growth.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/covid-19-international-exponential-growth.png)
+# ![covid-19-international-exponential-growth.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/covid-19-international-exponential-growth.png)
 
 ```
 latam.countries <- c("Mexico",
@@ -107,7 +107,7 @@ ggsave(file.path(data.dir, paste("covid-19-exponential-latam-growth-", Sys.Date(
 ```
 
 
-# ![covid-19-exponential-growth.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/covid-19-latam-exponential-growth.png)
+# ![covid-19-latam-exponential-growth.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/covid-19-latam-exponential-growth.png)
 
 
 ```
