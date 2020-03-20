@@ -93,7 +93,7 @@ ggsave(file.path(data.dir, paste("exponential-growth-", Sys.Date(), ".png", sep 
        width = 7, height = 5, dpi = 300)
 ```
 
-# ![covid-19-international-exponential-growth.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/covid-19-international-exponential-growth.png)
+# ![covid-19-exponential-growth.png](https://github.com/kenarab/COVID19/blob/master/inst/extdata/covid-19-international-exponential-growth.png)
 
 ```
 latam.countries <- c("Mexico",
@@ -111,13 +111,8 @@ ggsave(file.path(data.dir, paste("covid-19-exponential-latam-growth-", Sys.Date(
 
 
 ```
-latam.countries <- c("Mexico",
-                     data.processor$countries$getCountries(division = "sub.continent", name = "Caribbean"),
-                     data.processor$countries$getCountries(division = "sub.continent", name = "Central America"),
-                     data.processor$countries$getCountries(division = "sub.continent", name = "South America"))
-
-ggplot <- rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, min.cases = 20)
-ggsave(file.path(data.dir, paste("covid-19-exponential-latam-growth-", Sys.Date(), ".png", sep ="")), ggplot,
+ggplot <- rg$ggplotTopCountriesLines(field = "confirmed.inc", log.scale = TRUE)
+ggsave(file.path(data.dir, paste("top-countries-daily-conf-inc-log-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 7, height = 5, dpi = 300)
 ```
 

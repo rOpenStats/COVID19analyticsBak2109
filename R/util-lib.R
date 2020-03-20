@@ -194,7 +194,7 @@ Countries <- R6Class("Countries",
    countries = NA,
    countries.df = NA,
    initialize = function(countries){
-     self$countries <- countries
+     self$countries <- as.character(countries)
      self
    },
    setup = function(){
