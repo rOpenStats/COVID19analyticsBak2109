@@ -4,9 +4,9 @@ Title: COVID-19 data processing
 Version: 0.1.0
 Language: en-US
 Authors@R: c(
-    person("Alejandro", "Baranek",,"abaranek@dc.uba.ar", c("aut","com","cre"))
-    person(,"Yanchang Zhao",, "yanchang@RDataMining.com", c("cph")),
-    )
+    person("Alejandro", "Baranek",,"abaranek@dc.uba.ar", c("aut","com","cre", "cph")),
+    person("Yanchang Zhao",, "yanchang@RDataMining.com", c("cph")),
+    person("Tao",, "", c("cph")))
 Maintainer: Alejandro Baranek <abaranek@dc.uba.ar>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.

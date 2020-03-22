@@ -12,6 +12,7 @@ ReportGenerator <- R6Class("ReportGenerator",
   public = list(
    data.processor = NA,
    tex.builder    = NA,
+   report.date = NA,
    initialize = function(data.processor){
      # Manual type check
      stopifnot(class(data.processor)[1] == "COVID19DataProcessor")
@@ -42,7 +43,7 @@ ReportGenerator <- R6Class("ReportGenerator",
      mutate(txt = paste0(country, ': ', confirmed, ' (', per, '%)'))
     # pie(df$confirmed, labels=df$txt, cex=0.7)
 
-    report.date <- max(self$data.processor$data$date)
+    self$report.date <- max(self$data.processor$data$date)
 
     ret <- df %>% ggplot(aes(fill=country)) +
      geom_bar(aes(x='', y=per), stat='identity') +
@@ -50,7 +51,7 @@ ReportGenerator <- R6Class("ReportGenerator",
      xlab('') + ylab('Percentage (%)') +
      labs(title=paste0('Top 10 Countries with Most Confirmed Cases (', self$data.processor$max.date, ')')) +
      scale_fill_discrete(name='Country', labels=df$txt)
-    ret <- setupTheme(ret, report.date)
+    ret <- setupTheme(ret, self$report.date)
     ret
    },
    ggplotTopCountriesBarPlots = function(excluded.countries = "World"){
@@ -73,7 +74,7 @@ ReportGenerator <- R6Class("ReportGenerator",
      geom_area() + xlab('Date') + ylab('Count') +
      labs(title='Cases around the World')
     ret <- self$getXLabelsTheme(ret, x.values)
-    ret <- setupTheme(ret, report.date)
+    ret <- setupTheme(ret, self$report.date)
 
     ret <- ret +
      facet_wrap(~type, ncol=2, scales='free_y')
@@ -106,7 +107,7 @@ ReportGenerator <- R6Class("ReportGenerator",
     ret <- self$getXLabelsTheme(ret, x.values)
     # ret <- ret +
     #  theme(legend.title=element_blank(), legend.position='bottom')
-    ret <- setupTheme(ret, report.date) + facet_wrap(~country, ncol=3, scales='free_y')
+    ret <- setupTheme(ret, self$report.date) + facet_wrap(~country, ncol=3, scales='free_y')
    },
    ggplotConfirmedCases = function(){
      ## current confirmed and its increase
@@ -125,7 +126,7 @@ ReportGenerator <- R6Class("ReportGenerator",
 
      # + ylim(0, 4500)
      ret <- grid.arrange(plot1, plot2, ncol=2)
-     ret <- setupTheme(ret, report.date)
+     ret <- setupTheme(ret, self$report.date)
 
      ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
      ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
@@ -168,6 +169,7 @@ setupTheme = function(ggplot, report.date){
 #' @export
 ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
  inherit = ReportGenerator,
+
    public = list(
      initialize = function(data.processor){
        super$initialize(data.processor = data.processor)
@@ -191,13 +193,13 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          mutate(country=country %>% factor(levels=c(included.countries)))
        x.values <- sort(unique(data.long$date))
 
-       report.date <- max(df$date)
+       self$report.date <- max(df$date)
        ret <- df %>% filter(country != 'World') %>%
          ggplot(aes(x=date, y=count, fill=country)) +
          geom_bar(stat = "identity") + xlab('Date') + ylab('Count') +
          labs(title = plot.title)
        ret <- self$getXLabelsTheme(ret, x.values)
-       ret <- setupTheme(ret, report.date)
+       ret <- setupTheme(ret, self$report.date)
        ret <- ret +
          theme(legend.title=element_blank())
          # theme(legend.title=element_blank(),
@@ -238,14 +240,14 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        df <- df %>% filter(!country %in% excluded.countries)
        df %<>%
          mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
-       report.date <- max(df$date)
+       self$report.date <- max(df$date)
 
        ret <- df %>% filter(country != 'World') %>%
          ggplot(aes(x=date, y=count, colour=country)) +
          geom_line() + xlab('Date') + ylab(y.label) +
          labs(title = plot.title)
        ret <- self$getXLabelsTheme(ret, x.values)
-       ret <- setupTheme(ret, report.date)
+       ret <- setupTheme(ret, self$report.date)
 
        if (log.scale){
          #ret <- ret + scale_y_log10(labels = scales::comma)
@@ -273,6 +275,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
 ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
  public = list(
    data.processor = NA,
+   report.date = NA,
    initialize = function(data.processor){
      self$data.processor <- data.processor
      self
@@ -296,14 +299,14 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      # df %<>%
      #   mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
 
-     report.date <-max(self$data.processor$data$date)
+     self$report.date <-max(self$data.processor$data$date)
 
      ret <- df %>% filter(country != 'World') %>%
        ggplot(aes(x=epidemy.day, y=count, colour = country)) +
        geom_line() + xlab('Epidemy day (0 when confirmed >100)') + ylab('Confirmed Cases') +
        labs(title = plot.title)
      ret <- self$getXLabelsTheme(ret, x.values)
-     ret <- setupTheme(ret,  report.date)
+     ret <- setupTheme(ret,  self$report.date)
      ret <- ret +
        theme(legend.title=element_blank(),
              plot.caption = element_text(size = 6)

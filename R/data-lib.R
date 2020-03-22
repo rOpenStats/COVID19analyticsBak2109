@@ -444,11 +444,6 @@ ImputationMethodMean <- R6Class("ImputationMethodMean",
     self
    },
    getImputationValue = function(current.data, field){
-    # debug
-    current.data <<- current.data
-    prev.data <<- prev.data
-    field <<- field
-    self.debug <<- self
     prev.data <- self$data %>% filter(country == current.data$country & date == current.data$date -1)
     post.data <- self$data %>% filter(country == current.data$country & date == current.data$date +1)
 
