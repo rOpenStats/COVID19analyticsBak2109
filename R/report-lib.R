@@ -303,7 +303,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
 
      ret <- df %>% filter(country != 'World') %>%
        ggplot(aes(x=epidemy.day, y=count, colour = country)) +
-       geom_line() + xlab('Epidemy day (0 when confirmed >100)') + ylab('Confirmed Cases') +
+       geom_line() + xlab(paste("Epidemy day (0 when confirmed >", min.cases, ")")) + ylab("Confirmed Cases") +
        labs(title = plot.title)
      ret <- self$getXLabelsTheme(ret, x.values)
      ret <- setupTheme(ret,  self$report.date)
