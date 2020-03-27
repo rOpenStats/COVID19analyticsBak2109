@@ -8,6 +8,9 @@ ImputationMethodMean
 
 ImputationMethodMean
 }
+\author{
+ken4rab
+}
 \section{Super class}{
 \code{\link[COVID19:ImputationMethod]{COVID19::ImputationMethod}} -> \code{ImputationMethodMean}
 }

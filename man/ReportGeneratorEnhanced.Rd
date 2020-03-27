@@ -53,7 +53,8 @@ kenarab
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorEnhanced$ggplotTopCountriesStackedBarDailyInc(
   included.countries,
-  excluded.countries = "World"
+  excluded.countries = "World",
+  map.region = "The World"
 )}\if{html}{\out{</div>}}
 }
 
