@@ -122,9 +122,9 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    },
    loadData = function(){
     ## load data into R
-    self$data.confirmed <- read.csv(file.path(data.dir, 'time_series_19-covid-Confirmed.csv'))
-    self$data.deaths <- read.csv(file.path(data.dir,'time_series_19-covid-Deaths.csv'))
-    self$data.recovered <- read.csv(file.path(data.dir,'time_series_19-covid-Recovered.csv'))
+    self$data.confirmed <- read.csv(file.path(data.dir, 'time_series_covid19_confirmed_global.csv'))
+    self$data.deaths <- read.csv(file.path(data.dir,'time_series_covid19_deaths_global.csv'))
+    self$data.recovered <- read.csv(file.path(data.dir,'time_series_covid19_recovered_global.csv'))
 
     dim(self$data.confirmed)
     ## [1] 347 53
