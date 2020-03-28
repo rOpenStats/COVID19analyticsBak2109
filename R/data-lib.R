@@ -9,12 +9,11 @@
 #' @export
 COVID19DataProcessor <- R6Class("COVID19DataProcessor",
   public = list(
-   # parameters
+   # parametersirre
    top.countries.count = 11,
    force.download = FALSE,
    imputation.method = NA,
    filenames         = NA,
-   irrelevant.countries = "Cruise Ship",
    indicators = c("confirmed", "recovered", "deaths"),
    smooth.n = 3,
    #state
@@ -112,9 +111,9 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self
    },
    downloadData = function(){
-    self$filenames <- c('time_series_19-covid-Confirmed.csv',
-                        'time_series_19-covid-Deaths.csv',
-                        'time_series_19-covid-Recovered.csv')
+    self$filenames <- c(confirmed = 'time_series_covid19_confirmed_global.csv',
+                        deaths = 'time_series_covid19_deaths_global.csv',
+                        recovered = 'time_series_covid19_recovered_global.csv')
     # url.path <- 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_'
     #url.path <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series"
     url.path <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
@@ -122,9 +121,9 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    },
    loadData = function(){
     ## load data into R
-    self$data.confirmed <- read.csv(file.path(data.dir, 'time_series_covid19_confirmed_global.csv'))
-    self$data.deaths <- read.csv(file.path(data.dir,'time_series_covid19_deaths_global.csv'))
-    self$data.recovered <- read.csv(file.path(data.dir,'time_series_covid19_recovered_global.csv'))
+    self$data.confirmed <- read.csv(file.path(data.dir, self$filenames[["confirmed"]]))
+    self$data.deaths <- read.csv(file.path(data.dir, self$filenames[["deaths"]]))
+    self$data.recovered <- read.csv(file.path(data.dir, self$filenames[["recovered"]]))
 
     dim(self$data.confirmed)
     ## [1] 347 53
@@ -142,16 +141,18 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    consolidate = function(){
     ## merge above 3 datasets into one, by country and date
     self$data <- self$data.confirmed %>% merge(self$data.deaths) %>% merge(self$data.recovered)
+
+
+    self$countries <- Countries$new()
     #Remove Cruise Ship
-    self$data %<>% filter(!country %in% self$irrelevant.countries)
+    self$data %<>% filter(!country %in% self$countries$irrelevant.countries)
 
     self$data.na <- self$data %>% filter(is.na(confirmed))
     #self$data <- self$data %>% filter(is.na(confirmed))
     self$min.date <- min(self$data$date)
     self$max.date <- max(self$data$date)
 
-    self$countries <- Countries$new(sort(unique(self$data$country)))
-    self$countries$setup()
+    self$countries$setup(countries = sort(unique(self$data$country)))
 
     self$data
    },

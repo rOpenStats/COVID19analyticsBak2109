@@ -190,15 +190,24 @@ smoothSerie2 <- function(serie.name, serie, n){
 #' @export
 Countries <- R6Class("Countries",
   public = list(
+   #parameters
+   irrelevant.countries = c("Diamond Princess","Kosovo"),
+   # state
    data.processor = NA,
    countries = NA,
    countries.df = NA,
-   initialize = function(countries){
-     self$countries <- as.character(countries)
+   initialize = function(){
      self
    },
-   setup = function(){
-     countries.accepted <- self$countries[-which(self$countries =="Kosovo")]
+   setup = function(countries){
+     self$countries <- as.character(countries)
+     countries.remove <- which(self$countries %in% self$irrelevant.countries)
+
+     countries.accepted <- self$countries
+     if (length(countries.remove) > 0){
+       countries.accepted <- self$countries[-countries.remove]
+     }
+
      self$countries.df <- data.frame(country = countries.accepted,
                                       continent = vapply(countries.accepted,
                                                          FUN = function(x)countrycode(x, origin =  "country.name", destination = "continent"),
