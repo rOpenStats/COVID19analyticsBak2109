@@ -191,7 +191,7 @@ smoothSerie2 <- function(serie.name, serie, n){
 Countries <- R6Class("Countries",
   public = list(
    #parameters
-   irrelevant.countries = c("Diamond Princess","Kosovo"),
+   excluded.countries = c("Diamond Princess","Kosovo"),
    # state
    data.processor = NA,
    countries = NA,
@@ -201,7 +201,7 @@ Countries <- R6Class("Countries",
    },
    setup = function(countries){
      self$countries <- as.character(countries)
-     countries.remove <- which(self$countries %in% self$irrelevant.countries)
+     countries.remove <- which(self$countries %in% self$excluded.countries)
 
      countries.accepted <- self$countries
      if (length(countries.remove) > 0){

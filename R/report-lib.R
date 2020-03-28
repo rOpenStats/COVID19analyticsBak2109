@@ -338,11 +338,11 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
 #'
 #'@noRd
 getCitationNote <- function(add.date = TRUE, report.date){
-  ret <- "Credit @ken4rab"
+  ret <- "credit @ken4rab"
   if (add.date){
     ret <- paste(ret, report.date)
   }
-  ret <- paste(ret, "\nSource: https://github.com/rOpenStats/COVID19/ based on JHU")
+  ret <- paste(ret, "\nsource: https://github.com/rOpenStats/COVID19/ based on JHU")
   ret
 }
 

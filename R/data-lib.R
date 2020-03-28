@@ -145,7 +145,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
 
     self$countries <- Countries$new()
     #Remove Cruise Ship
-    self$data %<>% filter(!country %in% self$countries$irrelevant.countries)
+    self$data %<>% filter(!country %in% self$countries$excluded.countries)
 
     self$data.na <- self$data %>% filter(is.na(confirmed))
     #self$data <- self$data %>% filter(is.na(confirmed))
