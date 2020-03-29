@@ -74,7 +74,7 @@ cleanData <- function(data) {
 #' For copying generated graph to package folder
 #' @author kenarab
 #' @noRd
-#'
+#' @export
 copyPNG2package <- function(current.date = Sys.Date()){
   data.dir.files <- dir(data.dir)
   data.dir.files <- data.dir.files[grep("\\.png", data.dir.files)]

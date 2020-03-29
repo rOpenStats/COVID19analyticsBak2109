@@ -25,7 +25,7 @@ kenarab
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Countries$new(countries)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Countries$new()}\if{html}{\out{</div>}}
 }
 
 }
@@ -34,7 +34,7 @@ kenarab
 \if{latex}{\out{\hypertarget{method-setup}{}}}
 \subsection{Method \code{setup()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Countries$setup()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Countries$setup(countries)}\if{html}{\out{</div>}}
 }
 
 }
