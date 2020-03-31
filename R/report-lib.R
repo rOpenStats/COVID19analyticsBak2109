@@ -188,6 +188,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          gather(key=type, value=count, -c(country, date))
 
 
+
        plot.title <- paste('Daily new Confirmed Cases around', map.region)
 
        ## set factor levels to show them in a desirable order
