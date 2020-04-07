@@ -1,4 +1,4 @@
-# COVID19
+# COVID19analytics
 
  <!-- . -->
 
@@ -26,8 +26,8 @@ Data is still noisy because there are missing data from some regions in some day
 
 | Release | Usage | Development |
 |:--------|:------|:------------|
-| | [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-blue.svg)](https://cran.r-project.org/) | [![Travis](https://travis-ci.org/rOpenStats/COVID19.svg?branch=master)](https://travis-ci.org/rOpenStats/COVID19) |
-| [![CRAN](http://www.r-pkg.org/badges/version/COVID19)](https://cran.r-project.org/package=COVID19) | | [![codecov](https://codecov.io/gh/rOpenStats/COVID19/branch/master/graph/badge.svg)](https://codecov.io/gh/rOpenStats/COVID19) |
+| | [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-blue.svg)](https://cran.r-project.org/) | [![Travis](https://travis-ci.org/rOpenStats/COVID19analytics.svg?branch=master)](https://travis-ci.org/rOpenStats/COVID19analytics) |
+| [![CRAN](http://www.r-pkg.org/badges/version/COVID19analytics)](https://cran.r-project.org/package=COVID19analytics) | | [![codecov](https://codecov.io/gh/rOpenStats/COVID19analytics/branch/master/graph/badge.svg)](https://codecov.io/gh/rOpenStats/COVID19analytics) |
 |||[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)|
 
 
@@ -39,12 +39,12 @@ Install the R package using the following commands on the R console:
 
 ```R
 # install.packages("devtools")
-devtools::install_github("rOpenStats/COVID19", build_opts = NULL)
+devtools::install_github("rOpenStats/COVID19analytics", build_opts = NULL)
 ```
 
 # How to use it
 ```R
-library(COVID19)
+library(COVID19analytics)
 library(dplyr)
 library(dplyr)
 library(tidyverse)
@@ -84,7 +84,7 @@ ggplot <- rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.cou
 ggsave(file.path(data.dir, paste("latam-daily-increment-", dataviz.date, ".png", sep ="")), ggplot,
        width = 7, height = 5, dpi = 300)
 ```
-# ![top-countries-daily-increment.png](https://github.com/rOpenStats/COVID19/blob/master/inst/extdata/top-countries-daily-increment.png)
+# ![top-countries-daily-increment.png](https://github.com/rOpenStats/COVID19analytics/blob/master/inst/extdata/top-countries-daily-increment.png)
 
 ```
 ggplot <- rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries,
@@ -92,7 +92,7 @@ ggplot <- rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.cou
 ggsave(file.path(data.dir, paste("latam-daily-increment-", dataviz.date, ".png", sep ="")), ggplot,
        width = 7, height = 5, dpi = 300)
 ```
-# ![top-countries-daily-increment.png](https://github.com/rOpenStats/COVID19/blob/master/inst/extdata/latam-daily-increment.png)
+# ![top-countries-daily-increment.png](https://github.com/rOpenStats/COVID19analytics/blob/master/inst/extdata/latam-daily-increment.png)
 
 
 ```
@@ -106,7 +106,7 @@ ggsave(file.path(data.dir, paste("exponential-growth-", Sys.Date(), ".png", sep 
        width = 7, height = 5, dpi = 300)
 ```
 
-# ![covid-19-international-exponential-growth.png](https://github.com/rOpenStats/COVID19/blob/master/inst/extdata/covid-19-international-exponential-growth.png)
+# ![covid-19-international-exponential-growth.png](https://github.com/rOpenStats/COVID19analytics/blob/master/inst/extdata/covid-19-international-exponential-growth.png)
 
 ```
 latam.countries <- c("Mexico",
@@ -120,7 +120,7 @@ ggsave(file.path(data.dir, paste("covid-19-exponential-latam-growth-", Sys.Date(
 ```
 
 
-# ![covid-19-latam-exponential-growth.png](https://github.com/rOpenStats/COVID19/blob/master/inst/extdata/covid-19-latam-exponential-growth.png)
+# ![covid-19-latam-exponential-growth.png](https://github.com/rOpenStats/COVID19analytics/blob/master/inst/extdata/covid-19-latam-exponential-growth.png)
 
 
 ```
@@ -129,14 +129,14 @@ ggsave(file.path(data.dir, paste("top-countries-daily-conf-inc-log-", Sys.Date()
        width = 7, height = 5, dpi = 300)
 ```
 
-# ![top-countries-daily-conf-inc-log.png](https://github.com/rOpenStats/COVID19/blob/master/inst/extdata/top-countries-daily-conf-inc-log.png)
+# ![top-countries-daily-conf-inc-log.png](https://github.com/rOpenStats/COVID19analytics/blob/master/inst/extdata/top-countries-daily-conf-inc-log.png)
 
 ```
 ggplot <- rg$ggplotTopCountriesLines(field = "rate.inc.daily", log.scale = FALSE)
 ggsave(file.path(data.dir, paste("top-countries-lines-rate-daily-inc-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 7, height = 5, dpi = 300)
 ```
-# ![top-countries-lines-rate-daily-inc.png](https://github.com/rOpenStats/COVID19/blob/master/inst/extdata/top-countries-lines-rate-daily-inc.png)
+# ![top-countries-lines-rate-daily-inc.png](https://github.com/rOpenStats/COVID19analytics/blob/master/inst/extdata/top-countries-lines-rate-daily-inc.png)
 
 
 # Selected Yanchang Zhao visualizations
@@ -146,7 +146,7 @@ ggplot <- rg$ggplotTopCountriesPie()
 ggsave(file.path(data.dir, paste("top-countries-pie-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
 ```
-# ![top-countries-bar-plot.png](https://github.com/rOpenStats/COVID19/blob/master/inst/extdata/top-countries-pie.png)
+# ![top-countries-bar-plot.png](https://github.com/rOpenStats/COVID19analytics/blob/master/inst/extdata/top-countries-pie.png)
 
 
 
@@ -155,21 +155,21 @@ ggplot <- rg$ggplotTopCountriesBarPlots()
 ggsave(file.path(data.dir, paste("top-countries-bar-plot-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
 ```
-# ![top-countries-bar-plot](https://github.com/rOpenStats/COVID19/blob/master/inst/extdata/top-countries-bar-plot.png)
+# ![top-countries-bar-plot](https://github.com/rOpenStats/COVID19analytics/blob/master/inst/extdata/top-countries-bar-plot.png)
 
 ```
 ggplot <- rg$ggplotTopCountriesPie(excluded.countries = c("World", "China"))
 ggsave(file.path(data.dir, paste("top-countries-pie-wo-china-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
 ```
-# ![top-countries-pie-wo-china](https://github.com/rOpenStats/COVID19/blob/master/inst/extdata/top-countries-pie-wo-china.png)
+# ![top-countries-pie-wo-china](https://github.com/rOpenStats/COVID19analytics/blob/master/inst/extdata/top-countries-pie-wo-china.png)
 
 ```
 ggplot <- rg$ggplotTopCountriesBarPlots(excluded.countries = c("World", "China"))
 ggsave(file.path(data.dir, paste("top-countries-bar-plot-wo-china-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
 ```
-# ![top-countries-bar-plot-wo-china](https://github.com/rOpenStats/COVID19/blob/master/inst/extdata/top-countries-bar-plot-wo-china.png)
+# ![top-countries-bar-plot-wo-china](https://github.com/rOpenStats/COVID19analytics/blob/master/inst/extdata/top-countries-bar-plot-wo-china.png)
 
 ```
 # Including Australia
@@ -177,7 +177,7 @@ ggplot <- rg$ggplotCountriesBarGraphs(selected.country = "Australia")
 ggsave(file.path(data.dir, paste("countries-bar-plot-australia-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
 ```
-# ![countries-bar-plot-australia](https://github.com/rOpenStats/COVID19/blob/master/inst/extdata/countries-bar-plot-australia.png)
+# ![countries-bar-plot-australia](https://github.com/rOpenStats/COVID19analytics/blob/master/inst/extdata/countries-bar-plot-australia.png)
 
 ```
 # Including Argentina
@@ -185,7 +185,7 @@ ggplot <- rg$ggplotCountriesBarGraphs(selected.country = "Argentina")
 ggsave(file.path(data.dir, paste("countries-bar-plot-argentina-", Sys.Date(), ".png", sep ="")), ggplot,
        width = 20, height = 15, dpi = 300)
 ```
-# ![countries-bar-plot-argentina](https://github.com/rOpenStats/COVID19/blob/master/inst/extdata/countries-bar-plot-argentina.png)
+# ![countries-bar-plot-argentina](https://github.com/rOpenStats/COVID19analytics/blob/master/inst/extdata/countries-bar-plot-argentina.png)
 
 ```
 ggplot <- rg$ggplotConfirmedCases()
