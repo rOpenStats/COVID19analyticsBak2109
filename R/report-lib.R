@@ -50,8 +50,7 @@ ReportGenerator <- R6Class("ReportGenerator",
      coord_polar("y", start=0) +
      xlab('') + ylab('Percentage (%)') +
      labs(title=paste0('Top 10 Countries with Most Confirmed Cases (', self$data.processor$max.date, ')')) +
-     scale_fill_brewer(name='Country', labels=df$txt, palette = "Paired") +
-     theme_minimal()
+     scale_fill_brewer(name='Country', labels=df$txt, palette = "Paired")
     ret <- setupTheme(ret, self$report.date)
     ret
    },
@@ -74,8 +73,7 @@ ReportGenerator <- R6Class("ReportGenerator",
      ggplot(aes(x=date, y=count, fill=country)) +
      geom_area() + xlab('Date') + ylab('Count') +
      labs(title='Cases around the World') +
-     scale_fill_brewer(palette = "Paired") +
-     theme()
+     scale_fill_brewer(palette = "Paired")
     ret <- self$getXLabelsTheme(ret, x.values)
     ret <- setupTheme(ret, self$report.date)
 
@@ -106,8 +104,7 @@ ReportGenerator <- R6Class("ReportGenerator",
      ggplot(aes(x=date, y=count, fill=type)) +
      geom_area(alpha=0.5) + xlab('Date') + ylab('Count') +
      labs(title=paste0('COVID-19 Cases by Country (', self$data.processor$max.date, ')')) +
-     scale_fill_manual(values=c('red', 'green', 'black')) +
-     theme_minimal()
+     scale_fill_manual(values=c('red', 'green', 'black'))
     ret <- self$getXLabelsTheme(ret, x.values)
     # ret <- ret +
     #  theme(legend.title=element_blank(), legend.position='bottom')
@@ -118,15 +115,13 @@ ReportGenerator <- R6Class("ReportGenerator",
      x.values <- sort(unique(df$date))
      plot1 <- ggplot(self$data.processor$data, aes(x=date, y=remaining.confirmed)) +
        geom_point() + geom_smooth() +
-       xlab('Date') + ylab('Count') + labs(title='Current Confirmed Cases') +
-       theme_minimal()
+       xlab('Date') + ylab('Count') + labs(title='Current Confirmed Cases')
      plot1 <- self$getXLabelsTheme(plot1, x.values)
 
 
      plot2 <- ggplot(self$data.processor$data, aes(x=date, y=confirmed.inc)) +
        geom_point() + geom_smooth() +
-       xlab('Date') + ylab('Count') + labs(title='Increase in Current Confirmed') +
-       theme_minimal()
+       xlab('Date') + ylab('Count') + labs(title='Increase in Current Confirmed')
      plot2 <- self$getXLabelsTheme(plot2, x.values)
 
 
@@ -167,7 +162,8 @@ setupTheme = function(ggplot, report.date){
   ggplot + labs(caption = getCitationNote(report.date = report.date)) +
     theme(legend.title=element_blank(),
           #TODO caption size is not working. Fix it
-          plot.caption = element_text(size =8))
+          plot.caption = element_text(size =8)) +
+    theme_minimal()
 }
 
 #' New dataviz for reportGenerator by
@@ -205,8 +201,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          ggplot(aes(x=date, y=count, fill=country)) +
          geom_bar(stat = "identity") + xlab('Date') + ylab('Count') +
          labs(title = plot.title) +
-         scale_fill_brewer(palette = "Paired") +
-         theme_minimal()
+         scale_fill_brewer(palette = "Paired")
        ret <- self$getXLabelsTheme(ret, x.values)
        ret <- setupTheme(ret, self$report.date)
        ret <- ret +
@@ -255,8 +250,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          ggplot(aes(x=date, y=count, colour=country)) +
          geom_line() + xlab('Date') + ylab(y.label) +
          labs(title = plot.title) +
-         scale_color_brewer(palette = "Paired") +
-         theme_minimal()
+         scale_color_brewer(palette = "Paired")
        ret <- self$getXLabelsTheme(ret, x.values)
        ret <- setupTheme(ret, self$report.date)
 
@@ -316,8 +310,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
        ggplot(aes(x=epidemy.day, y=count, colour = country)) +
        geom_line() + xlab(paste("Epidemy day (0 when confirmed >", min.cases, ")")) + ylab("Confirmed Cases") +
        labs(title = plot.title) +
-       scale_color_brewer(palette = "Paired") +
-       theme_minimal()
+       scale_color_brewer(palette = "Paired")
      ret <- self$getXLabelsTheme(ret, x.values)
      ret <- setupTheme(ret,  self$report.date)
      ret <- ret +
