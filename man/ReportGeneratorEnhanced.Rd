@@ -12,7 +12,7 @@ New dataviz for reportGenerator by
 kenarab
 }
 \section{Super class}{
-\code{\link[COVID19:ReportGenerator]{COVID19::ReportGenerator}} -> \code{ReportGeneratorEnhanced}
+\code{\link[COVID19analytics:ReportGenerator]{COVID19analytics::ReportGenerator}} -> \code{ReportGeneratorEnhanced}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -26,14 +26,14 @@ kenarab
 \if{html}{
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="generateReport">}\href{../../COVID19/html/ReportGenerator.html#method-generateReport}{\code{COVID19::ReportGenerator$generateReport()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="generateTex">}\href{../../COVID19/html/ReportGenerator.html#method-generateTex}{\code{COVID19::ReportGenerator$generateTex()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="getXLabelsTheme">}\href{../../COVID19/html/ReportGenerator.html#method-getXLabelsTheme}{\code{COVID19::ReportGenerator$getXLabelsTheme()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="ggplotConfirmedCases">}\href{../../COVID19/html/ReportGenerator.html#method-ggplotConfirmedCases}{\code{COVID19::ReportGenerator$ggplotConfirmedCases()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="ggplotCountriesBarGraphs">}\href{../../COVID19/html/ReportGenerator.html#method-ggplotCountriesBarGraphs}{\code{COVID19::ReportGenerator$ggplotCountriesBarGraphs()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="ggplotTopCountriesBarPlots">}\href{../../COVID19/html/ReportGenerator.html#method-ggplotTopCountriesBarPlots}{\code{COVID19::ReportGenerator$ggplotTopCountriesBarPlots()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="ggplotTopCountriesPie">}\href{../../COVID19/html/ReportGenerator.html#method-ggplotTopCountriesPie}{\code{COVID19::ReportGenerator$ggplotTopCountriesPie()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ReportGenerator" data-id="preprocess">}\href{../../COVID19/html/ReportGenerator.html#method-preprocess}{\code{COVID19::ReportGenerator$preprocess()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="ReportGenerator" data-id="generateReport">}\href{../../COVID19analytics/html/ReportGenerator.html#method-generateReport}{\code{COVID19analytics::ReportGenerator$generateReport()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="ReportGenerator" data-id="generateTex">}\href{../../COVID19analytics/html/ReportGenerator.html#method-generateTex}{\code{COVID19analytics::ReportGenerator$generateTex()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="ReportGenerator" data-id="getXLabelsTheme">}\href{../../COVID19analytics/html/ReportGenerator.html#method-getXLabelsTheme}{\code{COVID19analytics::ReportGenerator$getXLabelsTheme()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="ReportGenerator" data-id="ggplotConfirmedCases">}\href{../../COVID19analytics/html/ReportGenerator.html#method-ggplotConfirmedCases}{\code{COVID19analytics::ReportGenerator$ggplotConfirmedCases()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="ReportGenerator" data-id="ggplotCountriesBarGraphs">}\href{../../COVID19analytics/html/ReportGenerator.html#method-ggplotCountriesBarGraphs}{\code{COVID19analytics::ReportGenerator$ggplotCountriesBarGraphs()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="ReportGenerator" data-id="ggplotTopCountriesBarPlots">}\href{../../COVID19analytics/html/ReportGenerator.html#method-ggplotTopCountriesBarPlots}{\code{COVID19analytics::ReportGenerator$ggplotTopCountriesBarPlots()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="ReportGenerator" data-id="ggplotTopCountriesPie">}\href{../../COVID19analytics/html/ReportGenerator.html#method-ggplotTopCountriesPie}{\code{COVID19analytics::ReportGenerator$ggplotTopCountriesPie()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="ReportGenerator" data-id="preprocess">}\href{../../COVID19analytics/html/ReportGenerator.html#method-preprocess}{\code{COVID19analytics::ReportGenerator$preprocess()}}\out{</span>}
 }
 \out{</details>}
 }

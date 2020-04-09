@@ -12,7 +12,7 @@ ImputationMethodMean
 ken4rab
 }
 \section{Super class}{
-\code{\link[COVID19:ImputationMethod]{COVID19::ImputationMethod}} -> \code{ImputationMethodMean}
+\code{\link[COVID19analytics:ImputationMethod]{COVID19analytics::ImputationMethod}} -> \code{ImputationMethodMean}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -25,7 +25,7 @@ ken4rab
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="COVID19" data-topic="ImputationMethod" data-id="setup">}\href{../../COVID19/html/ImputationMethod.html#method-setup}{\code{COVID19::ImputationMethod$setup()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="ImputationMethod" data-id="setup">}\href{../../COVID19analytics/html/ImputationMethod.html#method-setup}{\code{COVID19analytics::ImputationMethod$setup()}}\out{</span>}
 }
 \out{</details>}
 }
