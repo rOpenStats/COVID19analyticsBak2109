@@ -152,6 +152,7 @@ getLogger <- function(r6.object){
   ret
 }
 
+#' @description
 #' kind of type checking
 #' @author kenarab
 #' @export
@@ -160,6 +161,7 @@ typeCheck <- function(object, class.name){
 }
 
 
+#' @description
 #' smooth a serie averaging last n values
 #' @author kenarab
 #' @import dplyr
@@ -171,6 +173,7 @@ smoothSerie <- function(serie.name, serie, n){
 }
 
 
+#' @description
 #' smooth a serie applying smooth package. Currently under construction
 #' @author kenarab
 #' @import smooth
@@ -183,6 +186,7 @@ smoothSerie2 <- function(serie.name, serie, n){
 }
 
 
+#' @description
 #' New dataviz for reportGenerator by
 #' @author kenarab
 #' @import countrycode
