@@ -78,6 +78,7 @@ ReportGenerator <- R6Class("ReportGenerator",
 
     ret <- ret +
      facet_wrap(~type, ncol=2, scales='free_y')
+    ret
    },
    ggplotCountriesBarGraphs = function(selected.country = "Australia"){
     ## convert from wide to long format, for purpose of drawing a area plot
@@ -107,8 +108,9 @@ ReportGenerator <- R6Class("ReportGenerator",
     ret <- self$getXLabelsTheme(ret, x.values)
     # ret <- ret +
     #  theme(legend.title=element_blank(), legend.position='bottom')
-    ret <- setupTheme(ret, self$report.date, total.colors = length(unique(df$country))) +
+    ret <- setupTheme(ret, self$report.date, total.colors = NULL) +
       facet_wrap(~country, ncol=3, scales='free_y')
+    ret
    },
    ggplotConfirmedCases = function(){
      ## current confirmed and its increase
@@ -160,14 +162,20 @@ ReportGenerator <- R6Class("ReportGenerator",
 #' @import RColorBrewer
 #' @export
 setupTheme <- function(ggplot, report.date, total.colors, selected.palette = "Paired"){
-  colors.palette <- colorRampPalette(brewer.pal(8, selected.palette))(total.colors)
   ggplot + labs(caption = getCitationNote(report.date = report.date)) +
     theme(legend.title=element_blank(),
           #TODO caption size is not working. Fix it
           plot.caption = element_text(size =8)) +
-    theme_minimal()+
-    #scale_fill_brewer(palette = selected.palette)
-    scale_fill_manual(values = colors.palette)
+    theme_minimal()
+  if (!is.null(total.colors)){
+    colors.palette <- colorRampPalette(brewer.pal(8, selected.palette))(total.colors)
+    ggplot <- ggplot +
+      #scale_fill_brewer(palette = selected.palette)
+      scale_fill_manual(values = colors.palette) +
+      scale_color_manual(values = colors.palette)
+
+  }
+  ggplot
 }
 
 #' New dataviz for reportGenerator by
@@ -250,7 +258,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        self$report.date <- max(df$date)
 
        ret <- df %>% filter(country != 'World') %>%
-         ggplot(aes(x=date, y=count, colour=country)) +
+         ggplot(aes(x=date, y=count, color=country)) +
          geom_line() + xlab('Date') + ylab(y.label) +
          labs(title = plot.title)
        ret <- self$getXLabelsTheme(ret, x.values)
@@ -309,7 +317,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      self$report.date <-max(self$data.processor$data$date)
 
      ret <- df %>% filter(country != 'World') %>%
-       ggplot(aes(x=epidemy.day, y=count, colour = country)) +
+       ggplot(aes(x=epidemy.day, y=count, color = country)) +
        geom_line() + xlab(paste("Epidemy day (0 when confirmed >", min.cases, ")")) + ylab("Confirmed Cases") +
        labs(title = plot.title)
      ret <- self$getXLabelsTheme(ret, x.values)

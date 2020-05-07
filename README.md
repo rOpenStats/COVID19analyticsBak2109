@@ -76,14 +76,14 @@ library(COVID19analytics) # Optional but strongly recommended
 ``` r
 data.processor <- COVID19DataProcessor$new(force.download = FALSE)
 dummy <- data.processor$curate()
-#> INFO  [21:45:50.343]  {stage: data loaded}
+#> INFO  [22:22:24.252]  {stage: data loaded}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [21:45:52.465]  {stage: consolidated}
-#> INFO  [21:45:53.317]  {stage: Starting first imputation}
-#> INFO  [21:45:53.318] Imputation indicator {indicator: confirmed}
-#> INFO  [21:45:53.360] Imputation indicator {indicator: recovered}
-#> INFO  [21:45:53.445] Imputation indicator {indicator: deaths}
-#> INFO  [21:45:54.604]  {stage: Calculating top countries}
+#> INFO  [22:22:26.451]  {stage: consolidated}
+#> INFO  [22:22:27.295]  {stage: Starting first imputation}
+#> INFO  [22:22:27.297] Imputation indicator {indicator: confirmed}
+#> INFO  [22:22:27.337] Imputation indicator {indicator: recovered}
+#> INFO  [22:22:27.416] Imputation indicator {indicator: deaths}
+#> INFO  [22:22:28.620]  {stage: Calculating top countries}
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
 rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
@@ -125,30 +125,16 @@ rc$ggplotComparisonExponentialGrowth(included.countries = international.countrie
 <img src="man/figures/README-unnamed-chunk-4-2.png" width="100%" />
 
 ``` r
-rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
-#> Warning: Removed 2 rows containing missing values (position_stack).
+rg$ggplotTopCountriesLines(field = "confirmed.inc", log.scale = TRUE)
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 ``` r
-rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
-                                               min.cases = 100)
-```
-
-<img src="man/figures/README-unnamed-chunk-5-2.png" width="100%" />
-
-``` r
-rg$ggplotTopCountriesLines(field = "confirmed.inc", log.scale = TRUE)
-```
-
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
-
-``` r
 rg$ggplotTopCountriesLines(field = "rate.inc.daily", log.scale = FALSE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-2.png" width="100%" />
 
 ``` r
 rg$ggplotTopCountriesPie()
@@ -156,14 +142,16 @@ rg$ggplotTopCountriesPie()
 #> will replace the existing scale.
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 ``` r
 rg$ggplotTopCountriesBarPlots()
 ```
 
+<img src="man/figures/README-unnamed-chunk-6-2.png" width="100%" />
+
 ``` r
 rg$ggplotCountriesBarGraphs(selected.country = "Argentina")
-#> Scale for 'fill' is already present. Adding another scale for 'fill', which
-#> will replace the existing scale.
 ```
+
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />

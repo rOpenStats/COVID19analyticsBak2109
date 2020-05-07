@@ -97,12 +97,6 @@ rc$ggplotComparisonExponentialGrowth(included.countries = international.countrie
 
 
 ```{r}
-rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
-rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
-                                               min.cases = 100)
-```
-
-```{r}
 rg$ggplotTopCountriesLines(field = "confirmed.inc", log.scale = TRUE)
 rg$ggplotTopCountriesLines(field = "rate.inc.daily", log.scale = FALSE)
 ```
