@@ -82,6 +82,14 @@ latam.countries <- sort(c("Mexico",
 ```
 
 ```{r}
+(data.processor$data %>%
+  filter(date == current.date) %>%
+  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
+  arrange(desc(confirmed.inc)) %>%
+  filter(confirmed >=10))[1:10,]
+```
+
+```{r}
 rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries,
                                                   map.region = "Latam")
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, min.cases = 20)
