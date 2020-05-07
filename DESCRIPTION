@@ -14,8 +14,11 @@ License: NO
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
-Suggests: knitr, rmarkdown,
-    covr
+Suggests: 
+    knitr,
+    rmarkdown,
+    covr,
+    testthat
 VignetteBuilder: knitr
 Depends: R (>= 3.5.0)
 Imports: magrittr,

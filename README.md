@@ -85,14 +85,14 @@ library(dplyr)
 ``` r
 data.processor <- COVID19DataProcessor$new(force.download = FALSE)
 dummy <- data.processor$curate()
-#> INFO  [22:33:45.546]  {stage: data loaded}
+#> INFO  [10:36:37.545]  {stage: data loaded}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [22:33:47.724]  {stage: consolidated}
-#> INFO  [22:33:48.569]  {stage: Starting first imputation}
-#> INFO  [22:33:48.570] Imputation indicator {indicator: confirmed}
-#> INFO  [22:33:48.601] Imputation indicator {indicator: recovered}
-#> INFO  [22:33:48.688] Imputation indicator {indicator: deaths}
-#> INFO  [22:33:49.895]  {stage: Calculating top countries}
+#> INFO  [10:36:40.450]  {stage: consolidated}
+#> INFO  [10:36:41.549]  {stage: Starting first imputation}
+#> INFO  [10:36:41.551] Imputation indicator {indicator: confirmed}
+#> INFO  [10:36:41.616] Imputation indicator {indicator: recovered}
+#> INFO  [10:36:41.731] Imputation indicator {indicator: deaths}
+#> INFO  [10:36:43.312]  {stage: Calculating top countries}
 current.date <- max(data.processor$data$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
@@ -112,27 +112,27 @@ latam.countries <- sort(c("Mexico",
   arrange(desc(confirmed.inc)) %>%
   filter(confirmed >=10))[1:10,]
 #>           country       date rate.inc.daily confirmed.inc confirmed deaths
-#> 1              US 2020-05-05           0.02         23976   1204351  71064
-#> 2          Russia 2020-05-05           0.07         10102    155370   1451
-#> 3          Brazil 2020-05-05           0.06          6835    115455   7938
-#> 4  United Kingdom 2020-05-05           0.02          4411    196243  29501
-#> 5            Peru 2020-05-05           0.08          3817     51189   1444
-#> 6           India 2020-05-05           0.06          2963     49400   1693
-#> 7          Turkey 2020-05-05           0.01          1832    129491   3520
-#> 8    Saudi Arabia 2020-05-05           0.06          1595     30251    200
-#> 9           Chile 2020-05-05           0.07          1373     22016    275
-#> 10           Iran 2020-05-05           0.01          1323     99970   6340
+#> 1              US 2020-05-06           0.02         24252   1228603  73431
+#> 2          Brazil 2020-05-06           0.10         11156    126611   8588
+#> 3          Russia 2020-05-06           0.07         10559    165929   1537
+#> 4  United Kingdom 2020-05-06           0.03          6116    202359  30150
+#> 5            Peru 2020-05-06           0.07          3628     54817   1533
+#> 6           India 2020-05-06           0.07          3587     52987   1785
+#> 7          France 2020-05-06           0.02          3537    174224  25812
+#> 8          Turkey 2020-05-06           0.02          2253    131744   3584
+#> 9        Pakistan 2020-05-06           0.09          2024     24073    564
+#> 10   Saudi Arabia 2020-05-06           0.06          1687     31938    209
 #>    deaths.inc imputation.confirmed
-#> 1        2142                     
-#> 2          95                     
-#> 3         571                     
-#> 4         692                     
-#> 5         100                     
-#> 6         127                     
-#> 7          59                     
-#> 8           9                     
-#> 9           5                     
-#> 10         63
+#> 1        2367                     
+#> 2         650                     
+#> 3          86                     
+#> 4         649                     
+#> 5          89                     
+#> 6          92                     
+#> 7         275                     
+#> 8          64                     
+#> 9          50                     
+#> 10          9
 ```
 
 ``` r
