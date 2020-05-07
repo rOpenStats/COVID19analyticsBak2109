@@ -313,10 +313,10 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
        geom_line() + xlab(paste("Epidemy day (0 when confirmed >", min.cases, ")")) + ylab("Confirmed Cases") +
        labs(title = plot.title)
      ret <- self$getXLabelsTheme(ret, x.values)
-     ret <- ret +
-       theme(legend.title=element_blank(),
-             plot.caption = element_text(size = 6)
-             )
+     # ret <- ret +
+     #   theme(legend.title=element_blank(),
+     #         plot.caption = element_text(size = 6)
+     #         )
      ret <- setupTheme(ret,  self$report.date, total.colors = length(unique(df$country)))
      #ret <- ret + scale_y_log10(labels = scales::comma)
      ret <- ret + scale_y_log10()

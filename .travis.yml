@@ -1,0 +1,19 @@
+language: r
+cache: packages
+warnings_are_errors: false
+r:
+  - release
+before_install:
+  - tlmgr install index
+r_packages:
+  - covr
+  - lintr
+env:
+  - ON_TRAVIS = 1
+after_success:
+  - R CMD INSTALL $PKG_TARBALL
+  - Rscript -e 'library(covr); codecov()'
+  - Rscript -e 'lintr::lint_package()'
+after_success:
+  - R CMD INSTALL .
+  - Rscript -e 'pkgdown::build_site()'

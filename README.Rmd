@@ -109,13 +109,13 @@ rg$ggplotTopCountriesLines(field = "rate.inc.daily", log.scale = FALSE)
 
 
 ```{r}
-ggplot <- rg$ggplotTopCountriesPie()
-ggplot <- rg$ggplotTopCountriesBarPlots()
+rg$ggplotTopCountriesPie()
+rg$ggplotTopCountriesBarPlots()
 ```
 
 
 ```{r}
-ggplot <- rg$ggplotCountriesBarGraphs(selected.country = "Argentina")
+rg$ggplotCountriesBarGraphs(selected.country = "Argentina")
 ```
 
 

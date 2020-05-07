@@ -76,14 +76,14 @@ library(COVID19analytics) # Optional but strongly recommended
 ``` r
 data.processor <- COVID19DataProcessor$new(force.download = FALSE)
 dummy <- data.processor$curate()
-#> INFO  [21:25:43.653]  {stage: data loaded}
+#> INFO  [21:45:50.343]  {stage: data loaded}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [21:25:45.828]  {stage: consolidated}
-#> INFO  [21:25:46.665]  {stage: Starting first imputation}
-#> INFO  [21:25:46.666] Imputation indicator {indicator: confirmed}
-#> INFO  [21:25:46.706] Imputation indicator {indicator: recovered}
-#> INFO  [21:25:46.792] Imputation indicator {indicator: deaths}
-#> INFO  [21:25:47.980]  {stage: Calculating top countries}
+#> INFO  [21:45:52.465]  {stage: consolidated}
+#> INFO  [21:45:53.317]  {stage: Starting first imputation}
+#> INFO  [21:45:53.318] Imputation indicator {indicator: confirmed}
+#> INFO  [21:45:53.360] Imputation indicator {indicator: recovered}
+#> INFO  [21:45:53.445] Imputation indicator {indicator: deaths}
+#> INFO  [21:45:54.604]  {stage: Calculating top countries}
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
 rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
@@ -151,14 +151,19 @@ rg$ggplotTopCountriesLines(field = "rate.inc.daily", log.scale = FALSE)
 <img src="man/figures/README-unnamed-chunk-6-2.png" width="100%" />
 
 ``` r
-ggplot <- rg$ggplotTopCountriesPie()
+rg$ggplotTopCountriesPie()
 #> Scale for 'fill' is already present. Adding another scale for 'fill', which
 #> will replace the existing scale.
-ggplot <- rg$ggplotTopCountriesBarPlots()
+```
+
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+
+``` r
+rg$ggplotTopCountriesBarPlots()
 ```
 
 ``` r
-ggplot <- rg$ggplotCountriesBarGraphs(selected.country = "Argentina")
+rg$ggplotCountriesBarGraphs(selected.country = "Argentina")
 #> Scale for 'fill' is already present. Adding another scale for 'fill', which
 #> will replace the existing scale.
 ```
