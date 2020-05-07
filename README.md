@@ -57,7 +57,7 @@ devtools::install_github("rOpenStats/COVID19analytics", build_opts = NULL)
 # How to use it
 
 ``` r
-library(COVID19analytics) # Optional but strongly recommended
+library(COVID19analytics) 
 #> Warning: replacing previous import 'ggplot2::Layout' by 'lgr::Layout' when
 #> loading 'COVID19analytics'
 #> Warning: replacing previous import 'dplyr::intersect' by 'lubridate::intersect'
@@ -71,19 +71,29 @@ library(COVID19analytics) # Optional but strongly recommended
 #>   as.zoo.data.frame zoo
 #> Warning: replacing previous import 'magrittr::extract' by 'tidyr::extract' when
 #> loading 'COVID19analytics'
+library(dplyr) 
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
 ```
 
 ``` r
 data.processor <- COVID19DataProcessor$new(force.download = FALSE)
 dummy <- data.processor$curate()
-#> INFO  [22:22:24.252]  {stage: data loaded}
+#> INFO  [22:33:45.546]  {stage: data loaded}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [22:22:26.451]  {stage: consolidated}
-#> INFO  [22:22:27.295]  {stage: Starting first imputation}
-#> INFO  [22:22:27.297] Imputation indicator {indicator: confirmed}
-#> INFO  [22:22:27.337] Imputation indicator {indicator: recovered}
-#> INFO  [22:22:27.416] Imputation indicator {indicator: deaths}
-#> INFO  [22:22:28.620]  {stage: Calculating top countries}
+#> INFO  [22:33:47.724]  {stage: consolidated}
+#> INFO  [22:33:48.569]  {stage: Starting first imputation}
+#> INFO  [22:33:48.570] Imputation indicator {indicator: confirmed}
+#> INFO  [22:33:48.601] Imputation indicator {indicator: recovered}
+#> INFO  [22:33:48.688] Imputation indicator {indicator: deaths}
+#> INFO  [22:33:49.895]  {stage: Calculating top countries}
+current.date <- max(data.processor$data$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
 rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
@@ -95,6 +105,34 @@ latam.countries <- sort(c("Mexico",
                      data.processor$countries$getCountries(division = "sub.continent", name = "Caribbean"),
                      data.processor$countries$getCountries(division = "sub.continent", name = "Central America"),
                      data.processor$countries$getCountries(division = "sub.continent", name = "South America")))
+
+(data.processor$data %>%
+  filter(date == current.date) %>%
+  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
+  arrange(desc(confirmed.inc)) %>%
+  filter(confirmed >=10))[1:10,]
+#>           country       date rate.inc.daily confirmed.inc confirmed deaths
+#> 1              US 2020-05-05           0.02         23976   1204351  71064
+#> 2          Russia 2020-05-05           0.07         10102    155370   1451
+#> 3          Brazil 2020-05-05           0.06          6835    115455   7938
+#> 4  United Kingdom 2020-05-05           0.02          4411    196243  29501
+#> 5            Peru 2020-05-05           0.08          3817     51189   1444
+#> 6           India 2020-05-05           0.06          2963     49400   1693
+#> 7          Turkey 2020-05-05           0.01          1832    129491   3520
+#> 8    Saudi Arabia 2020-05-05           0.06          1595     30251    200
+#> 9           Chile 2020-05-05           0.07          1373     22016    275
+#> 10           Iran 2020-05-05           0.01          1323     99970   6340
+#>    deaths.inc imputation.confirmed
+#> 1        2142                     
+#> 2          95                     
+#> 3         571                     
+#> 4         692                     
+#> 5         100                     
+#> 6         127                     
+#> 7          59                     
+#> 8           9                     
+#> 9           5                     
+#> 10         63
 ```
 
 ``` r

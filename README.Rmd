@@ -61,12 +61,15 @@ devtools::install_github("rOpenStats/COVID19analytics", build_opts = NULL)
 # How to use it
 
 ```{r load}
-library(COVID19analytics) # Optional but strongly recommended
+library(COVID19analytics) 
+library(dplyr) 
+
 ```
 
 ```{r}
 data.processor <- COVID19DataProcessor$new(force.download = FALSE)
 dummy <- data.processor$curate()
+current.date <- max(data.processor$data$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
 rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
@@ -79,9 +82,6 @@ latam.countries <- sort(c("Mexico",
                      data.processor$countries$getCountries(division = "sub.continent", name = "Central America"),
                      data.processor$countries$getCountries(division = "sub.continent", name = "South America")))
 
-```
-
-```{r}
 (data.processor$data %>%
   filter(date == current.date) %>%
   select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
