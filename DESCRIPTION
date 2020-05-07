@@ -1,7 +1,7 @@
 Package: COVID19analytics
 Type: Package
 Title: COVID-19 data processing
-Version: 0.1.0
+Version: 0.2.0
 Language: en-US
 Authors@R: c(
     person("Alejandro", "Baranek",,"abaranek@dc.uba.ar", c("aut","com","cre", "cph")),
