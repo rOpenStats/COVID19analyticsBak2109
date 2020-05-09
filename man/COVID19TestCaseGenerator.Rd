@@ -13,6 +13,11 @@ COVID19TestCaseGenerator
 \itemize{
 \item \href{#method-new}{\code{COVID19TestCaseGenerator$new()}}
 \item \href{#method-generateTestCase}{\code{COVID19TestCaseGenerator$generateTestCase()}}
+\item \href{#method-getSourceIndicatorPath}{\code{COVID19TestCaseGenerator$getSourceIndicatorPath()}}
+\item \href{#method-getExpectedFile}{\code{COVID19TestCaseGenerator$getExpectedFile()}}
+\item \href{#method-readExpectedFile}{\code{COVID19TestCaseGenerator$readExpectedFile()}}
+\item \href{#method-getConfiguredProcessor}{\code{COVID19TestCaseGenerator$getConfiguredProcessor()}}
+\item \href{#method-doRegressionTest}{\code{COVID19TestCaseGenerator$doRegressionTest()}}
 \item \href{#method-clone}{\code{COVID19TestCaseGenerator$clone()}}
 }
 }
@@ -21,12 +26,7 @@ COVID19TestCaseGenerator
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19TestCaseGenerator$new(
-  data.processor,
-  case.name,
-  countries,
-  test.case.folder = "inst/extdata/"
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19TestCaseGenerator$new(case.name, countries, running.test = FALSE)}\if{html}{\out{</div>}}
 }
 
 }
@@ -35,7 +35,52 @@ COVID19TestCaseGenerator
 \if{latex}{\out{\hypertarget{method-generateTestCase}{}}}
 \subsection{Method \code{generateTestCase()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19TestCaseGenerator$generateTestCase(countries)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19TestCaseGenerator$generateTestCase()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getSourceIndicatorPath"></a>}}
+\if{latex}{\out{\hypertarget{method-getSourceIndicatorPath}{}}}
+\subsection{Method \code{getSourceIndicatorPath()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19TestCaseGenerator$getSourceIndicatorPath(indicator)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getExpectedFile"></a>}}
+\if{latex}{\out{\hypertarget{method-getExpectedFile}{}}}
+\subsection{Method \code{getExpectedFile()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19TestCaseGenerator$getExpectedFile()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-readExpectedFile"></a>}}
+\if{latex}{\out{\hypertarget{method-readExpectedFile}{}}}
+\subsection{Method \code{readExpectedFile()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19TestCaseGenerator$readExpectedFile(expected.file.path)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getConfiguredProcessor"></a>}}
+\if{latex}{\out{\hypertarget{method-getConfiguredProcessor}{}}}
+\subsection{Method \code{getConfiguredProcessor()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19TestCaseGenerator$getConfiguredProcessor()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-doRegressionTest"></a>}}
+\if{latex}{\out{\hypertarget{method-doRegressionTest}{}}}
+\subsection{Method \code{doRegressionTest()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19TestCaseGenerator$doRegressionTest(rownum2test, seed = 0)}\if{html}{\out{</div>}}
 }
 
 }

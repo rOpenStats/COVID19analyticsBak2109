@@ -235,8 +235,16 @@ Countries <- R6Class("Countries",
    }
   ))
 
+#' Get package directory
+#'
+#' Gets the path of package data.
+#' @noRd
+getPackageDir <- function(){
+  home.dir <- find.package("COVID19analytics", lib.loc = NULL, quiet = TRUE)
+  data.subdir <- file.path("inst", "extdata")
+  if (!dir.exists(file.path(home.dir, data.subdir)))
+    data.subdir <- "extdata"
+  file.path(home.dir, data.subdir)
+}
 
 
-
-library(countrycode)
-countrycode::codelist

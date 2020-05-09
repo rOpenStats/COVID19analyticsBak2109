@@ -15,6 +15,7 @@ kenarab
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{COVID19DataProcessor$new()}}
+\item \href{#method-setupData}{\code{COVID19DataProcessor$setupData()}}
 \item \href{#method-curate}{\code{COVID19DataProcessor$curate()}}
 \item \href{#method-downloadData}{\code{COVID19DataProcessor$downloadData()}}
 \item \href{#method-loadData}{\code{COVID19DataProcessor$loadData()}}
@@ -43,11 +44,20 @@ kenarab
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setupData"></a>}}
+\if{latex}{\out{\hypertarget{method-setupData}{}}}
+\subsection{Method \code{setupData()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$setupData()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-curate"></a>}}
 \if{latex}{\out{\hypertarget{method-curate}{}}}
 \subsection{Method \code{curate()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$curate()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$curate(countries = NULL)}\if{html}{\out{</div>}}
 }
 
 }

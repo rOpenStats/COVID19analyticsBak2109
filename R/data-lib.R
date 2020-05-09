@@ -44,14 +44,15 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
 
     self
    },
+   setupData = function(){
+     logger <- getLogger(self)
+     self$downloadData()
+     self$state <- "downloaded"
+     self$loadData()
+     self$state <- "loaded"
+     logger$info("", stage = "data loaded")
+   },
    curate = function(countries = NULL){
-    logger <- getLogger(self)
-    self$downloadData()
-    self$state <- "downloaded"
-    self$loadData()
-    self$state <- "loaded"
-    logger$info("", stage = "data loaded")
-
     n.col <- ncol(self$data.confirmed)
     ## get dates from column names
     dates <- names(self$data.confirmed)[5:n.col] %>% substr(2,8) %>% mdy()

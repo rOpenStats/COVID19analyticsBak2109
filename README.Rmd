@@ -69,6 +69,7 @@ library(dplyr)
 
 ```{r}
 data.processor <- COVID19DataProcessor$new(force.download = FALSE)
+dummy <- data.processor$setupData()
 dummy <- data.processor$curate()
 current.date <- max(data.processor$data$date)
 
