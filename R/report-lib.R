@@ -161,14 +161,22 @@ ReportGenerator <- R6Class("ReportGenerator",
 #' setup Dataviz theme
 #' @import RColorBrewer
 #' @export
-setupTheme <- function(ggplot, report.date, total.colors, selected.palette = "Paired"){
+setupTheme <- function(ggplot, report.date, total.colors){
   ggplot + labs(caption = getCitationNote(report.date = report.date)) +
     theme(legend.title=element_blank(),
           #TODO caption size is not working. Fix it
           plot.caption = element_text(size =8)) +
     theme_minimal()
   if (!is.null(total.colors)){
-    colors.palette <- colorRampPalette(brewer.pal(8, selected.palette))(total.colors)
+    #, selected.palette = "Paired"
+    #colors.palette <- colorRampPalette(brewer.pal(8, selected.palette))(total.colors)
+    colors.palette <- c(brewer.pal(n=9, name = "Set1"), brewer.pal(n=3, name = "Set1"), brewer.pal(n=12, name = "Set3"))
+    if ( total.colors >length(colors.palette)){
+      colors.palette <- colorRampPalette(colors.palette)(total.colors)
+    }
+    else{
+      colors.palette <- colors.palette[seq_len(total.colors)]
+    }
     ggplot <- ggplot +
       #scale_fill_brewer(palette = selected.palette)
       scale_fill_manual(values = colors.palette) +

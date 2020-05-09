@@ -4,7 +4,7 @@
 \alias{setupTheme}
 \title{setup Dataviz theme}
 \usage{
-setupTheme(ggplot, report.date, total.colors, selected.palette = "Paired")
+setupTheme(ggplot, report.date, total.colors)
 }
 \description{
 setup Dataviz theme
