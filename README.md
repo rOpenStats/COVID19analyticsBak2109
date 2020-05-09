@@ -12,10 +12,6 @@ analysing international outbreak of COVID-19.
 It includes several visualizations of the COVID-19 international
 outbreak.
 
-The package was inspired by [this
-blogpost](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/)
-from [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/)
-
 Yanchang Zhao, COVID-19 Data Analysis with Tidyverse and Ggplot2 -
 China. RDataMining.com, 2020.
 
@@ -23,10 +19,12 @@ URL:
 <http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf>.
 
   - COVID19DataProcessor generates curated series
-  - The original process and visualizations are included in
-    ReportGenerator R6 object
-  - More process and visualization included int ReportGeneratorEnhanced
-    R6 object
+  - [visualizations](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/)
+    by [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/)
+    are included in ReportGenerator R6 object
+  - More visualizations included int ReportGeneratorEnhanced R6 object
+  - Visualizations ReportGeneratorDataComparison compares all countries
+    counting epidemy day 0 when confirmed cases \> n (i.e. n = 100).
 
 # Consideration
 
@@ -85,14 +83,14 @@ library(dplyr)
 ``` r
 data.processor <- COVID19DataProcessor$new(force.download = FALSE)
 dummy <- data.processor$curate()
-#> INFO  [09:09:08.381]  {stage: data loaded}
+#> INFO  [12:05:44.844]  {stage: data loaded}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [09:09:10.528]  {stage: consolidated}
-#> INFO  [09:09:11.279]  {stage: Starting first imputation}
-#> INFO  [09:09:11.280] Imputation indicator {indicator: confirmed}
-#> INFO  [09:09:11.325] Imputation indicator {indicator: recovered}
-#> INFO  [09:09:11.412] Imputation indicator {indicator: deaths}
-#> INFO  [09:09:12.771]  {stage: Calculating top countries}
+#> INFO  [12:05:47.016]  {stage: consolidated}
+#> INFO  [12:05:47.910]  {stage: Starting first imputation}
+#> INFO  [12:05:47.911] Imputation indicator {indicator: confirmed}
+#> INFO  [12:05:47.947] Imputation indicator {indicator: recovered}
+#> INFO  [12:05:48.049] Imputation indicator {indicator: deaths}
+#> INFO  [12:05:49.357]  {stage: Calculating top countries}
 current.date <- max(data.processor$data$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
@@ -182,6 +180,14 @@ rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, min.c
 <img src="man/figures/README-unnamed-chunk-5-2.png" width="100%" />
 
 ``` r
+
+rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
+                        field = "confirmed.inc", log.scale = TRUE)
+```
+
+<img src="man/figures/README-unnamed-chunk-5-3.png" width="100%" />
+
+``` r
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
 #> Warning: Removed 2 rows containing missing values (position_stack).
 ```
@@ -196,13 +202,14 @@ rc$ggplotComparisonExponentialGrowth(included.countries = international.countrie
 <img src="man/figures/README-unnamed-chunk-6-2.png" width="100%" />
 
 ``` r
-rg$ggplotTopCountriesLines(field = "confirmed.inc", log.scale = TRUE)
+rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)
 ```
 
 <img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 ``` r
-rg$ggplotTopCountriesLines(field = "rate.inc.daily", log.scale = FALSE)
+rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
+#> Warning: Transformation introduced infinite values in continuous y-axis
 ```
 
 <img src="man/figures/README-unnamed-chunk-7-2.png" width="100%" />

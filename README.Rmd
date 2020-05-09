@@ -7,6 +7,7 @@ output: github_document
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  dpi=200,
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%"
@@ -23,7 +24,6 @@ This package curate (downloads, clean, consolidate, smooth) [data from Johns Hok
  
 It includes several visualizations of the COVID-19 international outbreak.
 
-The package was inspired by [this blogpost](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/) from [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/)
 
 
 Yanchang Zhao, COVID-19 Data Analysis with Tidyverse and Ggplot2 - China. RDataMining.com, 2020.
@@ -31,8 +31,9 @@ Yanchang Zhao, COVID-19 Data Analysis with Tidyverse and Ggplot2 - China. RDataM
 URL: http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf.
 
 * COVID19DataProcessor generates curated series
-* The original process and visualizations are included in ReportGenerator R6 object 
-* More process and visualization included int ReportGeneratorEnhanced R6 object
+* [visualizations](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/) by [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/) are included in ReportGenerator R6 object 
+* More visualizations included int ReportGeneratorEnhanced R6 object
+* Visualizations ReportGeneratorDataComparison compares all countries counting epidemy day 0 when confirmed cases > n (i.e. n = 100).
 
 # Consideration
 Data is still noisy because there are missing data from some regions in some days. We are working on in it.
@@ -107,6 +108,9 @@ rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries,
                                                   map.region = "Latam")
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, min.cases = 20)
 
+rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
+                        field = "confirmed.inc", log.scale = TRUE)
+
 ```
 
 
@@ -118,8 +122,8 @@ rc$ggplotComparisonExponentialGrowth(included.countries = international.countrie
 
 
 ```{r}
-rg$ggplotTopCountriesLines(field = "confirmed.inc", log.scale = TRUE)
-rg$ggplotTopCountriesLines(field = "rate.inc.daily", log.scale = FALSE)
+rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)
+rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
 ```
 
 

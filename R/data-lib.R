@@ -248,6 +248,9 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     logger$debug("Imputing", country = imputation.df$country, date = imputation.df$date)
 
    },
+   getCountries = function(){
+     self$countries$countries
+   },
    smoothSeries = function(old.serie.sufix = "original"){
     new.data <- NULL
     for (current.country in sort(unique((self$data$country)))){

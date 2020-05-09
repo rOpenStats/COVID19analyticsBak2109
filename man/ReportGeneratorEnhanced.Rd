@@ -19,7 +19,7 @@ kenarab
 \itemize{
 \item \href{#method-new}{\code{ReportGeneratorEnhanced$new()}}
 \item \href{#method-ggplotTopCountriesStackedBarDailyInc}{\code{ReportGeneratorEnhanced$ggplotTopCountriesStackedBarDailyInc()}}
-\item \href{#method-ggplotTopCountriesLines}{\code{ReportGeneratorEnhanced$ggplotTopCountriesLines()}}
+\item \href{#method-ggplotCountriesLines}{\code{ReportGeneratorEnhanced$ggplotCountriesLines()}}
 \item \href{#method-clone}{\code{ReportGeneratorEnhanced$clone()}}
 }
 }
@@ -60,11 +60,13 @@ kenarab
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ggplotTopCountriesLines"></a>}}
-\if{latex}{\out{\hypertarget{method-ggplotTopCountriesLines}{}}}
-\subsection{Method \code{ggplotTopCountriesLines()}}{
+\if{html}{\out{<a id="method-ggplotCountriesLines"></a>}}
+\if{latex}{\out{\hypertarget{method-ggplotCountriesLines}{}}}
+\subsection{Method \code{ggplotCountriesLines()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorEnhanced$ggplotTopCountriesLines(
+\if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorEnhanced$ggplotCountriesLines(
+  included.countries = self$data.processor$top.countries,
+  countries.text = "top countries",
   excluded.countries = "World",
   field = "confirmed.inc",
   log.scale = FALSE,

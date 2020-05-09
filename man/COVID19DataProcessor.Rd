@@ -23,6 +23,7 @@ kenarab
 \item \href{#method-makeDataComparison}{\code{COVID19DataProcessor$makeDataComparison()}}
 \item \href{#method-makeImputationsRemoveNA}{\code{COVID19DataProcessor$makeImputationsRemoveNA()}}
 \item \href{#method-makeImputations}{\code{COVID19DataProcessor$makeImputations()}}
+\item \href{#method-getCountries}{\code{COVID19DataProcessor$getCountries()}}
 \item \href{#method-smoothSeries}{\code{COVID19DataProcessor$smoothSeries()}}
 \item \href{#method-calculateRates}{\code{COVID19DataProcessor$calculateRates()}}
 \item \href{#method-calculateTopCountries}{\code{COVID19DataProcessor$calculateTopCountries()}}
@@ -110,6 +111,15 @@ kenarab
 \subsection{Method \code{makeImputations()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeImputations()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getCountries"></a>}}
+\if{latex}{\out{\hypertarget{method-getCountries}{}}}
+\subsection{Method \code{getCountries()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$getCountries()}\if{html}{\out{</div>}}
 }
 
 }
