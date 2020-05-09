@@ -82,11 +82,24 @@ latam.countries <- sort(c("Mexico",
                      data.processor$countries$getCountries(division = "sub.continent", name = "Central America"),
                      data.processor$countries$getCountries(division = "sub.continent", name = "South America")))
 
+```
+
+```{r}
+# Top 10 daily cases confirmed increment
 (data.processor$data %>%
   filter(date == current.date) %>%
   select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
   arrange(desc(confirmed.inc)) %>%
   filter(confirmed >=10))[1:10,]
+```
+
+
+```{r}
+# Top 10 daily deaths increment
+(data.processor$data %>%
+  filter(date == current.date) %>%
+  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
+  arrange(desc(deaths.inc)))[1:10,]
 ```
 
 ```{r}
