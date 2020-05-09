@@ -2,6 +2,7 @@
 
 export(COVID19DataComparison)
 export(COVID19DataProcessor)
+export(COVID19TestCaseGenerator)
 export(Countries)
 export(ImputationMethod)
 export(ImputationMethodMean)

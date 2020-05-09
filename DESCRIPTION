@@ -41,6 +41,7 @@ Collate:
   'util-lib.R'
   'data-lib.R'
   'report-lib.R'
+  'test-lib.R'
   'zzz.R'
 BugReports: https://github.com/kenarab/COVID19/issues
 URL: https://github.com/kenarab/COVID19

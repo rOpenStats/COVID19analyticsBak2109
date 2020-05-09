@@ -44,7 +44,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
 
     self
    },
-   curate = function(){
+   curate = function(countries = NULL){
     logger <- getLogger(self)
     self$downloadData()
     self$state <- "downloaded"
@@ -106,6 +106,10 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     # self$state <- "2st-imputation-smoothed"
     # self$makeDataComparison()
 
+    #For generating test cases filter countries
+    if (!is.null(countries)){
+      self$data %<>% filter(country %in% countries)
+    }
     logger$info("", stage = "Calculating top countries")
     self$calculateTopCountries()
     self
