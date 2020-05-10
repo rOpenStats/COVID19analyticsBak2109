@@ -17,7 +17,6 @@ RoxygenNote: 7.1.0
 Suggests: 
     knitr,
     rmarkdown,
-    covr,
     testthat
 VignetteBuilder: knitr
 Depends: R (>= 3.5.0)
@@ -38,6 +37,8 @@ Imports: magrittr,
          zoo,
          lgr,
          readr,
+         pkgdown,
+         covr,
          testthat
 Collate:
   'util-lib.R'
