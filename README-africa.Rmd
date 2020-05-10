@@ -1,0 +1,139 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  dpi=200,
+  comment = "#>",
+  fig.path = "man/figures/README-africa-",
+  out.width = "100%"
+)
+```
+
+
+
+# COVID19analytics
+
+ <!-- . -->
+
+This package curate (downloads, clean, consolidate, smooth) [data from Johns Hokpins](https://github.com/CSSEGISandData/COVID-19/) for analysing international outbreak of COVID-19. 
+ 
+It includes several visualizations of the COVID-19 international outbreak.
+
+
+
+Yanchang Zhao, COVID-19 Data Analysis with Tidyverse and Ggplot2 - China. RDataMining.com, 2020.
+
+URL: http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf.
+
+* COVID19DataProcessor generates curated series
+* [visualizations](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/) by [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/) are included in ReportGenerator R6 object 
+* More visualizations included int ReportGeneratorEnhanced R6 object
+* Visualizations ReportGeneratorDataComparison compares all countries counting epidemy day 0 when confirmed cases > n (i.e. n = 100).
+
+# Consideration
+Data is still noisy because there are missing data from some regions in some days. We are working on in it.
+
+
+
+# Package
+
+<!-- badges: start -->
+| Release | Usage | Development |
+|:--------|:------|:------------|
+| | [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-blue.svg)](https://cran.r-project.org/) | [![Travis](https://travis-ci.org/rOpenStats/COVID19analytics.svg?branch=master)](https://travis-ci.org/rOpenStats/COVID19analytics) |
+| [![CRAN](http://www.r-pkg.org/badges/version/COVID19analytics)](https://cran.r-project.org/package=COVID19analytics) | | [![codecov](https://codecov.io/gh/rOpenStats/COVID19analytics/branch/master/graph/badge.svg)](https://codecov.io/gh/rOpenStats/COVID19analytics) |
+|||[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)|
+<!-- badges: end -->
+
+# How to get started (Development version)
+
+Install the R package using the following commands on the R console:
+
+```R
+# install.packages("devtools")
+devtools::install_github("rOpenStats/COVID19analytics", build_opts = NULL)
+```
+
+# How to use it
+
+```{r load}
+library(COVID19analytics) 
+library(dplyr) 
+
+```
+
+```{r}
+data.processor <- COVID19DataProcessor$new(force.download = FALSE)
+dummy <- data.processor$setupData()
+dummy <- data.processor$curate()
+current.date <- max(data.processor$data$date)
+
+rg <- ReportGeneratorEnhanced$new(data.processor)
+rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
+
+top.countries <- data.processor$top.countries
+international.countries <- unique(c(data.processor$top.countries,
+                                    "Japan", "Singapore", "Korea, South"))
+africa.countries <- sort(data.processor$countries$getCountries(division = "continent", name = "Africa"))
+
+```
+
+```{r}
+# Top 10 daily cases confirmed increment
+(data.processor$data %>%
+  filter(date == current.date) %>%
+  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
+  arrange(desc(confirmed.inc)) %>%
+  filter(confirmed >=10))[1:10,]
+```
+
+
+```{r}
+# Top 10 daily deaths increment
+(data.processor$data %>%
+  filter(date == current.date) %>%
+  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
+  arrange(desc(deaths.inc)))[1:10,]
+```
+
+```{r}
+rg$ggplotTopCountriesStackedBarDailyInc(included.countries = africa.countries,
+                                                  map.region = "Africa")
+rc$ggplotComparisonExponentialGrowth(included.countries = africa.countries, min.cases = 20)
+
+rg$ggplotCountriesLines(included.countries = africa.countries, countries.text = "Africa countries",
+                        field = "confirmed.inc", log.scale = TRUE)
+
+```
+
+
+```{r}
+rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
+rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
+                                               min.cases = 100)
+```
+
+
+```{r}
+rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)
+rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
+```
+
+
+```{r}
+rg$ggplotTopCountriesPie()
+rg$ggplotTopCountriesBarPlots()
+```
+
+
+```{r}
+rg$ggplotCountriesBarGraphs(selected.country = "Ethiopia")
+```
+
+
+
