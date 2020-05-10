@@ -36,7 +36,9 @@ Imports: magrittr,
          ggplot2,
          plotly,
          zoo,
-         lgr
+         lgr,
+         readr,
+         testthat
 Collate:
   'util-lib.R'
   'data-lib.R'

@@ -66,6 +66,7 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
      dummy <- self$test.processor$curate(countries = self$countries)
      logger$info("Generating expected file ", filename = file.path.indicator, nrow = nrow(current.data.countries))
      write_csv(self$test.processor$data, file.path.expected)
+     #write.csv(self$test.processor$data, file.path.expected, quote = TRUE, row.names = FALSE)
     }
     else{
      stop(paste("sources folder", self$sources.folder, "should exist for generating test case"))
@@ -83,14 +84,24 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
                              .default = col_double(),
                              country = col_character(),
                              date = col_date(format = ""),
-                             imputation.confirmed.case = col_logical(),
+                             imputation.confirmed.case = col_character(),
                              imputation.confirmed = col_character(),
-                             imputation.recovered.case = col_logical(),
+                             imputation.recovered.case = col_character(),
                              imputation.recovered = col_character(),
-                             imputation.deaths.case = col_logical(),
-                             imputation.deaths = col_logical()
-                            ))
-    as.data.frame(expected.df)
+                             imputation.deaths.case = col_character(),
+                             imputation.deaths = col_character()
+                            )
+                            )
+    expected.df <- as.data.frame(expected.df)
+    # Correct Imputation columns
+    col.names  <- names(expected.df)
+    col.names.string.na <- col.names[grep("imputation", col.names)]
+    for (col in col.names.string.na){
+     na.rows <- which(is.na(expected.df[,col]))
+     expected.df[na.rows, col] <- ""
+    }
+    head(expected.df)
+    expected.df
    },
    getConfiguredProcessor = function(){
     logger <- getLogger(self)
@@ -110,9 +121,9 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
     processor
    },
    doRegressionTest = function(rownum2test, seed = 0){
-    expected.df <-test.case.generator$readExpectedFile()
+    expected.df <-self$readExpectedFile()
 
-    processor <- test.case.generator$getConfiguredProcessor()
+    processor <- self$getConfiguredProcessor()
     processor$curate()
     actual.df <- processor$data
     testthat::expect_equal(nrow(actual.df), nrow(expected.df))
@@ -121,9 +132,11 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
     n <- nrow(expected.df)
     rownum2test <- min(n, rownum2test)
     rows2test <-sort(sample(1:n, rownum2test, replace = FALSE))
+    #debug
+    actual.df <<- actual.df
+    expected.df <<- expected.df
     for (i in rows2test){
-     # TODO test each row
-     #testthat::expect_equivalent(actual.df[i,], expected.df[i,])
+     testthat::expect_equivalent(actual.df[i,], expected.df[i,])
     }
    }
   ))

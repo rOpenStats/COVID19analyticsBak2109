@@ -64,9 +64,16 @@ library(COVID19analytics)
 #> loading 'COVID19analytics'
 #> Warning: replacing previous import 'dplyr::setdiff' by 'lubridate::setdiff' when
 #> loading 'COVID19analytics'
-#> Registered S3 method overwritten by 'quantmod':
-#>   method            from
-#>   as.zoo.data.frame zoo
+#> Warning: replacing previous import 'magrittr::equals' by 'testthat::equals' when
+#> loading 'COVID19analytics'
+#> Warning: replacing previous import 'magrittr::not' by 'testthat::not' when
+#> loading 'COVID19analytics'
+#> Warning: replacing previous import 'magrittr::is_less_than' by
+#> 'testthat::is_less_than' when loading 'COVID19analytics'
+#> Warning: replacing previous import 'dplyr::matches' by 'testthat::matches' when
+#> loading 'COVID19analytics'
+#> Warning: replacing previous import 'testthat::matches' by 'tidyr::matches' when
+#> loading 'COVID19analytics'
 #> Warning: replacing previous import 'magrittr::extract' by 'tidyr::extract' when
 #> loading 'COVID19analytics'
 library(dplyr) 
@@ -82,15 +89,16 @@ library(dplyr)
 
 ``` r
 data.processor <- COVID19DataProcessor$new(force.download = FALSE)
+dummy <- data.processor$setupData()
+#> INFO  [10:14:05.306]  {stage: data loaded}
 dummy <- data.processor$curate()
-#> INFO  [12:05:44.844]  {stage: data loaded}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [12:05:47.016]  {stage: consolidated}
-#> INFO  [12:05:47.910]  {stage: Starting first imputation}
-#> INFO  [12:05:47.911] Imputation indicator {indicator: confirmed}
-#> INFO  [12:05:47.947] Imputation indicator {indicator: recovered}
-#> INFO  [12:05:48.049] Imputation indicator {indicator: deaths}
-#> INFO  [12:05:49.357]  {stage: Calculating top countries}
+#> INFO  [10:14:07.535]  {stage: consolidated}
+#> INFO  [10:14:08.289]  {stage: Starting first imputation}
+#> INFO  [10:14:08.290] Imputation indicator {indicator: confirmed}
+#> INFO  [10:14:08.327] Imputation indicator {indicator: recovered}
+#> INFO  [10:14:08.417] Imputation indicator {indicator: deaths}
+#> INFO  [10:14:09.664]  {stage: Calculating top countries}
 current.date <- max(data.processor$data$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
@@ -113,27 +121,27 @@ latam.countries <- sort(c("Mexico",
   arrange(desc(confirmed.inc)) %>%
   filter(confirmed >=10))[1:10,]
 #>           country       date rate.inc.daily confirmed.inc confirmed deaths
-#> 1              US 2020-05-08           0.02         26906   1283929  77180
-#> 2          Brazil 2020-05-08           0.08         11121    146894  10017
-#> 3          Russia 2020-05-08           0.06         10699    187859   1723
-#> 4  United Kingdom 2020-05-08           0.02          4652    212629  31316
-#> 5           India 2020-05-08           0.06          3344     59695   1985
-#> 6            Peru 2020-05-08           0.06          3321     61847   1714
-#> 7          Mexico 2020-05-08           0.06          1906     31522   3160
-#> 8          Turkey 2020-05-08           0.01          1848    135569   3689
-#> 9        Pakistan 2020-05-08           0.07          1791     26435    599
-#> 10   Saudi Arabia 2020-05-08           0.05          1701     35432    229
+#> 1              US 2020-05-09           0.02         25621   1309550  78795
+#> 2          Russia 2020-05-09           0.06         10817    198676   1827
+#> 3          Brazil 2020-05-09           0.06          9167    156061  10656
+#> 4  United Kingdom 2020-05-09           0.02          3896    216525  31662
+#> 5            Peru 2020-05-09           0.05          3168     65015   1814
+#> 6           India 2020-05-09           0.05          3113     62808   2101
+#> 7        Pakistan 2020-05-09           0.09          2301     28736    636
+#> 8          Mexico 2020-05-09           0.06          1938     33460   3353
+#> 9    Saudi Arabia 2020-05-09           0.05          1704     37136    239
+#> 10         Turkey 2020-05-09           0.01          1546    137115   3739
 #>    deaths.inc imputation.confirmed
-#> 1        1518                     
-#> 2         827                     
-#> 3          98                     
-#> 4         627                     
-#> 5          96                     
-#> 6          87                     
-#> 7         199                     
-#> 8          48                     
-#> 9          14                     
-#> 10         10
+#> 1        1615                     
+#> 2         104                     
+#> 3         639                     
+#> 4         346                     
+#> 5         100                     
+#> 6         116                     
+#> 7          37                     
+#> 8         193                     
+#> 9          10                     
+#> 10         50
 ```
 
 ``` r
@@ -143,27 +151,27 @@ latam.countries <- sort(c("Mexico",
   select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
   arrange(desc(deaths.inc)))[1:10,]
 #>           country       date rate.inc.daily confirmed.inc confirmed deaths
-#> 1              US 2020-05-08           0.02         26906   1283929  77180
-#> 2          Brazil 2020-05-08           0.08         11121    146894  10017
-#> 3  United Kingdom 2020-05-08           0.02          4652    212629  31316
-#> 4          France 2020-05-08           0.01          1284    176202  26233
-#> 5           Italy 2020-05-08           0.01          1327    217185  30201
-#> 6           Spain 2020-05-08           0.01          1410    222857  26299
-#> 7          Mexico 2020-05-08           0.06          1906     31522   3160
-#> 8          Canada 2020-05-08           0.02          1473     67674   4697
-#> 9          Sweden 2020-05-08           0.03           642     25265   3175
-#> 10        Germany 2020-05-08           0.01          1158    170588   7510
+#> 1              US 2020-05-09           0.02         25621   1309550  78795
+#> 2          Brazil 2020-05-09           0.06          9167    156061  10656
+#> 3  United Kingdom 2020-05-09           0.02          3896    216525  31662
+#> 4           Italy 2020-05-09           0.00          1083    218268  30395
+#> 5          Mexico 2020-05-09           0.06          1938     33460   3353
+#> 6           Spain 2020-05-09           0.00           721    223578  26478
+#> 7          Canada 2020-05-09           0.02          1244     68918   4823
+#> 8           India 2020-05-09           0.05          3113     62808   2101
+#> 9          Russia 2020-05-09           0.06         10817    198676   1827
+#> 10           Peru 2020-05-09           0.05          3168     65015   1814
 #>    deaths.inc imputation.confirmed
-#> 1        1518                     
-#> 2         827                     
-#> 3         627                     
-#> 4         243                     
-#> 5         243                     
-#> 6         229                     
-#> 7         199                     
-#> 8         156                     
-#> 9         135                     
-#> 10        118
+#> 1        1615                     
+#> 2         639                     
+#> 3         346                     
+#> 4         194                     
+#> 5         193                     
+#> 6         179                     
+#> 7         126                     
+#> 8         116                     
+#> 9         104                     
+#> 10        100
 ```
 
 ``` r

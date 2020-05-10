@@ -105,7 +105,7 @@ sourceRepoDiagnostic <- function(min.confirmed = 20){
                                         ret <- as.character(ret)
                                         ret
                                       },
-                                      FUN.VAL = character(1))
+                                      FUN.VALUE = character(1))
   all.countries <- all.countries[all.countries$total.confirmed > min.confirmed,]
   repo.diagnostic <- all.countries %>%
                       group_by(last.update) %>%
@@ -173,17 +173,6 @@ smoothSerie <- function(serie.name, serie, n){
 }
 
 
-#' @description
-#' smooth a serie applying smooth package. Currently under construction
-#' @author kenarab
-#' @import smooth
-#' @export
-smoothSerie2 <- function(serie.name, serie, n){
-  stop("Under construction")
-  model <- auto.ces(serie)
-  summary(model)
-  plot(model)
-}
 
 
 #' @description
