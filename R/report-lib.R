@@ -171,7 +171,7 @@ setupTheme <- function(ggplot, report.date, total.colors){
   if (!is.null(total.colors)){
     #, selected.palette = "Paired"
     #colors.palette <- colorRampPalette(brewer.pal(8, selected.palette))(total.colors)
-    colors.palette <- c(brewer.pal(n=9, name = "Set1"), brewer.pal(n=3, name = "Set1"), brewer.pal(n=12, name = "Set3"))
+    colors.palette <- c(brewer.pal(n=9, name = "Set1"), brewer.pal(n=8, name = "Set2"), brewer.pal(n=12, name = "Set3"))
     if ( total.colors >length(colors.palette)){
       colors.palette <- colorRampPalette(colors.palette)(total.colors)
     }

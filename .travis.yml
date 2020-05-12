@@ -5,6 +5,7 @@ r:
   - release
 before_install:
   - tlmgr install index
+before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
 r_packages:
   - covr
   - lintr
@@ -15,3 +16,7 @@ after_success:
   - Rscript -e 'library(covr); codecov()'
   - Rscript -e 'lintr::lint_package()'
   - Rscript -e 'pkgdown::build_site()'
+deploy:
+  provider: script
+  script: Rscript -e 'pkgdown::deploy_site_github(ssh_id = Sys.getenv("TRAVIS_DEPLOY_KEY", ""))'
+  skip_cleanup: true

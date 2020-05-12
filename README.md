@@ -90,15 +90,15 @@ library(dplyr)
 ``` r
 data.processor <- COVID19DataProcessor$new(force.download = FALSE)
 dummy <- data.processor$setupData()
-#> INFO  [08:18:29.057]  {stage: data loaded}
+#> INFO  [10:18:29.080]  {stage: data loaded}
 dummy <- data.processor$curate()
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [08:18:31.306]  {stage: consolidated}
-#> INFO  [08:18:32.125]  {stage: Starting first imputation}
-#> INFO  [08:18:32.126] Imputation indicator {indicator: confirmed}
-#> INFO  [08:18:32.167] Imputation indicator {indicator: recovered}
-#> INFO  [08:18:32.259] Imputation indicator {indicator: deaths}
-#> INFO  [08:18:33.505]  {stage: Calculating top countries}
+#> INFO  [10:18:31.333]  {stage: consolidated}
+#> INFO  [10:18:32.271]  {stage: Starting first imputation}
+#> INFO  [10:18:32.273] Imputation indicator {indicator: confirmed}
+#> INFO  [10:18:32.316] Imputation indicator {indicator: recovered}
+#> INFO  [10:18:32.416] Imputation indicator {indicator: deaths}
+#> INFO  [10:18:33.701]  {stage: Calculating top countries}
 current.date <- max(data.processor$data$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
