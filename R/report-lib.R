@@ -51,7 +51,7 @@ ReportGenerator <- R6Class("ReportGenerator",
      xlab("") + ylab("Percentage (%)") +
      labs(title=paste0("Top 10 Countries with Most Confirmed Cases (", self$data.processor$max.date, ")")) +
      scale_fill_brewer(name="Country", labels=df$txt, palette = "Paired")
-    ret <- setupTheme(ret, self$report.date, total.colors = length(unique(df$country)))
+    ret <- setupTheme(ret, self$report.date, total.colors = NULL)
     ret
    },
    ggplotTopCountriesBarPlots = function(excluded.countries = "World"){

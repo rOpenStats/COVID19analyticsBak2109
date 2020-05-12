@@ -90,15 +90,15 @@ library(dplyr)
 ``` r
 data.processor <- COVID19DataProcessor$new(force.download = FALSE)
 dummy <- data.processor$setupData()
-#> INFO  [00:20:32.719]  {stage: data loaded}
+#> INFO  [08:18:29.057]  {stage: data loaded}
 dummy <- data.processor$curate()
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [00:20:35.444]  {stage: consolidated}
-#> INFO  [00:20:36.407]  {stage: Starting first imputation}
-#> INFO  [00:20:36.408] Imputation indicator {indicator: confirmed}
-#> INFO  [00:20:36.455] Imputation indicator {indicator: recovered}
-#> INFO  [00:20:36.557] Imputation indicator {indicator: deaths}
-#> INFO  [00:20:38.009]  {stage: Calculating top countries}
+#> INFO  [08:18:31.306]  {stage: consolidated}
+#> INFO  [08:18:32.125]  {stage: Starting first imputation}
+#> INFO  [08:18:32.126] Imputation indicator {indicator: confirmed}
+#> INFO  [08:18:32.167] Imputation indicator {indicator: recovered}
+#> INFO  [08:18:32.259] Imputation indicator {indicator: deaths}
+#> INFO  [08:18:33.505]  {stage: Calculating top countries}
 current.date <- max(data.processor$data$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
@@ -121,27 +121,27 @@ latam.countries <- sort(c("Mexico",
   arrange(desc(confirmed.inc)) %>%
   filter(confirmed >=10))[1:10,]
 #>           country       date rate.inc.daily confirmed.inc confirmed deaths
-#> 1              US 2020-05-10           0.02         19710   1329260  79526
-#> 2          Russia 2020-05-10           0.06         11012    209688   1915
-#> 3          Brazil 2020-05-10           0.04          6638    162699  11123
-#> 4           India 2020-05-10           0.07          4353     67161   2212
-#> 5  United Kingdom 2020-05-10           0.02          3924    220449  31930
-#> 6            Peru 2020-05-10           0.04          2292     67307   1889
-#> 7    Saudi Arabia 2020-05-10           0.05          1912     39048    246
-#> 8           Chile 2020-05-10           0.06          1647     28866    312
-#> 9        Pakistan 2020-05-10           0.06          1598     30334    659
-#> 10         Mexico 2020-05-10           0.05          1562     35022   3465
+#> 1              US 2020-05-11           0.01         18621   1347881  80682
+#> 2          Russia 2020-05-11           0.06         11656    221344   2009
+#> 3          Brazil 2020-05-11           0.04          6895    169594  11653
+#> 4  United Kingdom 2020-05-11           0.02          3883    224332  32141
+#> 5           India 2020-05-11           0.05          3607     70768   2294
+#> 6           Spain 2020-05-11           0.01          3086    227436  26744
+#> 7    Saudi Arabia 2020-05-11           0.05          1966     41014    255
+#> 8        Pakistan 2020-05-11           0.06          1747     32081    706
+#> 9            Iran 2020-05-11           0.02          1683    109286   6685
+#> 10           Peru 2020-05-11           0.02          1515     68822   1961
 #>    deaths.inc imputation.confirmed
-#> 1         731                     
-#> 2          88                     
-#> 3         467                     
-#> 4         111                     
-#> 5         268                     
-#> 6          75                     
-#> 7           7                     
-#> 8           8                     
-#> 9          23                     
-#> 10        112
+#> 1        1156                     
+#> 2          94                     
+#> 3         530                     
+#> 4         211                     
+#> 5          82                     
+#> 6         123                     
+#> 7           9                     
+#> 8          47                     
+#> 9          45                     
+#> 10         72
 ```
 
 ``` r
@@ -151,27 +151,27 @@ latam.countries <- sort(c("Mexico",
   select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
   arrange(desc(deaths.inc)))[1:10,]
 #>           country       date rate.inc.daily confirmed.inc confirmed deaths
-#> 1              US 2020-05-10           0.02         19710   1329260  79526
-#> 2          Brazil 2020-05-10           0.04          6638    162699  11123
-#> 3         Ecuador 2020-05-10           0.02           488     29559   2127
-#> 4  United Kingdom 2020-05-10           0.02          3924    220449  31930
-#> 5          Canada 2020-05-10           0.02          1173     70091   4991
-#> 6           Italy 2020-05-10           0.00           802    219070  30560
-#> 7           Spain 2020-05-10           0.00           772    224350  26621
-#> 8          Mexico 2020-05-10           0.05          1562     35022   3465
-#> 9           India 2020-05-10           0.07          4353     67161   2212
-#> 10         Russia 2020-05-10           0.06         11012    209688   1915
+#> 1              US 2020-05-11           0.01         18621   1347881  80682
+#> 2          Brazil 2020-05-11           0.04          6895    169594  11653
+#> 3          France 2020-05-11           0.00           453    177547  26646
+#> 4  United Kingdom 2020-05-11           0.02          3883    224332  32141
+#> 5           Italy 2020-05-11           0.00           744    219814  30739
+#> 6          Canada 2020-05-11           0.02          1173     71264   5115
+#> 7           Spain 2020-05-11           0.01          3086    227436  26744
+#> 8          Mexico 2020-05-11           0.04          1305     36327   3573
+#> 9          Russia 2020-05-11           0.06         11656    221344   2009
+#> 10        Germany 2020-05-11           0.00           697    172576   7661
 #>    deaths.inc imputation.confirmed
-#> 1         731                     
-#> 2         467                     
-#> 3         410                     
-#> 4         268                     
-#> 5         168                     
-#> 6         165                     
-#> 7         143                     
-#> 8         112                     
-#> 9         111                     
-#> 10         88
+#> 1        1156                     
+#> 2         530                     
+#> 3         263                     
+#> 4         211                     
+#> 5         179                     
+#> 6         124                     
+#> 7         123                     
+#> 8         108                     
+#> 9          94                     
+#> 10         92
 ```
 
 ``` r
@@ -224,8 +224,6 @@ rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
 
 ``` r
 rg$ggplotTopCountriesPie()
-#> Scale for 'fill' is already present. Adding another scale for 'fill', which
-#> will replace the existing scale.
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
