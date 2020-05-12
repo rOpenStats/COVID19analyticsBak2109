@@ -12,3 +12,6 @@
 ^doc
 ^cran-comments\.md$
 ^inst\extdata\.tmp$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

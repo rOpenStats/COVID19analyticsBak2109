@@ -5,3 +5,5 @@ doc
 .RData*
 
 R/dev/*
+docs
+docs/
