@@ -9,7 +9,7 @@ downloadCOVID19(
   filename,
   force = FALSE,
   download.freq = 60 * 60 * 24,
-  check.remote = TRUE,
+  check.remote = FALSE,
   archive = TRUE
 )
 }

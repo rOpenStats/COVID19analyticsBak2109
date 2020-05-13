@@ -112,6 +112,7 @@ rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, min.c
 rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
                         field = "confirmed.inc", log.scale = TRUE)
 
+rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field = "deaths", y.label = "deaths", min.cases = 100)
 ```
 
 
@@ -119,6 +120,7 @@ rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
                                                min.cases = 100)
+rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, field = "deaths", y.label = "deaths", min.cases = 20)
 ```
 
 

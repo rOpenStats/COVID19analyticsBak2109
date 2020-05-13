@@ -5,7 +5,7 @@
 #' @author kenarab
 downloadCOVID19 <- function(url.path, filename, force = FALSE,
                             download.freq = 60*60*24, #daily
-                            check.remote = TRUE,
+                            check.remote = FALSE, # Not coded yet to check remote
                             archive = TRUE
                             ) {
  download.flag <- createDataDir()

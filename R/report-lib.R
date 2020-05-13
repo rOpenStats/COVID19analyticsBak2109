@@ -305,7 +305,10 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      self$data.processor <- data.processor
      self
    },
-   ggplotComparisonExponentialGrowth = function(included.countries, min.cases = 20){
+   ggplotComparisonExponentialGrowth = function(included.countries,
+                                                field = "confirmed",
+                                                y.label = "Confirmed Cases",
+                                                min.cases = 20){
 
      data.comparison <- self$data.processor$data.comparison$data.compared
      names(data.comparison)
@@ -316,7 +319,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      plot.title <- "COVID-19 Exponential growth \n(LOG scale)\n"
 
      ## set factor levels to show them in a desirable order
-     data.long %<>% mutate(type = factor(type, c("confirmed")))
+     data.long %<>% mutate(type = factor(type, c(field)))
      ## cases by type
      df <- data.long %>% filter(country %in% included.countries)
      unique(df$country)
@@ -328,7 +331,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
 
      ret <- df %>% filter(country != "World") %>%
        ggplot(aes(x=epidemy.day, y=count, color = country)) +
-       geom_line() + xlab(paste("Epidemy day (0 when confirmed >", min.cases, ")")) + ylab("Confirmed Cases") +
+       geom_line() + xlab(paste("Epidemy day (0 when confirmed >", min.cases, ")")) + ylab(y.label) +
        labs(title = plot.title)
      ret <- self$getXLabelsTheme(ret, x.values)
      # ret <- ret +

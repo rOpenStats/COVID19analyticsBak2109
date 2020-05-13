@@ -36,6 +36,8 @@ kenarab
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorDataComparison$ggplotComparisonExponentialGrowth(
   included.countries,
+  field = "confirmed",
+  y.label = "Confirmed Cases",
   min.cases = 20
 )}\if{html}{\out{</div>}}
 }

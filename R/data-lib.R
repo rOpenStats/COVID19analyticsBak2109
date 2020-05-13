@@ -116,14 +116,17 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self$calculateTopCountries()
     self
    },
-   downloadData = function(){
+   downloadData = function(download.freq = 60*60*18 #18 hours
+                           ){
     self$filenames <- c(confirmed = 'time_series_covid19_confirmed_global.csv',
                         deaths = 'time_series_covid19_deaths_global.csv',
                         recovered = 'time_series_covid19_recovered_global.csv')
     # url.path <- 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_'
     #url.path <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series"
     url.path <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
-    bin <- lapply(self$filenames, FUN = function(...){downloadCOVID19(url.path = url.path, force = self$force.download, ...)})
+
+    bin <- lapply(self$filenames, FUN = function(...){downloadCOVID19(url.path = url.path, force = self$force.download,
+                                                                      download.freq = download.freq, ...)})
    },
    loadData = function(){
     ## load data into R
