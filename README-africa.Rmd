@@ -76,6 +76,7 @@ current.date <- max(data.processor$data$date)
 rg <- ReportGeneratorEnhanced$new(data.processor)
 rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
 
+
 top.countries <- data.processor$top.countries
 international.countries <- unique(c(data.processor$top.countries,
                                     "Japan", "Singapore", "Korea, South"))
@@ -108,6 +109,8 @@ rc$ggplotComparisonExponentialGrowth(included.countries = africa.countries, min.
 
 rg$ggplotCountriesLines(included.countries = africa.countries, countries.text = "Africa countries",
                         field = "confirmed.inc", log.scale = TRUE)
+rc$ggplotComparisonExponentialGrowth(included.countries = africa.countries, 
+                                     field = "deaths", y.label = "deaths", min.cases = 1)
 
 ```
 

@@ -90,15 +90,15 @@ library(dplyr)
 ``` r
 data.processor <- COVID19DataProcessor$new(force.download = FALSE)
 dummy <- data.processor$setupData()
-#> INFO  [23:47:04.010]  {stage: data loaded}
+#> INFO  [00:20:52.758]  {stage: data loaded}
 dummy <- data.processor$curate()
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [23:47:06.366]  {stage: consolidated}
-#> INFO  [23:47:07.287]  {stage: Starting first imputation}
-#> INFO  [23:47:07.288] Imputation indicator {indicator: confirmed}
-#> INFO  [23:47:07.330] Imputation indicator {indicator: recovered}
-#> INFO  [23:47:07.436] Imputation indicator {indicator: deaths}
-#> INFO  [23:47:08.723]  {stage: Calculating top countries}
+#> INFO  [00:20:55.046]  {stage: consolidated}
+#> INFO  [00:20:55.718]  {stage: Starting first imputation}
+#> INFO  [00:20:55.719] Imputation indicator {indicator: confirmed}
+#> INFO  [00:20:55.756] Imputation indicator {indicator: recovered}
+#> INFO  [00:20:55.847] Imputation indicator {indicator: deaths}
+#> INFO  [00:20:56.954]  {stage: Calculating top countries}
 current.date <- max(data.processor$data$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
@@ -182,7 +182,7 @@ rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries,
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 ``` r
-rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, min.cases = 20)
+rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, min.cases = 100)
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-2.png" width="100%" />
@@ -194,6 +194,13 @@ rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-3.png" width="100%" />
+
+``` r
+
+rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field = "deaths", y.label = "deaths", min.cases = 1)
+```
+
+<img src="man/figures/README-unnamed-chunk-5-4.png" width="100%" />
 
 ``` r
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
@@ -208,6 +215,12 @@ rc$ggplotComparisonExponentialGrowth(included.countries = international.countrie
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-2.png" width="100%" />
+
+``` r
+rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, field = "deaths", y.label = "deaths", min.cases = 1)
+```
+
+<img src="man/figures/README-unnamed-chunk-6-3.png" width="100%" />
 
 ``` r
 rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)

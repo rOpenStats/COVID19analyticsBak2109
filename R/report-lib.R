@@ -309,11 +309,13 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
                                                 field = "confirmed",
                                                 y.label = "Confirmed Cases",
                                                 min.cases = 20){
+     data.comparison <- self$data.processor$data.comparison
+     data.comparison$buildData(field = field, base.min.cases = min.cases)
+     data.comparison.df <- data.comparison$data.compared
 
-     data.comparison <- self$data.processor$data.comparison$data.compared
-     names(data.comparison)
-     data.long <- data.comparison %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
-       select(c(country, epidemy.day, confirmed)) %>%
+     names(data.comparison.df)
+     data.long <- data.comparison.df %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
+       select_at(c("country", "epidemy.day", field)) %>%
        gather(key=type, value=count, -c(country, epidemy.day))
 
      plot.title <- "COVID-19 Exponential growth \n(LOG scale)\n"
@@ -331,7 +333,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
 
      ret <- df %>% filter(country != "World") %>%
        ggplot(aes(x=epidemy.day, y=count, color = country)) +
-       geom_line() + xlab(paste("Epidemy day (0 when confirmed >", min.cases, ")")) + ylab(y.label) +
+       geom_line() + xlab(paste("Epidemy day (0 when ", field, " >=", min.cases, ")")) + ylab(y.label) +
        labs(title = plot.title)
      ret <- self$getXLabelsTheme(ret, x.values)
      # ret <- ret +

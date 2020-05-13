@@ -181,8 +181,8 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     for (indicator in self$indicators){
       logger$info("Imputation indicator", indicator =indicator)
       indicator.inc <- paste(indicator, "inc", sep = ".")
-      imputation.case.indicator <- paste("imputation",indicator,"case", sep = ".")
-      imputation.indicator <- paste("imputation",indicator, sep = ".")
+      imputation.case.indicator <- paste("imputation", indicator,"case", sep = ".")
+      imputation.indicator <- paste("imputation", indicator, sep = ".")
       self$data[, imputation.case.indicator] <- ""
       self$data[, imputation.indicator] <- ""
       self$data[333, indicator] <- NA
@@ -215,7 +215,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
           self$imputation.summary[[imputation.indicator]] <- imputation.df %>%
             group_by_at(vars("country", imputation.indicator)) %>%
             summarize(n =n(),
-                         recoered = max(recovered),
+                         recovered = max(recovered),
                          min.date = min(date),
                          max.date = max(date)) %>%
                          arrange_at(desc(vars(confirmed)))
@@ -334,17 +334,13 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
 #' @export
 COVID19DataComparison <- R6Class("COVID19DataComparison",
   public = list(
-    # parameter
-    min.reference.cases = NA,
     data.processor = NA,
     # state
     data.compared  = NULL,
     countries.agg  = NULL,
     epidemic.stats = NULL,
-  initialize = function(data.processor,
-                        min.reference.cases = 20){
+  initialize = function(data.processor){
    self$data.processor <- data.processor
-   self$min.reference.cases <- min.reference.cases
    self
   },
   process = function(){
@@ -352,16 +348,16 @@ COVID19DataComparison <- R6Class("COVID19DataComparison",
     self$makeAggregations()
     self
   },
-  buildData = function(){
+  buildData = function(field = "confirmed", base.min.cases = 100){
    self$data.compared <- NULL
    data <- self$data.processor$data
    all.countries <- sort(unique(data$country))
    for (current.country in all.countries){
     data.country <- data %>% filter(country == current.country)
-    max.cases <- max(data.country$confirmed, na.rm = TRUE)
-    if (max.cases >= self$min.reference.cases){
+    max.cases <- max(data.country[,field], na.rm = TRUE)
+    if (max.cases >= base.min.cases){
       n <- nrow(data.country)
-      day.zero <- which(data.country$confirmed >= self$min.reference.cases)[1]
+      day.zero <- which(data.country[,field] >= base.min.cases)[1]
       data.country$epidemy.day <- c(1:n-day.zero)
       self$data.compared <- rbind(self$data.compared, data.country)
     }
