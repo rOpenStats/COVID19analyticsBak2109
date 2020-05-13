@@ -137,15 +137,15 @@
 <span class="co">#&gt;     intersect, setdiff, setequal, union</span></pre></div>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="no">data.processor</span> <span class="kw">&lt;-</span> <span class="no">COVID19DataProcessor</span>$<span class="fu">new</span>(<span class="kw">force.download</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
 <span class="no">dummy</span> <span class="kw">&lt;-</span> <span class="no">data.processor</span>$<span class="fu">setupData</span>()
-<span class="co">#&gt; INFO  [10:18:29.080]  {stage: data loaded}</span>
+<span class="co">#&gt; INFO  [00:20:52.758]  {stage: data loaded}</span>
 <span class="no">dummy</span> <span class="kw">&lt;-</span> <span class="no">data.processor</span>$<span class="fu">curate</span>()
 <span class="co">#&gt; Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam</span>
-<span class="co">#&gt; INFO  [10:18:31.333]  {stage: consolidated}</span>
-<span class="co">#&gt; INFO  [10:18:32.271]  {stage: Starting first imputation}</span>
-<span class="co">#&gt; INFO  [10:18:32.273] Imputation indicator {indicator: confirmed}</span>
-<span class="co">#&gt; INFO  [10:18:32.316] Imputation indicator {indicator: recovered}</span>
-<span class="co">#&gt; INFO  [10:18:32.416] Imputation indicator {indicator: deaths}</span>
-<span class="co">#&gt; INFO  [10:18:33.701]  {stage: Calculating top countries}</span>
+<span class="co">#&gt; INFO  [00:20:55.046]  {stage: consolidated}</span>
+<span class="co">#&gt; INFO  [00:20:55.718]  {stage: Starting first imputation}</span>
+<span class="co">#&gt; INFO  [00:20:55.719] Imputation indicator {indicator: confirmed}</span>
+<span class="co">#&gt; INFO  [00:20:55.756] Imputation indicator {indicator: recovered}</span>
+<span class="co">#&gt; INFO  [00:20:55.847] Imputation indicator {indicator: deaths}</span>
+<span class="co">#&gt; INFO  [00:20:56.954]  {stage: Calculating top countries}</span>
 <span class="no">current.date</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">data.processor</span>$<span class="no">data</span>$<span class="no">date</span>)
 
 <span class="no">rg</span> <span class="kw">&lt;-</span> <span class="no">ReportGeneratorEnhanced</span>$<span class="fu">new</span>(<span class="no">data.processor</span>)
@@ -216,28 +216,33 @@
 <div class="sourceCode" id="cb6"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotTopCountriesStackedBarDailyInc</span>(<span class="kw">included.countries</span> <span class="kw">=</span> <span class="no">latam.countries</span>,
                                                   <span class="kw">map.region</span> <span class="kw">=</span> <span class="st">"Latam"</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
-<div class="sourceCode" id="cb7"><pre class="r"><span class="no">rc</span>$<span class="fu">ggplotComparisonExponentialGrowth</span>(<span class="kw">included.countries</span> <span class="kw">=</span> <span class="no">latam.countries</span>, <span class="kw">min.cases</span> <span class="kw">=</span> <span class="fl">20</span>)</pre></div>
+<div class="sourceCode" id="cb7"><pre class="r"><span class="no">rc</span>$<span class="fu">ggplotComparisonExponentialGrowth</span>(<span class="kw">included.countries</span> <span class="kw">=</span> <span class="no">latam.countries</span>, <span class="kw">min.cases</span> <span class="kw">=</span> <span class="fl">100</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-5-2.png" width="100%"></p>
 <div class="sourceCode" id="cb8"><pre class="r">
 <span class="no">rg</span>$<span class="fu">ggplotCountriesLines</span>(<span class="kw">included.countries</span> <span class="kw">=</span> <span class="no">latam.countries</span>, <span class="kw">countries.text</span> <span class="kw">=</span> <span class="st">"Latam countries"</span>,
                         <span class="kw">field</span> <span class="kw">=</span> <span class="st">"confirmed.inc"</span>, <span class="kw">log.scale</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-5-3.png" width="100%"></p>
-<div class="sourceCode" id="cb9"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotTopCountriesStackedBarDailyInc</span>(<span class="no">top.countries</span>)
+<div class="sourceCode" id="cb9"><pre class="r">
+<span class="no">rc</span>$<span class="fu">ggplotComparisonExponentialGrowth</span>(<span class="kw">included.countries</span> <span class="kw">=</span> <span class="no">latam.countries</span>, <span class="kw">field</span> <span class="kw">=</span> <span class="st">"deaths"</span>, <span class="kw">y.label</span> <span class="kw">=</span> <span class="st">"deaths"</span>, <span class="kw">min.cases</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-5-4.png" width="100%"></p>
+<div class="sourceCode" id="cb10"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotTopCountriesStackedBarDailyInc</span>(<span class="no">top.countries</span>)
 <span class="co">#&gt; Warning: Removed 2 rows containing missing values (position_stack).</span></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
-<div class="sourceCode" id="cb10"><pre class="r"><span class="no">rc</span>$<span class="fu">ggplotComparisonExponentialGrowth</span>(<span class="kw">included.countries</span> <span class="kw">=</span> <span class="no">international.countries</span>,
+<div class="sourceCode" id="cb11"><pre class="r"><span class="no">rc</span>$<span class="fu">ggplotComparisonExponentialGrowth</span>(<span class="kw">included.countries</span> <span class="kw">=</span> <span class="no">international.countries</span>,
                                                <span class="kw">min.cases</span> <span class="kw">=</span> <span class="fl">100</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-6-2.png" width="100%"></p>
-<div class="sourceCode" id="cb11"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotCountriesLines</span>(<span class="kw">field</span> <span class="kw">=</span> <span class="st">"confirmed.inc"</span>, <span class="kw">log.scale</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
+<div class="sourceCode" id="cb12"><pre class="r"><span class="no">rc</span>$<span class="fu">ggplotComparisonExponentialGrowth</span>(<span class="kw">included.countries</span> <span class="kw">=</span> <span class="no">international.countries</span>, <span class="kw">field</span> <span class="kw">=</span> <span class="st">"deaths"</span>, <span class="kw">y.label</span> <span class="kw">=</span> <span class="st">"deaths"</span>, <span class="kw">min.cases</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-6-3.png" width="100%"></p>
+<div class="sourceCode" id="cb13"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotCountriesLines</span>(<span class="kw">field</span> <span class="kw">=</span> <span class="st">"confirmed.inc"</span>, <span class="kw">log.scale</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
-<div class="sourceCode" id="cb12"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotCountriesLines</span>(<span class="kw">field</span> <span class="kw">=</span> <span class="st">"rate.inc.daily"</span>, <span class="kw">log.scale</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<div class="sourceCode" id="cb14"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotCountriesLines</span>(<span class="kw">field</span> <span class="kw">=</span> <span class="st">"rate.inc.daily"</span>, <span class="kw">log.scale</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="co">#&gt; Warning: Transformation introduced infinite values in continuous y-axis</span></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-7-2.png" width="100%"></p>
-<div class="sourceCode" id="cb13"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotTopCountriesPie</span>()</pre></div>
+<div class="sourceCode" id="cb15"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotTopCountriesPie</span>()</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-8-1.png" width="100%"></p>
-<div class="sourceCode" id="cb14"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotTopCountriesBarPlots</span>()</pre></div>
+<div class="sourceCode" id="cb16"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotTopCountriesBarPlots</span>()</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-8-2.png" width="100%"></p>
-<div class="sourceCode" id="cb15"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotCountriesBarGraphs</span>(<span class="kw">selected.country</span> <span class="kw">=</span> <span class="st">"Argentina"</span>)</pre></div>
+<div class="sourceCode" id="cb17"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotCountriesBarGraphs</span>(<span class="kw">selected.country</span> <span class="kw">=</span> <span class="st">"Argentina"</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="100%"></p>
 </div>
 
