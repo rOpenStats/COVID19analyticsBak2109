@@ -332,7 +332,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      self$report.date <-max(self$data.processor$data$date)
 
      ret <- df %>% filter(country != "World") %>%
-       ggplot(aes(x=epidemy.day, y=count, color = country)) +
+       ggplot(aes(x = epidemy.day, y = count, color = country)) +
        geom_line() + xlab(paste("Epidemy day (0 when ", field, " >=", min.cases, ")")) + ylab(y.label) +
        labs(title = plot.title)
      ret <- self$getXLabelsTheme(ret, x.values)
@@ -354,6 +354,11 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      #   legend.key.size = unit(0.5, "lines"),
      #   axis.text.x = element_text(angle = 90)
      #
+     #debug
+     #df.debug <<- df
+
+     # Under construction
+     #ret <- addDuplications(ret, x.min = min(df$epidemy.day), x.max = max(df$epidemy.day))
      ret
    },
    getXLabelsTheme = function(ggplot, x.values){
@@ -375,7 +380,49 @@ getCitationNote <- function(add.date = TRUE, report.date){
   ret
 }
 
-labs(caption = "(Pauloo, et al. 2017)")
+#' addDuplications
+#' @import units
+#' @export
+addDuplications <- function(ggplot, x.min, x.max, linetype = "dotdash", line.color = "gray"
+){
+  # (1.415 ^ 2) = 2 duplication in 2 days
+  # (1.26 ^ 3)= 2 duplication in 3 days
+  # (1.16 ^ 4)= 2 duplication in 4 days
+  # (1.1893^5)= 2 duplication in 5 days
+  # (1.0718^10)= 2 duplication in 10 days
+  # (1.0473^15) = 2duplication in 15 days
+  # (1.04^15)= 2 duplication in 20 days
+  # (1.03527^20)= 2 duplication in 20 days
+  # (1.02338^30)= 2 duplication in 30 days
+  duplications <- list()
+  duplications[["2 days"]] <- 1.415
+  duplications[["5 days"]] <- 1.1893
+  duplications[["10 days"]] <- 1.0718
+  duplications[["15 days"]] <- 1.0473
+  duplications[["30 days"]] <- 1.02338
+  x.text <- (x.min + x.max) / 2
+  for (duplication in names(duplications)){
+  #for (duplication in names(duplications)[1]){
+    coef <- duplications[[duplication]]
+    exp.function <- function(x) coef*x
+    angle <-  acos(coef ^ -1)
+    angle.rad <- as_units(angle, "radians")
+    angle.deg <- set_units(angle.rad, "degrees")
+    #debug
+    print (paste("duplication line", duplication))
+    print(paste(x.min, x.max))
+    print(as.numeric(angle.deg))
+    ggplot <- ggplot +
+              #stat_function(fun = exp.function, linetype = linetype) + xlim(x.min, x.max) +
+              #geom_abline(intercept = 0, slope = as.numeric(angle.deg), linetype = linetype, color = line.color) +
+              geom_abline(intercept = 10, slope = as.numeric(angle.deg)/180, linetype = linetype, color = line.color) +
+              geom_text(aes(x = x.text, y = exp.function(x.text),
+                            label = duplication, angle = round(as.numeric(angle.deg))), color = line.color)
+  }
+  #ggplot <-
+  ggplot
+}
+
 
 #' TexBuilder (Not functional Yet)
 #' @importFrom R6 R6Class
