@@ -4,7 +4,13 @@
 \alias{addDuplications}
 \title{addDuplications}
 \usage{
-addDuplications(ggplot, x.text)
+addDuplications(
+  ggplot,
+  x.min,
+  x.max,
+  linetype = "dotdash",
+  line.color = "gray"
+)
 }
 \description{
 addDuplications
