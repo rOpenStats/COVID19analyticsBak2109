@@ -40,7 +40,8 @@ Imports: magrittr,
          readr,
          pkgdown,
          covr,
-         testthat
+         testthat,
+         vdiffr
 Collate:
   'util-lib.R'
   'data-lib.R'

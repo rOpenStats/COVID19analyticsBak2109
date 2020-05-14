@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -90,15 +95,15 @@ library(dplyr)
 ``` r
 data.processor <- COVID19DataProcessor$new(force.download = FALSE)
 dummy <- data.processor$setupData()
-#> INFO  [10:19:18.004]  {stage: data loaded}
+#> INFO  [13:03:51.735]  {stage: data loaded}
 dummy <- data.processor$curate()
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [10:19:20.258]  {stage: consolidated}
-#> INFO  [10:19:20.909]  {stage: Starting first imputation}
-#> INFO  [10:19:20.910] Imputation indicator {indicator: confirmed}
-#> INFO  [10:19:20.958] Imputation indicator {indicator: recovered}
-#> INFO  [10:19:21.055] Imputation indicator {indicator: deaths}
-#> INFO  [10:19:22.318]  {stage: Calculating top countries}
+#> INFO  [13:03:57.849]  {stage: consolidated}
+#> INFO  [13:04:00.581]  {stage: Starting first imputation}
+#> INFO  [13:04:00.615] Imputation indicator {indicator: confirmed}
+#> INFO  [13:04:00.767] Imputation indicator {indicator: recovered}
+#> INFO  [13:04:01.172] Imputation indicator {indicator: deaths}
+#> INFO  [13:04:05.227]  {stage: Calculating top countries}
 current.date <- max(data.processor$data$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
@@ -121,27 +126,27 @@ latam.countries <- sort(c("Mexico",
   arrange(desc(confirmed.inc)) %>%
   filter(confirmed >=10))[1:10,]
 #>           country       date rate.inc.daily confirmed.inc confirmed deaths
-#> 1              US 2020-05-12           0.02         21495   1369376  82356
-#> 2          Russia 2020-05-12           0.05         10899    232243   2116
-#> 3          Brazil 2020-05-12           0.05          8620    178214  12461
-#> 4           India 2020-05-12           0.05          3524     74292   2415
-#> 5  United Kingdom 2020-05-12           0.02          3409    227741  32769
-#> 6            Peru 2020-05-12           0.05          3237     72059   2057
-#> 7        Pakistan 2020-05-12           0.07          2255     34336    737
-#> 8          Mexico 2020-05-12           0.05          1997     38324   3926
-#> 9    Saudi Arabia 2020-05-12           0.05          1911     42925    264
-#> 10         Turkey 2020-05-12           0.01          1704    141475   3894
+#> 1              US 2020-05-13           0.02         21030   1390406  84119
+#> 2          Brazil 2020-05-13           0.07         11923    190137  13240
+#> 3          Russia 2020-05-13           0.04         10028    242271   2212
+#> 4            Peru 2020-05-13           0.06          4247     76306   2169
+#> 5           India 2020-05-13           0.05          3763     78055   2551
+#> 6  United Kingdom 2020-05-13           0.01          3244    230985  33264
+#> 7           Chile 2020-05-13           0.08          2660     34381    346
+#> 8            Iran 2020-05-13           0.02          1958    112725   6783
+#> 9    Saudi Arabia 2020-05-13           0.04          1905     44830    273
+#> 10         Mexico 2020-05-13           0.05          1862     40186   4220
 #>    deaths.inc imputation.confirmed
-#> 1        1674                     
-#> 2         107                     
-#> 3         808                     
-#> 4         121                     
-#> 5         628                     
-#> 6          96                     
-#> 7          31                     
-#> 8         353                     
+#> 1        1763                     
+#> 2         779                     
+#> 3          96                     
+#> 4         112                     
+#> 5         136                     
+#> 6         495                     
+#> 7          11                     
+#> 8          50                     
 #> 9           9                     
-#> 10         53
+#> 10        294
 ```
 
 ``` r
@@ -151,27 +156,27 @@ latam.countries <- sort(c("Mexico",
   select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
   arrange(desc(deaths.inc)))[1:10,]
 #>           country       date rate.inc.daily confirmed.inc confirmed deaths
-#> 1              US 2020-05-12           0.02         21495   1369376  82356
-#> 2          Brazil 2020-05-12           0.05          8620    178214  12461
-#> 3  United Kingdom 2020-05-12           0.02          3409    227741  32769
-#> 4          Mexico 2020-05-12           0.05          1997     38324   3926
-#> 5          France 2020-05-12           0.00           802    178349  26994
-#> 6          Canada 2020-05-12           0.02          1155     72419   5300
-#> 7         Ecuador 2020-05-12           0.03           910     30419   2327
-#> 8           Spain 2020-05-12           0.00           594    228030  26920
-#> 9           Italy 2020-05-12           0.01          1402    221216  30911
-#> 10          India 2020-05-12           0.05          3524     74292   2415
+#> 1              US 2020-05-13           0.02         21030   1390406  84119
+#> 2          Brazil 2020-05-13           0.07         11923    190137  13240
+#> 3  United Kingdom 2020-05-13           0.01          3244    230985  33264
+#> 4          Mexico 2020-05-13           0.05          1862     40186   4220
+#> 5           Italy 2020-05-13           0.00           888    222104  31106
+#> 6           Spain 2020-05-13           0.00           661    228691  27104
+#> 7          Sweden 2020-05-13           0.02           637     27909   3460
+#> 8           India 2020-05-13           0.05          3763     78055   2551
+#> 9          Canada 2020-05-13           0.02          1149     73568   5425
+#> 10        Germany 2020-05-13           0.01           927    174098   7861
 #>    deaths.inc imputation.confirmed
-#> 1        1674                     
-#> 2         808                     
-#> 3         628                     
-#> 4         353                     
-#> 5         348                     
-#> 6         185                     
-#> 7         182                     
-#> 8         176                     
-#> 9         172                     
-#> 10        121
+#> 1        1763                     
+#> 2         779                     
+#> 3         495                     
+#> 4         294                     
+#> 5         195                     
+#> 6         184                     
+#> 7         147                     
+#> 8         136                     
+#> 9         125                     
+#> 10        123
 ```
 
 ``` r
