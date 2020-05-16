@@ -100,7 +100,7 @@
 <a href="#how-to-get-started-development-version" class="anchor"></a>How to get started (Development version)</h1>
 <p>Install the R package using the following commands on the R console:</p>
 <div class="sourceCode" id="cb1"><pre class="r"><span class="co"># install.packages("devtools")</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"rOpenStats/COVID19analytics"</span>, <span class="kw">build_opts</span> <span class="kw">=</span> <span class="kw">NULL</span>)</pre></div>
+<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"rOpenStats/COVID19analytics"</span>, <span class="kw">build_opts</span> <span class="kw">=</span> <span class="kw">NULL</span>)</pre></div>
 </div>
 <div id="how-to-use-it" class="section level1">
 <h1 class="hasAnchor">
@@ -137,15 +137,18 @@
 <span class="co">#&gt;     intersect, setdiff, setequal, union</span></pre></div>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="no">data.processor</span> <span class="kw">&lt;-</span> <span class="no">COVID19DataProcessor</span>$<span class="fu">new</span>(<span class="kw">force.download</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
 <span class="no">dummy</span> <span class="kw">&lt;-</span> <span class="no">data.processor</span>$<span class="fu">setupData</span>()
-<span class="co">#&gt; INFO  [00:20:52.758]  {stage: data loaded}</span>
+<span class="co">#&gt; INFO  [13:35:29.733] Checking downloaded data {downloaded.ts: 2020-05-16 13:35:29, next.update.ts: 2020-05-16 02:49:04, download.flag: TRUE}</span>
+<span class="co">#&gt; INFO  [13:35:30.419] Checking downloaded data {downloaded.ts: 2020-05-16 13:35:30, next.update.ts: 2020-05-16 02:49:06, download.flag: TRUE}</span>
+<span class="co">#&gt; INFO  [13:35:31.063] Checking downloaded data {downloaded.ts: 2020-05-16 13:35:31, next.update.ts: 2020-05-16 02:49:09, download.flag: TRUE}</span>
+<span class="co">#&gt; INFO  [13:35:31.797]  {stage: data loaded}</span>
 <span class="no">dummy</span> <span class="kw">&lt;-</span> <span class="no">data.processor</span>$<span class="fu">curate</span>()
 <span class="co">#&gt; Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam</span>
-<span class="co">#&gt; INFO  [00:20:55.046]  {stage: consolidated}</span>
-<span class="co">#&gt; INFO  [00:20:55.718]  {stage: Starting first imputation}</span>
-<span class="co">#&gt; INFO  [00:20:55.719] Imputation indicator {indicator: confirmed}</span>
-<span class="co">#&gt; INFO  [00:20:55.756] Imputation indicator {indicator: recovered}</span>
-<span class="co">#&gt; INFO  [00:20:55.847] Imputation indicator {indicator: deaths}</span>
-<span class="co">#&gt; INFO  [00:20:56.954]  {stage: Calculating top countries}</span>
+<span class="co">#&gt; INFO  [13:35:34.633]  {stage: consolidated}</span>
+<span class="co">#&gt; INFO  [13:35:35.454]  {stage: Starting first imputation}</span>
+<span class="co">#&gt; INFO  [13:35:35.455] Imputation indicator {indicator: confirmed}</span>
+<span class="co">#&gt; INFO  [13:35:35.497] Imputation indicator {indicator: recovered}</span>
+<span class="co">#&gt; INFO  [13:35:35.591] Imputation indicator {indicator: deaths}</span>
+<span class="co">#&gt; INFO  [13:35:36.946]  {stage: Calculating top countries}</span>
 <span class="no">current.date</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">data.processor</span>$<span class="no">data</span>$<span class="no">date</span>)
 
 <span class="no">rg</span> <span class="kw">&lt;-</span> <span class="no">ReportGeneratorEnhanced</span>$<span class="fu">new</span>(<span class="no">data.processor</span>)
@@ -165,54 +168,54 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(<span class="no">confirmed.inc</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">confirmed</span> <span class="kw">&gt;=</span><span class="fl">10</span>))[<span class="fl">1</span>:<span class="fl">10</span>,]
 <span class="co">#&gt;           country       date rate.inc.daily confirmed.inc confirmed deaths</span>
-<span class="co">#&gt; 1              US 2020-05-11           0.01         18621   1347881  80682</span>
-<span class="co">#&gt; 2          Russia 2020-05-11           0.06         11656    221344   2009</span>
-<span class="co">#&gt; 3          Brazil 2020-05-11           0.04          6895    169594  11653</span>
-<span class="co">#&gt; 4  United Kingdom 2020-05-11           0.02          3883    224332  32141</span>
-<span class="co">#&gt; 5           India 2020-05-11           0.05          3607     70768   2294</span>
-<span class="co">#&gt; 6           Spain 2020-05-11           0.01          3086    227436  26744</span>
-<span class="co">#&gt; 7    Saudi Arabia 2020-05-11           0.05          1966     41014    255</span>
-<span class="co">#&gt; 8        Pakistan 2020-05-11           0.06          1747     32081    706</span>
-<span class="co">#&gt; 9            Iran 2020-05-11           0.02          1683    109286   6685</span>
-<span class="co">#&gt; 10           Peru 2020-05-11           0.02          1515     68822   1961</span>
+<span class="co">#&gt; 1              US 2020-05-15           0.02         25050   1442824  87530</span>
+<span class="co">#&gt; 2          Brazil 2020-05-15           0.08         17126    220291  14962</span>
+<span class="co">#&gt; 3          Russia 2020-05-15           0.04         10598    262843   2418</span>
+<span class="co">#&gt; 4            Peru 2020-05-15           0.05          3891     84495   2392</span>
+<span class="co">#&gt; 5           India 2020-05-15           0.05          3787     85784   2753</span>
+<span class="co">#&gt; 6  United Kingdom 2020-05-15           0.02          3564    238004  34078</span>
+<span class="co">#&gt; 7        Pakistan 2020-05-15           0.08          3011     38799    834</span>
+<span class="co">#&gt; 8           Chile 2020-05-15           0.07          2502     39542    394</span>
+<span class="co">#&gt; 9          Mexico 2020-05-15           0.06          2437     45032   4767</span>
+<span class="co">#&gt; 10   Saudi Arabia 2020-05-15           0.05          2307     49176    292</span>
 <span class="co">#&gt;    deaths.inc imputation.confirmed</span>
-<span class="co">#&gt; 1        1156                     </span>
-<span class="co">#&gt; 2          94                     </span>
-<span class="co">#&gt; 3         530                     </span>
-<span class="co">#&gt; 4         211                     </span>
-<span class="co">#&gt; 5          82                     </span>
-<span class="co">#&gt; 6         123                     </span>
-<span class="co">#&gt; 7           9                     </span>
-<span class="co">#&gt; 8          47                     </span>
-<span class="co">#&gt; 9          45                     </span>
-<span class="co">#&gt; 10         72</span></pre></div>
+<span class="co">#&gt; 1        1632                     </span>
+<span class="co">#&gt; 2         963                     </span>
+<span class="co">#&gt; 3         113                     </span>
+<span class="co">#&gt; 4         125                     </span>
+<span class="co">#&gt; 5         104                     </span>
+<span class="co">#&gt; 6         385                     </span>
+<span class="co">#&gt; 7          64                     </span>
+<span class="co">#&gt; 8          26                     </span>
+<span class="co">#&gt; 9         290                     </span>
+<span class="co">#&gt; 10          9</span></pre></div>
 <div class="sourceCode" id="cb5"><pre class="r"><span class="co"># Top 10 daily deaths increment</span>
 (<span class="no">data.processor</span>$<span class="no">data</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">date</span> <span class="kw">==</span> <span class="no">current.date</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">country</span>, <span class="no">date</span>, <span class="no">rate.inc.daily</span>, <span class="no">confirmed.inc</span>, <span class="no">confirmed</span>, <span class="no">deaths</span>, <span class="no">deaths.inc</span>, <span class="no">imputation.confirmed</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(<span class="no">deaths.inc</span>)))[<span class="fl">1</span>:<span class="fl">10</span>,]
 <span class="co">#&gt;           country       date rate.inc.daily confirmed.inc confirmed deaths</span>
-<span class="co">#&gt; 1              US 2020-05-11           0.01         18621   1347881  80682</span>
-<span class="co">#&gt; 2          Brazil 2020-05-11           0.04          6895    169594  11653</span>
-<span class="co">#&gt; 3          France 2020-05-11           0.00           453    177547  26646</span>
-<span class="co">#&gt; 4  United Kingdom 2020-05-11           0.02          3883    224332  32141</span>
-<span class="co">#&gt; 5           Italy 2020-05-11           0.00           744    219814  30739</span>
-<span class="co">#&gt; 6          Canada 2020-05-11           0.02          1173     71264   5115</span>
-<span class="co">#&gt; 7           Spain 2020-05-11           0.01          3086    227436  26744</span>
-<span class="co">#&gt; 8          Mexico 2020-05-11           0.04          1305     36327   3573</span>
-<span class="co">#&gt; 9          Russia 2020-05-11           0.06         11656    221344   2009</span>
-<span class="co">#&gt; 10        Germany 2020-05-11           0.00           697    172576   7661</span>
+<span class="co">#&gt; 1              US 2020-05-15           0.02         25050   1442824  87530</span>
+<span class="co">#&gt; 2          Brazil 2020-05-15           0.08         17126    220291  14962</span>
+<span class="co">#&gt; 3  United Kingdom 2020-05-15           0.02          3564    238004  34078</span>
+<span class="co">#&gt; 4          Mexico 2020-05-15           0.06          2437     45032   4767</span>
+<span class="co">#&gt; 5         Ecuador 2020-05-15           0.03           965     31467   2594</span>
+<span class="co">#&gt; 6           Italy 2020-05-15           0.00           789    223885  31610</span>
+<span class="co">#&gt; 7           Spain 2020-05-15           0.00           643    230183  27459</span>
+<span class="co">#&gt; 8            Peru 2020-05-15           0.05          3891     84495   2392</span>
+<span class="co">#&gt; 9          Sweden 2020-05-15           0.02           625     29207   3646</span>
+<span class="co">#&gt; 10         Russia 2020-05-15           0.04         10598    262843   2418</span>
 <span class="co">#&gt;    deaths.inc imputation.confirmed</span>
-<span class="co">#&gt; 1        1156                     </span>
-<span class="co">#&gt; 2         530                     </span>
-<span class="co">#&gt; 3         263                     </span>
-<span class="co">#&gt; 4         211                     </span>
-<span class="co">#&gt; 5         179                     </span>
-<span class="co">#&gt; 6         124                     </span>
-<span class="co">#&gt; 7         123                     </span>
-<span class="co">#&gt; 8         108                     </span>
-<span class="co">#&gt; 9          94                     </span>
-<span class="co">#&gt; 10         92</span></pre></div>
+<span class="co">#&gt; 1        1632                     </span>
+<span class="co">#&gt; 2         963                     </span>
+<span class="co">#&gt; 3         385                     </span>
+<span class="co">#&gt; 4         290                     </span>
+<span class="co">#&gt; 5         256                     </span>
+<span class="co">#&gt; 6         242                     </span>
+<span class="co">#&gt; 7         138                     </span>
+<span class="co">#&gt; 8         125                     </span>
+<span class="co">#&gt; 9         117                     </span>
+<span class="co">#&gt; 10        113</span></pre></div>
 <div class="sourceCode" id="cb6"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotTopCountriesStackedBarDailyInc</span>(<span class="kw">included.countries</span> <span class="kw">=</span> <span class="no">latam.countries</span>,
                                                   <span class="kw">map.region</span> <span class="kw">=</span> <span class="st">"Latam"</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
@@ -223,15 +226,15 @@
                         <span class="kw">field</span> <span class="kw">=</span> <span class="st">"confirmed.inc"</span>, <span class="kw">log.scale</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-5-3.png" width="100%"></p>
 <div class="sourceCode" id="cb9"><pre class="r">
-<span class="no">rc</span>$<span class="fu">ggplotComparisonExponentialGrowth</span>(<span class="kw">included.countries</span> <span class="kw">=</span> <span class="no">latam.countries</span>, <span class="kw">field</span> <span class="kw">=</span> <span class="st">"deaths"</span>, <span class="kw">y.label</span> <span class="kw">=</span> <span class="st">"deaths"</span>, <span class="kw">min.cases</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></div>
+<span class="no">rc</span>$<span class="fu">ggplotComparisonExponentialGrowth</span>(<span class="kw">included.countries</span> <span class="kw">=</span> <span class="no">latam.countries</span>, <span class="kw">field</span> <span class="kw">=</span> <span class="st">"deaths"</span>, <span class="kw">y.label</span> <span class="kw">=</span> <span class="st">"Deaths"</span>, <span class="kw">min.cases</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-5-4.png" width="100%"></p>
 <div class="sourceCode" id="cb10"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotTopCountriesStackedBarDailyInc</span>(<span class="no">top.countries</span>)
-<span class="co">#&gt; Warning: Removed 2 rows containing missing values (position_stack).</span></pre></div>
+<span class="co">#&gt; Warning: Removed 1 rows containing missing values (position_stack).</span></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
 <div class="sourceCode" id="cb11"><pre class="r"><span class="no">rc</span>$<span class="fu">ggplotComparisonExponentialGrowth</span>(<span class="kw">included.countries</span> <span class="kw">=</span> <span class="no">international.countries</span>,
                                                <span class="kw">min.cases</span> <span class="kw">=</span> <span class="fl">100</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-6-2.png" width="100%"></p>
-<div class="sourceCode" id="cb12"><pre class="r"><span class="no">rc</span>$<span class="fu">ggplotComparisonExponentialGrowth</span>(<span class="kw">included.countries</span> <span class="kw">=</span> <span class="no">international.countries</span>, <span class="kw">field</span> <span class="kw">=</span> <span class="st">"deaths"</span>, <span class="kw">y.label</span> <span class="kw">=</span> <span class="st">"deaths"</span>, <span class="kw">min.cases</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></div>
+<div class="sourceCode" id="cb12"><pre class="r"><span class="no">rc</span>$<span class="fu">ggplotComparisonExponentialGrowth</span>(<span class="kw">included.countries</span> <span class="kw">=</span> <span class="no">international.countries</span>, <span class="kw">field</span> <span class="kw">=</span> <span class="st">"deaths"</span>, <span class="kw">y.label</span> <span class="kw">=</span> <span class="st">"Deaths"</span>, <span class="kw">min.cases</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-6-3.png" width="100%"></p>
 <div class="sourceCode" id="cb13"><pre class="r"><span class="no">rg</span>$<span class="fu">ggplotCountriesLines</span>(<span class="kw">field</span> <span class="kw">=</span> <span class="st">"confirmed.inc"</span>, <span class="kw">log.scale</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
