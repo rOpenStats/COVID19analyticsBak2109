@@ -358,7 +358,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      #df.debug <<- df
 
      # Under construction
-     #ret <- addDuplications(ret, x.min = min(df$epidemy.day), x.max = max(df$epidemy.day))
+     #ret <- addDuplicationsLines(ret, x.min = min(df$epidemy.day), x.max = max(df$epidemy.day))
      ret
    },
    getXLabelsTheme = function(ggplot, x.values){
@@ -380,23 +380,22 @@ getCitationNote <- function(add.date = TRUE, report.date){
   ret
 }
 
-#' addDuplications
+#' addDuplicationsLines
 #' @import units
 #' @export
-addDuplications <- function(ggplot, x.min, x.max, linetype = "dotdash", line.color = "gray"
+addDuplicationsLines <- function(ggplot, x.min, x.max, linetype = "dotdash", line.color = "gray"
 ){
   # (1.415 ^ 2) = 2 duplication in 2 days
   # (1.26 ^ 3)= 2 duplication in 3 days
   # (1.16 ^ 4)= 2 duplication in 4 days
   # (1.1893^5)= 2 duplication in 5 days
   # (1.0718^10)= 2 duplication in 10 days
-  # (1.0473^15) = 2duplication in 15 days
-  # (1.04^15)= 2 duplication in 20 days
+  # (1.0473^15) = 2 duplication in 15 days
   # (1.03527^20)= 2 duplication in 20 days
   # (1.02338^30)= 2 duplication in 30 days
   duplications <- list()
-  duplications[["2 days"]] <- 1.415
-  duplications[["5 days"]] <- 1.1893
+  #duplications[["2 days"]] <- 1.415
+  #duplications[["5 days"]] <- 1.1893
   duplications[["10 days"]] <- 1.0718
   duplications[["15 days"]] <- 1.0473
   duplications[["30 days"]] <- 1.02338

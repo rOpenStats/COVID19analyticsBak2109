@@ -90,18 +90,18 @@ library(dplyr)
 ``` r
 data.processor <- COVID19DataProcessor$new(force.download = FALSE)
 dummy <- data.processor$setupData()
-#> INFO  [13:35:29.733] Checking downloaded data {downloaded.ts: 2020-05-16 13:35:29, next.update.ts: 2020-05-16 02:49:04, download.flag: TRUE}
-#> INFO  [13:35:30.419] Checking downloaded data {downloaded.ts: 2020-05-16 13:35:30, next.update.ts: 2020-05-16 02:49:06, download.flag: TRUE}
-#> INFO  [13:35:31.063] Checking downloaded data {downloaded.ts: 2020-05-16 13:35:31, next.update.ts: 2020-05-16 02:49:09, download.flag: TRUE}
-#> INFO  [13:35:31.797]  {stage: data loaded}
+#> INFO  [14:27:11.005] Checking downloaded data {downloaded.ts: 2020-05-16 14:27:11, next.update.ts: 2020-05-17 07:35:30, download.flag: FALSE}
+#> INFO  [14:27:11.046] Checking downloaded data {downloaded.ts: 2020-05-16 14:27:11, next.update.ts: 2020-05-17 07:35:31, download.flag: FALSE}
+#> INFO  [14:27:11.057] Checking downloaded data {downloaded.ts: 2020-05-16 14:27:11, next.update.ts: 2020-05-17 07:35:31, download.flag: FALSE}
+#> INFO  [14:27:11.110]  {stage: data loaded}
 dummy <- data.processor$curate()
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [13:35:34.633]  {stage: consolidated}
-#> INFO  [13:35:35.454]  {stage: Starting first imputation}
-#> INFO  [13:35:35.455] Imputation indicator {indicator: confirmed}
-#> INFO  [13:35:35.497] Imputation indicator {indicator: recovered}
-#> INFO  [13:35:35.591] Imputation indicator {indicator: deaths}
-#> INFO  [13:35:36.946]  {stage: Calculating top countries}
+#> INFO  [14:27:13.507]  {stage: consolidated}
+#> INFO  [14:27:14.301]  {stage: Starting first imputation}
+#> INFO  [14:27:14.302] Imputation indicator {indicator: confirmed}
+#> INFO  [14:27:14.348] Imputation indicator {indicator: recovered}
+#> INFO  [14:27:14.438] Imputation indicator {indicator: deaths}
+#> INFO  [14:27:15.690]  {stage: Calculating top countries}
 current.date <- max(data.processor$data$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
