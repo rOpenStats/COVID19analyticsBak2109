@@ -1,6 +1,7 @@
 
 
 #' download COVID-19 data from Johns Hopkins University
+#' @import lgr
 #' @export
 #' @author kenarab
 downloadCOVID19 <- function(url.path, filename, force = FALSE,
@@ -8,13 +9,14 @@ downloadCOVID19 <- function(url.path, filename, force = FALSE,
                             check.remote = FALSE, # Not coded yet to check remote
                             archive = TRUE
                             ) {
+ logger <- lgr
  download.flag <- createDataDir()
  if (download.flag){
   url <- file.path(url.path, filename)
   dest <- file.path(data.dir, filename)
 
-  download <- !file.exists(dest) | force
-  if (!download & file.exists(dest)){
+  download.flag <- !file.exists(dest) | force
+  if (!download.flag & file.exists(dest)){
     if(check.remote){
       #TODO git2r
     }
@@ -23,12 +25,13 @@ downloadCOVID19 <- function(url.path, filename, force = FALSE,
       #If is it expected to have updated data, download
       update.time <- file.info$mtime + download.freq
       current.time <- Sys.time()
-      if (current.time > update.time){
+      if (current.time >= update.time){
         download.flag <- TRUE
       }
+      logger$info("Checking downloaded data", downloaded.ts = current.time, next.update.ts = update.time, download.flag = download.flag)
     }
   }
-  if (download){
+  if (download.flag){
    download.file(url, dest)
   }
  }

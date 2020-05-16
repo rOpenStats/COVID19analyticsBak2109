@@ -90,15 +90,18 @@ library(dplyr)
 ``` r
 data.processor <- COVID19DataProcessor$new(force.download = FALSE)
 dummy <- data.processor$setupData()
-#> INFO  [08:49:12.508]  {stage: data loaded}
+#> INFO  [13:35:29.733] Checking downloaded data {downloaded.ts: 2020-05-16 13:35:29, next.update.ts: 2020-05-16 02:49:04, download.flag: TRUE}
+#> INFO  [13:35:30.419] Checking downloaded data {downloaded.ts: 2020-05-16 13:35:30, next.update.ts: 2020-05-16 02:49:06, download.flag: TRUE}
+#> INFO  [13:35:31.063] Checking downloaded data {downloaded.ts: 2020-05-16 13:35:31, next.update.ts: 2020-05-16 02:49:09, download.flag: TRUE}
+#> INFO  [13:35:31.797]  {stage: data loaded}
 dummy <- data.processor$curate()
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [08:49:19.187]  {stage: consolidated}
-#> INFO  [08:49:19.905]  {stage: Starting first imputation}
-#> INFO  [08:49:19.906] Imputation indicator {indicator: confirmed}
-#> INFO  [08:49:19.958] Imputation indicator {indicator: recovered}
-#> INFO  [08:49:20.056] Imputation indicator {indicator: deaths}
-#> INFO  [08:49:21.209]  {stage: Calculating top countries}
+#> INFO  [13:35:34.633]  {stage: consolidated}
+#> INFO  [13:35:35.454]  {stage: Starting first imputation}
+#> INFO  [13:35:35.455] Imputation indicator {indicator: confirmed}
+#> INFO  [13:35:35.497] Imputation indicator {indicator: recovered}
+#> INFO  [13:35:35.591] Imputation indicator {indicator: deaths}
+#> INFO  [13:35:36.946]  {stage: Calculating top countries}
 current.date <- max(data.processor$data$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
@@ -121,27 +124,27 @@ latam.countries <- sort(c("Mexico",
   arrange(desc(confirmed.inc)) %>%
   filter(confirmed >=10))[1:10,]
 #>           country       date rate.inc.daily confirmed.inc confirmed deaths
-#> 1              US 2020-05-14           0.02         27368   1417774  85898
-#> 2          Brazil 2020-05-14           0.07         13028    203165  13999
-#> 3          Russia 2020-05-14           0.04          9974    252245   2305
-#> 4            Peru 2020-05-14           0.06          4298     80604   2267
-#> 5           India 2020-05-14           0.05          3942     81997   2649
-#> 6  United Kingdom 2020-05-14           0.01          3455    234440  33693
-#> 7           Chile 2020-05-14           0.08          2659     37040    368
-#> 8          Mexico 2020-05-14           0.06          2409     42595   4477
-#> 9    Saudi Arabia 2020-05-14           0.05          2039     46869    283
-#> 10           Iran 2020-05-14           0.02          1808    114533   6854
+#> 1              US 2020-05-15           0.02         25050   1442824  87530
+#> 2          Brazil 2020-05-15           0.08         17126    220291  14962
+#> 3          Russia 2020-05-15           0.04         10598    262843   2418
+#> 4            Peru 2020-05-15           0.05          3891     84495   2392
+#> 5           India 2020-05-15           0.05          3787     85784   2753
+#> 6  United Kingdom 2020-05-15           0.02          3564    238004  34078
+#> 7        Pakistan 2020-05-15           0.08          3011     38799    834
+#> 8           Chile 2020-05-15           0.07          2502     39542    394
+#> 9          Mexico 2020-05-15           0.06          2437     45032   4767
+#> 10   Saudi Arabia 2020-05-15           0.05          2307     49176    292
 #>    deaths.inc imputation.confirmed
-#> 1        1779                     
-#> 2         759                     
-#> 3          93                     
-#> 4          98                     
-#> 5          98                     
-#> 6         429                     
-#> 7          22                     
-#> 8         257                     
-#> 9          10                     
-#> 10         71
+#> 1        1632                     
+#> 2         963                     
+#> 3         113                     
+#> 4         125                     
+#> 5         104                     
+#> 6         385                     
+#> 7          64                     
+#> 8          26                     
+#> 9         290                     
+#> 10          9
 ```
 
 ``` r
@@ -151,27 +154,27 @@ latam.countries <- sort(c("Mexico",
   select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
   arrange(desc(deaths.inc)))[1:10,]
 #>           country       date rate.inc.daily confirmed.inc confirmed deaths
-#> 1              US 2020-05-14           0.02         27368   1417774  85898
-#> 2          Brazil 2020-05-14           0.07         13028    203165  13999
-#> 3  United Kingdom 2020-05-14           0.01          3455    234440  33693
-#> 4          France 2020-05-14           0.00           810    178994  27428
-#> 5           Italy 2020-05-14           0.00           992    223096  31368
-#> 6          Mexico 2020-05-14           0.06          2409     42595   4477
-#> 7           Spain 2020-05-14           0.00           849    229540  27321
-#> 8          Canada 2020-05-14           0.02          1213     74781   5592
-#> 9           India 2020-05-14           0.05          3942     81997   2649
-#> 10           Peru 2020-05-14           0.06          4298     80604   2267
+#> 1              US 2020-05-15           0.02         25050   1442824  87530
+#> 2          Brazil 2020-05-15           0.08         17126    220291  14962
+#> 3  United Kingdom 2020-05-15           0.02          3564    238004  34078
+#> 4          Mexico 2020-05-15           0.06          2437     45032   4767
+#> 5         Ecuador 2020-05-15           0.03           965     31467   2594
+#> 6           Italy 2020-05-15           0.00           789    223885  31610
+#> 7           Spain 2020-05-15           0.00           643    230183  27459
+#> 8            Peru 2020-05-15           0.05          3891     84495   2392
+#> 9          Sweden 2020-05-15           0.02           625     29207   3646
+#> 10         Russia 2020-05-15           0.04         10598    262843   2418
 #>    deaths.inc imputation.confirmed
-#> 1        1779                     
-#> 2         759                     
-#> 3         429                     
-#> 4         351                     
-#> 5         262                     
-#> 6         257                     
-#> 7         217                     
-#> 8         167                     
-#> 9          98                     
-#> 10         98
+#> 1        1632                     
+#> 2         963                     
+#> 3         385                     
+#> 4         290                     
+#> 5         256                     
+#> 6         242                     
+#> 7         138                     
+#> 8         125                     
+#> 9         117                     
+#> 10        113
 ```
 
 ``` r
@@ -204,7 +207,7 @@ rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field
 
 ``` r
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
-#> Warning: Removed 2 rows containing missing values (position_stack).
+#> Warning: Removed 1 rows containing missing values (position_stack).
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
