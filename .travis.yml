@@ -5,6 +5,7 @@ r:
   - release
 before_install:
   - tlmgr install index
+  - sudo apt-get -y install libudunits2-dev # For units package
 before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
 r_packages:
   - covr
