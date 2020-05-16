@@ -32,15 +32,15 @@ ImputationMethodMean <- R6Class("ImputationMethodMean",
     self
    },
    getImputationValue = function(current.data, field){
-    prev.data <- self$data %>% filter(country == current.data$country & date == current.data$date -1)
-    post.data <- self$data %>% filter(country == current.data$country & date == current.data$date +1)
+    prev.data <- self$data %>% filter(country == current.data$country & date == current.data$date - 1)
+    post.data <- self$data %>% filter(country == current.data$country & date == current.data$date + 1)
 
     imputation.relatives <- self$data.comparison$getImputationRelative(current.data)
     if (field %in% self$indicators.imputation){
      rel <- imputation.relatives[, paste(field, "rel", sep = ".")]
      if (nrow(post.data) > 0){
       # Get relative post/prev
-      rel.post <- post.data[,field]/prev.data[,field]
+      rel.post <- post.data[, field] / prev.data[, field]
       rel <- min(rel, rel.post)
      }
     }
@@ -49,4 +49,3 @@ ImputationMethodMean <- R6Class("ImputationMethodMean",
     }
     round(prev.data[, field] * rel)
    }))
-
