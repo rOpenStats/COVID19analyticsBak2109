@@ -44,7 +44,9 @@ Imports: magrittr,
          vdiffr
 Collate:
   'util-lib.R'
-  'data-lib.R'
+  'COVID19DataProcessor.R'
+  'COVID19DataComparison.R'
+  'COVID19MissingValuesImputation.R'
   'report-lib.R'
   'test-lib.R'
   'zzz.R'
