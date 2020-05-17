@@ -88,20 +88,36 @@ library(dplyr)
 ```
 
 ``` r
-data.processor <- COVID19DataProcessor$new(force.download = FALSE)
+data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity", missing.values = "imputation")
+data.processor$setupStrategies()
+
 dummy <- data.processor$setupData()
-#> INFO  [14:27:11.005] Checking downloaded data {downloaded.ts: 2020-05-16 14:27:11, next.update.ts: 2020-05-17 07:35:30, download.flag: FALSE}
-#> INFO  [14:27:11.046] Checking downloaded data {downloaded.ts: 2020-05-16 14:27:11, next.update.ts: 2020-05-17 07:35:31, download.flag: FALSE}
-#> INFO  [14:27:11.057] Checking downloaded data {downloaded.ts: 2020-05-16 14:27:11, next.update.ts: 2020-05-17 07:35:31, download.flag: FALSE}
-#> INFO  [14:27:11.110]  {stage: data loaded}
+#> <Countries>
+#>   Public:
+#>     clone: function (deep = FALSE) 
+#>     countries: NA
+#>     countries.df: NA
+#>     data.processor: NA
+#>     excluded.countries: Diamond Princess Kosovo
+#>     getCountries: function (division, name) 
+#>     initialize: function () 
+#>     setup: function (countries) 
+#> INFO  [16:57:03.788] Checking downloaded data {downloaded.ts: 2020-05-17 16:57:03, next.update.ts: 2020-05-18 10:52:52, download.flag: FALSE}
+#> INFO  [16:57:03.873] Checking downloaded data {downloaded.ts: 2020-05-17 16:57:03, next.update.ts: 2020-05-18 10:52:53, download.flag: FALSE}
+#> INFO  [16:57:03.885] Checking downloaded data {downloaded.ts: 2020-05-17 16:57:03, next.update.ts: 2020-05-18 10:52:54, download.flag: FALSE}
+#> INFO  [16:57:03.938]  {stage: data loaded}
+#> INFO  [16:57:05.233]  {stage: consolidated}
 dummy <- data.processor$curate()
+#> INFO  [16:57:05.303]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [14:27:13.507]  {stage: consolidated}
-#> INFO  [14:27:14.301]  {stage: Starting first imputation}
-#> INFO  [14:27:14.302] Imputation indicator {indicator: confirmed}
-#> INFO  [14:27:14.348] Imputation indicator {indicator: recovered}
-#> INFO  [14:27:14.438] Imputation indicator {indicator: deaths}
-#> INFO  [14:27:15.690]  {stage: Calculating top countries}
+#> INFO  [16:57:06.927]  {stage: calculating-rates}
+#> INFO  [16:57:07.081]  {stage: making-data-comparison}
+#> INFO  [16:57:08.040]  {stage: applying-missing-values-method}
+#> INFO  [16:57:08.042]  {stage: Starting first imputation}
+#> INFO  [16:57:08.045]  {stage: calculating-rates}
+#> INFO  [16:57:08.333]  {stage: making-data-comparison-2}
+#> INFO  [16:57:09.245]  {stage: calculating-top-countries}
+
 current.date <- max(data.processor$data$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
@@ -120,61 +136,45 @@ latam.countries <- sort(c("Mexico",
 # Top 10 daily cases confirmed increment
 (data.processor$data %>%
   filter(date == current.date) %>%
-  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
+  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
   arrange(desc(confirmed.inc)) %>%
   filter(confirmed >=10))[1:10,]
-#>           country       date rate.inc.daily confirmed.inc confirmed deaths
-#> 1              US 2020-05-15           0.02         25050   1442824  87530
-#> 2          Brazil 2020-05-15           0.08         17126    220291  14962
-#> 3          Russia 2020-05-15           0.04         10598    262843   2418
-#> 4            Peru 2020-05-15           0.05          3891     84495   2392
-#> 5           India 2020-05-15           0.05          3787     85784   2753
-#> 6  United Kingdom 2020-05-15           0.02          3564    238004  34078
-#> 7        Pakistan 2020-05-15           0.08          3011     38799    834
-#> 8           Chile 2020-05-15           0.07          2502     39542    394
-#> 9          Mexico 2020-05-15           0.06          2437     45032   4767
-#> 10   Saudi Arabia 2020-05-15           0.05          2307     49176    292
-#>    deaths.inc imputation.confirmed
-#> 1        1632                     
-#> 2         963                     
-#> 3         113                     
-#> 4         125                     
-#> 5         104                     
-#> 6         385                     
-#> 7          64                     
-#> 8          26                     
-#> 9         290                     
-#> 10          9
+#> # A tibble: 10 x 7
+#> # Groups:   country [10]
+#>    country   date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
+#>    <chr>     <date>              <dbl>         <int>     <int>  <int>      <int>
+#>  1 US        2020-05-16           0.02         24996   1467820  88754       1224
+#>  2 Brazil    2020-05-16           0.06         13220    233511  15662        700
+#>  3 Russia    2020-05-16           0.04          9200    272043   2537        119
+#>  4 India     2020-05-16           0.06          4864     90648   2871        118
+#>  5 Peru      2020-05-16           0.05          4046     88541   2523        131
+#>  6 United K… 2020-05-16           0.01          3457    241461  34546        468
+#>  7 Saudi Ar… 2020-05-16           0.06          2840     52016    302         10
+#>  8 Mexico    2020-05-16           0.05          2112     47144   5045        278
+#>  9 Chile     2020-05-16           0.05          1886     41428    421         27
+#> 10 Iran      2020-05-16           0.02          1757    118392   6937         35
 ```
 
 ``` r
 # Top 10 daily deaths increment
 (data.processor$data %>%
   filter(date == current.date) %>%
-  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
+  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
   arrange(desc(deaths.inc)))[1:10,]
-#>           country       date rate.inc.daily confirmed.inc confirmed deaths
-#> 1              US 2020-05-15           0.02         25050   1442824  87530
-#> 2          Brazil 2020-05-15           0.08         17126    220291  14962
-#> 3  United Kingdom 2020-05-15           0.02          3564    238004  34078
-#> 4          Mexico 2020-05-15           0.06          2437     45032   4767
-#> 5         Ecuador 2020-05-15           0.03           965     31467   2594
-#> 6           Italy 2020-05-15           0.00           789    223885  31610
-#> 7           Spain 2020-05-15           0.00           643    230183  27459
-#> 8            Peru 2020-05-15           0.05          3891     84495   2392
-#> 9          Sweden 2020-05-15           0.02           625     29207   3646
-#> 10         Russia 2020-05-15           0.04         10598    262843   2418
-#>    deaths.inc imputation.confirmed
-#> 1        1632                     
-#> 2         963                     
-#> 3         385                     
-#> 4         290                     
-#> 5         256                     
-#> 6         242                     
-#> 7         138                     
-#> 8         125                     
-#> 9         117                     
-#> 10        113
+#> # A tibble: 10 x 7
+#> # Groups:   country [10]
+#>    country   date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
+#>    <chr>     <date>              <dbl>         <int>     <int>  <int>      <int>
+#>  1 US        2020-05-16           0.02         24996   1467820  88754       1224
+#>  2 Brazil    2020-05-16           0.06         13220    233511  15662        700
+#>  3 United K… 2020-05-16           0.01          3457    241461  34546        468
+#>  4 Mexico    2020-05-16           0.05          2112     47144   5045        278
+#>  5 Italy     2020-05-16           0              875    224760  31763        153
+#>  6 Peru      2020-05-16           0.05          4046     88541   2523        131
+#>  7 Russia    2020-05-16           0.04          9200    272043   2537        119
+#>  8 India     2020-05-16           0.06          4864     90648   2871        118
+#>  9 Spain     2020-05-16           0              515    230698  27563        104
+#> 10 Ecuador   2020-05-16           0.04          1296     32763   2688         94
 ```
 
 ``` r
@@ -207,7 +207,7 @@ rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field
 
 ``` r
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
-#> Warning: Removed 1 rows containing missing values (position_stack).
+#> Warning: Removed 6 rows containing missing values (position_stack).
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
@@ -240,6 +240,8 @@ rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
 
 ``` r
 rg$ggplotTopCountriesPie()
+#> Warning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette Paired is 12
+#> Returning the palette you asked for with that many colors
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />

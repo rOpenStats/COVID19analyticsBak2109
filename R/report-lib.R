@@ -34,7 +34,8 @@ ReportGenerator <- R6Class("ReportGenerator",
     #Page 6
     # a <- data %>% group_by(country) %>% tally()
     ## put all others in a single group of "Others"
-    df <- self$data.processor$data.latest %>% filter(!is.na(country) & !country %in% excluded.countries) %>%
+    df <- as.data.frame(self$data.processor$data.latest)
+    df %>% filter(!is.na(country) & !country %in% excluded.countries) %>%
      mutate(country=ifelse(ranking <= self$data.processor$top.countries.count, as.character(country), "Others")) %>%
      mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
     df %<>% group_by(country) %>% summarise(confirmed=sum(confirmed))
@@ -57,7 +58,8 @@ ReportGenerator <- R6Class("ReportGenerator",
    ggplotTopCountriesBarPlots = function(excluded.countries = "World"){
     #Page 7
     ## convert from wide to long format, for purpose of drawing a area plot
-    data.long <- self$data.processor$data %>% select(c(country, date, confirmed, remaining.confirmed, recovered, deaths)) %>%
+     data.long <- as.data.frame(self$data.processor$data)
+     data.long %<>% select(c(country, date, confirmed, remaining.confirmed, recovered, deaths)) %>%
      gather(key=type, value=count, -c(country, date))
     ## set factor levels to show them in a desirable order
     data.long %<>% mutate(type = factor(type, c("confirmed", "remaining.confirmed", "recovered", "deaths")))
@@ -82,7 +84,8 @@ ReportGenerator <- R6Class("ReportGenerator",
    },
    ggplotCountriesBarGraphs = function(selected.country = "Australia"){
     ## convert from wide to long format, for purpose of drawing a area plot
-    data.long <- self$data.processor$data %>% select(c(country, date, confirmed, remaining.confirmed, recovered, deaths)) %>%
+     data.long <- as.data.frame(self$data.processor$data)
+     data.long %<>% select(c(country, date, confirmed, remaining.confirmed, recovered, deaths)) %>%
      gather(key=type, value=count, -c(country, date))
     ## set factor levels to show them in a desirable order
     data.long %<>% mutate(type = factor(type, c("confirmed", "remaining.confirmed", "recovered", "deaths")))
@@ -114,8 +117,10 @@ ReportGenerator <- R6Class("ReportGenerator",
    },
    ggplotConfirmedCases = function(){
      ## current confirmed and its increase
-     x.values <- sort(unique(df$date))
-     plot1 <- ggplot(self$data.processor$data, aes(x=date, y=remaining.confirmed)) +
+     data.long <- as.data.frame(self$data.processor$data)
+
+     x.values <- sort(unique(data.long$date))
+     plot1 <- ggplot(data.long, aes(x=date, y=remaining.confirmed)) +
        geom_point() + geom_smooth() +
        xlab("Date") + ylab("Count") + labs(title="Current Confirmed Cases")
      plot1 <- self$getXLabelsTheme(plot1, x.values)
@@ -189,6 +194,7 @@ setupTheme <- function(ggplot, report.date, total.colors){
 
 #' New dataviz for reportGenerator by
 #' @author kenarab
+#' @import magrittr
 #' @export
 ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
  inherit = ReportGenerator,
@@ -199,7 +205,8 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
      },
      ggplotTopCountriesStackedBarDailyInc = function(included.countries, excluded.countries = "World",
                                                      map.region = "The World"){
-       data.long <- self$data.processor$data %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
+       data.long <- as.data.frame(self$data.processor$data)
+       data.long %<>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
          filter(confirmed > 0) %>%
          select(c(country, date, confirmed.inc)) %>%
          gather(key=type, value=count, -c(country, date))
@@ -245,7 +252,8 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
                                      excluded.countries = "World", field = "confirmed.inc", log.scale = FALSE,
                                         min.confirmed = 100){
 
-       data.long <- self$data.processor$data %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
+       data.long <- as.data.frame(self$data.processor$data)
+       data.long %<>%  #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
          filter(confirmed >= min.confirmed) %>%
          filter(confirmed.inc > 0)
        data.long <- data.long[,c("country", "date", field)] %>% gather(key=type, value=count, -c(country, date))

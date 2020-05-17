@@ -68,13 +68,13 @@ library(dplyr)
 ```
 
 ```{r}
-processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity", missing.values = "imputation")
-processor$setupStrategies()
+data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity", missing.values = "imputation")
+data.processor$setupStrategies()
 
-dummy <- processor$setupData()
-dummy <- processor$curate()
+dummy <- data.processor$setupData()
+dummy <- data.processor$curate()
 
-current.date <- max(processor$data$date)
+current.date <- max(data.processor$data$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
 rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
@@ -93,7 +93,7 @@ latam.countries <- sort(c("Mexico",
 # Top 10 daily cases confirmed increment
 (data.processor$data %>%
   filter(date == current.date) %>%
-  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
+  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
   arrange(desc(confirmed.inc)) %>%
   filter(confirmed >=10))[1:10,]
 ```
@@ -103,7 +103,7 @@ latam.countries <- sort(c("Mexico",
 # Top 10 daily deaths increment
 (data.processor$data %>%
   filter(date == current.date) %>%
-  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
+  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
   arrange(desc(deaths.inc)))[1:10,]
 ```
 

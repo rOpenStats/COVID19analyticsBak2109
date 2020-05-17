@@ -13,7 +13,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    top.countries.count = 11,
    filenames         = NA,
    indicators = c("confirmed", "recovered", "deaths"),
-
+   aggregation.columns = "country",
    smooth.n = 3,
    available.providers = NULL,
    available.missing.value.models = NULL,
@@ -96,7 +96,8 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     #self$data.provider$consolidate()
     # TODO generalization of uses of data model
     self$changeState("loading-aggregated-data-model")
-    self$data <- self$data.model$getAggregatedData(columns = c("country", "date"))
+
+    self$data <- self$data.model$getAggregatedData(columns = c(self$aggregation.columns, "date"))
     self$min.date <- min(self$data$date)
     self$max.date <- max(self$data$date)
 
