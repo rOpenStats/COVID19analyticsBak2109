@@ -9,20 +9,35 @@ COVID19DataProviderJHU
 COVID19DataProviderJHU
 }
 \author{
+yanchang-zhao
+
 kenarab
+}
+\section{Super classes}{
+\code{\link[COVID19analytics:COVID19DataProvider]{COVID19analytics::COVID19DataProvider}} -> \code{\link[COVID19analytics:COVID19DataProviderConfirmedRecoveredDeaths]{COVID19analytics::COVID19DataProviderConfirmedRecoveredDeaths}} -> \code{COVID19DataProviderJHU}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{COVID19DataProviderJHU$new()}}
-\item \href{#method-setupData}{\code{COVID19DataProviderJHU$setupData()}}
-\item \href{#method-consolidate}{\code{COVID19DataProviderJHU$consolidate()}}
+\item \href{#method-getID}{\code{COVID19DataProviderJHU$getID()}}
 \item \href{#method-downloadData}{\code{COVID19DataProviderJHU$downloadData()}}
+\item \href{#method-getDates}{\code{COVID19DataProviderJHU$getDates()}}
 \item \href{#method-loadData}{\code{COVID19DataProviderJHU$loadData()}}
 \item \href{#method-cleanData}{\code{COVID19DataProviderJHU$cleanData()}}
 \item \href{#method-mergeData}{\code{COVID19DataProviderJHU$mergeData()}}
+\item \href{#method-standarize}{\code{COVID19DataProviderJHU$standarize()}}
 \item \href{#method-clone}{\code{COVID19DataProviderJHU$clone()}}
 }
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProvider" data-id="getDataModel">}\href{../../COVID19analytics/html/COVID19DataProvider.html#method-getDataModel}{\code{COVID19analytics::COVID19DataProvider$getDataModel()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProvider" data-id="setupData">}\href{../../COVID19analytics/html/COVID19DataProvider.html#method-setupData}{\code{COVID19analytics::COVID19DataProvider$setupData()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProviderConfirmedRecoveredDeaths" data-id="consolidate">}\href{../../COVID19analytics/html/COVID19DataProviderConfirmedRecoveredDeaths.html#method-consolidate}{\code{COVID19analytics::COVID19DataProviderConfirmedRecoveredDeaths$consolidate()}}\out{</span>}
+}
+\out{</details>}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
@@ -34,20 +49,11 @@ kenarab
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setupData"></a>}}
-\if{latex}{\out{\hypertarget{method-setupData}{}}}
-\subsection{Method \code{setupData()}}{
+\if{html}{\out{<a id="method-getID"></a>}}
+\if{latex}{\out{\hypertarget{method-getID}{}}}
+\subsection{Method \code{getID()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProviderJHU$setupData()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-consolidate"></a>}}
-\if{latex}{\out{\hypertarget{method-consolidate}{}}}
-\subsection{Method \code{consolidate()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProviderJHU$consolidate()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProviderJHU$getID()}\if{html}{\out{</div>}}
 }
 
 }
@@ -57,6 +63,15 @@ kenarab
 \subsection{Method \code{downloadData()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProviderJHU$downloadData(download.freq = 60 * 60 * 18)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getDates"></a>}}
+\if{latex}{\out{\hypertarget{method-getDates}{}}}
+\subsection{Method \code{getDates()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProviderJHU$getDates()}\if{html}{\out{</div>}}
 }
 
 }
@@ -84,6 +99,15 @@ kenarab
 \subsection{Method \code{mergeData()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProviderJHU$mergeData()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-standarize"></a>}}
+\if{latex}{\out{\hypertarget{method-standarize}{}}}
+\subsection{Method \code{standarize()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProviderJHU$standarize()}\if{html}{\out{</div>}}
 }
 
 }

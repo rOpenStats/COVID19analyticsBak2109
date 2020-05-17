@@ -46,6 +46,7 @@ Collate:
   'util-lib.R'
   'COVID19DataProcessor.R'
   'COVID19DataProviderJHU.R'
+  'COVID19DataModel.R'
   'COVID19DataComparison.R'
   'COVID19MissingValuesImputation.R'
   'report-lib.R'

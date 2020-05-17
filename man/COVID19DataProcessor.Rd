@@ -15,11 +15,15 @@ kenarab
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{COVID19DataProcessor$new()}}
+\item \href{#method-initProviders}{\code{COVID19DataProcessor$initProviders()}}
+\item \href{#method-initMissingValuesModels}{\code{COVID19DataProcessor$initMissingValuesModels()}}
+\item \href{#method-setupProvider}{\code{COVID19DataProcessor$setupProvider()}}
+\item \href{#method-setupMissingValuesModel}{\code{COVID19DataProcessor$setupMissingValuesModel()}}
+\item \href{#method-setupStrategies}{\code{COVID19DataProcessor$setupStrategies()}}
 \item \href{#method-setupData}{\code{COVID19DataProcessor$setupData()}}
+\item \href{#method-changeState}{\code{COVID19DataProcessor$changeState()}}
 \item \href{#method-curate}{\code{COVID19DataProcessor$curate()}}
 \item \href{#method-makeDataComparison}{\code{COVID19DataProcessor$makeDataComparison()}}
-\item \href{#method-makeImputationsRemoveNA}{\code{COVID19DataProcessor$makeImputationsRemoveNA()}}
-\item \href{#method-makeImputations}{\code{COVID19DataProcessor$makeImputations()}}
 \item \href{#method-getCountries}{\code{COVID19DataProcessor$getCountries()}}
 \item \href{#method-smoothSeries}{\code{COVID19DataProcessor$smoothSeries()}}
 \item \href{#method-calculateRates}{\code{COVID19DataProcessor$calculateRates()}}
@@ -32,10 +36,52 @@ kenarab
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$new(
-  force.download = FALSE,
-  imputation.method = ImputationMethodMean$new()
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$new(provider.id, missing.values.model.id)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-initProviders"></a>}}
+\if{latex}{\out{\hypertarget{method-initProviders}{}}}
+\subsection{Method \code{initProviders()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$initProviders()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-initMissingValuesModels"></a>}}
+\if{latex}{\out{\hypertarget{method-initMissingValuesModels}{}}}
+\subsection{Method \code{initMissingValuesModels()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$initMissingValuesModels()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setupProvider"></a>}}
+\if{latex}{\out{\hypertarget{method-setupProvider}{}}}
+\subsection{Method \code{setupProvider()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$setupProvider(provider.id)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setupMissingValuesModel"></a>}}
+\if{latex}{\out{\hypertarget{method-setupMissingValuesModel}{}}}
+\subsection{Method \code{setupMissingValuesModel()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$setupMissingValuesModel(missing.values.model.id)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setupStrategies"></a>}}
+\if{latex}{\out{\hypertarget{method-setupStrategies}{}}}
+\subsection{Method \code{setupStrategies()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$setupStrategies()}\if{html}{\out{</div>}}
 }
 
 }
@@ -45,6 +91,15 @@ kenarab
 \subsection{Method \code{setupData()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$setupData()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-changeState"></a>}}
+\if{latex}{\out{\hypertarget{method-changeState}{}}}
+\subsection{Method \code{changeState()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$changeState(new.state)}\if{html}{\out{</div>}}
 }
 
 }
@@ -63,24 +118,6 @@ kenarab
 \subsection{Method \code{makeDataComparison()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeDataComparison()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-makeImputationsRemoveNA"></a>}}
-\if{latex}{\out{\hypertarget{method-makeImputationsRemoveNA}{}}}
-\subsection{Method \code{makeImputationsRemoveNA()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeImputationsRemoveNA()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-makeImputations"></a>}}
-\if{latex}{\out{\hypertarget{method-makeImputations}{}}}
-\subsection{Method \code{makeImputations()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$makeImputations()}\if{html}{\out{</div>}}
 }
 
 }

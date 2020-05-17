@@ -57,21 +57,6 @@ createDataDir <- function(){
 
 
 
-#' clean irrelevant data from source
-#' @author kenarab
-#'
-#' @export
-cleanData <- function(data) {
- ## remove some columns
- data %<>% select(-c(Province.State, Lat, Long)) %>% rename(country=Country.Region)
- ## convert from wide to long format
- data %<>% gather(key=date, value=count, -country)
- ## convert from character to date
- data %<>% mutate(date = date %>% substr(2,8) %>% mdy())
- ## aggregate by country
- data %<>% group_by(country, date) %>% summarise(count=sum(count)) %>% as.data.frame()
- return(data)
-}
 
 
 #' For copying generated graph to package folder

@@ -264,8 +264,9 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        ## cases by type
        df <- data.long %>% filter(country %in% included.countries)
        df <- df %>% filter(!country %in% excluded.countries)
+       countries.object <- self$data.processor$getCountries()
        df %<>%
-         mutate(country=country %>% factor(levels=c(self$data.processor$getCountries())))
+         mutate(country=country %>% factor(levels=c(countries.object$countries)))
        self$report.date <- max(df$date)
 
        ret <- df %>% filter(country != "World") %>%

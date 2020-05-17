@@ -23,6 +23,8 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    #state
    state          = NA,
    data.provider  = NULL,
+   data.model     = NULL,
+   data           = NULL,
    missing.values.model = NULL,
    countries      = NA,
    min.date       = NA,
@@ -75,36 +77,53 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    setupData = function(){
      logger <- getLogger(self)
      self$setupStrategies()
-     self$data.provider$setupData()
+     self$countries <- Countries$new()
+     #debug
+     print(self$countries)
+     self$data.provider$setupData(self)
+     self$data.model <- self$data.provider$getDataModel()
+   },
+   changeState = function(new.state){
+     logger <- getLogger(self)
+     logger$info("", stage = new.state)
+     self$state <- new.state
    },
    curate = function(countries = NULL){
     logger <- getLogger(self)
     dates <- self$data.provider$getDates()
     range(dates)
 
-    self$data <- self$data.provider$consolidate()
+
+    #self$data.provider$consolidate()
+    # TODO generalization of uses of data model
+    self$changeState("loading-aggregated-data-model")
+    self$data <- self$data.model$getAggregatedData(columns = c("country", "date"))
+    self$min.date <- min(self$data$date)
+    self$max.date <- max(self$data$date)
 
     self$countries$setup(countries = sort(unique(self$data$country)))
 
     nrow(self$data)
     max(self$data$date)
+    self$changeState("calculating-rates")
     self$calculateRates()
-    self$state <- "rates-calculated"
     nrow(self$data)
     # TODO imputation. By now remove rows with no confirmed data
+    self$changeState("making-data-comparison")
     self$makeDataComparison()
-    self$state <- "data-comparison"
 
+    self$changeState("applying-missing-values-method")
     self$missing.values.model$setupDataProcessor(self)
     self$data <- self$missing.values.model$apply()
 
     # TODO add smooth
     # self$smoothSeries(old.serie.sufix = "original")
     # self$state <- "1st-imputation-smoothed"
+    self$changeState("calculating-rates")
     self$calculateRates()
 
+    self$changeState("making-data-comparison-2")
     self$makeDataComparison()
-    self$state <- "data-comparison-imputed"
     #self$state <- "data-comparison-smoothed"
 
     # logger$info("", stage = "Starting second imputation")
@@ -121,7 +140,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     if (!is.null(countries)){
       self$data %<>% filter(country %in% countries)
     }
-    logger$info("", stage = "Calculating top countries")
+    self$changeState("calculating-top-countries")
     self$calculateTopCountries()
     self
    },
@@ -132,8 +151,9 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self$data.comparison
    },
    getCountries = function(){
-     self$countries$countries
+     self$countries
    },
+   # TODO Move to a specific model
    smoothSeries = function(old.serie.sufix = "original"){
     new.data <- NULL
     for (current.country in sort(unique((self$data$country)))){
@@ -217,21 +237,22 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
 COVID19DataProvider <- R6Class("COVID19DataProvider",
   public = list(
     force.download = FALSE,
-    filenames         = NA,
-    indicators = c("confirmed", "recovered", "deaths"),
+    filenames      = NA,
+    indicators     = c("confirmed", "recovered", "deaths"),
+    data.processor = NULL,
     #state
     state          = NA,
     data.na        = NA,
     data           = NA,
-    countries      = NA,
-    min.date       = NA,
-    max.date       = NA,
-
+    data.model     = NA,
     logger         = NA,
   initialize = function(force.download = FALSE){
     self$force.download <- force.download
     self$logger <- genLogger(self)
     self
+  },
+  getDataModel = function(){
+    self$data.model
   },
   getID = function(){
     stop("Abstract class")
@@ -239,8 +260,9 @@ COVID19DataProvider <- R6Class("COVID19DataProvider",
   getDates = function(){
     stop("Abstract class")
   },
-  setupData = function(){
+  setupData = function(data.processor){
     logger <- getLogger(self)
+    self$data.processor <- data.processor
     self$downloadData()
     self$state <- "downloaded"
     self$loadData()
@@ -318,20 +340,7 @@ COVID19DataProviderConfirmedRecoveredDeaths <- R6Class("COVID19DataProviderConfi
      stop("Abstract class")
    },
    mergeData = function(){
-     ## merge above 3 datasets into one, by country and date
-     self$data <- self$data.confirmed %>% merge(self$data.deaths) %>% merge(self$data.recovered)
-
-
-     self$countries <- Countries$new()
-     #Remove Cruise Ship
-     self$data %<>% filter(!country %in% self$countries$excluded.countries)
-
-     self$data.na <- self$data %>% filter(is.na(confirmed))
-     #self$data <- self$data %>% filter(is.na(confirmed))
-     self$min.date <- min(self$data$date)
-     self$max.date <- max(self$data$date)
-
-     self$data
+     stop("Abstract class")
    }
  ))
 

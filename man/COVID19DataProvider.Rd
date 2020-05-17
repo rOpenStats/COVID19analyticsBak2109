@@ -15,12 +15,15 @@ kenarab
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{COVID19DataProvider$new()}}
+\item \href{#method-getDataModel}{\code{COVID19DataProvider$getDataModel()}}
+\item \href{#method-getID}{\code{COVID19DataProvider$getID()}}
+\item \href{#method-getDates}{\code{COVID19DataProvider$getDates()}}
 \item \href{#method-setupData}{\code{COVID19DataProvider$setupData()}}
-\item \href{#method-consolidate}{\code{COVID19DataProvider$consolidate()}}
 \item \href{#method-downloadData}{\code{COVID19DataProvider$downloadData()}}
 \item \href{#method-loadData}{\code{COVID19DataProvider$loadData()}}
 \item \href{#method-cleanData}{\code{COVID19DataProvider$cleanData()}}
-\item \href{#method-mergeData}{\code{COVID19DataProvider$mergeData()}}
+\item \href{#method-consolidate}{\code{COVID19DataProvider$consolidate()}}
+\item \href{#method-standarize}{\code{COVID19DataProvider$standarize()}}
 \item \href{#method-clone}{\code{COVID19DataProvider$clone()}}
 }
 }
@@ -34,20 +37,38 @@ kenarab
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setupData"></a>}}
-\if{latex}{\out{\hypertarget{method-setupData}{}}}
-\subsection{Method \code{setupData()}}{
+\if{html}{\out{<a id="method-getDataModel"></a>}}
+\if{latex}{\out{\hypertarget{method-getDataModel}{}}}
+\subsection{Method \code{getDataModel()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProvider$setupData()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProvider$getDataModel()}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-consolidate"></a>}}
-\if{latex}{\out{\hypertarget{method-consolidate}{}}}
-\subsection{Method \code{consolidate()}}{
+\if{html}{\out{<a id="method-getID"></a>}}
+\if{latex}{\out{\hypertarget{method-getID}{}}}
+\subsection{Method \code{getID()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProvider$consolidate()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProvider$getID()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getDates"></a>}}
+\if{latex}{\out{\hypertarget{method-getDates}{}}}
+\subsection{Method \code{getDates()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProvider$getDates()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setupData"></a>}}
+\if{latex}{\out{\hypertarget{method-setupData}{}}}
+\subsection{Method \code{setupData()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProvider$setupData(data.processor)}\if{html}{\out{</div>}}
 }
 
 }
@@ -79,11 +100,20 @@ kenarab
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mergeData"></a>}}
-\if{latex}{\out{\hypertarget{method-mergeData}{}}}
-\subsection{Method \code{mergeData()}}{
+\if{html}{\out{<a id="method-consolidate"></a>}}
+\if{latex}{\out{\hypertarget{method-consolidate}{}}}
+\subsection{Method \code{consolidate()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProvider$mergeData()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProvider$consolidate()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-standarize"></a>}}
+\if{latex}{\out{\hypertarget{method-standarize}{}}}
+\subsection{Method \code{standarize()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProvider$standarize()}\if{html}{\out{</div>}}
 }
 
 }
