@@ -74,8 +74,6 @@ COVID19DataProviderJHU <- R6Class("COVID19DataProviderJHU",
    standarize = function(){
     self$data.model <- COVID19DataModel$new(provider = self)
     #Add county.department field
-    #debug
-    ret <<- ret
     self$data$county.department <- ""
     self$data.model$loadData(data = self$data)
     self$data.model
