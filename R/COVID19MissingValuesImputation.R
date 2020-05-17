@@ -21,9 +21,11 @@ COVID19MissingValuesImputation <- R6Class("COVID19MissingValuesImputation",
      "imputation"
    },
    apply = function(){
+     logger <- getLogger(self)
      logger$info("", stage = "Starting first imputation")
-     self$makeImputations()
+     ret <- self$makeImputations()
      self$state <- "1st-imputation"
+     ret
     },
    makeImputations = function(){
      logger <- getLogger(self)
@@ -106,9 +108,10 @@ COVID19MissingValuesImputation <- R6Class("COVID19MissingValuesImputation",
 
      #data.imputation <- data.na %>% filter(date == max.date)
      #logger$debug("Imputing", country = imputation.df$country, date = imputation.df$date)
-     logger$debug("Setting data processor",)
+     logger$debug("Setting data processor")
      self$data.processor$imputation.summary <- imputation.summary
      self$data.processor$data               <- data
+     data
    }
   ))
 

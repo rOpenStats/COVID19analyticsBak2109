@@ -68,10 +68,13 @@ library(dplyr)
 ```
 
 ```{r}
-data.processor <- COVID19DataProcessor$new(force.download = FALSE)
-dummy <- data.processor$setupData()
-dummy <- data.processor$curate()
-current.date <- max(data.processor$data$date)
+processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity", missing.values = "imputation")
+processor$setupStrategies()
+
+dummy <- processor$setupData()
+dummy <- processor$curate()
+
+current.date <- max(processor$data$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
 rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)

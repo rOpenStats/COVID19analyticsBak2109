@@ -16,7 +16,8 @@ kenarab
 \itemize{
 \item \href{#method-new}{\code{COVID19MissingValuesModel$new()}}
 \item \href{#method-getID}{\code{COVID19MissingValuesModel$getID()}}
-\item \href{#method-setupDataProcessor}{\code{COVID19MissingValuesModel$setupDataProcessor()}}
+\item \href{#method-setup}{\code{COVID19MissingValuesModel$setup()}}
+\item \href{#method-apply}{\code{COVID19MissingValuesModel$apply()}}
 \item \href{#method-clone}{\code{COVID19MissingValuesModel$clone()}}
 }
 }
@@ -39,11 +40,20 @@ kenarab
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setupDataProcessor"></a>}}
-\if{latex}{\out{\hypertarget{method-setupDataProcessor}{}}}
-\subsection{Method \code{setupDataProcessor()}}{
+\if{html}{\out{<a id="method-setup"></a>}}
+\if{latex}{\out{\hypertarget{method-setup}{}}}
+\subsection{Method \code{setup()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19MissingValuesModel$setupDataProcessor(data.processor)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19MissingValuesModel$setup(data.processor, data.comparison)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-apply"></a>}}
+\if{latex}{\out{\hypertarget{method-apply}{}}}
+\subsection{Method \code{apply()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19MissingValuesModel$apply()}\if{html}{\out{</div>}}
 }
 
 }

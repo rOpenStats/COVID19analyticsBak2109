@@ -11,7 +11,6 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
   public = list(
    # parametersirre
    top.countries.count = 11,
-   imputation.method = NA,
    filenames         = NA,
    indicators = c("confirmed", "recovered", "deaths"),
 
@@ -113,8 +112,9 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self$makeDataComparison()
 
     self$changeState("applying-missing-values-method")
-    self$missing.values.model$setupDataProcessor(self)
-    self$data <- self$missing.values.model$apply()
+    self$missing.values.model$setup(self, self$data.comparison)
+    # Missing values method setup the processed series in object
+    self$missing.values.model$apply()
 
     # TODO add smooth
     # self$smoothSeries(old.serie.sufix = "original")
@@ -147,7 +147,6 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    makeDataComparison = function(){
     self$data.comparison <- COVID19DataComparison$new(data.processor = self)
     self$data.comparison$process()
-    self$imputation.method$setup(self, self$data.comparison)
     self$data.comparison
    },
    getCountries = function(){
@@ -357,6 +356,8 @@ COVID19DataProviderConfirmedRecoveredDeaths <- R6Class("COVID19DataProviderConfi
 COVID19MissingValuesModel <- R6Class("COVID19MissingValuesModel",
 public = list(
  data.processor = NULL,
+ data.comparison = NULL,
+ state          = NA,
  logger         = NA,
  initialize = function(){
    self$logger <- genLogger(self)
@@ -365,9 +366,13 @@ public = list(
  getID = function(){
    stop("Abstract class")
  },
- setupDataProcessor = function(data.processor){
+ setup = function(data.processor, data.comparison){
    # TODO check class of data.processor
    # stopifnot()
-   data.processor
+   self$data.processor <- data.processor
+   self$data.comparison <- data.comparison
+ },
+ apply = function(){
+   stop("Abstract class")
  }))
 

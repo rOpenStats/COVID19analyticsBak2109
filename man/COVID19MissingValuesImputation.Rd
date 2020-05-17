@@ -27,7 +27,7 @@ kenarab
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19MissingValuesModel" data-id="setupDataProcessor">}\href{../../COVID19analytics/html/COVID19MissingValuesModel.html#method-setupDataProcessor}{\code{COVID19analytics::COVID19MissingValuesModel$setupDataProcessor()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19MissingValuesModel" data-id="setup">}\href{../../COVID19analytics/html/COVID19MissingValuesModel.html#method-setup}{\code{COVID19analytics::COVID19MissingValuesModel$setup()}}\out{</span>}
 }
 \out{</details>}
 }
