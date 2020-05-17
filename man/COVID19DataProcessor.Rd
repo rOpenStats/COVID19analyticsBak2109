@@ -17,10 +17,6 @@ kenarab
 \item \href{#method-new}{\code{COVID19DataProcessor$new()}}
 \item \href{#method-setupData}{\code{COVID19DataProcessor$setupData()}}
 \item \href{#method-curate}{\code{COVID19DataProcessor$curate()}}
-\item \href{#method-downloadData}{\code{COVID19DataProcessor$downloadData()}}
-\item \href{#method-loadData}{\code{COVID19DataProcessor$loadData()}}
-\item \href{#method-cleanData}{\code{COVID19DataProcessor$cleanData()}}
-\item \href{#method-consolidate}{\code{COVID19DataProcessor$consolidate()}}
 \item \href{#method-makeDataComparison}{\code{COVID19DataProcessor$makeDataComparison()}}
 \item \href{#method-makeImputationsRemoveNA}{\code{COVID19DataProcessor$makeImputationsRemoveNA()}}
 \item \href{#method-makeImputations}{\code{COVID19DataProcessor$makeImputations()}}
@@ -58,42 +54,6 @@ kenarab
 \subsection{Method \code{curate()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$curate(countries = NULL)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-downloadData"></a>}}
-\if{latex}{\out{\hypertarget{method-downloadData}{}}}
-\subsection{Method \code{downloadData()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$downloadData(download.freq = 60 * 60 * 18)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-loadData"></a>}}
-\if{latex}{\out{\hypertarget{method-loadData}{}}}
-\subsection{Method \code{loadData()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$loadData()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cleanData"></a>}}
-\if{latex}{\out{\hypertarget{method-cleanData}{}}}
-\subsection{Method \code{cleanData()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$cleanData()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-consolidate"></a>}}
-\if{latex}{\out{\hypertarget{method-consolidate}{}}}
-\subsection{Method \code{consolidate()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$consolidate()}\if{html}{\out{</div>}}
 }
 
 }

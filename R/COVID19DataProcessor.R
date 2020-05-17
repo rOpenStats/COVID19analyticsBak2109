@@ -11,22 +11,19 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
   public = list(
    # parametersirre
    top.countries.count = 11,
-   force.download = FALSE,
    imputation.method = NA,
    filenames         = NA,
    indicators = c("confirmed", "recovered", "deaths"),
+
    smooth.n = 3,
+   available.providers = NULL,
+   available.missing.value.models = NULL,
+   provider.id    = NULL,
+   missing.values.model.id = NULL,
    #state
-   state             = NA,
-   data.confirmed    = NA,
-   data.deaths       = NA,
-   data.recovered    = NA,
-   data.confirmed.original = NA,
-   data.deaths.original    = NA,
-   data.recovered.original = NA,
-   # consolidated
-   data.na        = NA,
-   data           = NA,
+   state          = NA,
+   data.provider  = NULL,
+   missing.values.model = NULL,
    countries      = NA,
    min.date       = NA,
    max.date       = NA,
@@ -35,24 +32,54 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    #imputation
    data.comparison = NA,
    imputation.summary = NA,
-
    logger         = NA,
-   initialize = function(force.download = FALSE, imputation.method = ImputationMethodMean$new()){
-    self$force.download <- force.download
-    self$imputation.method <- imputation.method
+   initialize = function(provider.id, missing.values.model.id){
     self$logger <- genLogger(self)
-
+    self$provider.id <- provider.id
+    self$missing.values.model.id <- missing.values.model.id
+    self$initProviders()
+    self$initMissingValuesModels()
     self
+   },
+   initProviders = function(){
+     self$available.providers <- list()
+     provided.jhu <- COVID19DataProviderJHU$new()
+     self$available.providers[[provided.jhu$getID()]] <- provided.jhu
+     self$available.providers
+   },
+   initMissingValuesModels = function(){
+    self$available.missing.value.models <- list()
+    missing.values.imputation <- COVID19MissingValuesImputation$new()
+    self$available.missing.value.models[[missing.values.imputation$getID()]] <- missing.values.imputation
+   },
+   setupProvider = function(provider.id){
+    if (provider.id %in% names(self$available.providers)){
+      self$data.provider <- self$available.providers[[provider.id]]
+    }
+    else{
+      stop(paste(provider.id, "is not a valid data provider"))
+    }
+   },
+   setupMissingValuesModel = function(missing.values.model.id){
+     if (missing.values.model.id %in% names(self$available.missing.value.models)){
+       self$missing.values.model <- self$available.missing.value.models[[missing.values.model.id]]
+     }
+     else{
+       stop(paste(missing.values.model.id, "is not a valid missing values model"))
+     }
+   },
+   setupStrategies = function(){
+     self$setupProvider(self$provider.id)
+     self$setupMissingValuesModel(self$missing.values.model.id)
    },
    setupData = function(){
      logger <- getLogger(self)
+     self$setupStrategies()
      self$data.provider$setupData()
    },
    curate = function(countries = NULL){
     logger <- getLogger(self)
-    n.col <- ncol(self$data.confirmed)
-    ## get dates from column names
-    dates <- names(self$data.confirmed)[5:n.col] %>% substr(2, 8) %>% mdy()
+    dates <- self$data.provider$getDates()
     range(dates)
 
     self$data <- self$data.provider$consolidate()
@@ -67,9 +94,9 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     # TODO imputation. By now remove rows with no confirmed data
     self$makeDataComparison()
     self$state <- "data-comparison"
-    logger$info("", stage = "Starting first imputation")
-    self$makeImputations()
-    self$state <- "1st-imputation"
+
+    self$missing.values.model$setupDataProcessor(self)
+    self$data <- self$missing.values.model$apply()
 
     # TODO add smooth
     # self$smoothSeries(old.serie.sufix = "original")
@@ -103,92 +130,6 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self$data.comparison$process()
     self$imputation.method$setup(self, self$data.comparison)
     self$data.comparison
-   },
-   #deprecated
-   makeImputationsRemoveNA = function(){
-    self$data <- self$data[!is.na(self$data$confirmed), ]
-   },
-   makeImputations = function(){
-    logger <- getLogger(self)
-    self$imputation.summary <- list()
-    for (indicator in self$indicators){
-      logger$info("Imputation indicator", indicator = indicator)
-      indicator.inc <- paste(indicator, "inc", sep = ".")
-      imputation.case.indicator <- paste("imputation", indicator, "case", sep = ".")
-      imputation.indicator <- paste("imputation", indicator, sep = ".")
-      self$data[, imputation.case.indicator] <- ""
-      self$data[, imputation.indicator] <- ""
-      self$data[333, indicator] <- NA
-
-      self$data[which(is.na(self$data[, indicator])), imputation.case.indicator] <- "N/A"
-      #self$data[which(self$data$confirmed > 20 & self$data$confirmed.inc == 0), "imputation.case"] <- "0inc"
-      # Rectifications
-      rect <- self$data[which(self$data[, indicator.inc] < 0), ]
-      for (rect.row in seq_len(nrow(rect))){
-        current.rect <- rect[rect.row, ]
-        data.row <- which(self$data$country == current.rect$country & self$data$date == current.rect$date - 1)
-        self$data[data.row, indicator] <- current.rect[, indicator]
-        self$data[data.row, imputation.indicator] <- "rect"
-      }
-      #imputation.df <- self$data %>% filter(imputation.case != "")
-      imputation.df <- self$data[self$data[, imputation.case.indicator] != "", ]
-      if (nrow(imputation.df) > 0){
-        # DOING IT QUICK
-        if (imputation.indicator == "imputation.confirmed"){
-          self$imputation.summary[[imputation.indicator]] <- imputation.df %>%
-            group_by_at(vars("country", imputation.indicator)) %>%
-            summarize(n = n(),
-                     confirmed = max(confirmed),
-                     min.date = min(date),
-                     max.date = max(date)) %>%
-                       arrange_at(desc(vars(indicator)))
-
-        }
-        if (imputation.indicator == "imputation.recovered"){
-          self$imputation.summary[[imputation.indicator]] <- imputation.df %>%
-            group_by_at(vars("country", imputation.indicator)) %>%
-            summarize(n = n(),
-                         recovered = max(recovered),
-                         min.date = min(date),
-                         max.date = max(date)) %>%
-                         arrange_at(desc(vars(confirmed)))
-
-        }
-        if (imputation.indicator == "imputation.deaths"){
-          self$imputation.summary[[imputation.indicator]] <- imputation.df %>%
-            group_by_at(vars("country", imputation.indicator)) %>%
-            summarize(n = n(),
-                         deaths = max(deaths),
-                         min.date = min(date),
-                         max.date = max(date)) %>%
-                         arrange_at(desc(vars(confirmed)))
-
-        }
-
-      }
-
-      rows.imputation <- which(self$data[, imputation.case.indicator] !=  "")
-      length(rows.imputation)
-      for (r in rows.imputation){
-        imputation.df <- self$data[r, ]
-        imputation.df$country <- as.character(imputation.df$country)
-
-        self$data[r, indicator] <- self$imputation.method$getImputationValue(imputation.df, indicator)
-        self$data[r, imputation.indicator] <- "I"
-      }
-    }
-    self$data %>% filter(country == "China") %>% filter(date %in% (as.Date("2020-02-12") + 0:1))
-    # This is strange
-    # 2   China 2020-02-12     44759   1117      5082                      373          5           446       18.0
-    # 23   China 2020-02-13     59895   1369      6217                    15136        252          1135       18.0
-
-    #self$data %>% group_by(imputation) %>% summarize(n = n())
-
-
-
-    #data.imputation <- self$data.na %>% filter(date == self$max.date)
-    logger$debug("Imputing", country = imputation.df$country, date = imputation.df$date)
-
    },
    getCountries = function(){
      self$countries$countries
@@ -279,27 +220,24 @@ COVID19DataProvider <- R6Class("COVID19DataProvider",
     filenames         = NA,
     indicators = c("confirmed", "recovered", "deaths"),
     #state
-    state             = NA,
+    state          = NA,
     data.na        = NA,
     data           = NA,
     countries      = NA,
     min.date       = NA,
     max.date       = NA,
 
-    # confirmedDeathsRecoveredModel
-    data.confirmed    = NA,
-    data.deaths       = NA,
-    data.recovered    = NA,
-    data.confirmed.original = NA,
-    data.deaths.original    = NA,
-    data.recovered.original = NA,
-
     logger         = NA,
   initialize = function(force.download = FALSE){
     self$force.download <- force.download
-    self$imputation.method <- imputation.method
     self$logger <- genLogger(self)
     self
+  },
+  getID = function(){
+    stop("Abstract class")
+  },
+  getDates = function(){
+    stop("Abstract class")
   },
   setupData = function(){
     logger <- getLogger(self)
@@ -308,66 +246,119 @@ COVID19DataProvider <- R6Class("COVID19DataProvider",
     self$loadData()
     self$state <- "loaded"
     logger$info("", stage = "data loaded")
-    self$assessModel()
-    self$data
-  },
-  consolidate = function(){
-    logger <- getLogger(self)
-    self$cleanData()
-    self$state <- "cleaned"
-    nrow(self$data.confirmed)
     self$consolidate()
-    self$state <- "consolidated"
-    logger$info("", stage = "consolidated")
+    self$standarize()
     self$data
   },
   downloadData = function(download.freq = 60 * 60 * 18 #18 hours
   ) {
-    self$filenames <- c(confirmed = "time_series_covid19_confirmed_global.csv",
-                        deaths = "time_series_covid19_deaths_global.csv",
-                        recovered = "time_series_covid19_recovered_global.csv")
-    # url.path <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_"
-    #url.path <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series"
-    url.path <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
-
-    bin <- lapply(self$filenames, FUN = function(...){
-      downloadCOVID19(url.path = url.path, force = self$force.download,
-                                                                      download.freq = download.freq, ...)
-      })
+    stop("Abstract class")
   },
   loadData = function() {
-    ## load data into R
-    self$data.confirmed <- read.csv(file.path(data.dir, self$filenames[["confirmed"]]))
-    self$data.deaths <- read.csv(file.path(data.dir, self$filenames[["deaths"]]))
-    self$data.recovered <- read.csv(file.path(data.dir, self$filenames[["recovered"]]))
-
-    dim(self$data.confirmed)
-    ## [1] 347 53
-    self
+    stop("Abstract class")
   },
   cleanData = function(){
-    self$data.confirmed.original <- self$data.confirmed
-    self$data.deaths.original    <- self$data.deaths
-    self$data.recovered.original <- self$data.recovered
-    self$data.confirmed <- self$data.confirmed %<>% cleanData() %>% rename(confirmed = count)
-    self$data.deaths    <- self$data.deaths %<>% cleanData() %>% rename(deaths = count)
-    self$data.recovered <- self$data.recovered %<>% cleanData() %>% rename(recovered = count)
-    self
+    stop("Abstract class")
   },
-  mergeData = function(){
-    ## merge above 3 datasets into one, by country and date
-    self$data <- self$data.confirmed %>% merge(self$data.deaths) %>% merge(self$data.recovered)
-
-
-    self$countries <- Countries$new()
-    #Remove Cruise Ship
-    self$data %<>% filter(!country %in% self$countries$excluded.countries)
-
-    self$data.na <- self$data %>% filter(is.na(confirmed))
-    #self$data <- self$data %>% filter(is.na(confirmed))
-    self$min.date <- min(self$data$date)
-    self$max.date <- max(self$data$date)
-
-    self$data
+  consolidate = function(){
+    stop("Abstract class")
+  },
+  standarize = function(){
+    stop("Abstract class")
   }
   ))
+
+
+
+#' COVID19DataProviderConfirmedRecoveredDeaths
+#' @author kenarab
+#' @importFrom R6 R6Class
+#' @import magrittr
+#' @import dplyr
+#' @import tidyr
+#' @import lubridate
+#' @import lgr
+#' @export
+COVID19DataProviderConfirmedRecoveredDeaths <- R6Class("COVID19DataProviderConfirmedRecoveredDeaths",
+ inherit = COVID19DataProvider,
+ public = list(
+   force.download = FALSE,
+   filenames         = NA,
+   indicators = c("confirmed", "recovered", "deaths"),
+   # confirmedDeathsRecoveredModel
+   data.confirmed    = NA,
+   data.deaths       = NA,
+   data.recovered    = NA,
+   data.confirmed.original = NA,
+   data.deaths.original    = NA,
+   data.recovered.original = NA,
+   initialize = function(force.download = FALSE){
+     super$initialize(force.download = force.download)
+     self$logger <- genLogger(self)
+     self
+   },
+   consolidate = function(){
+     logger <- getLogger(self)
+     self$cleanData()
+     self$state <- "cleaned"
+     nrow(self$data.confirmed)
+     self$mergeData()
+     self$state <- "consolidated"
+     logger$info("", stage = "consolidated")
+     self$data
+   },
+   downloadData = function(download.freq = 60 * 60 * 18 #18 hours
+   ) {
+     stop("Abstract class")
+   },
+   loadData = function() {
+     stop("Abstract class")
+   },
+   cleanData = function(){
+     stop("Abstract class")
+   },
+   mergeData = function(){
+     ## merge above 3 datasets into one, by country and date
+     self$data <- self$data.confirmed %>% merge(self$data.deaths) %>% merge(self$data.recovered)
+
+
+     self$countries <- Countries$new()
+     #Remove Cruise Ship
+     self$data %<>% filter(!country %in% self$countries$excluded.countries)
+
+     self$data.na <- self$data %>% filter(is.na(confirmed))
+     #self$data <- self$data %>% filter(is.na(confirmed))
+     self$min.date <- min(self$data$date)
+     self$max.date <- max(self$data$date)
+
+     self$data
+   }
+ ))
+
+
+#' COVID19MissingValuesModel
+#' @author kenarab
+#' @importFrom R6 R6Class
+#' @import magrittr
+#' @import dplyr
+#' @import tidyr
+#' @import lubridate
+#' @import lgr
+#' @export
+COVID19MissingValuesModel <- R6Class("COVID19MissingValuesModel",
+public = list(
+ data.processor = NULL,
+ logger         = NA,
+ initialize = function(){
+   self$logger <- genLogger(self)
+   self
+ },
+ getID = function(){
+   stop("Abstract class")
+ },
+ setupDataProcessor = function(data.processor){
+   # TODO check class of data.processor
+   # stopifnot()
+   data.processor
+ }))
+

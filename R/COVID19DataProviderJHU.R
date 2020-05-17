@@ -8,52 +8,15 @@
 #' @import lgr
 #' @export
 COVID19DataProviderJHU <- R6Class("COVID19DataProviderJHU",
+  inherit = COVID19DataProviderConfirmedRecoveredDeaths,
   public = list(
-   force.download = FALSE,
-   filenames         = NA,
-   indicators = c("confirmed", "recovered", "deaths"),
-   #state
-   state             = NA,
-   data.na        = NA,
-   data           = NA,
-   countries      = NA,
-   min.date       = NA,
-   max.date       = NA,
-
-   # confirmedDeathsRecoveredModel
-   data.confirmed    = NA,
-   data.deaths       = NA,
-   data.recovered    = NA,
-   data.confirmed.original = NA,
-   data.deaths.original    = NA,
-   data.recovered.original = NA,
-
-   logger         = NA,
    initialize = function(force.download = FALSE){
-    self$force.download <- force.download
-    self$imputation.method <- imputation.method
+    super$initialize(force.download = force.download)
     self$logger <- genLogger(self)
     self
    },
-   setupData = function(){
-    logger <- getLogger(self)
-    self$downloadData()
-    self$state <- "downloaded"
-    self$loadData()
-    self$state <- "loaded"
-    logger$info("", stage = "data loaded")
-    self$assessModel()
-    self$data
-   },
-   consolidate = function(){
-    logger <- getLogger(self)
-    self$cleanData()
-    self$state <- "cleaned"
-    nrow(self$data.confirmed)
-    self$consolidate()
-    self$state <- "consolidated"
-    logger$info("", stage = "consolidated")
-    self$data
+   getID = function(){
+     "JohnsHopkingsUniversity"
    },
    downloadData = function(download.freq = 60 * 60 * 18 #18 hours
    ) {
@@ -66,8 +29,14 @@ COVID19DataProviderJHU <- R6Class("COVID19DataProviderJHU",
 
     bin <- lapply(self$filenames, FUN = function(...){
      downloadCOVID19(url.path = url.path, force = self$force.download,
-                                                                      download.freq = download.freq, ...)
-     })
+                     download.freq = download.freq, ...)
+    })
+   },
+   getDates = function(){
+     n.col <- ncol(self$data.confirmed)
+     ## get dates from column names
+     dates <- names(self$data.confirmed)[5:n.col] %>% substr(2, 8) %>% mdy()
+     dates
    },
    loadData = function() {
     ## load data into R
@@ -102,6 +71,10 @@ COVID19DataProviderJHU <- R6Class("COVID19DataProviderJHU",
     self$min.date <- min(self$data$date)
     self$max.date <- max(self$data$date)
 
+    self$data
+   },
+   standarize = function(){
+     #JHU is the the reference model, so do nothing
     self$data
    }
   ))
