@@ -74,7 +74,7 @@ data.processor$setupStrategies()
 dummy <- data.processor$setupData()
 dummy <- data.processor$curate()
 
-current.date <- max(data.processor$data$date)
+current.date <- max(data.processor$getData()$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
 rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
@@ -91,7 +91,7 @@ latam.countries <- sort(c("Mexico",
 
 ```{r}
 # Top 10 daily cases confirmed increment
-(data.processor$data %>%
+(data.processor$getData() %>%
   filter(date == current.date) %>%
   select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
   arrange(desc(confirmed.inc)) %>%
@@ -101,7 +101,7 @@ latam.countries <- sort(c("Mexico",
 
 ```{r}
 # Top 10 daily deaths increment
-(data.processor$data %>%
+(data.processor$getData() %>%
   filter(date == current.date) %>%
   select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
   arrange(desc(deaths.inc)))[1:10,]
