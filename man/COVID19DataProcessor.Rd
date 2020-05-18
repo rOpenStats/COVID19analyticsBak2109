@@ -17,6 +17,7 @@ kenarab
 \item \href{#method-new}{\code{COVID19DataProcessor$new()}}
 \item \href{#method-initProviders}{\code{COVID19DataProcessor$initProviders()}}
 \item \href{#method-initMissingValuesModels}{\code{COVID19DataProcessor$initMissingValuesModels()}}
+\item \href{#method-getData}{\code{COVID19DataProcessor$getData()}}
 \item \href{#method-setupProvider}{\code{COVID19DataProcessor$setupProvider()}}
 \item \href{#method-setupMissingValuesModel}{\code{COVID19DataProcessor$setupMissingValuesModel()}}
 \item \href{#method-setupStrategies}{\code{COVID19DataProcessor$setupStrategies()}}
@@ -55,6 +56,15 @@ kenarab
 \subsection{Method \code{initMissingValuesModels()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$initMissingValuesModels()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getData"></a>}}
+\if{latex}{\out{\hypertarget{method-getData}{}}}
+\subsection{Method \code{getData()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$getData()}\if{html}{\out{</div>}}
 }
 
 }

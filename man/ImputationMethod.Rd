@@ -34,7 +34,7 @@ ken4rab
 \if{latex}{\out{\hypertarget{method-setup}{}}}
 \subsection{Method \code{setup()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImputationMethod$setup(data.procesor, data.comparison)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ImputationMethod$setup(data.processor)}\if{html}{\out{</div>}}
 }
 
 }

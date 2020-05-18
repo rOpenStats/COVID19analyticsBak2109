@@ -41,7 +41,8 @@ ReportGenerator <- R6Class("ReportGenerator",
     df %<>% group_by(country) %>% summarise(confirmed=sum(confirmed))
     ## precentage and label
     df %<>% mutate(per = (100*confirmed/sum(confirmed)) %>% round(1)) %>%
-     mutate(txt = paste0(country, ": ", confirmed, " (", per, "%)"))
+     mutate(txt = paste0(country, ": ", confirmed, " (", per, "%)")) %>%
+      mutate(country = fct_reorder(country, desc(count)))
     # pie(df$confirmed, labels=df$txt, cex=0.7)
 
     self$report.date <- max(self$data.processor$getData()$date)
@@ -68,7 +69,8 @@ ReportGenerator <- R6Class("ReportGenerator",
     df <- df %>% filter(!country %in% excluded.countries)
     df %<>%
      mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
-    df %<>% filter(country != "World")
+    df %<>% filter(country != "World") %>%
+      mutate(country = fct_reorder(country, desc(count)))
     x.values <- sort(unique(df$date))
 
     ret <-  df %>%
@@ -100,7 +102,8 @@ ReportGenerator <- R6Class("ReportGenerator",
      df <- data.long
     }
     ## cases by country
-    df %<>% filter(type != "confirmed")
+    df %<>% filter(type != "confirmed") %>%
+      mutate(country = fct_reorder(country, desc(count)))
     x.values <- sort(unique(df$date))
 
     ret <- df %>%
@@ -195,6 +198,7 @@ setupTheme <- function(ggplot, report.date, total.colors){
 #' New dataviz for reportGenerator by
 #' @author kenarab
 #' @import magrittr
+#' @import forcats
 #' @export
 ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
  inherit = ReportGenerator,
@@ -221,7 +225,8 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        df <- data.long %>% filter(country %in% included.countries)
        df <- df %>% filter(!country %in% excluded.countries)
        df %<>%
-         mutate(country=country %>% factor(levels=c(included.countries)))
+         mutate(country = country %>% factor(levels=c(included.countries))) %>%
+         mutate(country = fct_reorder(country, desc(count)))
        x.values <- sort(unique(data.long$date))
 
        self$report.date <- max(df$date)
@@ -274,7 +279,8 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        df <- df %>% filter(!country %in% excluded.countries)
        countries.object <- self$data.processor$getCountries()
        df %<>%
-         mutate(country=country %>% factor(levels=c(countries.object$countries)))
+         mutate(country=country %>% factor(levels=c(countries.object$countries))) %>%
+         mutate(country = fct_reorder(country, desc(count)))
        self$report.date <- max(df$date)
 
        ret <- df %>% filter(country != "World") %>%
@@ -320,7 +326,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
                                                 min.cases = 20){
      data.comparison <- self$data.processor$data.comparison
      data.comparison$buildData(field = field, base.min.cases = min.cases)
-     data.comparison.df <- data.comparison$data.compared
+     data.comparison.df <- as.data.frame(data.comparison$data.compared)
 
      names(data.comparison.df)
      data.long <- data.comparison.df %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
@@ -334,14 +340,20 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      ## cases by type
      df <- data.long %>% filter(country %in% included.countries)
      unique(df$country)
-     df <- df %>% filter(count >= min.cases)
+     df <- df %>% filter(count >= min.cases) %>%
+           mutate(country = fct_reorder(country, desc(count)))
+
      # df %<>%
      #   mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
 
      self$report.date <-max(self$data.processor$getData()$date)
 
+     #debug
+     df.debug <<- df
+
      ret <- df %>% filter(country != "World") %>%
        ggplot(aes(x = epidemy.day, y = count, color = country)) +
+       #ggplot(aes(x = epidemy.day, y = count, color = country)) +
        geom_line() + xlab(paste("Epidemy day (0 when ", field, " >=", min.cases, ")")) + ylab(y.label) +
        labs(title = plot.title)
      ret <- self$getXLabelsTheme(ret, x.values)
