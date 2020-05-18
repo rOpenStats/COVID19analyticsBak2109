@@ -93,6 +93,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
      self$transform()
    },
    transform = function(){
+     logger <- getLogger(self)
      self$checkValidTransition(state.expected = "data-setup")
      logger$info("Executing transform")
      self$data.provider$transform()
@@ -210,12 +211,12 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
                           deaths.inc = ifelse(date == day1, NA, deaths - lag(deaths, n = 1)),
                           recovered.inc = ifelse(date == day1, NA, recovered - lag(recovered, n = 1)))
     ## death rate based on total deaths and cured cases
-    self$data.agg %<>% mutate(rate.upper = (100 * deaths / (deaths + recovered)) %>% round(1))
+    self$data.agg %<>% mutate(rate.upper = (100 * deaths / (deaths + recovered)) %>% round(2))
     ## lower bound: death rate based on total confirmed cases
-    self$data.agg %<>% mutate(rate.lower = (100 * deaths / confirmed) %>% round(1))
+    self$data.agg %<>% mutate(rate.lower = (100 * deaths / confirmed) %>% round(2))
     ## death rate based on the number of death/cured on every single day
-    self$data.agg %<>% mutate(rate.daily = (100 * deaths.inc / (deaths.inc + recovered.inc)) %>% round(1))
-    self$data.agg %<>% mutate(rate.inc.daily = (confirmed.inc / (confirmed - confirmed.inc)) %>% round(2))
+    self$data.agg %<>% mutate(rate.daily = (100 * deaths.inc / (deaths.inc + recovered.inc)) %>% round(3))
+    self$data.agg %<>% mutate(rate.inc.daily = (confirmed.inc / (confirmed - confirmed.inc)) %>% round(3))
 
     self$data.agg %<>% mutate(remaining.confirmed = (confirmed - deaths - recovered))
     self$data.agg %<>% mutate(death.rate.min = (deaths / confirmed))

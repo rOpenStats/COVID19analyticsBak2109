@@ -69,9 +69,11 @@ library(dplyr)
 
 ```{r}
 data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity", missing.values = "imputation")
-data.processor$setupStrategies()
 
+#dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
+dummy <- data.processor$transform()
+# Curate is the process made by missing values method
 dummy <- data.processor$curate()
 
 current.date <- max(data.processor$getData()$date)
