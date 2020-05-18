@@ -29,7 +29,7 @@ COVID19MissingValuesImputation <- R6Class("COVID19MissingValuesImputation",
     },
    makeImputations = function(){
      logger <- getLogger(self)
-     data <- self$data.processor$data
+     data <- self$data.processor$getData()
      imputation.summary <- list()
      for (indicator in self$indicators){
        logger$info("Imputation indicator", indicator = indicator)
@@ -110,7 +110,7 @@ COVID19MissingValuesImputation <- R6Class("COVID19MissingValuesImputation",
      #logger$debug("Imputing", country = imputation.df$country, date = imputation.df$date)
      logger$debug("Setting data processor")
      self$data.processor$imputation.summary <- imputation.summary
-     self$data.processor$data               <- data
+     self$data.processor$data.agg               <- data
      data
    }
   ))
@@ -123,16 +123,13 @@ COVID19MissingValuesImputation <- R6Class("COVID19MissingValuesImputation",
 ImputationMethod <- R6Class("ImputationMethod",
   public = list(
    data = NA,
-   data.comparison = NA,
    indicators.imputation = c("confirmed"),
    initialize = function(){
     self
    },
-   setup = function(data.procesor, data.comparison){
-    typeCheck(data.procesor, "COVID19DataProcessor")
-    typeCheck(data.comparison, "COVID19DataComparison")
-    self$data            <- data.procesor$data
-    self$data.comparison <- data.comparison
+   setup = function(data.processor){
+    super$setup(data.processor = data.processor)
+    self$data            <- data.processor$getData()
    },
    getImputationValue = function(current.data, field){
     stop("Abastract class")

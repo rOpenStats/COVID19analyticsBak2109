@@ -21,7 +21,7 @@ COVID19DataComparison <- R6Class("COVID19DataComparison",
    },
    buildData = function(field = "confirmed", base.min.cases = 100) {
     self$data.compared <- NULL
-    data <- self$data.processor$data
+    data <- self$data.processor$getData()
     all.countries <- sort(unique(data$country))
     for (current.country in all.countries){
      data.country <- data %>% filter(country == current.country)
