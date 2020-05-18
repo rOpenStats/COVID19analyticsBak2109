@@ -33,6 +33,7 @@ Imports: magrittr,
          R6,
          units,
          RColorBrewer,
+         forcats,
          ggplot2,
          plotly,
          zoo,
@@ -44,7 +45,11 @@ Imports: magrittr,
          vdiffr
 Collate:
   'util-lib.R'
-  'data-lib.R'
+  'COVID19DataProcessor.R'
+  'COVID19DataProviderJHU.R'
+  'COVID19DataModel.R'
+  'COVID19DataComparison.R'
+  'COVID19MissingValuesImputation.R'
   'report-lib.R'
   'test-lib.R'
   'zzz.R'

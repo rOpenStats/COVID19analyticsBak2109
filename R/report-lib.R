@@ -34,18 +34,26 @@ ReportGenerator <- R6Class("ReportGenerator",
     #Page 6
     # a <- data %>% group_by(country) %>% tally()
     ## put all others in a single group of "Others"
-    df <- self$data.processor$data.latest %>% filter(!is.na(country) & !country %in% excluded.countries) %>%
-     mutate(country=ifelse(ranking <= self$data.processor$top.countries.count, as.character(country), "Others")) %>%
-     mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
+    #df <- as.data.frame(self$data.processor$data.latest)
+    df <- self$data.processor$data.latest
+    df %<>% filter(!is.na(country) & !country %in% excluded.countries) %>%
+     mutate(country = ifelse(ranking <= self$data.processor$top.countries.count, as.character(country), "Others")) %>%
+     mutate(country = country %>% factor(levels = c(self$data.processor$top.countries)))
     df %<>% group_by(country) %>% summarise(confirmed=sum(confirmed))
     ## precentage and label
-    df %<>% mutate(per = (100*confirmed/sum(confirmed)) %>% round(1)) %>%
+    df %<>% mutate(per = (100 * confirmed / sum(confirmed)) %>% round(1)) %>%
      mutate(txt = paste0(country, ": ", confirmed, " (", per, "%)"))
+
+    unique(df$country)
+    #debug
+    #df.debug <<- df
+
+    #df %<>% mutate(country = fct_reorder(country, desc(confirmed)))
     # pie(df$confirmed, labels=df$txt, cex=0.7)
 
-    self$report.date <- max(self$data.processor$data$date)
+    self$report.date <- max(self$data.processor$getData()$date)
 
-    ret <- df %>% ggplot(aes(fill=country)) +
+    ret <- df %>% ggplot(aes(fill = country)) +
      geom_bar(aes(x="", y=per), stat="identity") +
      coord_polar("y", start=0) +
      xlab("") + ylab("Percentage (%)") +
@@ -57,7 +65,8 @@ ReportGenerator <- R6Class("ReportGenerator",
    ggplotTopCountriesBarPlots = function(excluded.countries = "World"){
     #Page 7
     ## convert from wide to long format, for purpose of drawing a area plot
-    data.long <- self$data.processor$data %>% select(c(country, date, confirmed, remaining.confirmed, recovered, deaths)) %>%
+     data.long <- as.data.frame(self$data.processor$getData())
+     data.long %<>% select(c(country, date, confirmed, remaining.confirmed, recovered, deaths)) %>%
      gather(key=type, value=count, -c(country, date))
     ## set factor levels to show them in a desirable order
     data.long %<>% mutate(type = factor(type, c("confirmed", "remaining.confirmed", "recovered", "deaths")))
@@ -66,7 +75,8 @@ ReportGenerator <- R6Class("ReportGenerator",
     df <- df %>% filter(!country %in% excluded.countries)
     df %<>%
      mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
-    df %<>% filter(country != "World")
+    df %<>% filter(country != "World") %>%
+      mutate(country = fct_reorder(country, desc(count)))
     x.values <- sort(unique(df$date))
 
     ret <-  df %>%
@@ -82,7 +92,8 @@ ReportGenerator <- R6Class("ReportGenerator",
    },
    ggplotCountriesBarGraphs = function(selected.country = "Australia"){
     ## convert from wide to long format, for purpose of drawing a area plot
-    data.long <- self$data.processor$data %>% select(c(country, date, confirmed, remaining.confirmed, recovered, deaths)) %>%
+     data.long <- as.data.frame(self$data.processor$getData())
+     data.long %<>% select(c(country, date, confirmed, remaining.confirmed, recovered, deaths)) %>%
      gather(key=type, value=count, -c(country, date))
     ## set factor levels to show them in a desirable order
     data.long %<>% mutate(type = factor(type, c("confirmed", "remaining.confirmed", "recovered", "deaths")))
@@ -97,7 +108,8 @@ ReportGenerator <- R6Class("ReportGenerator",
      df <- data.long
     }
     ## cases by country
-    df %<>% filter(type != "confirmed")
+    df %<>% filter(type != "confirmed") %>%
+      mutate(country = fct_reorder(country, desc(count)))
     x.values <- sort(unique(df$date))
 
     ret <- df %>%
@@ -114,14 +126,16 @@ ReportGenerator <- R6Class("ReportGenerator",
    },
    ggplotConfirmedCases = function(){
      ## current confirmed and its increase
-     x.values <- sort(unique(df$date))
-     plot1 <- ggplot(self$data.processor$data, aes(x=date, y=remaining.confirmed)) +
+     data.long <- as.data.frame(self$data.processor$getData())
+
+     x.values <- sort(unique(data.long$date))
+     plot1 <- ggplot(data.long, aes(x=date, y=remaining.confirmed)) +
        geom_point() + geom_smooth() +
        xlab("Date") + ylab("Count") + labs(title="Current Confirmed Cases")
      plot1 <- self$getXLabelsTheme(plot1, x.values)
 
 
-     plot2 <- ggplot(self$data.processor$data, aes(x=date, y=confirmed.inc)) +
+     plot2 <- ggplot(self$data.processor$getData(), aes(x=date, y=confirmed.inc)) +
        geom_point() + geom_smooth() +
        xlab("Date") + ylab("Count") + labs(title="Increase in Current Confirmed")
      plot2 <- self$getXLabelsTheme(plot2, x.values)
@@ -142,7 +156,7 @@ ReportGenerator <- R6Class("ReportGenerator",
     self$tex.builder$initTex(output.file)
     ## first 10 records when it first broke out in China
     table.2 <-
-     self$data.processor$data %>% filter(country=="Mainland China") %>% head(10) %>%
+     self$data.processor$getData() %>% filter(country=="Mainland China") %>% head(10) %>%
      kable("latex", booktabs=T, caption="Raw Data (with first 10 Columns Only)",
            format.args=list(big.mark=",")) %>%
      kable_styling(latex_options = c("striped", "hold_position", "repeat_header"))
@@ -189,6 +203,8 @@ setupTheme <- function(ggplot, report.date, total.colors){
 
 #' New dataviz for reportGenerator by
 #' @author kenarab
+#' @import magrittr
+#' @import forcats
 #' @export
 ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
  inherit = ReportGenerator,
@@ -199,7 +215,8 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
      },
      ggplotTopCountriesStackedBarDailyInc = function(included.countries, excluded.countries = "World",
                                                      map.region = "The World"){
-       data.long <- self$data.processor$data %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
+       data.long <- as.data.frame(self$data.processor$getData())
+       data.long %<>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
          filter(confirmed > 0) %>%
          select(c(country, date, confirmed.inc)) %>%
          gather(key=type, value=count, -c(country, date))
@@ -214,7 +231,8 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        df <- data.long %>% filter(country %in% included.countries)
        df <- df %>% filter(!country %in% excluded.countries)
        df %<>%
-         mutate(country=country %>% factor(levels=c(included.countries)))
+         mutate(country = country %>% factor(levels=c(included.countries))) %>%
+         mutate(country = fct_reorder(country, desc(count)))
        x.values <- sort(unique(data.long$date))
 
        self$report.date <- max(df$date)
@@ -245,7 +263,8 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
                                      excluded.countries = "World", field = "confirmed.inc", log.scale = FALSE,
                                         min.confirmed = 100){
 
-       data.long <- self$data.processor$data %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
+       data.long <- as.data.frame(self$data.processor$getData())
+       data.long %<>%  #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
          filter(confirmed >= min.confirmed) %>%
          filter(confirmed.inc > 0)
        data.long <- data.long[,c("country", "date", field)] %>% gather(key=type, value=count, -c(country, date))
@@ -264,8 +283,10 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        ## cases by type
        df <- data.long %>% filter(country %in% included.countries)
        df <- df %>% filter(!country %in% excluded.countries)
+       countries.object <- self$data.processor$getCountries()
        df %<>%
-         mutate(country=country %>% factor(levels=c(self$data.processor$getCountries())))
+         mutate(country=country %>% factor(levels=c(countries.object$countries))) %>%
+         mutate(country = fct_reorder(country, desc(count)))
        self$report.date <- max(df$date)
 
        ret <- df %>% filter(country != "World") %>%
@@ -311,7 +332,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
                                                 min.cases = 20){
      data.comparison <- self$data.processor$data.comparison
      data.comparison$buildData(field = field, base.min.cases = min.cases)
-     data.comparison.df <- data.comparison$data.compared
+     data.comparison.df <- as.data.frame(data.comparison$data.compared)
 
      names(data.comparison.df)
      data.long <- data.comparison.df %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
@@ -325,14 +346,20 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      ## cases by type
      df <- data.long %>% filter(country %in% included.countries)
      unique(df$country)
-     df <- df %>% filter(count >= min.cases)
+     df <- df %>% filter(count >= min.cases) %>%
+           mutate(country = fct_reorder(country, desc(count)))
+
      # df %<>%
      #   mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
 
-     self$report.date <-max(self$data.processor$data$date)
+     self$report.date <-max(self$data.processor$getData()$date)
+
+     #debug
+     df.debug <<- df
 
      ret <- df %>% filter(country != "World") %>%
        ggplot(aes(x = epidemy.day, y = count, color = country)) +
+       #ggplot(aes(x = epidemy.day, y = count, color = country)) +
        geom_line() + xlab(paste("Epidemy day (0 when ", field, " >=", min.cases, ")")) + ylab(y.label) +
        labs(title = plot.title)
      ret <- self$getXLabelsTheme(ret, x.values)

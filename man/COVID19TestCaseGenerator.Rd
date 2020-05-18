@@ -16,7 +16,8 @@ COVID19TestCaseGenerator
 \item \href{#method-getSourceIndicatorPath}{\code{COVID19TestCaseGenerator$getSourceIndicatorPath()}}
 \item \href{#method-getExpectedFile}{\code{COVID19TestCaseGenerator$getExpectedFile()}}
 \item \href{#method-readExpectedFile}{\code{COVID19TestCaseGenerator$readExpectedFile()}}
-\item \href{#method-getConfiguredProcessor}{\code{COVID19TestCaseGenerator$getConfiguredProcessor()}}
+\item \href{#method-getProcessor}{\code{COVID19TestCaseGenerator$getProcessor()}}
+\item \href{#method-getProcessorPreloaded}{\code{COVID19TestCaseGenerator$getProcessorPreloaded()}}
 \item \href{#method-doRegressionTest}{\code{COVID19TestCaseGenerator$doRegressionTest()}}
 \item \href{#method-clone}{\code{COVID19TestCaseGenerator$clone()}}
 }
@@ -26,7 +27,13 @@ COVID19TestCaseGenerator
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19TestCaseGenerator$new(case.name, countries, running.test = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19TestCaseGenerator$new(
+  case.name,
+  countries,
+  provider.id = "JohnsHopkingsUniversity",
+  missing.values.model.id = "imputation",
+  running.test = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 }
@@ -67,11 +74,20 @@ COVID19TestCaseGenerator
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getConfiguredProcessor"></a>}}
-\if{latex}{\out{\hypertarget{method-getConfiguredProcessor}{}}}
-\subsection{Method \code{getConfiguredProcessor()}}{
+\if{html}{\out{<a id="method-getProcessor"></a>}}
+\if{latex}{\out{\hypertarget{method-getProcessor}{}}}
+\subsection{Method \code{getProcessor()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19TestCaseGenerator$getConfiguredProcessor()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19TestCaseGenerator$getProcessor()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getProcessorPreloaded"></a>}}
+\if{latex}{\out{\hypertarget{method-getProcessorPreloaded}{}}}
+\subsection{Method \code{getProcessorPreloaded()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19TestCaseGenerator$getProcessorPreloaded()}\if{html}{\out{</div>}}
 }
 
 }
