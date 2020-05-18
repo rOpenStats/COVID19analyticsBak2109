@@ -34,20 +34,26 @@ ReportGenerator <- R6Class("ReportGenerator",
     #Page 6
     # a <- data %>% group_by(country) %>% tally()
     ## put all others in a single group of "Others"
-    df <- as.data.frame(self$data.processor$data.latest)
-    df %>% filter(!is.na(country) & !country %in% excluded.countries) %>%
-     mutate(country=ifelse(ranking <= self$data.processor$top.countries.count, as.character(country), "Others")) %>%
-     mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
+    #df <- as.data.frame(self$data.processor$data.latest)
+    df <- self$data.processor$data.latest
+    df %<>% filter(!is.na(country) & !country %in% excluded.countries) %>%
+     mutate(country = ifelse(ranking <= self$data.processor$top.countries.count, as.character(country), "Others")) %>%
+     mutate(country = country %>% factor(levels = c(self$data.processor$top.countries)))
     df %<>% group_by(country) %>% summarise(confirmed=sum(confirmed))
     ## precentage and label
-    df %<>% mutate(per = (100*confirmed/sum(confirmed)) %>% round(1)) %>%
-     mutate(txt = paste0(country, ": ", confirmed, " (", per, "%)")) %>%
-      mutate(country = fct_reorder(country, desc(count)))
+    df %<>% mutate(per = (100 * confirmed / sum(confirmed)) %>% round(1)) %>%
+     mutate(txt = paste0(country, ": ", confirmed, " (", per, "%)"))
+
+    unique(df$country)
+    #debug
+    #df.debug <<- df
+
+    #df %<>% mutate(country = fct_reorder(country, desc(confirmed)))
     # pie(df$confirmed, labels=df$txt, cex=0.7)
 
     self$report.date <- max(self$data.processor$getData()$date)
 
-    ret <- df %>% ggplot(aes(fill=country)) +
+    ret <- df %>% ggplot(aes(fill = country)) +
      geom_bar(aes(x="", y=per), stat="identity") +
      coord_polar("y", start=0) +
      xlab("") + ylab("Percentage (%)") +

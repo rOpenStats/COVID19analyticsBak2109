@@ -116,3 +116,41 @@ transformDataJHU <- function(data) {
   data %<>% group_by(country,province.state, lat, long, date) %>% summarise(count=sum(count)) %>% as.data.frame()
   return(data)
 }
+
+
+#' download COVID-19 data from Johns Hopkins University
+#' @import lgr
+#' @export
+#' @author kenarab
+downloadCOVID19 <- function(url.path, filename, force = FALSE,
+                            download.freq = 60 * 60 * 24, #daily
+                            check.remote = FALSE, # Not coded yet to check remote
+                            archive = TRUE
+) {
+  logger <- lgr
+  download.flag <- createDataDir()
+  if (download.flag){
+    url <- file.path(url.path, filename)
+    dest <- file.path(data.dir, filename)
+
+    download.flag <- !file.exists(dest) | force
+    if (!download.flag & file.exists(dest)){
+      if(check.remote){
+        #TODO git2r
+      }
+      else{
+        file.info <- file.info(dest)
+        #If is it expected to have updated data, download
+        update.time <- file.info$mtime + download.freq
+        current.time <- Sys.time()
+        if (current.time >= update.time){
+          download.flag <- TRUE
+        }
+        logger$info("Checking downloaded data", downloaded.ts = current.time, next.update.ts = update.time, download.flag = download.flag)
+      }
+    }
+    if (download.flag){
+      download.file(url, dest)
+    }
+  }
+}

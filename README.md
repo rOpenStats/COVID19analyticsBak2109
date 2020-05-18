@@ -102,23 +102,23 @@ dummy <- data.processor$setupData()
 #>     getCountries: function (division, name) 
 #>     initialize: function () 
 #>     setup: function (countries) 
-#> INFO  [16:57:03.788] Checking downloaded data {downloaded.ts: 2020-05-17 16:57:03, next.update.ts: 2020-05-18 10:52:52, download.flag: FALSE}
-#> INFO  [16:57:03.873] Checking downloaded data {downloaded.ts: 2020-05-17 16:57:03, next.update.ts: 2020-05-18 10:52:53, download.flag: FALSE}
-#> INFO  [16:57:03.885] Checking downloaded data {downloaded.ts: 2020-05-17 16:57:03, next.update.ts: 2020-05-18 10:52:54, download.flag: FALSE}
-#> INFO  [16:57:03.938]  {stage: data loaded}
-#> INFO  [16:57:05.233]  {stage: consolidated}
+#> INFO  [22:18:17.901] Checking downloaded data {downloaded.ts: 2020-05-17 22:18:17, next.update.ts: 2020-05-18 10:52:52, download.flag: FALSE}
+#> INFO  [22:18:17.973] Checking downloaded data {downloaded.ts: 2020-05-17 22:18:17, next.update.ts: 2020-05-18 10:52:53, download.flag: FALSE}
+#> INFO  [22:18:17.988] Checking downloaded data {downloaded.ts: 2020-05-17 22:18:17, next.update.ts: 2020-05-18 10:52:54, download.flag: FALSE}
+#> INFO  [22:18:18.076]  {stage: data loaded}
+#> INFO  [22:18:19.305]  {stage: consolidated}
 dummy <- data.processor$curate()
-#> INFO  [16:57:05.303]  {stage: loading-aggregated-data-model}
+#> INFO  [22:18:19.368]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [16:57:06.927]  {stage: calculating-rates}
-#> INFO  [16:57:07.081]  {stage: making-data-comparison}
-#> INFO  [16:57:08.040]  {stage: applying-missing-values-method}
-#> INFO  [16:57:08.042]  {stage: Starting first imputation}
-#> INFO  [16:57:08.045]  {stage: calculating-rates}
-#> INFO  [16:57:08.333]  {stage: making-data-comparison-2}
-#> INFO  [16:57:09.245]  {stage: calculating-top-countries}
+#> INFO  [22:18:20.979]  {stage: calculating-rates}
+#> INFO  [22:18:21.135]  {stage: making-data-comparison}
+#> INFO  [22:18:22.113]  {stage: applying-missing-values-method}
+#> INFO  [22:18:22.114]  {stage: Starting first imputation}
+#> INFO  [22:18:22.117]  {stage: calculating-rates}
+#> INFO  [22:18:22.301]  {stage: making-data-comparison-2}
+#> INFO  [22:18:23.317]  {stage: calculating-top-countries}
 
-current.date <- max(data.processor$data$date)
+current.date <- max(data.processor$getData()$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
 rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
@@ -134,7 +134,7 @@ latam.countries <- sort(c("Mexico",
 
 ``` r
 # Top 10 daily cases confirmed increment
-(data.processor$data %>%
+(data.processor$getData() %>%
   filter(date == current.date) %>%
   select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
   arrange(desc(confirmed.inc)) %>%
@@ -157,7 +157,7 @@ latam.countries <- sort(c("Mexico",
 
 ``` r
 # Top 10 daily deaths increment
-(data.processor$data %>%
+(data.processor$getData() %>%
   filter(date == current.date) %>%
   select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
   arrange(desc(deaths.inc)))[1:10,]
@@ -207,7 +207,7 @@ rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field
 
 ``` r
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
-#> Warning: Removed 6 rows containing missing values (position_stack).
+#> Warning: Removed 1 rows containing missing values (position_stack).
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
@@ -240,8 +240,6 @@ rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
 
 ``` r
 rg$ggplotTopCountriesPie()
-#> Warning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette Paired is 12
-#> Returning the palette you asked for with that many colors
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
