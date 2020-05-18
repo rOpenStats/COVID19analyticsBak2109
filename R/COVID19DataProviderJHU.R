@@ -120,6 +120,7 @@ transformDataJHU <- function(data) {
 
 #' download COVID-19 data from Johns Hopkins University
 #' @import lgr
+#' @importFrom utils download.file
 #' @export
 #' @author kenarab
 downloadCOVID19 <- function(url.path, filename, force = FALSE,

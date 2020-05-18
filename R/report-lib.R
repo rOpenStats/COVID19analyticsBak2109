@@ -39,10 +39,10 @@ ReportGenerator <- R6Class("ReportGenerator",
     df %<>% filter(!is.na(country) & !country %in% excluded.countries) %>%
      mutate(country = ifelse(ranking <= self$data.processor$top.countries.count, as.character(country), "Others")) %>%
      mutate(country = country %>% factor(levels = c(self$data.processor$top.countries)))
-    df %<>% group_by(country) %>% summarise(confirmed=sum(confirmed))
+    df %<>% group_by(country) %>% summarise(confirmed = sum(confirmed))
     ## precentage and label
     df %<>% mutate(per = (100 * confirmed / sum(confirmed)) %>% round(1)) %>%
-     mutate(txt = paste0(country, ": ", confirmed, " (", per, "%)"))
+            mutate(txt = paste0(country, ": ", confirmed, " (", per, "%)"))
 
     unique(df$country)
     #debug
@@ -54,11 +54,11 @@ ReportGenerator <- R6Class("ReportGenerator",
     self$report.date <- max(self$data.processor$getData()$date)
 
     ret <- df %>% ggplot(aes(fill = country)) +
-     geom_bar(aes(x="", y=per), stat="identity") +
-     coord_polar("y", start=0) +
+     geom_bar(aes(x = "", y = per), stat = "identity") +
+     coord_polar("y", start = 0) +
      xlab("") + ylab("Percentage (%)") +
-     labs(title=paste0("Top 10 Countries with Most Confirmed Cases (", self$data.processor$max.date, ")")) +
-     scale_fill_brewer(name="Country", labels=df$txt, palette = "Paired")
+     labs(title = paste0("Top 10 Countries with Most Confirmed Cases (", self$data.processor$max.date, ")")) +
+     scale_fill_brewer(name = "Country", labels = df$txt, palette = "Paired")
     ret <- setupTheme(ret, self$report.date, total.colors = NULL)
     ret
    },
@@ -67,42 +67,42 @@ ReportGenerator <- R6Class("ReportGenerator",
     ## convert from wide to long format, for purpose of drawing a area plot
      data.long <- as.data.frame(self$data.processor$getData())
      data.long %<>% select(c(country, date, confirmed, remaining.confirmed, recovered, deaths)) %>%
-     gather(key=type, value=count, -c(country, date))
+     gather(key = type, value = count, -c(country, date))
     ## set factor levels to show them in a desirable order
     data.long %<>% mutate(type = factor(type, c("confirmed", "remaining.confirmed", "recovered", "deaths")))
     ## cases by type
     df <- data.long %>% filter(country %in% self$data.processor$top.countries)
     df <- df %>% filter(!country %in% excluded.countries)
     df %<>%
-     mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
+     mutate(country = country %>% factor(levels = c(self$data.processor$top.countries)))
     df %<>% filter(country != "World") %>%
       mutate(country = fct_reorder(country, desc(count)))
     x.values <- sort(unique(df$date))
 
     ret <-  df %>%
-     ggplot(aes(x=date, y=count, fill=country)) +
+     ggplot(aes(x = date, y = count, fill = country)) +
      geom_area() + xlab("Date") + ylab("Count") +
-     labs(title="Cases around the World")
+     labs(title = "Cases around the World")
     ret <- self$getXLabelsTheme(ret, x.values)
     ret <- setupTheme(ret, self$report.date, total.colors = length(unique(df$country)))
 
     ret <- ret +
-     facet_wrap(~type, ncol=2, scales="free_y")
+     facet_wrap(~type, ncol = 2, scales = "free_y")
     ret
    },
    ggplotCountriesBarGraphs = function(selected.country = "Australia"){
     ## convert from wide to long format, for purpose of drawing a area plot
      data.long <- as.data.frame(self$data.processor$getData())
      data.long %<>% select(c(country, date, confirmed, remaining.confirmed, recovered, deaths)) %>%
-     gather(key=type, value=count, -c(country, date))
+     gather(key = type, value = count, -c(country, date))
     ## set factor levels to show them in a desirable order
     data.long %<>% mutate(type = factor(type, c("confirmed", "remaining.confirmed", "recovered", "deaths")))
 
     top.countries <- self$data.processor$top.countries
-    if(!(selected.country %in% top.countries)) {
+    if (!(selected.country %in% top.countries)) {
      top.countries %<>% setdiff("Others") %>% c(selected.country)
      df <- data.long %>% filter(country %in% top.countries) %<>%
-      mutate(country=country %>% factor(levels=c(top.countries)))
+      mutate(country = country %>% factor(levels = c(top.countries)))
     }
     else{
      df <- data.long
@@ -113,15 +113,15 @@ ReportGenerator <- R6Class("ReportGenerator",
     x.values <- sort(unique(df$date))
 
     ret <- df %>%
-     ggplot(aes(x=date, y=count, fill=type)) +
-     geom_area(alpha=0.5) + xlab("Date") + ylab("Count") +
-     labs(title=paste0("COVID-19 Cases by Country (", self$data.processor$max.date, ")")) +
-     scale_fill_manual(values=c("red", "green", "black"))
+     ggplot(aes(x = date, y = count, fill = type)) +
+     geom_area(alpha = 0.5) + xlab("Date") + ylab("Count") +
+     labs(title = paste0("COVID-19 Cases by Country (", self$data.processor$max.date, ")")) +
+     scale_fill_manual(values = c("red", "green", "black"))
     ret <- self$getXLabelsTheme(ret, x.values)
     # ret <- ret +
     #  theme(legend.title=element_blank(), legend.position="bottom")
     ret <- setupTheme(ret, self$report.date, total.colors = NULL) +
-      facet_wrap(~country, ncol=3, scales="free_y")
+      facet_wrap(~country, ncol = 3, scales = "free_y")
     ret
    },
    ggplotConfirmedCases = function(){
@@ -129,20 +129,20 @@ ReportGenerator <- R6Class("ReportGenerator",
      data.long <- as.data.frame(self$data.processor$getData())
 
      x.values <- sort(unique(data.long$date))
-     plot1 <- ggplot(data.long, aes(x=date, y=remaining.confirmed)) +
+     plot1 <- ggplot(data.long, aes(x = date, y = remaining.confirmed)) +
        geom_point() + geom_smooth() +
-       xlab("Date") + ylab("Count") + labs(title="Current Confirmed Cases")
+       xlab("Date") + ylab("Count") + labs(title = "Current Confirmed Cases")
      plot1 <- self$getXLabelsTheme(plot1, x.values)
 
 
-     plot2 <- ggplot(self$data.processor$getData(), aes(x=date, y=confirmed.inc)) +
+     plot2 <- ggplot(self$data.processor$getData(), aes(x = date, y = confirmed.inc)) +
        geom_point() + geom_smooth() +
-       xlab("Date") + ylab("Count") + labs(title="Increase in Current Confirmed")
+       xlab("Date") + ylab("Count") + labs(title = "Increase in Current Confirmed")
      plot2 <- self$getXLabelsTheme(plot2, x.values)
 
 
      # + ylim(0, 4500)
-     ret <- grid.arrange(plot1, plot2, ncol=2)
+     ret <- grid.arrange(plot1, plot2, ncol = 2)
      ret <- setupTheme(ret, self$report.date, total.colors = length(unique(df$country)))
 
      ## `geom_smooth()` using method = "loess" and formula "y ~ x"
@@ -156,9 +156,9 @@ ReportGenerator <- R6Class("ReportGenerator",
     self$tex.builder$initTex(output.file)
     ## first 10 records when it first broke out in China
     table.2 <-
-     self$data.processor$getData() %>% filter(country=="Mainland China") %>% head(10) %>%
-     kable("latex", booktabs=T, caption="Raw Data (with first 10 Columns Only)",
-           format.args=list(big.mark=",")) %>%
+     self$data.processor$getData() %>% filter(country == "China") %>% head(10) %>%
+     kable("latex", booktabs = T, caption = "Raw Data (with first 10 Columns Only)",
+           format.args = list(big.mark = ",")) %>%
      kable_styling(latex_options = c("striped", "hold_position", "repeat_header"))
 
     writeLines(table.2)
@@ -174,19 +174,21 @@ ReportGenerator <- R6Class("ReportGenerator",
 
 #' setup Dataviz theme
 #' @import RColorBrewer
+#' @importFrom grDevices colorRampPalette
+#' @import scales
 #' @export
 setupTheme <- function(ggplot, report.date, total.colors){
   ggplot + labs(caption = getCitationNote(report.date = report.date)) +
-    theme(legend.title=element_blank(),
+    theme(legend.title = element_blank(),
           #TODO caption size is not working. Fix it
-          plot.caption = element_text(size =8)) +
-          scale_y_continuous(labels = scales::comma) +
+          plot.caption = element_text(size = 8)) +
+          scale_y_continuous(labels = comma) +
     theme_minimal()
   if (!is.null(total.colors)){
     #, selected.palette = "Paired"
     #colors.palette <- colorRampPalette(brewer.pal(8, selected.palette))(total.colors)
-    colors.palette <- c(brewer.pal(n=9, name = "Set1"), brewer.pal(n=8, name = "Set2"), brewer.pal(n=12, name = "Set3"))
-    if ( total.colors >length(colors.palette)){
+    colors.palette <- c(brewer.pal(n = 9, name = "Set1"), brewer.pal(n = 8, name = "Set2"), brewer.pal(n = 12, name = "Set3"))
+    if ( total.colors > length(colors.palette)){
       colors.palette <- colorRampPalette(colors.palette)(total.colors)
     }
     else{
@@ -219,7 +221,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        data.long %<>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
          filter(confirmed > 0) %>%
          select(c(country, date, confirmed.inc)) %>%
-         gather(key=type, value=count, -c(country, date))
+         gather(key = type, value = count, -c(country, date))
 
 
 
@@ -231,19 +233,19 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        df <- data.long %>% filter(country %in% included.countries)
        df <- df %>% filter(!country %in% excluded.countries)
        df %<>%
-         mutate(country = country %>% factor(levels=c(included.countries))) %>%
+         mutate(country = country %>% factor(levels = c(included.countries))) %>%
          mutate(country = fct_reorder(country, desc(count)))
        x.values <- sort(unique(data.long$date))
 
        self$report.date <- max(df$date)
        ret <- df %>% filter(country != "World") %>%
-         ggplot(aes(x=date, y=count, fill=country)) +
+         ggplot(aes(x = date, y = count, fill = country)) +
          geom_bar(stat = "identity") + xlab("Date") + ylab("Count") +
          labs(title = plot.title)
        ret <- self$getXLabelsTheme(ret, x.values)
        ret <- setupTheme(ret, self$report.date, total.colors = length(unique(df$country)))
        ret <- ret +
-         theme(legend.title=element_blank())
+         theme(legend.title = element_blank())
          # theme(legend.title=element_blank(),
          #   #legend.position = c(.05, .05),
          #   legend.position = "bottom",
@@ -267,7 +269,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        data.long %<>%  #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
          filter(confirmed >= min.confirmed) %>%
          filter(confirmed.inc > 0)
-       data.long <- data.long[,c("country", "date", field)] %>% gather(key=type, value=count, -c(country, date))
+       data.long <- data.long[, c("country", "date", field)] %>% gather(key = type, value = count, -c(country, date))
 
 
        plot.title <- paste("Daily new Confirmed Cases in", countries.text, " \nwith > ", min.confirmed, " confirmed")
@@ -285,19 +287,19 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        df <- df %>% filter(!country %in% excluded.countries)
        countries.object <- self$data.processor$getCountries()
        df %<>%
-         mutate(country=country %>% factor(levels=c(countries.object$countries))) %>%
+         mutate(country = country %>% factor(levels = c(countries.object$countries))) %>%
          mutate(country = fct_reorder(country, desc(count)))
        self$report.date <- max(df$date)
 
        ret <- df %>% filter(country != "World") %>%
-         ggplot(aes(x=date, y=count, color=country)) +
+         ggplot(aes(x = date, y = count, color = country)) +
          geom_line() + xlab("Date") + ylab(y.label) +
          labs(title = plot.title)
        ret <- self$getXLabelsTheme(ret, x.values)
        ret <- setupTheme(ret, self$report.date, total.colors = length(unique(df$country)))
 
        if (log.scale){
-         ret <- ret + scale_y_log10(labels = scales::comma)
+         ret <- ret + scale_y_log10(labels = comma)
        }
        # theme(legend.title=element_blank(),
        #   #legend.position = c(.05, .05),
@@ -317,6 +319,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
 
 #' New dataviz for reportGenerator by
 #' @author kenarab
+#' @import scales
 #' @export
 ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
  public = list(
@@ -337,7 +340,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      names(data.comparison.df)
      data.long <- data.comparison.df %>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
        select_at(c("country", "epidemy.day", field)) %>%
-       gather(key=type, value=count, -c(country, epidemy.day))
+       gather(key = type, value = count, -c(country, epidemy.day))
 
      plot.title <- "COVID-19 Exponential growth \n(LOG scale)\n"
 
@@ -352,7 +355,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      # df %<>%
      #   mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
 
-     self$report.date <-max(self$data.processor$getData()$date)
+     self$report.date <- max(self$data.processor$getData()$date)
 
      #debug
      df.debug <<- df
@@ -368,7 +371,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      #         plot.caption = element_text(size = 6)
      #         )
      ret <- setupTheme(ret,  self$report.date, total.colors = length(unique(df$country)))
-     ret <- ret + scale_y_log10(labels = scales::comma)
+     ret <- ret + scale_y_log10(labels = comma)
      # theme(legend.title=element_blank(),
      #   #legend.position = c(.05, .05),
      #   legend.position = "bottom",
@@ -430,18 +433,18 @@ addDuplicationsLines <- function(ggplot, x.min, x.max, linetype = "dotdash", lin
   for (duplication in names(duplications)){
   #for (duplication in names(duplications)[1]){
     coef <- duplications[[duplication]]
-    exp.function <- function(x) coef*x
+    exp.function <- function(x) coef * x
     angle <-  acos(coef ^ -1)
     angle.rad <- as_units(angle, "radians")
     angle.deg <- set_units(angle.rad, "degrees")
     #debug
-    print (paste("duplication line", duplication))
+    print(paste("duplication line", duplication))
     print(paste(x.min, x.max))
     print(as.numeric(angle.deg))
     ggplot <- ggplot +
               #stat_function(fun = exp.function, linetype = linetype) + xlim(x.min, x.max) +
               #geom_abline(intercept = 0, slope = as.numeric(angle.deg), linetype = linetype, color = line.color) +
-              geom_abline(intercept = 10, slope = as.numeric(angle.deg)/180, linetype = linetype, color = line.color) +
+              geom_abline(intercept = 10, slope = as.numeric(angle.deg) / 180, linetype = linetype, color = line.color) +
               geom_text(aes(x = x.text, y = exp.function(x.text),
                             label = duplication, angle = round(as.numeric(angle.deg))), color = line.color)
   }

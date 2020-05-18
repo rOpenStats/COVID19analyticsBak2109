@@ -77,7 +77,7 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
      logger$info("Curate")
      dummy <- self$test.processor$curate()
      file.path.expected <- self$getExpectedFile()
-     logger$info("Generating expected file ", filename = file.path.indicator, nrow = nrow(current.data.countries))
+     logger$info("Generating expected file ", filename = file.path.expected, nrow = nrow(current.data.countries))
      write_csv(self$test.processor$getData(), file.path.expected)
      #write.csv(self$test.processor$data, file.path.expected, quote = TRUE, row.names = FALSE)
     }
@@ -127,7 +127,7 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
     col.names  <- names(expected.df)
     col.names.string.na <- col.names[grep("imputation", col.names)]
     for (col in col.names.string.na){
-     na.rows <- which(is.na(expected.df[,col]))
+     na.rows <- which(is.na(expected.df[, col]))
      expected.df[na.rows, col] <- ""
     }
     head(expected.df)
@@ -164,7 +164,7 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
     processor
    },
    doRegressionTest = function(rownum2test, seed = 0){
-    expected.df <-self$readExpectedFile()
+    expected.df <- self$readExpectedFile()
 
     processor <- self$getProcessorPreloaded()
     processor$curate()
@@ -174,15 +174,15 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
     set.seed(seed)
     n <- nrow(expected.df)
     rownum2test <- min(n, rownum2test)
-    rows2test <-sort(sample(1:n, rownum2test, replace = FALSE))
+    rows2test <- sort(sample(1:n, rownum2test, replace = FALSE))
     #debug
     actual.df <<- actual.df
     expected.df <<- expected.df
     for (i in rows2test){
       #setdiff(names(actual.df[i,]), names(expected.df[i,]))
       #setdiff(names(expected.df[i,]), names(actual.df[i,]))
-      testthat::expect_equivalent(as.data.frame(actual.df[i,]),
-                                  as.data.frame(expected.df[i,]))
+      testthat::expect_equivalent(as.data.frame(actual.df[i, ]),
+                                  as.data.frame(expected.df[i, ]))
 
     }
    }

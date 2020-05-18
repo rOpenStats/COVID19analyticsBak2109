@@ -44,13 +44,14 @@ copyPNG2package <- function(current.date = Sys.Date()){
 sourceRepoDiagnostic <- function(min.confirmed = 20){
   data.processor <- COVID19DataProcessor$new(force.download = FALSE)
   data.processor$curate()
-  all.countries <- data.processor$data %>% group_by(country) %>% summarize(n = n(),
-                                                                 total.confirmed = max(confirmed))
+  all.countries <- data.processor$data %>% group_by(country) %>%
+          summarize(n = n(),
+                    total.confirmed = max(confirmed))
 
 
   all.countries$last.update <- vapply(all.countries$country,
                                       FUN = function(x){
-                                        data.country <- data.processor$data[data.processor$data$country == x,]
+                                        data.country <- data.processor$data[data.processor$data$country == x, ]
                                         #ret <- data.country %>% filter(confirmed.inc > 0) %>% summarize(max.date = max(date))
                                         data.country <- data.country %>% filter(imputation != "")
                                         ret <- max(data.country$date)
@@ -58,16 +59,16 @@ sourceRepoDiagnostic <- function(min.confirmed = 20){
                                         ret
                                       },
                                       FUN.VALUE = character(1))
-  all.countries <- all.countries[all.countries$total.confirmed > min.confirmed,]
+  all.countries <- all.countries[all.countries$total.confirmed > min.confirmed, ]
   repo.diagnostic <- all.countries %>%
                       group_by(last.update) %>%
                       summarize(n = n(), total.confirmed = sum(total.confirmed)) %>%
                       arrange(desc(last.update))
   repo.diagnostic[, "countries (confirmed)"] <- vapply(repo.diagnostic$last.update,
                                       FUN = function(x){
-                                        data.last.update <- all.countries[all.countries$last.update == x,]
+                                        data.last.update <- all.countries[all.countries$last.update == x, ]
                                         data.last.update <- data.last.update %>% arrange(desc(total.confirmed))
-                                        paste(data.last.update$country, "(", round(data.last.update$total.confirmed), ")", sep = "",collapse =", ")
+                                        paste(data.last.update$country, "(", round(data.last.update$total.confirmed), ")", sep = "", collapse = ", ")
                                       },
                                       FUN.VALUE = character(1))
 
@@ -136,7 +137,7 @@ smoothSerie <- function(serie.name, serie, n){
 Countries <- R6Class("Countries",
   public = list(
    #parameters
-   excluded.countries = c("Diamond Princess","Kosovo"),
+   excluded.countries = c("Diamond Princess", "Kosovo"),
    # state
    data.processor = NA,
    countries = NA,
@@ -164,7 +165,7 @@ Countries <- R6Class("Countries",
                       , "sub.continent"] <- "South America"
     self$countries.df[self$countries.df$country %in%   c("Costa Rica", "Guatemala", "Honduras", "Panama"), "sub.continent"] <- "Central America"
 
-    self$countries.df[self$countries.df$country %in% c("Antigua and Barbuda","Aruba",  "Cuba", "Dominican Republic", "Guadeloupe", "Jamaica", "Martinique", "Puerto Rico", "Saint Lucia", "Saint Vincent and the Grenadines", "The Bahamas", "Trinidad and Tobago"),
+    self$countries.df[self$countries.df$country %in% c("Antigua and Barbuda", "Aruba",  "Cuba", "Dominican Republic", "Guadeloupe", "Jamaica", "Martinique", "Puerto Rico", "Saint Lucia", "Saint Vincent and the Grenadines", "The Bahamas", "Trinidad and Tobago"),
                       "sub.continent"] <- "Caribbean"
 
     self$countries.df[self$countries.df$country %in% c("Canada", "Greenland", "Mexico", "US"),
@@ -187,5 +188,3 @@ getPackageDir <- function(){
     data.subdir <- "extdata"
   file.path(home.dir, data.subdir)
 }
-
-
