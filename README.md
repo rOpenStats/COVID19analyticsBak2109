@@ -88,21 +88,37 @@ library(dplyr)
 ```
 
 ``` r
-data.processor <- COVID19DataProcessor$new(force.download = FALSE)
+data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity", missing.values = "imputation")
+data.processor$setupStrategies()
+
 dummy <- data.processor$setupData()
-#> INFO  [14:27:11.005] Checking downloaded data {downloaded.ts: 2020-05-16 14:27:11, next.update.ts: 2020-05-17 07:35:30, download.flag: FALSE}
-#> INFO  [14:27:11.046] Checking downloaded data {downloaded.ts: 2020-05-16 14:27:11, next.update.ts: 2020-05-17 07:35:31, download.flag: FALSE}
-#> INFO  [14:27:11.057] Checking downloaded data {downloaded.ts: 2020-05-16 14:27:11, next.update.ts: 2020-05-17 07:35:31, download.flag: FALSE}
-#> INFO  [14:27:11.110]  {stage: data loaded}
+#> <Countries>
+#>   Public:
+#>     clone: function (deep = FALSE) 
+#>     countries: NA
+#>     countries.df: NA
+#>     data.processor: NA
+#>     excluded.countries: Diamond Princess Kosovo
+#>     getCountries: function (division, name) 
+#>     initialize: function () 
+#>     setup: function (countries) 
+#> INFO  [14:01:05.178] Checking downloaded data {downloaded.ts: 2020-05-18 14:01:05, next.update.ts: 2020-05-19 05:07:40, download.flag: FALSE}
+#> INFO  [14:01:05.219] Checking downloaded data {downloaded.ts: 2020-05-18 14:01:05, next.update.ts: 2020-05-19 05:07:40, download.flag: FALSE}
+#> INFO  [14:01:05.229] Checking downloaded data {downloaded.ts: 2020-05-18 14:01:05, next.update.ts: 2020-05-19 05:07:41, download.flag: FALSE}
+#> INFO  [14:01:05.315]  {stage: data loaded}
+#> INFO  [14:01:06.546]  {stage: consolidated}
 dummy <- data.processor$curate()
+#> INFO  [14:01:06.601]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [14:27:13.507]  {stage: consolidated}
-#> INFO  [14:27:14.301]  {stage: Starting first imputation}
-#> INFO  [14:27:14.302] Imputation indicator {indicator: confirmed}
-#> INFO  [14:27:14.348] Imputation indicator {indicator: recovered}
-#> INFO  [14:27:14.438] Imputation indicator {indicator: deaths}
-#> INFO  [14:27:15.690]  {stage: Calculating top countries}
-current.date <- max(data.processor$data$date)
+#> INFO  [14:01:08.185]  {stage: calculating-rates}
+#> INFO  [14:01:08.325]  {stage: making-data-comparison}
+#> INFO  [14:01:09.286]  {stage: applying-missing-values-method}
+#> INFO  [14:01:09.287]  {stage: Starting first imputation}
+#> INFO  [14:01:09.291]  {stage: calculating-rates}
+#> INFO  [14:01:09.465]  {stage: making-data-comparison-2}
+#> INFO  [14:01:10.491]  {stage: calculating-top-countries}
+
+current.date <- max(data.processor$getData()$date)
 
 rg <- ReportGeneratorEnhanced$new(data.processor)
 rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
@@ -118,63 +134,47 @@ latam.countries <- sort(c("Mexico",
 
 ``` r
 # Top 10 daily cases confirmed increment
-(data.processor$data %>%
+(data.processor$getData() %>%
   filter(date == current.date) %>%
-  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
+  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
   arrange(desc(confirmed.inc)) %>%
   filter(confirmed >=10))[1:10,]
-#>           country       date rate.inc.daily confirmed.inc confirmed deaths
-#> 1              US 2020-05-15           0.02         25050   1442824  87530
-#> 2          Brazil 2020-05-15           0.08         17126    220291  14962
-#> 3          Russia 2020-05-15           0.04         10598    262843   2418
-#> 4            Peru 2020-05-15           0.05          3891     84495   2392
-#> 5           India 2020-05-15           0.05          3787     85784   2753
-#> 6  United Kingdom 2020-05-15           0.02          3564    238004  34078
-#> 7        Pakistan 2020-05-15           0.08          3011     38799    834
-#> 8           Chile 2020-05-15           0.07          2502     39542    394
-#> 9          Mexico 2020-05-15           0.06          2437     45032   4767
-#> 10   Saudi Arabia 2020-05-15           0.05          2307     49176    292
-#>    deaths.inc imputation.confirmed
-#> 1        1632                     
-#> 2         963                     
-#> 3         113                     
-#> 4         125                     
-#> 5         104                     
-#> 6         385                     
-#> 7          64                     
-#> 8          26                     
-#> 9         290                     
-#> 10          9
+#> # A tibble: 10 x 7
+#> # Groups:   country [10]
+#>    country   date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
+#>    <chr>     <date>              <dbl>         <int>     <int>  <int>      <int>
+#>  1 US        2020-05-17           0.01         18937   1486757  89562        808
+#>  2 Russia    2020-05-17           0.04          9709    281752   2631         94
+#>  3 Brazil    2020-05-17           0.03          7569    241080  16118        456
+#>  4 India     2020-05-17           0.06          5050     95698   3025        154
+#>  5 Peru      2020-05-17           0.04          3732     92273   2648        125
+#>  6 United K… 2020-05-17           0.01          3534    244995  34716        170
+#>  7 Saudi Ar… 2020-05-17           0.05          2736     54752    312         10
+#>  8 Chile     2020-05-17           0.06          2353     43781    450         29
+#>  9 Mexico    2020-05-17           0.04          2075     49219   5177        132
+#> 10 Iran      2020-05-17           0.02          1806    120198   6988         51
 ```
 
 ``` r
 # Top 10 daily deaths increment
-(data.processor$data %>%
+(data.processor$getData() %>%
   filter(date == current.date) %>%
-  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc, imputation.confirmed) %>%
+  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
   arrange(desc(deaths.inc)))[1:10,]
-#>           country       date rate.inc.daily confirmed.inc confirmed deaths
-#> 1              US 2020-05-15           0.02         25050   1442824  87530
-#> 2          Brazil 2020-05-15           0.08         17126    220291  14962
-#> 3  United Kingdom 2020-05-15           0.02          3564    238004  34078
-#> 4          Mexico 2020-05-15           0.06          2437     45032   4767
-#> 5         Ecuador 2020-05-15           0.03           965     31467   2594
-#> 6           Italy 2020-05-15           0.00           789    223885  31610
-#> 7           Spain 2020-05-15           0.00           643    230183  27459
-#> 8            Peru 2020-05-15           0.05          3891     84495   2392
-#> 9          Sweden 2020-05-15           0.02           625     29207   3646
-#> 10         Russia 2020-05-15           0.04         10598    262843   2418
-#>    deaths.inc imputation.confirmed
-#> 1        1632                     
-#> 2         963                     
-#> 3         385                     
-#> 4         290                     
-#> 5         256                     
-#> 6         242                     
-#> 7         138                     
-#> 8         125                     
-#> 9         117                     
-#> 10        113
+#> # A tibble: 10 x 7
+#> # Groups:   country [10]
+#>    country   date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
+#>    <chr>     <date>              <dbl>         <int>     <int>  <int>      <int>
+#>  1 US        2020-05-17           0.01         18937   1486757  89562        808
+#>  2 France    2020-05-17           0               63    179693  28111        579
+#>  3 Brazil    2020-05-17           0.03          7569    241080  16118        456
+#>  4 United K… 2020-05-17           0.01          3534    244995  34716        170
+#>  5 India     2020-05-17           0.06          5050     95698   3025        154
+#>  6 Italy     2020-05-17           0              675    225435  31908        145
+#>  7 Mexico    2020-05-17           0.04          2075     49219   5177        132
+#>  8 Peru      2020-05-17           0.04          3732     92273   2648        125
+#>  9 Russia    2020-05-17           0.04          9709    281752   2631         94
+#> 10 Indonesia 2020-05-17           0.03           489     17514   1148         59
 ```
 
 ``` r
