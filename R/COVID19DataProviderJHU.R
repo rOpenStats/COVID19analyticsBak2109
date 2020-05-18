@@ -9,7 +9,7 @@
 #' @import lgr
 #' @export
 COVID19DataProviderJHU <- R6Class("COVID19DataProviderJHU",
-  inherit = COVID19DataProviderConfirmedRecoveredDeaths,
+  inherit = COVID19DataProviderCRD,
   public = list(
    initialize = function(force.download = FALSE){
     super$initialize(force.download = force.download)

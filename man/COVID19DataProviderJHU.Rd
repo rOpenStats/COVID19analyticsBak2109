@@ -14,7 +14,7 @@ yanchang-zhao
 kenarab
 }
 \section{Super classes}{
-\code{\link[COVID19analytics:COVID19DataProvider]{COVID19analytics::COVID19DataProvider}} -> \code{\link[COVID19analytics:COVID19DataProviderConfirmedRecoveredDeaths]{COVID19analytics::COVID19DataProviderConfirmedRecoveredDeaths}} -> \code{COVID19DataProviderJHU}
+\code{\link[COVID19analytics:COVID19DataProvider]{COVID19analytics::COVID19DataProvider}} -> \code{\link[COVID19analytics:COVID19DataProviderCRD]{COVID19analytics::COVID19DataProviderCRD}} -> \code{COVID19DataProviderJHU}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -35,7 +35,9 @@ kenarab
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProvider" data-id="getDataModel">}\href{../../COVID19analytics/html/COVID19DataProvider.html#method-getDataModel}{\code{COVID19analytics::COVID19DataProvider$getDataModel()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProvider" data-id="setupData">}\href{../../COVID19analytics/html/COVID19DataProvider.html#method-setupData}{\code{COVID19analytics::COVID19DataProvider$setupData()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProviderConfirmedRecoveredDeaths" data-id="consolidate">}\href{../../COVID19analytics/html/COVID19DataProviderConfirmedRecoveredDeaths.html#method-consolidate}{\code{COVID19analytics::COVID19DataProviderConfirmedRecoveredDeaths$consolidate()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProvider" data-id="setupProcessor">}\href{../../COVID19analytics/html/COVID19DataProvider.html#method-setupProcessor}{\code{COVID19analytics::COVID19DataProvider$setupProcessor()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProvider" data-id="transform">}\href{../../COVID19analytics/html/COVID19DataProvider.html#method-transform}{\code{COVID19analytics::COVID19DataProvider$transform()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProviderCRD" data-id="consolidate">}\href{../../COVID19analytics/html/COVID19DataProviderCRD.html#method-consolidate}{\code{COVID19analytics::COVID19DataProviderCRD$consolidate()}}\out{</span>}
 }
 \out{</details>}
 }

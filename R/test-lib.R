@@ -8,6 +8,8 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
   public = list(
    # parametersirre
    case.name        = NA,
+   provider.id      = NA,
+   missing.values.model.id = NA,
    countries        = NA,
    test.case.folder = NA,
    sources.folder   = NA,
@@ -17,9 +19,13 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
    logger           = NA,
    initialize = function(case.name,
                          countries,
+                         provider.id = "JohnsHopkingsUniversity",
+                         missing.values.model.id = "imputation",
                          running.test = FALSE){
-     self$case.name        <- case.name
-     self$countries        <- countries
+     self$case.name               <- case.name
+     self$provider.id             <- provider.id
+     self$missing.values.model.id <- missing.values.model.id
+     self$countries               <- countries
      if (running.test){
       test.case.folder <- getPackageDir()
      }
@@ -49,23 +55,30 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
     }
 
     if (generate.case){
-     self$test.processor <- COVID19DataProcessor$new()
+     self$test.processor <- self$getProcessor()
+     logger$info("SetupData")
      self$test.processor$setupData()
      #sources
+     logger$info("Save testcases sources")
      for (indicator in c("confirmed", "recovered", "deaths")) {
-      indicator.field <- paste("data", indicator, sep = ".")
-      current.data <- self$test.processor[[indicator.field]]
-      current.data.countries <- current.data %>% filter(Country.Region %in% self$countries)
-      file.path.indicator <- file.path(self$sources.folder, paste(self$case.name, "_", indicator, ".csv", sep = ""))
-      file.path.indicator <- self$getSourceIndicatorPath(indicator)
-      logger$info("Generating testcase file ", filename = file.path.indicator, nrow = nrow(current.data.countries))
-      write_csv(current.data.countries, file.path.indicator)
+       indicator.field <- paste("data", indicator, sep = ".")
+       current.data <- self$test.processor$data.provider[[indicator.field]]
+       current.data.countries <- current.data %>% filter(Country.Region %in% self$countries)
+       self$test.processor$data.provider[[indicator.field]] <- current.data.countries
+       file.path.indicator <- file.path(self$sources.folder, paste(self$case.name, "_", indicator, ".csv", sep = ""))
+       file.path.indicator <- self$getSourceIndicatorPath(indicator)
+       logger$info("Generating testcase file ", filename = file.path.indicator, nrow = nrow(current.data.countries))
+       write_csv(current.data.countries, file.path.indicator)
      }
+     #After load
+     logger$info("Transform")
+     self$test.processor$transform()
      #expected
+     logger$info("Curate")
+     dummy <- self$test.processor$curate()
      file.path.expected <- self$getExpectedFile()
-     dummy <- self$test.processor$curate(countries = self$countries)
      logger$info("Generating expected file ", filename = file.path.indicator, nrow = nrow(current.data.countries))
-     write_csv(self$test.processor$data, file.path.expected)
+     write_csv(self$test.processor$getData(), file.path.expected)
      #write.csv(self$test.processor$data, file.path.expected, quote = TRUE, row.names = FALSE)
     }
     else{
@@ -80,19 +93,36 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
    },
    readExpectedFile = function(expected.file.path){
     expected.df <- read_csv(self$getExpectedFile(),
-                            col_types = cols(
-                             .default = col_double(),
-                             country = col_character(),
-                             date = col_date(format = ""),
-                             imputation.confirmed.case = col_character(),
-                             imputation.confirmed = col_character(),
-                             imputation.recovered.case = col_character(),
-                             imputation.recovered = col_character(),
-                             imputation.deaths.case = col_character(),
-                             imputation.deaths = col_character()
-                            )
-                            )
-    expected.df <- as.data.frame(expected.df)
+                            col_types =
+                            cols(
+                              country = col_character(),
+                              date = col_date(format = ""),
+                              confirmed = col_double(),
+                              recovered = col_double(),
+                              deaths = col_double(),
+                              confirmed.inc = col_double(),
+                              deaths.inc = col_double(),
+                              recovered.inc = col_double(),
+                              rate.upper = col_double(),
+                              rate.lower = col_double(),
+                              rate.daily = col_double(),
+                              rate.inc.daily = col_double(),
+                              remaining.confirmed = col_double(),
+                              death.rate.min = col_double(),
+                              death.rate.max = col_double()
+                            ))
+                            # col_types = cols(
+                            #  .default = col_double(),
+                            #  country = col_character(),
+                            #  date = col_date(format = ""),
+                            #  imputation.confirmed.case = col_character(),
+                            #  imputation.confirmed = col_character(),
+                            #  imputation.recovered.case = col_character(),
+                            #  imputation.recovered = col_character(),
+                            #  imputation.deaths.case = col_character(),
+                            #  imputation.deaths = col_character()
+                            # )
+    #expected.df <- as.data.frame(expected.df)
     # Correct Imputation columns
     col.names  <- names(expected.df)
     col.names.string.na <- col.names[grep("imputation", col.names)]
@@ -103,9 +133,18 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
     head(expected.df)
     expected.df
    },
-   getConfiguredProcessor = function(){
+   getProcessor = function(){
+     ret <- COVID19DataProcessor$new(provider.id = self$provider.id,
+                                     missing.values.model.id = self$missing.values.model.id)
+     ret$setupProcessor()
+     ret
+   },
+   getProcessorPreloaded = function(){
     logger <- getLogger(self)
-    processor <- COVID19DataProcessor$new()
+    processor <- self$getProcessor()
+    # TODO in  fancy way for different data.providers
+    processor$data.provider$setupProcessor(processor)
+    #Simulate setupData
     for (indicator in c("confirmed", "recovered", "deaths")) {
      indicator.field <- paste("data", indicator, sep = ".")
      indicator.file.path <- self$getSourceIndicatorPath(indicator)
@@ -116,16 +155,20 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
                           Country.Region = col_character()
                          ))
      logger$info("Setting indicator ", indicator = indicator)
-     processor[[indicator.field]] <- data.df
+     processor$data.provider[[indicator.field]] <- data.df
     }
+    # As we loaded data manually we have to manually setup data-setup state
+    processor$changeState("data-setup")
+
+    processor$transform()
     processor
    },
    doRegressionTest = function(rownum2test, seed = 0){
     expected.df <-self$readExpectedFile()
 
-    processor <- self$getConfiguredProcessor()
+    processor <- self$getProcessorPreloaded()
     processor$curate()
-    actual.df <- processor$data
+    actual.df <- processor$getData()
     testthat::expect_equal(nrow(actual.df), nrow(expected.df))
     testthat::expect_identical(names(actual.df), names(expected.df))
     set.seed(seed)
@@ -136,7 +179,11 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
     actual.df <<- actual.df
     expected.df <<- expected.df
     for (i in rows2test){
-     testthat::expect_equivalent(actual.df[i,], expected.df[i,])
+      #setdiff(names(actual.df[i,]), names(expected.df[i,]))
+      #setdiff(names(expected.df[i,]), names(actual.df[i,]))
+      testthat::expect_equivalent(as.data.frame(actual.df[i,]),
+                                  as.data.frame(expected.df[i,]))
+
     }
    }
   ))

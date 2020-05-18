@@ -18,6 +18,8 @@ kenarab
 \item \href{#method-getDataModel}{\code{COVID19DataProvider$getDataModel()}}
 \item \href{#method-getID}{\code{COVID19DataProvider$getID()}}
 \item \href{#method-getDates}{\code{COVID19DataProvider$getDates()}}
+\item \href{#method-transform}{\code{COVID19DataProvider$transform()}}
+\item \href{#method-setupProcessor}{\code{COVID19DataProvider$setupProcessor()}}
 \item \href{#method-setupData}{\code{COVID19DataProvider$setupData()}}
 \item \href{#method-downloadData}{\code{COVID19DataProvider$downloadData()}}
 \item \href{#method-loadData}{\code{COVID19DataProvider$loadData()}}
@@ -60,6 +62,24 @@ kenarab
 \subsection{Method \code{getDates()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProvider$getDates()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-transform"></a>}}
+\if{latex}{\out{\hypertarget{method-transform}{}}}
+\subsection{Method \code{transform()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProvider$transform()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setupProcessor"></a>}}
+\if{latex}{\out{\hypertarget{method-setupProcessor}{}}}
+\subsection{Method \code{setupProcessor()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProvider$setupProcessor(data.processor)}\if{html}{\out{</div>}}
 }
 
 }

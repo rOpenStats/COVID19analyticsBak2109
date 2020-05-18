@@ -21,7 +21,11 @@ kenarab
 \item \href{#method-setupProvider}{\code{COVID19DataProcessor$setupProvider()}}
 \item \href{#method-setupMissingValuesModel}{\code{COVID19DataProcessor$setupMissingValuesModel()}}
 \item \href{#method-setupStrategies}{\code{COVID19DataProcessor$setupStrategies()}}
+\item \href{#method-setupProcessor}{\code{COVID19DataProcessor$setupProcessor()}}
 \item \href{#method-setupData}{\code{COVID19DataProcessor$setupData()}}
+\item \href{#method-process}{\code{COVID19DataProcessor$process()}}
+\item \href{#method-transform}{\code{COVID19DataProcessor$transform()}}
+\item \href{#method-checkValidTransition}{\code{COVID19DataProcessor$checkValidTransition()}}
 \item \href{#method-changeState}{\code{COVID19DataProcessor$changeState()}}
 \item \href{#method-curate}{\code{COVID19DataProcessor$curate()}}
 \item \href{#method-makeDataComparison}{\code{COVID19DataProcessor$makeDataComparison()}}
@@ -96,11 +100,47 @@ kenarab
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setupProcessor"></a>}}
+\if{latex}{\out{\hypertarget{method-setupProcessor}{}}}
+\subsection{Method \code{setupProcessor()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$setupProcessor()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-setupData"></a>}}
 \if{latex}{\out{\hypertarget{method-setupData}{}}}
 \subsection{Method \code{setupData()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$setupData()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-process"></a>}}
+\if{latex}{\out{\hypertarget{method-process}{}}}
+\subsection{Method \code{process()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$process()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-transform"></a>}}
+\if{latex}{\out{\hypertarget{method-transform}{}}}
+\subsection{Method \code{transform()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$transform()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-checkValidTransition"></a>}}
+\if{latex}{\out{\hypertarget{method-checkValidTransition}{}}}
+\subsection{Method \code{checkValidTransition()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$checkValidTransition(state.expected = "datamodel-setup")}\if{html}{\out{</div>}}
 }
 
 }

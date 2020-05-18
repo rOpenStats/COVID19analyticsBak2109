@@ -76,14 +76,36 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
      self$setupProvider(self$provider.id)
      self$setupMissingValuesModel(self$missing.values.model.id)
    },
-   setupData = function(){
-     logger <- getLogger(self)
+   setupProcessor = function(){
      self$setupStrategies()
      self$countries <- Countries$new()
-     #debug
-     print(self$countries)
+     self$state <- "processor-setup"
+     self$changeState("processor-setup")
+   },
+   setupData = function(){
+     logger <- getLogger(self)
+     self$setupProcessor()
      self$data.provider$setupData(self)
+     self$changeState("data-setup")
+   },
+   process = function(){
+     self$setupData()
+     self$transform()
+   },
+   transform = function(){
+     self$checkValidTransition(state.expected = "data-setup")
+     logger$info("Executing transform")
+     self$data.provider$transform()
+
+     logger$info("gathering DataModel")
      self$data.model <- self$data.provider$getDataModel()
+     self$changeState("datamodel-setup")
+   },
+   checkValidTransition = function(state.expected = "datamodel-setup"){
+     if (state.expected != self$state){
+       stop(paste("Invalid state", self$state, "for running curate.", state.expected, "was expected"))
+     }
+     TRUE
    },
    changeState = function(new.state){
      logger <- getLogger(self)
@@ -92,6 +114,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    },
    curate = function(countries = NULL){
     logger <- getLogger(self)
+    self$checkValidTransition(state.expected = "datamodel-setup")
     dates <- self$data.provider$getDates()
     range(dates)
 
@@ -146,6 +169,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     }
     self$changeState("calculating-top-countries")
     self$calculateTopCountries()
+    self$changeState("processed")
     self
    },
    makeDataComparison = function(){
@@ -213,6 +237,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
            arrange(ranking) %>%
             pull(country) %>%
             as.character()
+
     self$top.countries
 
     ## move 'Others' to the end
@@ -264,17 +289,24 @@ COVID19DataProvider <- R6Class("COVID19DataProvider",
   getDates = function(){
     stop("Abstract class")
   },
+  transform = function(){
+    logger <- getLogger(self)
+    logger$info("Executing consolidate")
+    self$consolidate()
+    logger$info("Executing standarize")
+    self$standarize()
+  },
+  setupProcessor = function(data.processor){
+    self$data.processor <- data.processor
+  },
   setupData = function(data.processor){
     logger <- getLogger(self)
-    self$data.processor <- data.processor
+    self$setupProcessor(data.processor)
     self$downloadData()
     self$state <- "downloaded"
     self$loadData()
     self$state <- "loaded"
     logger$info("", stage = "data loaded")
-    self$consolidate()
-    self$standarize()
-    self$data
   },
   downloadData = function(download.freq = 60 * 60 * 18 #18 hours
   ) {
@@ -296,7 +328,8 @@ COVID19DataProvider <- R6Class("COVID19DataProvider",
 
 
 
-#' COVID19DataProviderConfirmedRecoveredDeaths
+#' COVID19DataProviderCRD
+#' Data provider for Confirmed Recovered Deaths models separated in files
 #' @author kenarab
 #' @importFrom R6 R6Class
 #' @import magrittr
@@ -305,7 +338,7 @@ COVID19DataProvider <- R6Class("COVID19DataProvider",
 #' @import lubridate
 #' @import lgr
 #' @export
-COVID19DataProviderConfirmedRecoveredDeaths <- R6Class("COVID19DataProviderConfirmedRecoveredDeaths",
+COVID19DataProviderCRD <- R6Class("COVID19DataProviderCRD",
  inherit = COVID19DataProvider,
  public = list(
    force.download = FALSE,
