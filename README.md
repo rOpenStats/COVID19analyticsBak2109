@@ -64,6 +64,8 @@ library(COVID19analytics)
 #> loading 'COVID19analytics'
 #> Warning: replacing previous import 'dplyr::setdiff' by 'lubridate::setdiff' when
 #> loading 'COVID19analytics'
+#> Warning: replacing previous import 'readr::col_factor' by 'scales::col_factor'
+#> when loading 'COVID19analytics'
 #> Warning: replacing previous import 'magrittr::equals' by 'testthat::equals' when
 #> loading 'COVID19analytics'
 #> Warning: replacing previous import 'magrittr::not' by 'testthat::not' when
@@ -92,31 +94,31 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [16:15:29.256]  {stage: processor-setup}
-#> INFO  [16:15:29.262] Checking downloaded data {downloaded.ts: 2020-05-18 16:15:29, next.update.ts: 2020-05-19 05:07:40, download.flag: FALSE}
-#> INFO  [16:15:29.323] Checking downloaded data {downloaded.ts: 2020-05-18 16:15:29, next.update.ts: 2020-05-19 05:07:40, download.flag: FALSE}
-#> INFO  [16:15:29.326] Checking downloaded data {downloaded.ts: 2020-05-18 16:15:29, next.update.ts: 2020-05-19 05:07:41, download.flag: FALSE}
-#> INFO  [16:15:29.431]  {stage: data loaded}
-#> INFO  [16:15:29.432]  {stage: data-setup}
+#> INFO  [16:30:10.377]  {stage: processor-setup}
+#> INFO  [16:30:10.380] Checking downloaded data {downloaded.ts: 2020-05-19 16:30:10, next.update.ts: 2020-05-20 04:36:46, download.flag: FALSE}
+#> INFO  [16:30:10.434] Checking downloaded data {downloaded.ts: 2020-05-19 16:30:10, next.update.ts: 2020-05-20 04:36:47, download.flag: FALSE}
+#> INFO  [16:30:10.436] Checking downloaded data {downloaded.ts: 2020-05-19 16:30:10, next.update.ts: 2020-05-20 04:36:48, download.flag: FALSE}
+#> INFO  [16:30:10.557]  {stage: data loaded}
+#> INFO  [16:30:10.558]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [16:15:29.434] Executing transform 
-#> INFO  [16:15:29.434] Executing consolidate 
-#> INFO  [16:15:30.708]  {stage: consolidated}
-#> INFO  [16:15:30.709] Executing standarize 
-#> INFO  [16:15:30.766] gathering DataModel 
-#> INFO  [16:15:30.767]  {stage: datamodel-setup}
+#> INFO  [16:30:10.562] Executing transform 
+#> INFO  [16:30:10.564] Executing consolidate 
+#> INFO  [16:30:11.780]  {stage: consolidated}
+#> INFO  [16:30:11.781] Executing standarize 
+#> INFO  [16:30:11.837] gathering DataModel 
+#> INFO  [16:30:11.838]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [16:15:30.770]  {stage: loading-aggregated-data-model}
+#> INFO  [16:30:11.841]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [16:15:32.415]  {stage: calculating-rates}
-#> INFO  [16:15:32.571]  {stage: making-data-comparison}
-#> INFO  [16:15:33.699]  {stage: applying-missing-values-method}
-#> INFO  [16:15:33.701]  {stage: Starting first imputation}
-#> INFO  [16:15:33.704]  {stage: calculating-rates}
-#> INFO  [16:15:33.879]  {stage: making-data-comparison-2}
-#> INFO  [16:15:34.933]  {stage: calculating-top-countries}
-#> INFO  [16:15:34.949]  {stage: processed}
+#> INFO  [16:30:13.391]  {stage: calculating-rates}
+#> INFO  [16:30:13.524]  {stage: making-data-comparison}
+#> INFO  [16:30:14.454]  {stage: applying-missing-values-method}
+#> INFO  [16:30:14.455]  {stage: Starting first imputation}
+#> INFO  [16:30:14.459]  {stage: calculating-rates}
+#> INFO  [16:30:14.638]  {stage: making-data-comparison-2}
+#> INFO  [16:30:15.648]  {stage: calculating-top-countries}
+#> INFO  [16:30:15.664]  {stage: processed}
 
 current.date <- max(data.processor$getData()$date)
 
@@ -143,16 +145,16 @@ latam.countries <- sort(c("Mexico",
 #> # Groups:   country [10]
 #>    country   date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
 #>    <chr>     <date>              <dbl>         <int>     <int>  <int>      <int>
-#>  1 US        2020-05-17          0.013         18937   1486757  89562        808
-#>  2 Russia    2020-05-17          0.036          9709    281752   2631         94
-#>  3 Brazil    2020-05-17          0.032          7569    241080  16118        456
-#>  4 India     2020-05-17          0.056          5050     95698   3025        154
-#>  5 Peru      2020-05-17          0.042          3732     92273   2648        125
-#>  6 United K… 2020-05-17          0.015          3534    244995  34716        170
-#>  7 Saudi Ar… 2020-05-17          0.053          2736     54752    312         10
-#>  8 Chile     2020-05-17          0.057          2353     43781    450         29
-#>  9 Mexico    2020-05-17          0.044          2075     49219   5177        132
-#> 10 Iran      2020-05-17          0.015          1806    120198   6988         51
+#>  1 US        2020-05-18          0.014         21551   1508308  90347        785
+#>  2 Brazil    2020-05-18          0.059         14288    255368  16853        735
+#>  3 Russia    2020-05-18          0.032          8926    290678   2722         91
+#>  4 India     2020-05-18          0.048          4630    100328   3156        131
+#>  5 United K… 2020-05-18          0.011          2714    247709  34876        160
+#>  6 Peru      2020-05-18          0.029          2660     94933   2789        141
+#>  7 Saudi Ar… 2020-05-18          0.047          2593     57345    320          8
+#>  8 Mexico    2020-05-18          0.049          2414     51633   5332        155
+#>  9 Iran      2020-05-18          0.019          2294    122492   7057         69
+#> 10 Chile     2020-05-18          0.052          2278     46059    478         28
 ```
 
 ``` r
@@ -165,16 +167,16 @@ latam.countries <- sort(c("Mexico",
 #> # Groups:   country [10]
 #>    country   date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
 #>    <chr>     <date>              <dbl>         <int>     <int>  <int>      <int>
-#>  1 US        2020-05-17          0.013         18937   1486757  89562        808
-#>  2 France    2020-05-17          0                63    179693  28111        579
-#>  3 Brazil    2020-05-17          0.032          7569    241080  16118        456
-#>  4 United K… 2020-05-17          0.015          3534    244995  34716        170
-#>  5 India     2020-05-17          0.056          5050     95698   3025        154
-#>  6 Italy     2020-05-17          0.003           675    225435  31908        145
-#>  7 Mexico    2020-05-17          0.044          2075     49219   5177        132
-#>  8 Peru      2020-05-17          0.042          3732     92273   2648        125
-#>  9 Russia    2020-05-17          0.036          9709    281752   2631         94
-#> 10 Indonesia 2020-05-17          0.029           489     17514   1148         59
+#>  1 US        2020-05-18          0.014         21551   1508308  90347        785
+#>  2 Brazil    2020-05-18          0.059         14288    255368  16853        735
+#>  3 United K… 2020-05-18          0.011          2714    247709  34876        160
+#>  4 Mexico    2020-05-18          0.049          2414     51633   5332        155
+#>  5 Spain     2020-05-18          0.004           908    231606  27709        146
+#>  6 Peru      2020-05-18          0.029          2660     94933   2789        141
+#>  7 France    2020-05-18          0.002           358    180051  28242        131
+#>  8 India     2020-05-18          0.048          4630    100328   3156        131
+#>  9 Italy     2020-05-18          0.002           451    225886  32007         99
+#> 10 Russia    2020-05-18          0.032          8926    290678   2722         91
 ```
 
 ``` r
@@ -186,6 +188,8 @@ rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries,
 
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, min.cases = 100)
+#> Scale for 'y' is already present. Adding another scale for 'y', which will
+#> replace the existing scale.
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-2.png" width="100%" />
@@ -194,6 +198,8 @@ rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, min.c
 
 rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
                         field = "confirmed.inc", log.scale = TRUE)
+#> Scale for 'y' is already present. Adding another scale for 'y', which will
+#> replace the existing scale.
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-3.png" width="100%" />
@@ -201,6 +207,8 @@ rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "
 ``` r
 
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field = "deaths", y.label = "Deaths", min.cases = 1)
+#> Scale for 'y' is already present. Adding another scale for 'y', which will
+#> replace the existing scale.
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-4.png" width="100%" />
@@ -215,24 +223,32 @@ rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
                                                min.cases = 100)
+#> Scale for 'y' is already present. Adding another scale for 'y', which will
+#> replace the existing scale.
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-2.png" width="100%" />
 
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, field = "deaths", y.label = "Deaths", min.cases = 1)
+#> Scale for 'y' is already present. Adding another scale for 'y', which will
+#> replace the existing scale.
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-3.png" width="100%" />
 
 ``` r
 rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)
+#> Scale for 'y' is already present. Adding another scale for 'y', which will
+#> replace the existing scale.
 ```
 
 <img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 ``` r
 rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
+#> Scale for 'y' is already present. Adding another scale for 'y', which will
+#> replace the existing scale.
 #> Warning: Transformation introduced infinite values in continuous y-axis
 ```
 

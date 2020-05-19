@@ -77,14 +77,13 @@ ReportGenerator <- R6Class("ReportGenerator",
      mutate(country = country %>% factor(levels = c(self$data.processor$top.countries)))
     df %<>% filter(country != "World") %>%
       mutate(country = fct_reorder(country, desc(count)))
-    x.values <- sort(unique(df$date))
 
     ret <-  df %>%
      ggplot(aes(x = date, y = count, fill = country)) +
      geom_area() + xlab("Date") + ylab("Count") +
      labs(title = "Cases around the World")
     ret <- self$getXLabelsTheme(ret, x.values)
-    ret <- setupTheme(ret, report.date = self$report.date, x.values = df$epidemy.day, total.colors = length(unique(df$country)), x.type = "epidemy.day")
+    ret <- setupTheme(ret, report.date = self$report.date, x.values = sort(unique(df$date)), total.colors = length(unique(df$country)))
 
     ret <- ret +
      facet_wrap(~type, ncol = 2, scales = "free_y")
@@ -118,8 +117,6 @@ ReportGenerator <- R6Class("ReportGenerator",
      labs(title = paste0("COVID-19 Cases by Country (", self$data.processor$max.date, ")")) +
      scale_fill_manual(values = c("red", "green", "black"))
     ret <- self$getXLabelsTheme(ret, x.values)
-    # ret <- ret +
-    #  theme(legend.title=element_blank(), legend.position="bottom")
     ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date, total.colors = NULL) +
       facet_wrap(~country, ncol = 3, scales = "free_y")
     ret
@@ -178,11 +175,6 @@ ReportGenerator <- R6Class("ReportGenerator",
 #' @import scales
 #' @export
 setupTheme <- function(ggplot, report.date, x.values, total.colors, x.type = "dates", base.size = 6){
-  ggplot + labs(caption = getCitationNote(report.date = report.date)) +
-    theme(legend.title = element_blank(),
-          #TODO caption size is not working. Fix it
-          plot.caption = element_text(size = 8)) +
-          scale_y_continuous(labels = comma)
   if (!is.null(x.type)){
     if (x.type == "dates"){
       dates    <- x.values
@@ -228,11 +220,17 @@ setupTheme <- function(ggplot, report.date, x.values, total.colors, x.type = "da
       #scale_fill_brewer(palette = selected.palette)
       scale_fill_manual(values = colors.palette) +
       scale_color_manual(values = colors.palette) +
-      theme_minimal(base_size = base.size,
+      theme_bw(base_size = base.size,
+
                     #base_family = "courier")
                     base_family = "mono",
-                    )+
-      theme(axis.text.x = element_text(angle = 90))
+                    ) +
+      scale_y_continuous(labels = comma) +
+      theme(legend.title = element_blank(),
+            #TODO caption size is not working. Fix it
+            plot.caption = element_text(size = 5),
+            axis.text.x = element_text(angle = 90)) +
+      labs(caption = getCitationNote(report.date = report.date))
   }
   ggplot
 }
@@ -276,7 +274,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          ggplot(aes(x = date, y = count, fill = country)) +
          geom_bar(stat = "identity") + xlab("Date") + ylab("Count") +
          labs(title = plot.title)
-       ret <- self$getXLabelsTheme(ret, x.values)
+       #ret <- self$getXLabelsTheme(ret, x.values)
        ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date, total.colors = length(unique(df$country)))
        ret <- ret +
          theme(legend.title = element_blank())
