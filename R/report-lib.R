@@ -59,7 +59,7 @@ ReportGenerator <- R6Class("ReportGenerator",
      xlab("") + ylab("Percentage (%)") +
      labs(title = paste0("Top 10 Countries with Most Confirmed Cases (", self$data.processor$max.date, ")")) +
      scale_fill_brewer(name = "Country", labels = df$txt, palette = "Paired")
-    ret <- setupTheme(ret, self$report.date, total.colors = NULL)
+    ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date, total.colors = NULL, x.type = NULL)
     ret
    },
    ggplotTopCountriesBarPlots = function(excluded.countries = "World"){
@@ -84,7 +84,7 @@ ReportGenerator <- R6Class("ReportGenerator",
      geom_area() + xlab("Date") + ylab("Count") +
      labs(title = "Cases around the World")
     ret <- self$getXLabelsTheme(ret, x.values)
-    ret <- setupTheme(ret, self$report.date, total.colors = length(unique(df$country)))
+    ret <- setupTheme(ret, report.date = self$report.date, x.values = df$epidemy.day, total.colors = length(unique(df$country)), x.type = "epidemy.day")
 
     ret <- ret +
      facet_wrap(~type, ncol = 2, scales = "free_y")
@@ -120,7 +120,7 @@ ReportGenerator <- R6Class("ReportGenerator",
     ret <- self$getXLabelsTheme(ret, x.values)
     # ret <- ret +
     #  theme(legend.title=element_blank(), legend.position="bottom")
-    ret <- setupTheme(ret, self$report.date, total.colors = NULL) +
+    ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date, total.colors = NULL) +
       facet_wrap(~country, ncol = 3, scales = "free_y")
     ret
    },
@@ -143,7 +143,7 @@ ReportGenerator <- R6Class("ReportGenerator",
 
      # + ylim(0, 4500)
      ret <- grid.arrange(plot1, plot2, ncol = 2)
-     ret <- setupTheme(ret, self$report.date, total.colors = length(unique(df$country)))
+     ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date, total.colors = length(unique(df$country)))
 
      ## `geom_smooth()` using method = "loess" and formula "y ~ x"
      ## `geom_smooth()` using method = "loess" and formula "y ~ x"
@@ -177,13 +177,43 @@ ReportGenerator <- R6Class("ReportGenerator",
 #' @importFrom grDevices colorRampPalette
 #' @import scales
 #' @export
-setupTheme <- function(ggplot, report.date, total.colors){
+setupTheme <- function(ggplot, report.date, x.values, total.colors, x.type = "dates", base.size = 6){
   ggplot + labs(caption = getCitationNote(report.date = report.date)) +
     theme(legend.title = element_blank(),
           #TODO caption size is not working. Fix it
           plot.caption = element_text(size = 8)) +
-          scale_y_continuous(labels = comma) +
-    theme_minimal()
+          scale_y_continuous(labels = comma)
+  if (!is.null(x.type)){
+    if (x.type == "dates"){
+      dates    <- x.values
+      max.date <- max(dates)
+      min.date <- min(dates)
+      date.breaks.freq  <- "7 day"
+      minor.breaks.freq <- "1 day"
+      date.labels.format <- "%y-%m-%d"
+      neg.date.breaks.freq <- paste("-", date.breaks.freq, sep ="")
+      neg.minor.breaks.freq <- paste("-", minor.breaks.freq, sep ="")
+      date.breaks  <- sort(seq(max.date,
+                               min.date,
+                               by = neg.date.breaks.freq))
+      minor.breaks  <- sort(seq(max.date,
+                                min.date,
+                                by = neg.minor.breaks.freq))
+      ggplot <- ggplot + scale_x_date(date_labels = date.labels.format,
+                                      breaks  = date.breaks,
+                                      minor_breaks = minor.breaks
+                                      #,limits = c(min.date, max.date)
+      )
+    }
+    if (x.type == "epidemy.day"){
+      max.value <- max(x.values)
+      min.value <- min(x.values)
+      breaks  <- sort(seq(max.value, min.value,
+                               by = -7))
+      ggplot <- ggplot + scale_x_continuous(breaks  = breaks,
+                                            minor_breaks = x.values)
+    }
+  }
   if (!is.null(total.colors)){
     #, selected.palette = "Paired"
     #colors.palette <- colorRampPalette(brewer.pal(8, selected.palette))(total.colors)
@@ -197,8 +227,12 @@ setupTheme <- function(ggplot, report.date, total.colors){
     ggplot <- ggplot +
       #scale_fill_brewer(palette = selected.palette)
       scale_fill_manual(values = colors.palette) +
-      scale_color_manual(values = colors.palette)
-
+      scale_color_manual(values = colors.palette) +
+      theme_minimal(base_size = base.size,
+                    #base_family = "courier")
+                    base_family = "mono",
+                    )+
+      theme(axis.text.x = element_text(angle = 90))
   }
   ggplot
 }
@@ -243,7 +277,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          geom_bar(stat = "identity") + xlab("Date") + ylab("Count") +
          labs(title = plot.title)
        ret <- self$getXLabelsTheme(ret, x.values)
-       ret <- setupTheme(ret, self$report.date, total.colors = length(unique(df$country)))
+       ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date, total.colors = length(unique(df$country)))
        ret <- ret +
          theme(legend.title = element_blank())
          # theme(legend.title=element_blank(),
@@ -296,7 +330,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          geom_line() + xlab("Date") + ylab(y.label) +
          labs(title = plot.title)
        ret <- self$getXLabelsTheme(ret, x.values)
-       ret <- setupTheme(ret, self$report.date, total.colors = length(unique(df$country)))
+       ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date, total.colors = length(unique(df$country)))
 
        if (log.scale){
          ret <- ret + scale_y_log10(labels = comma)
@@ -332,7 +366,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
    ggplotComparisonExponentialGrowth = function(included.countries,
                                                 field = "confirmed",
                                                 y.label = "Confirmed Cases",
-                                                min.cases = 20){
+                                                min.cases = 100){
      data.comparison <- self$data.processor$data.comparison
      data.comparison$buildData(field = field, base.min.cases = min.cases)
      data.comparison.df <- as.data.frame(data.comparison$data.compared)
@@ -354,7 +388,6 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
 
      # df %<>%
      #   mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
-
      self$report.date <- max(self$data.processor$getData()$date)
 
      #debug
@@ -370,7 +403,10 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      #   theme(legend.title=element_blank(),
      #         plot.caption = element_text(size = 6)
      #         )
-     ret <- setupTheme(ret,  self$report.date, total.colors = length(unique(df$country)))
+     ret <- setupTheme(ggplot = ret,  report.date = self$report.date,
+                       x.values = df$epidemy.day,
+                       total.colors = length(unique(df$country)),
+                       x.type = "epidemy.day")
      ret <- ret + scale_y_log10(labels = comma)
      # theme(legend.title=element_blank(),
      #   #legend.position = c(.05, .05),

@@ -38,7 +38,7 @@ kenarab
   included.countries,
   field = "confirmed",
   y.label = "Confirmed Cases",
-  min.cases = 20
+  min.cases = 100
 )}\if{html}{\out{</div>}}
 }
 

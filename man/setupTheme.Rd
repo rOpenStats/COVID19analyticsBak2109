@@ -4,7 +4,14 @@
 \alias{setupTheme}
 \title{setup Dataviz theme}
 \usage{
-setupTheme(ggplot, report.date, total.colors)
+setupTheme(
+  ggplot,
+  report.date,
+  x.values,
+  total.colors,
+  x.type = "dates",
+  base.size = 6
+)
 }
 \description{
 setup Dataviz theme
