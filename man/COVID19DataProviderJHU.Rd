@@ -64,7 +64,7 @@ kenarab
 \if{latex}{\out{\hypertarget{method-downloadData}{}}}
 \subsection{Method \code{downloadData()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProviderJHU$downloadData(download.freq = 60 * 60 * 18)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProviderJHU$downloadData()}\if{html}{\out{</div>}}
 }
 
 }

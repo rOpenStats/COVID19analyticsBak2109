@@ -230,8 +230,8 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self$data.latest <- tibble(self$data.agg) %>%
         filter(date == max(date)) %>%
      select(country, date, confirmed, deaths, recovered, remaining.confirmed) %>%
-     #mutate(ranking = dense_rank(desc(confirmed)))
-      mutate(ranking = dense_rank(desc(deaths)))
+       mutate(ranking = dense_rank(desc(confirmed)))
+       #mutate(ranking = dense_rank(desc(deaths)))
     ## top 10 countries: 12 incl. 'World' and 'Others'
     self$top.countries <- self$data.latest %>%
             filter(ranking <= self$top.countries.count) %>%

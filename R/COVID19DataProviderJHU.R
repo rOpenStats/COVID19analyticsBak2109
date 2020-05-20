@@ -19,8 +19,7 @@ COVID19DataProviderJHU <- R6Class("COVID19DataProviderJHU",
    getID = function(){
      "JohnsHopkingsUniversity"
    },
-   downloadData = function(download.freq = 60 * 60 * 18 #18 hours
-   ) {
+   downloadData = function() {
     self$filenames <- c(confirmed = "time_series_covid19_confirmed_global.csv",
                         deaths = "time_series_covid19_deaths_global.csv",
                         recovered = "time_series_covid19_recovered_global.csv")
@@ -29,8 +28,7 @@ COVID19DataProviderJHU <- R6Class("COVID19DataProviderJHU",
     url.path <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
 
     bin <- lapply(self$filenames, FUN = function(...){
-     downloadCOVID19(url.path = url.path, force = self$force.download,
-                     download.freq = download.freq, ...)
+     downloadCOVID19(url.path = url.path, force = self$force.download, ...)
     })
    },
    getDates = function(){
@@ -42,9 +40,9 @@ COVID19DataProviderJHU <- R6Class("COVID19DataProviderJHU",
    },
    loadData = function() {
     ## load data into R
-    self$data.confirmed <- read.csv(file.path(data.dir, self$filenames[["confirmed"]]))
-    self$data.deaths <- read.csv(file.path(data.dir, self$filenames[["deaths"]]))
-    self$data.recovered <- read.csv(file.path(data.dir, self$filenames[["recovered"]]))
+    self$data.confirmed <- readJHUDataFile(file.path(data.dir, self$filenames[["confirmed"]]))
+    self$data.deaths <- readJHUDataFile(file.path(data.dir, self$filenames[["deaths"]]))
+    self$data.recovered <- readJHUDataFile(file.path(data.dir, self$filenames[["recovered"]]))
 
     dim(self$data.confirmed)
     ## [1] 347 53
@@ -124,34 +122,48 @@ transformDataJHU <- function(data) {
 #' @export
 #' @author kenarab
 downloadCOVID19 <- function(url.path, filename, force = FALSE,
-                            download.freq = 60 * 60 * 24, #daily
-                            check.remote = FALSE, # Not coded yet to check remote
-                            archive = TRUE
-) {
+                            daily.update.time = "21:00:00",
+                            archive = TRUE) {
   logger <- lgr
   download.flag <- createDataDir()
   if (download.flag){
     url <- file.path(url.path, filename)
     dest <- file.path(data.dir, filename)
-
     download.flag <- !file.exists(dest) | force
     if (!download.flag & file.exists(dest)){
-      if(check.remote){
-        #TODO git2r
+      current.data <- readJHUDataFile(dest)
+      max.date.col <- names(current.data)[ncol(current.data)]
+      max.date <- max.date.col %>% substr(2,8) %>% mdy()
+      current.datetime <- Sys.time()
+      current.date <- as.Date(current.datetime, tz = Sys.timezone())
+      current.time <- format(current.datetime, format = "%H:%M:%S")
+
+
+      if (max.date < current.date - 1 | (max.date < current.date & current.time >= daily.update.time)){
+        download.flag <- TRUE
       }
       else{
-        file.info <- file.info(dest)
-        #If is it expected to have updated data, download
-        update.time <- file.info$mtime + download.freq
-        current.time <- Sys.time()
-        if (current.time >= update.time){
-          download.flag <- TRUE
-        }
-        logger$info("Checking downloaded data", downloaded.ts = current.time, next.update.ts = update.time, download.flag = download.flag)
+        download.flag <- FALSE
       }
+      logger$info("Checking required downloaded ", downloaded.max.date = max.date,
+                  daily.update.time = daily.update.time,
+                  current.datetime = current.datetime,
+                  download.flag = download.flag)
+
     }
     if (download.flag){
       download.file(url, dest)
     }
   }
+}
+
+#' readJHUDataFiles
+#' @import readr
+readJHUDataFile <- function(path){
+  read.csv(path)
+  # read_csv(path,
+  #          col_types = cols(
+  #   .default = col_double(),
+  #   `Province/State` = col_character(),
+  #   `Country/Region` = col_character()))
 }

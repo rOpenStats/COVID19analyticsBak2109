@@ -433,6 +433,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
    ))
 
 
+
 #'
 #'@noRd
 getCitationNote <- function(add.date = TRUE, report.date){

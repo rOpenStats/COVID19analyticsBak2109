@@ -8,8 +8,7 @@ downloadCOVID19(
   url.path,
   filename,
   force = FALSE,
-  download.freq = 60 * 60 * 24,
-  check.remote = FALSE,
+  daily.update.time = "21:00:00",
   archive = TRUE
 )
 }
