@@ -294,7 +294,10 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
      },
      ggplotCountriesLines = function(included.countries = self$data.processor$top.countries,
                                      countries.text ="top countries",
-                                     excluded.countries = "World", field = "confirmed.inc", log.scale = FALSE,
+                                     excluded.countries = "World",
+                                     field = "confirmed.inc",
+                                     field.description  = "Daily new Confirmed Cases",
+                                     log.scale = FALSE,
                                         min.confirmed = 100){
 
        data.long <- as.data.frame(self$data.processor$getData())
@@ -304,7 +307,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        data.long <- data.long[, c("country", "date", field)] %>% gather(key = type, value = count, -c(country, date))
 
 
-       plot.title <- paste("Daily new Confirmed Cases in", countries.text, " \nwith > ", min.confirmed, " confirmed")
+       plot.title <- paste(field.description, "in", countries.text, " \nwith > ", min.confirmed, " confirmed")
        y.label <- field
        if (log.scale){
          plot.title <- paste(plot.title, "(LOG scale)")
