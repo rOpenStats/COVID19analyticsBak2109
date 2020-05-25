@@ -20,6 +20,7 @@ kenarab
 \item \href{#method-new}{\code{ReportGeneratorEnhanced$new()}}
 \item \href{#method-ggplotTopCountriesStackedBarDailyInc}{\code{ReportGeneratorEnhanced$ggplotTopCountriesStackedBarDailyInc()}}
 \item \href{#method-ggplotCountriesLines}{\code{ReportGeneratorEnhanced$ggplotCountriesLines()}}
+\item \href{#method-ggplotCrossSection}{\code{ReportGeneratorEnhanced$ggplotCrossSection()}}
 \item \href{#method-clone}{\code{ReportGeneratorEnhanced$clone()}}
 }
 }
@@ -69,7 +70,29 @@ kenarab
   countries.text = "top countries",
   excluded.countries = "World",
   field = "confirmed.inc",
+  field.description = "Daily new Confirmed Cases",
   log.scale = FALSE,
+  min.confirmed = 100
+)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ggplotCrossSection"></a>}}
+\if{latex}{\out{\hypertarget{method-ggplotCrossSection}{}}}
+\subsection{Method \code{ggplotCrossSection()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorEnhanced$ggplotCrossSection(
+  included.countries = self$data.processor$top.countries,
+  countries.text = "top countries",
+  excluded.countries = "World",
+  field.x = "confirmed",
+  label.x = field.x,
+  field.y = "death.rate.min",
+  label.y = field.y,
+  plot.description = "Cross section Confirmed vs  Death rate min",
+  log.scale.x = TRUE,
+  log.scale.y = FALSE,
   min.confirmed = 100
 )}\if{html}{\out{</div>}}
 }
