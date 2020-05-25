@@ -294,7 +294,10 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
      },
      ggplotCountriesLines = function(included.countries = self$data.processor$top.countries,
                                      countries.text ="top countries",
-                                     excluded.countries = "World", field = "confirmed.inc", log.scale = FALSE,
+                                     excluded.countries = "World",
+                                     field = "confirmed.inc",
+                                     field.description  = "Daily new Confirmed Cases",
+                                     log.scale = FALSE,
                                         min.confirmed = 100){
 
        data.long <- as.data.frame(self$data.processor$getData())
@@ -304,7 +307,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        data.long <- data.long[, c("country", "date", field)] %>% gather(key = type, value = count, -c(country, date))
 
 
-       plot.title <- paste("Daily new Confirmed Cases in", countries.text, " \nwith > ", min.confirmed, " confirmed")
+       plot.title <- paste(field.description, "in", countries.text, " \nwith > ", min.confirmed, " confirmed")
        y.label <- field
        if (log.scale){
          plot.title <- paste(plot.title, "(LOG scale)")
@@ -345,6 +348,75 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        #   legend.key.size = unit(0.5, "lines"),
        #   axis.text.x = element_text(angle = 90)
        #
+       ret
+     },
+     ggplotCrossSection = function(included.countries = self$data.processor$top.countries,
+                                     countries.text ="top countries",
+                                     excluded.countries = "World",
+                                     field.x = "confirmed",
+                                     label.x = field.x,
+                                     field.y = "death.rate.min",
+                                     label.y = field.y,
+                                     plot.description  = "Cross section Confirmed vs  Death rate min",
+                                     log.scale.x = TRUE,
+                                     log.scale.y = FALSE,
+                                     min.confirmed = 100){
+
+       data.long <- as.data.frame(self$data.processor$getData())
+       data.long %<>%  #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
+         filter(confirmed >= min.confirmed) %>%
+         filter(confirmed.inc > 0)
+       self$report.date <- max(data.long$date)
+
+       data.long <- data.long[, c("country", field.x, field.y)]
+       head(data.long)
+       data.long %<>% gather(key = type, value = count, -c("country", field.x))
+       head(data.long)
+
+       plot.title <- paste(plot.description, "in", countries.text, " \nwith > ", min.confirmed, " confirmed")
+       log.plot <- NULL
+       if (log.scale.x){
+         log.plot <- c(log.plot, "X")
+
+         label.x <- paste(label.x, "(log)")
+       }
+       if (log.scale.y){
+         log.plot <- c(log.plot, "Y")
+         label.y <- paste(label.y, "(log)")
+       }
+       if (length(log.plot) == 1 ){
+         plot.title <- paste(plot.title, "(semi LOG scale)")
+       }
+       if (length(log.plot) == 2 ){
+         plot.title <- paste(plot.title, "(LOG scale)")
+       }
+
+       ## set factor levels to show them in a desirable order
+       data.long %<>% mutate(type = factor(type, c(field.y)))
+       x.values <- data.long[, field.x]
+
+       ## cases by type
+       df <- data.long %>% filter(country %in% included.countries)
+       df <- df %>% filter(!country %in% excluded.countries)
+       countries.object <- self$data.processor$getCountries()
+       df %<>%
+         mutate(country = country %>% factor(levels = c(countries.object$countries))) %>%
+         mutate(country = fct_reorder(country, desc(count)))
+
+       ret <- df %>% filter(country != "World") %>%
+         ggplot(aes_string(x = field.x, y = "count", color = "country")) +
+         geom_line() + xlab(label.x) + ylab(label.y) +
+         labs(title = plot.title)
+       ret <- setupTheme(ret, report.date = self$report.date,
+                         x.values = df[, field.x], x.type = "field.x",
+                         total.colors = length(unique(df$country)))
+
+       if (log.scale.x){
+         ret <- ret + scale_x_log10(labels = comma)
+       }
+       if (log.scale.y){
+         ret <- ret + scale_y_log10(labels = comma)
+       }
        ret
      }
    ))
