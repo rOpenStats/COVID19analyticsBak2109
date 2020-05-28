@@ -118,6 +118,14 @@ rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "
                         field = "confirmed.inc", log.scale = TRUE)
 
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field = "deaths", y.label = "Deaths", min.cases = 1)
+
+rg$ggplotCrossSection(included.countries = latam.countries,
+                       field.x = "confirmed",
+                       field.y = "fatality.rate.min",
+                       plot.description  = "Cross section Confirmed vs  Death rate min",
+                       log.scale.x = TRUE,
+                       log.scale.y = FALSE)
+ 
 ```
 
 
@@ -125,7 +133,15 @@ rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
                                                min.cases = 100)
-rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, field = "deaths", y.label = "Deaths", min.cases = 1)
+rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, field = "deaths", 
+                                     y.label = "Deaths", min.cases = 1)
+rg$ggplotCrossSection(included.countries = international.countries,
+                       field.x = "confirmed",
+                       field.y = "fatality.rate.min",
+                       plot.description  = "Cross section Confirmed vs Death rate min",
+                       log.scale.x = TRUE,
+                       log.scale.y = FALSE)
+
 ```
 
 

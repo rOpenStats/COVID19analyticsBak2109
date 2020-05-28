@@ -219,8 +219,8 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     self$data.agg %<>% mutate(rate.inc.daily = (confirmed.inc / (confirmed - confirmed.inc)) %>% round(3))
 
     self$data.agg %<>% mutate(remaining.confirmed = (confirmed - deaths - recovered))
-    self$data.agg %<>% mutate(death.rate.min = (deaths / confirmed))
-    self$data.agg %<>% mutate(death.rate.max = (death.rate.min * (remaining.confirmed) + deaths) / confirmed)
+    self$data.agg %<>% mutate(fatality.rate.min = (deaths / confirmed))
+    self$data.agg %<>% mutate(fatality.rate.max = (fatality.rate.min * (remaining.confirmed) + deaths) / confirmed)
 
     names(self$data.agg)
     self$data.agg

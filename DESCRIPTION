@@ -17,7 +17,8 @@ RoxygenNote: 7.1.0
 Suggests: 
     knitr,
     rmarkdown,
-    testthat
+    testthat, 
+    reprex
 VignetteBuilder: knitr
 Depends: R (>= 3.5.0)
 Imports: magrittr,

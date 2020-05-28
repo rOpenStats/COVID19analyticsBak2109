@@ -94,31 +94,31 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [10:04:29.530]  {stage: processor-setup}
-#> INFO  [10:04:29.564] Checking required downloaded  {downloaded.max.date: 2020-05-26, daily.update.time: 21:00:00, current.datetime: 2020-05-28 1.., download.flag: TRUE}
-#> INFO  [10:04:30.442] Checking required downloaded  {downloaded.max.date: 2020-05-26, daily.update.time: 21:00:00, current.datetime: 2020-05-28 1.., download.flag: TRUE}
-#> INFO  [10:04:31.087] Checking required downloaded  {downloaded.max.date: 2020-05-26, daily.update.time: 21:00:00, current.datetime: 2020-05-28 1.., download.flag: TRUE}
-#> INFO  [10:04:31.832]  {stage: data loaded}
-#> INFO  [10:04:31.833]  {stage: data-setup}
+#> INFO  [17:06:46.885]  {stage: processor-setup}
+#> INFO  [17:06:46.914] Checking required downloaded  {downloaded.max.date: 2020-05-27, daily.update.time: 21:00:00, current.datetime: 2020-05-28 1.., download.flag: FALSE}
+#> INFO  [17:06:47.012] Checking required downloaded  {downloaded.max.date: 2020-05-27, daily.update.time: 21:00:00, current.datetime: 2020-05-28 1.., download.flag: FALSE}
+#> INFO  [17:06:47.119] Checking required downloaded  {downloaded.max.date: 2020-05-27, daily.update.time: 21:00:00, current.datetime: 2020-05-28 1.., download.flag: FALSE}
+#> INFO  [17:06:47.166]  {stage: data loaded}
+#> INFO  [17:06:47.168]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [10:04:31.835] Executing transform 
-#> INFO  [10:04:31.836] Executing consolidate 
-#> INFO  [10:04:32.978]  {stage: consolidated}
-#> INFO  [10:04:32.979] Executing standarize 
-#> INFO  [10:04:33.037] gathering DataModel 
-#> INFO  [10:04:33.038]  {stage: datamodel-setup}
+#> INFO  [17:06:47.170] Executing transform 
+#> INFO  [17:06:47.171] Executing consolidate 
+#> INFO  [17:06:48.419]  {stage: consolidated}
+#> INFO  [17:06:48.420] Executing standarize 
+#> INFO  [17:06:48.482] gathering DataModel 
+#> INFO  [17:06:48.483]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [10:04:33.041]  {stage: loading-aggregated-data-model}
+#> INFO  [17:06:48.486]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [10:04:34.620]  {stage: calculating-rates}
-#> INFO  [10:04:34.761]  {stage: making-data-comparison}
-#> INFO  [10:04:35.845]  {stage: applying-missing-values-method}
-#> INFO  [10:04:35.846]  {stage: Starting first imputation}
-#> INFO  [10:04:35.850]  {stage: calculating-rates}
-#> INFO  [10:04:36.017]  {stage: making-data-comparison-2}
-#> INFO  [10:04:36.971]  {stage: calculating-top-countries}
-#> INFO  [10:04:36.988]  {stage: processed}
+#> INFO  [17:06:50.095]  {stage: calculating-rates}
+#> INFO  [17:06:50.240]  {stage: making-data-comparison}
+#> INFO  [17:06:51.390]  {stage: applying-missing-values-method}
+#> INFO  [17:06:51.392]  {stage: Starting first imputation}
+#> INFO  [17:06:51.396]  {stage: calculating-rates}
+#> INFO  [17:06:51.571]  {stage: making-data-comparison-2}
+#> INFO  [17:06:52.576]  {stage: calculating-top-countries}
+#> INFO  [17:06:52.591]  {stage: processed}
 
 current.date <- max(data.processor$getData()$date)
 
@@ -214,6 +214,18 @@ rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field
 <img src="man/figures/README-unnamed-chunk-5-4.png" width="100%" />
 
 ``` r
+
+rg$ggplotCrossSection(included.countries = latam.countries,
+                       field.x = "confirmed",
+                       field.y = "fatality.rate.min",
+                       plot.description  = "Cross section Confirmed vs  Death rate min",
+                       log.scale.x = TRUE,
+                       log.scale.y = FALSE)
+```
+
+<img src="man/figures/README-unnamed-chunk-5-5.png" width="100%" />
+
+``` r
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
 #> Warning: Removed 1 rows containing missing values (position_stack).
 ```
@@ -230,12 +242,24 @@ rc$ggplotComparisonExponentialGrowth(included.countries = international.countrie
 <img src="man/figures/README-unnamed-chunk-6-2.png" width="100%" />
 
 ``` r
-rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, field = "deaths", y.label = "Deaths", min.cases = 1)
+rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, field = "deaths", 
+                                     y.label = "Deaths", min.cases = 1)
 #> Scale for 'y' is already present. Adding another scale for 'y', which will
 #> replace the existing scale.
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-3.png" width="100%" />
+
+``` r
+rg$ggplotCrossSection(included.countries = international.countries,
+                       field.x = "confirmed",
+                       field.y = "fatality.rate.min",
+                       plot.description  = "Cross section Confirmed vs Death rate min",
+                       log.scale.x = TRUE,
+                       log.scale.y = FALSE)
+```
+
+<img src="man/figures/README-unnamed-chunk-6-4.png" width="100%" />
 
 ``` r
 rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)
