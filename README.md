@@ -6,7 +6,7 @@
 <!-- . -->
 
 This package curate (downloads, clean, consolidate, smooth) [data from
-Johns Hokpins](https://github.com/CSSEGISandData/COVID-19/) for
+                                                             Johns Hokpins](https://github.com/CSSEGISandData/COVID-19/) for
 analysing international outbreak of COVID-19.
 
 It includes several visualizations of the COVID-19 international
@@ -18,13 +18,13 @@ China. RDataMining.com, 2020.
 URL:
 <http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf>.
 
-  - COVID19DataProcessor generates curated series
-  - [visualizations](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/)
-    by [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/)
-    are included in ReportGenerator R6 object
-  - More visualizations included int ReportGeneratorEnhanced R6 object
-  - Visualizations ReportGeneratorDataComparison compares all countries
-    counting epidemy day 0 when confirmed cases \> n (i.e. n = 100).
+- COVID19DataProcessor generates curated series
+- [visualizations](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/)
+by [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/)
+are included in ReportGenerator R6 object
+- More visualizations included int ReportGeneratorEnhanced R6 object
+- Visualizations ReportGeneratorDataComparison compares all countries
+counting epidemy day 0 when confirmed cases \> n (i.e. n = 100).
 
 # Consideration
 
@@ -94,31 +94,31 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [01:48:08.040]  {stage: processor-setup}
-#> INFO  [01:48:08.068] Checking required downloaded  {downloaded.max.date: 2020-05-28, daily.update.time: 21:00:00, current.datetime: 2020-05-29 0.., download.flag: FALSE}
-#> INFO  [01:48:08.164] Checking required downloaded  {downloaded.max.date: 2020-05-28, daily.update.time: 21:00:00, current.datetime: 2020-05-29 0.., download.flag: FALSE}
-#> INFO  [01:48:08.258] Checking required downloaded  {downloaded.max.date: 2020-05-28, daily.update.time: 21:00:00, current.datetime: 2020-05-29 0.., download.flag: FALSE}
-#> INFO  [01:48:08.304]  {stage: data loaded}
-#> INFO  [01:48:08.305]  {stage: data-setup}
+#> INFO  [00:19:23.780]  {stage: processor-setup}
+#> INFO  [00:19:23.812] Checking required downloaded  {downloaded.max.date: 2020-05-27, daily.update.time: 21:00:00, current.datetime: 2020-05-29 0.., download.flag: TRUE}
+#> INFO  [00:19:24.555] Checking required downloaded  {downloaded.max.date: 2020-05-27, daily.update.time: 21:00:00, current.datetime: 2020-05-29 0.., download.flag: TRUE}
+#> INFO  [00:19:25.315] Checking required downloaded  {downloaded.max.date: 2020-05-27, daily.update.time: 21:00:00, current.datetime: 2020-05-29 0.., download.flag: TRUE}
+#> INFO  [00:19:25.979]  {stage: data loaded}
+#> INFO  [00:19:25.980]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [01:48:08.308] Executing transform 
-#> INFO  [01:48:08.309] Executing consolidate 
-#> INFO  [01:48:09.590]  {stage: consolidated}
-#> INFO  [01:48:09.592] Executing standarize 
-#> INFO  [01:48:09.648] gathering DataModel 
-#> INFO  [01:48:09.649]  {stage: datamodel-setup}
+#> INFO  [00:19:25.985] Executing transform 
+#> INFO  [00:19:25.986] Executing consolidate 
+#> INFO  [00:19:27.228]  {stage: consolidated}
+#> INFO  [00:19:27.229] Executing standarize 
+#> INFO  [00:19:27.311] gathering DataModel 
+#> INFO  [00:19:27.312]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [01:48:09.652]  {stage: loading-aggregated-data-model}
+#> INFO  [00:19:27.315]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [01:48:11.234]  {stage: calculating-rates}
-#> INFO  [01:48:11.380]  {stage: making-data-comparison}
-#> INFO  [01:48:12.501]  {stage: applying-missing-values-method}
-#> INFO  [01:48:12.502]  {stage: Starting first imputation}
-#> INFO  [01:48:12.505]  {stage: calculating-rates}
-#> INFO  [01:48:12.671]  {stage: making-data-comparison-2}
-#> INFO  [01:48:13.648]  {stage: calculating-top-countries}
-#> INFO  [01:48:13.663]  {stage: processed}
+#> INFO  [00:19:28.929]  {stage: calculating-rates}
+#> INFO  [00:19:29.077]  {stage: making-data-comparison}
+#> INFO  [00:19:30.212]  {stage: applying-missing-values-method}
+#> INFO  [00:19:30.213]  {stage: Starting first imputation}
+#> INFO  [00:19:30.217]  {stage: calculating-rates}
+#> INFO  [00:19:30.386]  {stage: making-data-comparison-2}
+#> INFO  [00:19:31.387]  {stage: calculating-top-countries}
+#> INFO  [00:19:31.402]  {stage: processed}
 
 current.date <- max(data.processor$getData()$date)
 
@@ -127,20 +127,20 @@ rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
 
 top.countries <- data.processor$top.countries
 international.countries <- unique(c(data.processor$top.countries,
-                                    "Japan", "Singapore", "Korea, South"))
+"Japan", "Singapore", "Korea, South"))
 latam.countries <- sort(c("Mexico",
-                     data.processor$countries$getCountries(division = "sub.continent", name = "Caribbean"),
-                     data.processor$countries$getCountries(division = "sub.continent", name = "Central America"),
-                     data.processor$countries$getCountries(division = "sub.continent", name = "South America")))
+data.processor$countries$getCountries(division = "sub.continent", name = "Caribbean"),
+data.processor$countries$getCountries(division = "sub.continent", name = "Central America"),
+data.processor$countries$getCountries(division = "sub.continent", name = "South America")))
 ```
 
 ``` r
 # Top 10 daily cases confirmed increment
 (data.processor$getData() %>%
-  filter(date == current.date) %>%
-  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
-  arrange(desc(confirmed.inc)) %>%
-  filter(confirmed >=10))[1:10,]
+filter(date == current.date) %>%
+select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
+arrange(desc(confirmed.inc)) %>%
+filter(confirmed >=10))[1:10,]
 #> # A tibble: 10 x 7
 #> # Groups:   country [10]
 #>    country  date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
@@ -160,9 +160,9 @@ latam.countries <- sort(c("Mexico",
 ``` r
 # Top 10 daily deaths increment
 (data.processor$getData() %>%
-  filter(date == current.date) %>%
-  select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
-  arrange(desc(deaths.inc)))[1:10,]
+filter(date == current.date) %>%
+select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
+arrange(desc(deaths.inc)))[1:10,]
 #> # A tibble: 10 x 7
 #> # Groups:   country [10]
 #>    country   date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
@@ -181,7 +181,7 @@ latam.countries <- sort(c("Mexico",
 
 ``` r
 rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries,
-                                                  map.region = "Latam")
+map.region = "Latam")
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
@@ -197,7 +197,7 @@ rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, min.c
 ``` r
 
 rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
-                        field = "confirmed.inc", log.scale = TRUE)
+field = "confirmed.inc", log.scale = TRUE)
 #> Scale for 'y' is already present. Adding another scale for 'y', which will
 #> replace the existing scale.
 ```
@@ -216,11 +216,11 @@ rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field
 ``` r
 
 rg$ggplotCrossSection(included.countries = latam.countries,
-                       field.x = "confirmed",
-                       field.y = "fatality.rate.min",
-                       plot.description  = "Cross section Confirmed vs  Death rate min",
-                       log.scale.x = TRUE,
-                       log.scale.y = FALSE)
+field.x = "confirmed",
+field.y = "fatality.rate.min",
+plot.description  = "Cross section Confirmed vs  Death rate min",
+log.scale.x = TRUE,
+log.scale.y = FALSE)
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-5.png" width="100%" />
@@ -234,7 +234,7 @@ rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
 
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
-                                               min.cases = 100)
+min.cases = 100)
 #> Scale for 'y' is already present. Adding another scale for 'y', which will
 #> replace the existing scale.
 ```
@@ -243,7 +243,7 @@ rc$ggplotComparisonExponentialGrowth(included.countries = international.countrie
 
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, field = "deaths", 
-                                     y.label = "Deaths", min.cases = 1)
+y.label = "Deaths", min.cases = 1)
 #> Scale for 'y' is already present. Adding another scale for 'y', which will
 #> replace the existing scale.
 ```
@@ -252,11 +252,11 @@ rc$ggplotComparisonExponentialGrowth(included.countries = international.countrie
 
 ``` r
 rg$ggplotCrossSection(included.countries = international.countries,
-                       field.x = "confirmed",
-                       field.y = "fatality.rate.min",
-                       plot.description  = "Cross section Confirmed vs Death rate min",
-                       log.scale.x = TRUE,
-                       log.scale.y = FALSE)
+field.x = "confirmed",
+field.y = "fatality.rate.min",
+plot.description  = "Cross section Confirmed vs Death rate min",
+log.scale.x = TRUE,
+log.scale.y = FALSE)
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-4.png" width="100%" />
