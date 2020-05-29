@@ -230,7 +230,7 @@ setupTheme <- function(ggplot, report.date, x.values, total.colors, x.type = "da
             #TODO caption size is not working. Fix it
             plot.caption = element_text(size = 5),
             axis.text.x = element_text(angle = 90)) +
-      labs(caption = getCitationNote(report.date = report.date))
+      labs(caption = getCitationNote(report.date = report.date, data.provider = self$data.processor$getDataProvider))
   }
   ggplot
 }
@@ -508,12 +508,12 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
 
 #'
 #'@noRd
-getCitationNote <- function(add.date = TRUE, report.date){
+getCitationNote <- function(add.date = TRUE, report.date, data.provider){
   ret <- "credit @ken4rab"
   if (add.date){
     ret <- paste(ret, report.date)
   }
-  ret <- paste(ret, "\nsource: https://github.com/rOpenStats/COVID19/ based on JHU")
+  ret <- paste(ret, "\nsource: https://github.com/rOpenStats/COVID19/ based on", data.provider$getCitationInitials())
   ret
 }
 

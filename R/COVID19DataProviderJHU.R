@@ -16,6 +16,9 @@ COVID19DataProviderJHU <- R6Class("COVID19DataProviderJHU",
     self$logger <- genLogger(self)
     self
    },
+   getCitationInitials = function(){
+     "JHU"
+   },
    getID = function(){
      "JohnsHopkingsUniversity"
    },

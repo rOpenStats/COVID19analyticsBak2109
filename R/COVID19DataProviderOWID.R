@@ -16,6 +16,9 @@ COVID19DataProviderOWID <- R6Class("COVID19DataProviderOWID",
     self$logger <- genLogger(self)
     self
    },
+   getCitationInitials = function(){
+     "OWID"
+   },
    getID = function(){
      "OurWorldInData"
    },
@@ -35,6 +38,9 @@ COVID19DataProviderOWID <- R6Class("COVID19DataProviderOWID",
     ## load data into R
     self$data <- readOWIDDataFile(file.path(data.dir, self$filenames[1]))
     self
+   },
+   consolidate = function(){
+     self
    },
    cleanData = function(){
     self$data.confirmed.original <- self$data.confirmed
@@ -120,8 +126,10 @@ downloadCOVID19OWID <- function(url.path, filename, force = FALSE,
     download.flag <- !file.exists(dest) | force
     if (!download.flag & file.exists(dest)){
       current.data <- readOWIDDataFile(dest)
+      names(current.data)
+      current.data$location
       max.date.col <- names(current.data)[ncol(current.data)]
-      max.date <- max.date.col %>% substr(2,8) %>% mdy()
+      max.date <- max(current.data$date)
       current.datetime <- Sys.time()
       current.date <- as.Date(current.datetime, tz = Sys.timezone())
       current.time <- format(current.datetime, format = "%H:%M:%S")

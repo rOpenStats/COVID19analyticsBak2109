@@ -46,6 +46,8 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
      self$available.providers <- list()
      provided.jhu <- COVID19DataProviderJHU$new()
      self$available.providers[[provided.jhu$getID()]] <- provided.jhu
+     provided.owid <- COVID19DataProviderOWID$new()
+     self$available.providers[[provided.owid$getID()]] <- provided.owid
      self$available.providers
    },
    initMissingValuesModels = function(){
@@ -311,6 +313,9 @@ COVID19DataProvider <- R6Class("COVID19DataProvider",
   },
   downloadData = function(download.freq = 60 * 60 * 18 #18 hours
   ) {
+    stop("Abstract class")
+  },
+  getCitationInitials = function(){
     stop("Abstract class")
   },
   loadData = function() {
