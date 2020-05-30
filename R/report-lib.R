@@ -513,7 +513,7 @@ getCitationNote <- function(add.date = TRUE, report.date, data.provider){
   if (add.date){
     ret <- paste(ret, report.date)
   }
-  ret <- paste(ret, "\nsource: https://github.com/rOpenStats/COVID19/ based on", data.provider$getCitationInitials())
+  ret <- paste(ret, "\nsource: https://github.com/rOpenStats/COVID19analytics/ based on", data.provider$getCitationInitials())
   ret
 }
 
