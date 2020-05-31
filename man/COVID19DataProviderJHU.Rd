@@ -20,6 +20,7 @@ kenarab
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{COVID19DataProviderJHU$new()}}
+\item \href{#method-getCitationInitials}{\code{COVID19DataProviderJHU$getCitationInitials()}}
 \item \href{#method-getID}{\code{COVID19DataProviderJHU$getID()}}
 \item \href{#method-downloadData}{\code{COVID19DataProviderJHU$downloadData()}}
 \item \href{#method-getDates}{\code{COVID19DataProviderJHU$getDates()}}
@@ -47,6 +48,15 @@ kenarab
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProviderJHU$new(force.download = FALSE)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getCitationInitials"></a>}}
+\if{latex}{\out{\hypertarget{method-getCitationInitials}{}}}
+\subsection{Method \code{getCitationInitials()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProviderJHU$getCitationInitials()}\if{html}{\out{</div>}}
 }
 
 }

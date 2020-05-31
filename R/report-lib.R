@@ -59,7 +59,9 @@ ReportGenerator <- R6Class("ReportGenerator",
      xlab("") + ylab("Percentage (%)") +
      labs(title = paste0("Top 10 Countries with Most Confirmed Cases (", self$data.processor$max.date, ")")) +
      scale_fill_brewer(name = "Country", labels = df$txt, palette = "Paired")
-    ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date, total.colors = NULL, x.type = NULL)
+    ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date,
+                      data.processor = self$data.processor,
+                      total.colors = NULL, x.type = NULL)
     ret
    },
    ggplotTopCountriesBarPlots = function(excluded.countries = "World"){
@@ -83,7 +85,9 @@ ReportGenerator <- R6Class("ReportGenerator",
      geom_area() + xlab("Date") + ylab("Count") +
      labs(title = "Cases around the World")
     ret <- self$getXLabelsTheme(ret, x.values)
-    ret <- setupTheme(ret, report.date = self$report.date, x.values = sort(unique(df$date)), total.colors = length(unique(df$country)))
+    ret <- setupTheme(ret, report.date = self$report.date, x.values = sort(unique(df$date)),
+                      data.processor = self$data.processor,
+                      total.colors = length(unique(df$country)))
 
     ret <- ret +
      facet_wrap(~type, ncol = 2, scales = "free_y")
@@ -117,7 +121,9 @@ ReportGenerator <- R6Class("ReportGenerator",
      labs(title = paste0("COVID-19 Cases by Country (", self$data.processor$max.date, ")")) +
      scale_fill_manual(values = c("red", "green", "black"))
     ret <- self$getXLabelsTheme(ret, x.values)
-    ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date, total.colors = NULL) +
+    ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date,
+                      data.processor = self$data.processor,
+                      total.colors = NULL) +
       facet_wrap(~country, ncol = 3, scales = "free_y")
     ret
    },
@@ -140,7 +146,9 @@ ReportGenerator <- R6Class("ReportGenerator",
 
      # + ylim(0, 4500)
      ret <- grid.arrange(plot1, plot2, ncol = 2)
-     ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date, total.colors = length(unique(df$country)))
+     ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date,
+                       data.processor = self$data.processor,
+                       total.colors = length(unique(df$country)))
 
      ## `geom_smooth()` using method = "loess" and formula "y ~ x"
      ## `geom_smooth()` using method = "loess" and formula "y ~ x"
@@ -174,7 +182,7 @@ ReportGenerator <- R6Class("ReportGenerator",
 #' @importFrom grDevices colorRampPalette
 #' @import scales
 #' @export
-setupTheme <- function(ggplot, report.date, x.values, total.colors, x.type = "dates", base.size = 6){
+setupTheme <- function(ggplot, report.date, x.values, data.processor, total.colors, x.type = "dates", base.size = 6){
   if (!is.null(x.type)){
     if (x.type == "dates"){
       dates    <- x.values
@@ -216,6 +224,10 @@ setupTheme <- function(ggplot, report.date, x.values, total.colors, x.type = "da
     else{
       colors.palette <- colors.palette[seq_len(total.colors)]
     }
+
+    #debug
+    data.processor.debug <<- data.processor
+
     ggplot <- ggplot +
       #scale_fill_brewer(palette = selected.palette)
       scale_fill_manual(values = colors.palette) +
@@ -230,7 +242,7 @@ setupTheme <- function(ggplot, report.date, x.values, total.colors, x.type = "da
             #TODO caption size is not working. Fix it
             plot.caption = element_text(size = 5),
             axis.text.x = element_text(angle = 90)) +
-      labs(caption = getCitationNote(report.date = report.date, data.provider = self$data.processor$getDataProvider))
+      labs(caption = getCitationNote(report.date = report.date, data.provider = data.processor$getDataProvider()))
   }
   ggplot
 }
@@ -275,7 +287,9 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          geom_bar(stat = "identity") + xlab("Date") + ylab("Count") +
          labs(title = plot.title)
        #ret <- self$getXLabelsTheme(ret, x.values)
-       ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date, total.colors = length(unique(df$country)))
+       ret <- setupTheme(ggplot = ret, report.date = self$report.date, x.values = df$date,
+                         data.processor = self$data.processor,
+                         total.colors = length(unique(df$country)))
        ret <- ret +
          theme(legend.title = element_blank())
          # theme(legend.title=element_blank(),
@@ -331,7 +345,9 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          geom_line() + xlab("Date") + ylab(y.label) +
          labs(title = plot.title)
        ret <- self$getXLabelsTheme(ret, x.values)
-       ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date, total.colors = length(unique(df$country)))
+       ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date,
+                         data.processor = self$data.processor,
+                         total.colors = length(unique(df$country)))
 
        if (log.scale){
          ret <- ret + scale_y_log10(labels = comma)
@@ -409,6 +425,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          labs(title = plot.title)
        ret <- setupTheme(ret, report.date = self$report.date,
                          x.values = df[, field.x], x.type = "field.x",
+                         data.processor = self$data.processor,
                          total.colors = length(unique(df$country)))
 
        if (log.scale.x){
@@ -475,6 +492,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      #         )
      ret <- setupTheme(ggplot = ret,  report.date = self$report.date,
                        x.values = df$epidemy.day,
+                       data.processor = self$data.processor,
                        total.colors = length(unique(df$country)),
                        x.type = "epidemy.day")
      ret <- ret + scale_y_log10(labels = comma)
@@ -513,7 +531,12 @@ getCitationNote <- function(add.date = TRUE, report.date, data.provider){
   if (add.date){
     ret <- paste(ret, report.date)
   }
-  ret <- paste(ret, "\nsource: https://github.com/rOpenStats/COVID19analytics/ based on", data.provider$getCitationInitials())
+
+  #debug
+  data.provider <<- data.provider
+
+  data.provider.initials <- data.provider$getCitationInitials()
+  ret <- paste(ret, "\nsource: https://github.com/rOpenStats/COVID19analytics/ based on", data.provider.initials)
   ret
 }
 

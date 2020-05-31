@@ -50,6 +50,9 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
      self$available.providers[[provided.owid$getID()]] <- provided.owid
      self$available.providers
    },
+   getDataProvider = function(){
+     self$data.provider
+   },
    initMissingValuesModels = function(){
     self$available.missing.value.models <- list()
     missing.values.imputation <- COVID19MissingValuesImputation$new()

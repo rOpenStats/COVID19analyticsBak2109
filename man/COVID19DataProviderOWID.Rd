@@ -20,10 +20,12 @@ kenarab
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{COVID19DataProviderOWID$new()}}
+\item \href{#method-getCitationInitials}{\code{COVID19DataProviderOWID$getCitationInitials()}}
 \item \href{#method-getID}{\code{COVID19DataProviderOWID$getID()}}
 \item \href{#method-downloadData}{\code{COVID19DataProviderOWID$downloadData()}}
 \item \href{#method-getDates}{\code{COVID19DataProviderOWID$getDates()}}
 \item \href{#method-loadData}{\code{COVID19DataProviderOWID$loadData()}}
+\item \href{#method-consolidate}{\code{COVID19DataProviderOWID$consolidate()}}
 \item \href{#method-cleanData}{\code{COVID19DataProviderOWID$cleanData()}}
 \item \href{#method-mergeData}{\code{COVID19DataProviderOWID$mergeData()}}
 \item \href{#method-standarize}{\code{COVID19DataProviderOWID$standarize()}}
@@ -33,7 +35,6 @@ kenarab
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProvider" data-id="consolidate">}\href{../../COVID19analytics/html/COVID19DataProvider.html#method-consolidate}{\code{COVID19analytics::COVID19DataProvider$consolidate()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProvider" data-id="getDataModel">}\href{../../COVID19analytics/html/COVID19DataProvider.html#method-getDataModel}{\code{COVID19analytics::COVID19DataProvider$getDataModel()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProvider" data-id="setupData">}\href{../../COVID19analytics/html/COVID19DataProvider.html#method-setupData}{\code{COVID19analytics::COVID19DataProvider$setupData()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProvider" data-id="setupProcessor">}\href{../../COVID19analytics/html/COVID19DataProvider.html#method-setupProcessor}{\code{COVID19analytics::COVID19DataProvider$setupProcessor()}}\out{</span>}
@@ -47,6 +48,15 @@ kenarab
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProviderOWID$new(force.download = FALSE)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getCitationInitials"></a>}}
+\if{latex}{\out{\hypertarget{method-getCitationInitials}{}}}
+\subsection{Method \code{getCitationInitials()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProviderOWID$getCitationInitials()}\if{html}{\out{</div>}}
 }
 
 }
@@ -83,6 +93,15 @@ kenarab
 \subsection{Method \code{loadData()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProviderOWID$loadData()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-consolidate"></a>}}
+\if{latex}{\out{\hypertarget{method-consolidate}{}}}
+\subsection{Method \code{consolidate()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProviderOWID$consolidate()}\if{html}{\out{</div>}}
 }
 
 }

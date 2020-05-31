@@ -8,6 +8,7 @@ setupTheme(
   ggplot,
   report.date,
   x.values,
+  data.processor,
   total.colors,
   x.type = "dates",
   base.size = 6

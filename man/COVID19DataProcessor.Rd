@@ -16,6 +16,7 @@ kenarab
 \itemize{
 \item \href{#method-new}{\code{COVID19DataProcessor$new()}}
 \item \href{#method-initProviders}{\code{COVID19DataProcessor$initProviders()}}
+\item \href{#method-getDataProvider}{\code{COVID19DataProcessor$getDataProvider()}}
 \item \href{#method-initMissingValuesModels}{\code{COVID19DataProcessor$initMissingValuesModels()}}
 \item \href{#method-getData}{\code{COVID19DataProcessor$getData()}}
 \item \href{#method-setupProvider}{\code{COVID19DataProcessor$setupProvider()}}
@@ -51,6 +52,15 @@ kenarab
 \subsection{Method \code{initProviders()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$initProviders()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getDataProvider"></a>}}
+\if{latex}{\out{\hypertarget{method-getDataProvider}{}}}
+\subsection{Method \code{getDataProvider()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$getDataProvider()}\if{html}{\out{</div>}}
 }
 
 }

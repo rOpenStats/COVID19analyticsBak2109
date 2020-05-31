@@ -22,6 +22,7 @@ kenarab
 \item \href{#method-setupProcessor}{\code{COVID19DataProvider$setupProcessor()}}
 \item \href{#method-setupData}{\code{COVID19DataProvider$setupData()}}
 \item \href{#method-downloadData}{\code{COVID19DataProvider$downloadData()}}
+\item \href{#method-getCitationInitials}{\code{COVID19DataProvider$getCitationInitials()}}
 \item \href{#method-loadData}{\code{COVID19DataProvider$loadData()}}
 \item \href{#method-cleanData}{\code{COVID19DataProvider$cleanData()}}
 \item \href{#method-consolidate}{\code{COVID19DataProvider$consolidate()}}
@@ -98,6 +99,15 @@ kenarab
 \subsection{Method \code{downloadData()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProvider$downloadData(download.freq = 60 * 60 * 18)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getCitationInitials"></a>}}
+\if{latex}{\out{\hypertarget{method-getCitationInitials}{}}}
+\subsection{Method \code{getCitationInitials()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProvider$getCitationInitials()}\if{html}{\out{</div>}}
 }
 
 }

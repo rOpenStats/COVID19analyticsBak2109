@@ -32,6 +32,7 @@ kenarab
 \if{html}{
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProvider" data-id="getCitationInitials">}\href{../../COVID19analytics/html/COVID19DataProvider.html#method-getCitationInitials}{\code{COVID19analytics::COVID19DataProvider$getCitationInitials()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProvider" data-id="getDataModel">}\href{../../COVID19analytics/html/COVID19DataProvider.html#method-getDataModel}{\code{COVID19analytics::COVID19DataProvider$getDataModel()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProvider" data-id="getDates">}\href{../../COVID19analytics/html/COVID19DataProvider.html#method-getDates}{\code{COVID19analytics::COVID19DataProvider$getDates()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="COVID19analytics" data-topic="COVID19DataProvider" data-id="getID">}\href{../../COVID19analytics/html/COVID19DataProvider.html#method-getID}{\code{COVID19analytics::COVID19DataProvider$getID()}}\out{</span>}
