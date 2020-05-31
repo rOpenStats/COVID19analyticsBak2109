@@ -36,7 +36,6 @@ COVID19DataModel <- R6Class("COVID19DataModel",
      }
      #stop(paste("Missing fields", paste(names(existing.fields[!existing.fields]), collapse = ",")), "in data")
      self$data <- self$data[, intersect(self$homologated.fields, names(self$data))]
-     self.debug <<- self
      #Check pk
      duplicated.pk <- self$data %>%
                        group_by_at(self$pk.fields) %>%

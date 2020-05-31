@@ -176,8 +176,8 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
     rownum2test <- min(n, rownum2test)
     rows2test <- sort(sample(1:n, rownum2test, replace = FALSE))
     #debug
-    actual.df <<- actual.df
-    expected.df <<- expected.df
+    # actual.df <<- actual.df
+    # expected.df <<- expected.df
     for (i in rows2test){
       #setdiff(names(actual.df[i,]), names(expected.df[i,]))
       #setdiff(names(expected.df[i,]), names(actual.df[i,]))

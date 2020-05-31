@@ -45,11 +45,6 @@ ReportGenerator <- R6Class("ReportGenerator",
             mutate(txt = paste0(country, ": ", confirmed, " (", per, "%)"))
 
     unique(df$country)
-    #debug
-    #df.debug <<- df
-
-    #df %<>% mutate(country = fct_reorder(country, desc(confirmed)))
-    # pie(df$confirmed, labels=df$txt, cex=0.7)
 
     self$report.date <- max(self$data.processor$getData()$date)
 
@@ -224,9 +219,6 @@ setupTheme <- function(ggplot, report.date, x.values, data.processor, total.colo
     else{
       colors.palette <- colors.palette[seq_len(total.colors)]
     }
-
-    #debug
-    data.processor.debug <<- data.processor
 
     ggplot <- ggplot +
       #scale_fill_brewer(palette = selected.palette)
@@ -477,8 +469,6 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      #   mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
      self$report.date <- max(self$data.processor$getData()$date)
 
-     #debug
-     df.debug <<- df
 
      ret <- df %>% filter(country != "World") %>%
        ggplot(aes(x = epidemy.day, y = count, color = country)) +
@@ -496,21 +486,6 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
                        total.colors = length(unique(df$country)),
                        x.type = "epidemy.day")
      ret <- ret + scale_y_log10(labels = comma)
-     # theme(legend.title=element_blank(),
-     #   #legend.position = c(.05, .05),
-     #   legend.position = "bottom",
-     #   #legend.justification = c("left", "bottom"),
-     #   #legend.box.just = "left",
-     #   #legend.margin = margin(6, 6, 6, 6),
-     #   legend.spacing.y = unit(0.5, "mm"),
-     #   #legend.spacing = unit(0.5, "lines"),
-     #   legend.key = element_rect(size = 5),
-     #   legend.key.size = unit(0.5, "lines"),
-     #   axis.text.x = element_text(angle = 90)
-     #
-     #debug
-     #df.debug <<- df
-
      # Under construction
      #ret <- addDuplicationsLines(ret, x.min = min(df$epidemy.day), x.max = max(df$epidemy.day))
      ret
@@ -531,9 +506,6 @@ getCitationNote <- function(add.date = TRUE, report.date, data.provider){
   if (add.date){
     ret <- paste(ret, report.date)
   }
-
-  #debug
-  data.provider <<- data.provider
 
   data.provider.initials <- data.provider$getCitationInitials()
   ret <- paste(ret, "\nsource: https://github.com/rOpenStats/COVID19analytics/ based on", data.provider.initials)
