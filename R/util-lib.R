@@ -188,3 +188,64 @@ getPackageDir <- function(){
     data.subdir <- "extdata"
   file.path(home.dir, data.subdir)
 }
+
+
+#' generateSticker
+#' @noRd
+generateSticker <- function(){
+  data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity", missing.values = "imputation")
+  dummy <- data.processor$setupData()
+  dummy <- data.processor$transform()
+  dummy <- data.processor$curate()
+
+
+  top.countries <- data.processor$top.countries
+  international.countries <- unique(c(data.processor$top.countries[1:7],
+                                      "Japan", "Singapore", "Korea, South", "China"))
+
+  data.processor$data.comparison$data.compared$remaining.confirmed
+  field <- "remaining.confirmed"
+  data.long <- data.processor$data.comparison$data.compared  %>%
+    select_at(c("country", "epidemy.day", field)) %>%
+    gather(key = type, value = count, -c(country, epidemy.day))
+
+
+  ## set factor levels to show them in a desirable order
+  data.long %<>% mutate(type = factor(type, c(field)))
+  ## cases by type
+  unique(df$country)
+  df <- data.long %>%
+    filter(count >= 100) %>%
+    filter(!country %in% "China" | epidemy.day < 108) %>%
+    mutate(country = fct_reorder(country, desc(count)))
+  df.all <- df %>% filter(epidemy.day >=0 & count >= 100)
+  unique(df.all$country)
+  df <- df %>% filter(country %in% international.countries)
+
+
+  p <- df %>% filter(country != "World") %>%
+    ggplot(aes(x = epidemy.day, y = count, color = country)) +
+    geom_line(data = df.all, aes(x = epidemy.day, y = count,
+                                 group = country, colour = "aaaa"), size = 0.2, show.legend = FALSE) +
+    geom_point(size = .005, show.legend = FALSE) +
+    scale_color_manual(values = c(gray = "gray",brewer.pal(n = 9, name = "Set1"),
+                                  brewer.pal(n = 8, name = "Set2"),
+                                  brewer.pal(n = 12, name = "Set3")),
+    ) +
+    scale_y_log10(labels = comma)
+  p <- p + theme_void() + theme_transparent()
+
+  sticker(p, package = "COVID19analytics",
+          p_color = brewer.pal(n = 11, name = "PiYG")[11],
+          p_size = 5, p_y = 0.6,
+          #p_family = "Courier new",
+          s_x= 1, s_y= 1.1, s_width=1.3, s_height=1.4,
+          #h_fill = "white",
+          h_fill = brewer.pal(n = 7, name = "PiYG")[5],
+          url = "https://github.com/rOpenStats/COVID19analytics",
+          u_size = 1.04,
+          u_x = 0.19,
+          u_y = 1.47,
+          filename="man/figures/COVID19analytics.png")
+
+}
