@@ -114,15 +114,13 @@ latam.countries <- sort(c("Mexico",
 ```
 
 ```{r}
-rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries,
-                                                  map.region = "Latam")
-rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, 
+rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries, countries.text = "Latam countries")
+rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, countries.text = "Latam countries",   
+                                     field = "confirmed", y.label = "Confirmed", min.cases = 100)
+rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, countries.text = "Latam countries",   
                                      field = "remaining.confirmed", y.label = "Active cases", min.cases = 100)
-rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, min.cases = 100)
-
 rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
                         field = "confirmed.inc", log.scale = TRUE)
-
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field = "deaths", y.label = "Deaths", min.cases = 1)
 
 rg$ggplotCrossSection(included.countries = latam.countries,
@@ -138,9 +136,9 @@ rg$ggplotCrossSection(included.countries = latam.countries,
 ```{r}
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
-                                     field = "remaining.confirmed", y.label = "Active cases", min.cases = 100)
+                                     field = "confirmed", y.label = "Confirmed", min.cases = 100)
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
-                                               min.cases = 100)
+                                     field = "remaining.confirmed", y.label = "Active cases", min.cases = 100)
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, field = "deaths", 
                                      y.label = "Deaths", min.cases = 1)
 rg$ggplotCrossSection(included.countries = international.countries,

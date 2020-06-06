@@ -38,6 +38,7 @@ kenarab
   included.countries,
   field = "confirmed",
   y.label = "Confirmed Cases",
+  countries.text = "Top countries",
   min.cases = 100
 )}\if{html}{\out{</div>}}
 }

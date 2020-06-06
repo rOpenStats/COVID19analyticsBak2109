@@ -270,7 +270,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        super$initialize(data.processor = data.processor)
      },
      ggplotTopCountriesStackedBarDailyInc = function(included.countries, excluded.countries = "World",
-                                                     map.region = "The World"){
+                                                     countries.text = "Top countries"){
        data.long <- as.data.frame(self$data.processor$getData())
        data.long %<>% #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
          filter(confirmed > 0) %>%
@@ -279,7 +279,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
 
 
 
-       plot.title <- paste("Daily new Confirmed Cases around", map.region)
+       plot.title <- paste("Daily new Confirmed Cases on", countries.text)
 
        ## set factor levels to show them in a desirable order
        data.long %<>% mutate(type = factor(type, c("confirmed.inc")))
@@ -453,6 +453,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
    ggplotComparisonExponentialGrowth = function(included.countries,
                                                 field = "confirmed",
                                                 y.label = "Confirmed Cases",
+                                                countries.text = "Top countries",
                                                 min.cases = 100){
      data.comparison <- self$data.processor$data.comparison
      data.comparison$buildData(field = field, base.min.cases = min.cases)
@@ -463,7 +464,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
        select_at(c("country", "epidemy.day", field)) %>%
        gather(key = type, value = count, -c(country, epidemy.day))
 
-     plot.title <- "COVID-19 Exponential growth \n(LOG scale)\n"
+     plot.title <- paste("COVID-19 Exponential growth on",countries.text, "\n(LOG scale)")
 
      ## set factor levels to show them in a desirable order
      data.long %<>% mutate(type = factor(type, c(field)))

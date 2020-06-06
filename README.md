@@ -90,31 +90,31 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [12:37:05.198]  {stage: processor-setup}
-#> INFO  [12:37:05.298] Checking required downloaded  {downloaded.max.date: 2020-06-05, daily.update.time: 21:00:00, current.datetime: 2020-06-06 1.., download.flag: FALSE}
-#> INFO  [12:37:05.508] Checking required downloaded  {downloaded.max.date: 2020-06-05, daily.update.time: 21:00:00, current.datetime: 2020-06-06 1.., download.flag: FALSE}
-#> INFO  [12:37:05.704] Checking required downloaded  {downloaded.max.date: 2020-06-05, daily.update.time: 21:00:00, current.datetime: 2020-06-06 1.., download.flag: FALSE}
-#> INFO  [12:37:05.929]  {stage: data loaded}
-#> INFO  [12:37:05.933]  {stage: data-setup}
+#> INFO  [13:15:54.487]  {stage: processor-setup}
+#> INFO  [13:15:54.519] Checking required downloaded  {downloaded.max.date: 2020-06-05, daily.update.time: 21:00:00, current.datetime: 2020-06-06 1.., download.flag: FALSE}
+#> INFO  [13:15:54.619] Checking required downloaded  {downloaded.max.date: 2020-06-05, daily.update.time: 21:00:00, current.datetime: 2020-06-06 1.., download.flag: FALSE}
+#> INFO  [13:15:54.712] Checking required downloaded  {downloaded.max.date: 2020-06-05, daily.update.time: 21:00:00, current.datetime: 2020-06-06 1.., download.flag: FALSE}
+#> INFO  [13:15:54.762]  {stage: data loaded}
+#> INFO  [13:15:54.764]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [12:37:05.940] Executing transform 
-#> INFO  [12:37:05.942] Executing consolidate 
-#> INFO  [12:37:08.391]  {stage: consolidated}
-#> INFO  [12:37:08.393] Executing standarize 
-#> INFO  [12:37:08.941] gathering DataModel 
-#> INFO  [12:37:08.942]  {stage: datamodel-setup}
+#> INFO  [13:15:54.766] Executing transform 
+#> INFO  [13:15:54.767] Executing consolidate 
+#> INFO  [13:15:56.470]  {stage: consolidated}
+#> INFO  [13:15:56.472] Executing standarize 
+#> INFO  [13:15:57.062] gathering DataModel 
+#> INFO  [13:15:57.063]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [12:37:08.945]  {stage: loading-aggregated-data-model}
+#> INFO  [13:15:57.066]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [12:37:10.813]  {stage: calculating-rates}
-#> INFO  [12:37:11.008]  {stage: making-data-comparison}
-#> INFO  [12:37:18.171]  {stage: applying-missing-values-method}
-#> INFO  [12:37:18.172]  {stage: Starting first imputation}
-#> INFO  [12:37:18.180]  {stage: calculating-rates}
-#> INFO  [12:37:18.388]  {stage: making-data-comparison-2}
-#> INFO  [12:37:24.921]  {stage: calculating-top-countries}
-#> INFO  [12:37:24.946]  {stage: processed}
+#> INFO  [13:15:58.801]  {stage: calculating-rates}
+#> INFO  [13:15:59.016]  {stage: making-data-comparison}
+#> INFO  [13:16:04.913]  {stage: applying-missing-values-method}
+#> INFO  [13:16:04.914]  {stage: Starting first imputation}
+#> INFO  [13:16:04.922]  {stage: calculating-rates}
+#> INFO  [13:16:05.140]  {stage: making-data-comparison-2}
+#> INFO  [13:16:10.737]  {stage: calculating-top-countries}
+#> INFO  [13:16:10.761]  {stage: processed}
 
 current.date <- max(data.processor$getData()$date)
 
@@ -176,27 +176,26 @@ latam.countries <- sort(c("Mexico",
 ```
 
 ``` r
-rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries,
-                                                  map.region = "Latam")
+rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries, countries.text = "Latam countries")
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 ``` r
-rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, 
-                                     field = "remaining.confirmed", y.label = "Active cases", min.cases = 100)
+rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, countries.text = "Latam countries",   
+                                     field = "confirmed", y.label = "Confirmed", min.cases = 100)
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-2.png" width="100%" />
 
 ``` r
-rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, min.cases = 100)
+rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, countries.text = "Latam countries",   
+                                     field = "remaining.confirmed", y.label = "Active cases", min.cases = 100)
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-3.png" width="100%" />
 
 ``` r
-
 rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
                         field = "confirmed.inc", log.scale = TRUE)
 ```
@@ -204,7 +203,6 @@ rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "
 <img src="man/figures/README-unnamed-chunk-5-4.png" width="100%" />
 
 ``` r
-
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field = "deaths", y.label = "Deaths", min.cases = 1)
 ```
 
@@ -231,14 +229,14 @@ rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
 
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
-                                     field = "remaining.confirmed", y.label = "Active cases", min.cases = 100)
+                                     field = "confirmed", y.label = "Confirmed", min.cases = 100)
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-2.png" width="100%" />
 
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
-                                               min.cases = 100)
+                                     field = "remaining.confirmed", y.label = "Active cases", min.cases = 100)
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-3.png" width="100%" />
