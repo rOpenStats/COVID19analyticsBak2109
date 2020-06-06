@@ -177,8 +177,12 @@ ReportGenerator <- R6Class("ReportGenerator",
 #' @importFrom grDevices colorRampPalette
 #' @import scales
 #' @export
-setupTheme <- function(ggplot, report.date, x.values, data.processor, total.colors, x.type = "dates", base.size = 6){
+setupTheme <- function(ggplot, report.date, x.values, data.processor,
+                       total.colors, x.type = "dates", base.size = 6,
+                       log.scale.y = FALSE, log.scale.x = FALSE){
+  apply.log.x.scale <- TRUE
   if (!is.null(x.type)){
+    apply.log.x.scale <- FALSE
     if (x.type == "dates"){
       dates    <- x.values
       max.date <- max(dates)
@@ -208,6 +212,14 @@ setupTheme <- function(ggplot, report.date, x.values, data.processor, total.colo
       ggplot <- ggplot + scale_x_continuous(breaks  = breaks,
                                             minor_breaks = x.values)
     }
+    if (x.type == "x.field"){
+      apply.log.x.scale <- TRUE
+    }
+  }
+  if (apply.log.x.scale){
+    if (log.scale.x){
+      ggplot <- ggplot + scale_x_log10(labels = comma)
+    }
   }
   if (!is.null(total.colors)){
     #, selected.palette = "Paired"
@@ -223,18 +235,24 @@ setupTheme <- function(ggplot, report.date, x.values, data.processor, total.colo
     ggplot <- ggplot +
       #scale_fill_brewer(palette = selected.palette)
       scale_fill_manual(values = colors.palette) +
-      scale_color_manual(values = colors.palette) +
-      theme_bw(base_size = base.size,
+      scale_color_manual(values = colors.palette)
+  }
+  ggplot <- ggplot +
+    theme_bw(base_size = base.size,
 
-                    #base_family = "courier")
-                    base_family = "mono",
-                    ) +
-      scale_y_continuous(labels = comma) +
-      theme(legend.title = element_blank(),
-            #TODO caption size is not working. Fix it
-            plot.caption = element_text(size = 5),
-            axis.text.x = element_text(angle = 90)) +
-      labs(caption = getCitationNote(report.date = report.date, data.provider = data.processor$getDataProvider()))
+             #base_family = "courier")
+             base_family = "mono",
+    ) +
+    theme(legend.title = element_blank(),
+          #TODO caption size is not working. Fix it
+          plot.caption = element_text(size = 5),
+          axis.text.x = element_text(angle = 90)) +
+    labs(caption = getCitationNote(report.date = report.date, data.provider = data.processor$getDataProvider()))
+  if (log.scale.y){
+    ggplot <- ggplot + scale_y_log10(labels = comma)
+  }
+  else{
+    ggplot <- ggplot + scale_y_continuous(labels = comma)
   }
   ggplot
 }
@@ -339,11 +357,8 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        ret <- self$getXLabelsTheme(ret, x.values)
        ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date,
                          data.processor = self$data.processor,
-                         total.colors = length(unique(df$country)))
-
-       if (log.scale){
-         ret <- ret + scale_y_log10(labels = comma)
-       }
+                         total.colors = length(unique(df$country)),
+                         log.scale.y = TRUE)
        # theme(legend.title=element_blank(),
        #   #legend.position = c(.05, .05),
        #   legend.position = "bottom",
@@ -385,7 +400,6 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        log.plot <- NULL
        if (log.scale.x){
          log.plot <- c(log.plot, "X")
-
          label.x <- paste(label.x, "(log)")
        }
        if (log.scale.y){
@@ -418,14 +432,8 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        ret <- setupTheme(ret, report.date = self$report.date,
                          x.values = df[, field.x], x.type = "field.x",
                          data.processor = self$data.processor,
-                         total.colors = length(unique(df$country)))
-
-       if (log.scale.x){
-         ret <- ret + scale_x_log10(labels = comma)
-       }
-       if (log.scale.y){
-         ret <- ret + scale_y_log10(labels = comma)
-       }
+                         total.colors = length(unique(df$country)),
+                         log.scale.x = log.scale.x, log.scale.y = log.scale.y)
        ret
      }
    ))
@@ -484,8 +492,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
                        x.values = df$epidemy.day,
                        data.processor = self$data.processor,
                        total.colors = length(unique(df$country)),
-                       x.type = "epidemy.day")
-     ret <- ret + scale_y_log10(labels = comma)
+                       x.type = "epidemy.day", log.scale.y = TRUE)
      # Under construction
      #ret <- addDuplicationsLines(ret, x.min = min(df$epidemy.day), x.max = max(df$epidemy.day))
      ret

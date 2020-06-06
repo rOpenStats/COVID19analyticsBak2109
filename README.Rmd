@@ -116,6 +116,8 @@ latam.countries <- sort(c("Mexico",
 ```{r}
 rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries,
                                                   map.region = "Latam")
+rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, 
+                                     field = "remaining.confirmed", y.label = "Active cases", min.cases = 100)
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, min.cases = 100)
 
 rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
@@ -135,6 +137,8 @@ rg$ggplotCrossSection(included.countries = latam.countries,
 
 ```{r}
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
+rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
+                                     field = "remaining.confirmed", y.label = "Active cases", min.cases = 100)
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
                                                min.cases = 100)
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, field = "deaths", 

@@ -11,7 +11,9 @@ setupTheme(
   data.processor,
   total.colors,
   x.type = "dates",
-  base.size = 6
+  base.size = 6,
+  log.scale.y = FALSE,
+  log.scale.x = FALSE
 )
 }
 \description{
