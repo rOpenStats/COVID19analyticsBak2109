@@ -212,7 +212,7 @@ setupTheme <- function(ggplot, report.date, x.values, data.processor,
       ggplot <- ggplot + scale_x_continuous(breaks  = breaks,
                                             minor_breaks = x.values)
     }
-    if (x.type == "x.field"){
+    if (x.type == "field.x"){
       apply.log.x.scale <- TRUE
     }
   }
