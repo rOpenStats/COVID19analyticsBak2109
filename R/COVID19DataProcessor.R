@@ -19,6 +19,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    available.missing.value.models = NULL,
    provider.id    = NULL,
    missing.values.model.id = NULL,
+   force.download = NA,
    #state
    state          = NA,
    data.provider  = NULL,
@@ -34,19 +35,20 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    data.comparison = NA,
    imputation.summary = NA,
    logger         = NA,
-   initialize = function(provider.id, missing.values.model.id){
+   initialize = function(provider.id, missing.values.model.id, force.download = FALSE){
     self$logger <- genLogger(self)
     self$provider.id <- provider.id
     self$missing.values.model.id <- missing.values.model.id
+    self$force.download <- force.download
     self$initProviders()
     self$initMissingValuesModels()
     self
    },
    initProviders = function(){
      self$available.providers <- list()
-     provided.jhu <- COVID19DataProviderJHU$new()
+     provided.jhu <- COVID19DataProviderJHU$new(force.download = self$force.download)
      self$available.providers[[provided.jhu$getID()]] <- provided.jhu
-     provided.owid <- COVID19DataProviderOWID$new()
+     provided.owid <- COVID19DataProviderOWID$new(force.download = self$force.download)
      self$available.providers[[provided.owid$getID()]] <- provided.owid
      self$available.providers
    },

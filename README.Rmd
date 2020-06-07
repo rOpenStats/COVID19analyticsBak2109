@@ -65,13 +65,13 @@ devtools::install_github("rOpenStats/COVID19analytics", build_opts = NULL)
 
 # How to use it
 
-```{r load}
+```{r libraries}
 library(COVID19analytics) 
 library(dplyr) 
 
 ```
 
-```{r}
+```{r, load-processor}
 data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity", missing.values = "imputation")
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
@@ -87,7 +87,7 @@ rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
 
 top.countries <- data.processor$top.countries
 international.countries <- unique(c(data.processor$top.countries,
-                                    "Japan", "Singapore", "Korea, South"))
+                                    "China", "Japan", "Singapore", "Korea, South"))
 latam.countries <- sort(c("Mexico",
                      data.processor$countries$getCountries(division = "sub.continent", name = "Caribbean"),
                      data.processor$countries$getCountries(division = "sub.continent", name = "Central America"),
@@ -95,7 +95,7 @@ latam.countries <- sort(c("Mexico",
 
 ```
 
-```{r}
+```{r, top-countries-confirmed-inc}
 # Top 10 daily cases confirmed increment
 (data.processor$getData() %>%
   filter(date == current.date) %>%
@@ -105,7 +105,7 @@ latam.countries <- sort(c("Mexico",
 ```
 
 
-```{r}
+```{r, top-countries-confirmed-deaths}
 # Top 10 daily deaths increment
 (data.processor$getData() %>%
   filter(date == current.date) %>%
@@ -113,7 +113,7 @@ latam.countries <- sort(c("Mexico",
   arrange(desc(deaths.inc)))[1:10,]
 ```
 
-```{r}
+```{r, dataviz-latam}
 rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries, countries.text = "Latam countries")
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, countries.text = "Latam countries",   
                                      field = "confirmed", y.label = "Confirmed", min.cases = 100)
@@ -133,7 +133,7 @@ rg$ggplotCrossSection(included.countries = latam.countries,
 ```
 
 
-```{r}
+```{r, dataviz-top-countries}
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
                                      field = "confirmed", y.label = "Confirmed", min.cases = 100)
@@ -151,19 +151,15 @@ rg$ggplotCrossSection(included.countries = international.countries,
 ```
 
 
-```{r}
+```{r, dataviz-top-countries-inc-daily}
 rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)
 rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
 ```
 
 
-```{r}
+```{r, dataviz-top-countries-legacy}
 rg$ggplotTopCountriesPie()
 rg$ggplotTopCountriesBarPlots()
-```
-
-
-```{r}
 rg$ggplotCountriesBarGraphs(selected.country = "Argentina")
 ```
 
