@@ -65,7 +65,7 @@ devtools::install_github("rOpenStats/COVID19analytics", build_opts = NULL)
 
 # How to use it
 
-```{r libraries}
+```{r, libraries}
 library(COVID19analytics) 
 library(dplyr) 
 
@@ -113,7 +113,7 @@ latam.countries <- sort(c("Mexico",
   arrange(desc(deaths.inc)))[1:10,]
 ```
 
-```{r, dataviz-latam}
+```{r, dataviz-4-latam}
 rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries, countries.text = "Latam countries")
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, countries.text = "Latam countries",   
                                      field = "confirmed", y.label = "Confirmed", min.cases = 100)
@@ -133,7 +133,7 @@ rg$ggplotCrossSection(included.countries = latam.countries,
 ```
 
 
-```{r, dataviz-top-countries}
+```{r, dataviz-5-top-countries}
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
                                      field = "confirmed", y.label = "Confirmed", min.cases = 100)
@@ -151,13 +151,13 @@ rg$ggplotCrossSection(included.countries = international.countries,
 ```
 
 
-```{r, dataviz-top-countries-inc-daily}
+```{r, dataviz-6-top-countries-inc-daily}
 rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)
 rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
 ```
 
 
-```{r, dataviz-top-countries-legacy}
+```{r, dataviz-7-top-countries-legacy}
 rg$ggplotTopCountriesPie()
 rg$ggplotTopCountriesBarPlots()
 rg$ggplotCountriesBarGraphs(selected.country = "Argentina")

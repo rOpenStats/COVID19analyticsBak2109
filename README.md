@@ -90,31 +90,31 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [20:54:43.077]  {stage: processor-setup}
-#> INFO  [20:54:43.109] Checking required downloaded  {downloaded.max.date: 2020-06-05, daily.update.time: 21:00:00, current.datetime: 2020-06-06 2.., download.flag: FALSE}
-#> INFO  [20:54:43.209] Checking required downloaded  {downloaded.max.date: 2020-06-05, daily.update.time: 21:00:00, current.datetime: 2020-06-06 2.., download.flag: FALSE}
-#> INFO  [20:54:43.343] Checking required downloaded  {downloaded.max.date: 2020-06-05, daily.update.time: 21:00:00, current.datetime: 2020-06-06 2.., download.flag: FALSE}
-#> INFO  [20:54:43.398]  {stage: data loaded}
-#> INFO  [20:54:43.400]  {stage: data-setup}
+#> INFO  [10:26:13.261]  {stage: processor-setup}
+#> INFO  [10:26:13.294] Checking required downloaded  {downloaded.max.date: 2020-06-06, daily.update.time: 21:00:00, current.datetime: 2020-06-07 1.., download.flag: FALSE}
+#> INFO  [10:26:13.416] Checking required downloaded  {downloaded.max.date: 2020-06-06, daily.update.time: 21:00:00, current.datetime: 2020-06-07 1.., download.flag: FALSE}
+#> INFO  [10:26:13.516] Checking required downloaded  {downloaded.max.date: 2020-06-06, daily.update.time: 21:00:00, current.datetime: 2020-06-07 1.., download.flag: FALSE}
+#> INFO  [10:26:13.565]  {stage: data loaded}
+#> INFO  [10:26:13.566]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [20:54:43.402] Executing transform 
-#> INFO  [20:54:43.403] Executing consolidate 
-#> INFO  [20:54:45.102]  {stage: consolidated}
-#> INFO  [20:54:45.103] Executing standarize 
-#> INFO  [20:54:45.722] gathering DataModel 
-#> INFO  [20:54:45.723]  {stage: datamodel-setup}
+#> INFO  [10:26:13.568] Executing transform 
+#> INFO  [10:26:13.568] Executing consolidate 
+#> INFO  [10:26:15.277]  {stage: consolidated}
+#> INFO  [10:26:15.278] Executing standarize 
+#> INFO  [10:26:15.833] gathering DataModel 
+#> INFO  [10:26:15.834]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [20:54:45.726]  {stage: loading-aggregated-data-model}
+#> INFO  [10:26:15.838]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [20:54:47.379]  {stage: calculating-rates}
-#> INFO  [20:54:47.592]  {stage: making-data-comparison}
-#> INFO  [20:54:53.481]  {stage: applying-missing-values-method}
-#> INFO  [20:54:53.482]  {stage: Starting first imputation}
-#> INFO  [20:54:53.490]  {stage: calculating-rates}
-#> INFO  [20:54:53.696]  {stage: making-data-comparison-2}
-#> INFO  [20:54:59.898]  {stage: calculating-top-countries}
-#> INFO  [20:54:59.928]  {stage: processed}
+#> INFO  [10:26:17.552]  {stage: calculating-rates}
+#> INFO  [10:26:17.733]  {stage: making-data-comparison}
+#> INFO  [10:26:23.619]  {stage: applying-missing-values-method}
+#> INFO  [10:26:23.620]  {stage: Starting first imputation}
+#> INFO  [10:26:23.628]  {stage: calculating-rates}
+#> INFO  [10:26:23.837]  {stage: making-data-comparison-2}
+#> INFO  [10:26:29.725]  {stage: calculating-top-countries}
+#> INFO  [10:26:29.752]  {stage: processed}
 
 current.date <- max(data.processor$getData()$date)
 
@@ -139,18 +139,18 @@ latam.countries <- sort(c("Mexico",
   filter(confirmed >=10))[1:10,]
 #> # A tibble: 10 x 7
 #> # Groups:   country [10]
-#>    country  date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
-#>    <chr>    <date>              <dbl>         <int>     <int>  <int>      <int>
-#>  1 Brazil   2020-06-05          0.05          30830    645771  35026       1005
-#>  2 US       2020-06-05          0.013         24720   1897380 109132        921
-#>  3 India    2020-06-05          0.042          9471    236184   6649        286
-#>  4 Russia   2020-06-05          0.02           8718    449256   5520        144
-#>  5 Mexico   2020-06-05          0.041          4346    110026  13170        625
-#>  6 Chile    2020-06-05          0.036          4207    122499   1448         92
-#>  7 Peru     2020-06-05          0.023          4202    187400   5162        131
-#>  8 Pakistan 2020-06-05          0.047          3985     89249   1838         68
-#>  9 Colombia 2020-06-05          0.098          3293     36759   1204        105
-#> 10 Iran     2020-06-05          0.018          2886    167156   8134         63
+#>    country   date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
+#>    <chr>     <date>              <dbl>         <int>     <int>  <int>      <int>
+#>  1 Brazil    2020-06-06          0.042         27075    672846  35930        904
+#>  2 US        2020-06-06          0.012         22681   1920061 109802        670
+#>  3 India     2020-06-06          0.044         10438    246622   6946        297
+#>  4 Russia    2020-06-06          0.02           8846    458102   5717        197
+#>  5 Chile     2020-06-06          0.043          5246    127745   1541         93
+#>  6 Pakistan  2020-06-06          0.053          4734     93983   1935         97
+#>  7 Peru      2020-06-06          0.023          4358    191758   5301        139
+#>  8 Mexico    2020-06-06          0.033          3593    113619  13511        341
+#>  9 Saudi Ar… 2020-06-06          0.033          3121     98869    676         34
+#> 10 Banglade… 2020-06-06          0.044          2635     63026    846         35
 ```
 
 ``` r
@@ -163,50 +163,50 @@ latam.countries <- sort(c("Mexico",
 #> # Groups:   country [10]
 #>    country   date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
 #>    <chr>     <date>              <dbl>         <int>     <int>  <int>      <int>
-#>  1 Brazil    2020-06-05          0.05          30830    645771  35026       1005
-#>  2 US        2020-06-05          0.013         24720   1897380 109132        921
-#>  3 Mexico    2020-06-05          0.041          4346    110026  13170        625
-#>  4 United K… 2020-06-05          0.006          1655    284734  40344        357
-#>  5 India     2020-06-05          0.042          9471    236184   6649        286
-#>  6 Russia    2020-06-05          0.02           8718    449256   5520        144
-#>  7 Peru      2020-06-05          0.023          4202    187400   5162        131
-#>  8 Colombia  2020-06-05          0.098          3293     36759   1204        105
-#>  9 Chile     2020-06-05          0.036          4207    122499   1448         92
-#> 10 Italy     2020-06-05          0.002           518    234531  33774         85
+#>  1 Brazil    2020-06-06          0.042         27075    672846  35930        904
+#>  2 US        2020-06-06          0.012         22681   1920061 109802        670
+#>  3 Mexico    2020-06-06          0.033          3593    113619  13511        341
+#>  4 India     2020-06-06          0.044         10438    246622   6946        297
+#>  5 United K… 2020-06-06          0.005          1560    286294  40548        204
+#>  6 Russia    2020-06-06          0.02           8846    458102   5717        197
+#>  7 Peru      2020-06-06          0.023          4358    191758   5301        139
+#>  8 Pakistan  2020-06-06          0.053          4734     93983   1935         97
+#>  9 Chile     2020-06-06          0.043          5246    127745   1541         93
+#> 10 Iran      2020-06-06          0.014          2269    169425   8209         75
 ```
 
 ``` r
 rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries, countries.text = "Latam countries")
 ```
 
-<img src="man/figures/README-dataviz-latam-1.png" width="100%" />
+<img src="man/figures/README-dataviz-4-latam-1.png" width="100%" />
 
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, countries.text = "Latam countries",   
                                      field = "confirmed", y.label = "Confirmed", min.cases = 100)
 ```
 
-<img src="man/figures/README-dataviz-latam-2.png" width="100%" />
+<img src="man/figures/README-dataviz-4-latam-2.png" width="100%" />
 
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, countries.text = "Latam countries",   
                                      field = "remaining.confirmed", y.label = "Active cases", min.cases = 100)
 ```
 
-<img src="man/figures/README-dataviz-latam-3.png" width="100%" />
+<img src="man/figures/README-dataviz-4-latam-3.png" width="100%" />
 
 ``` r
 rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
                         field = "confirmed.inc", log.scale = TRUE)
 ```
 
-<img src="man/figures/README-dataviz-latam-4.png" width="100%" />
+<img src="man/figures/README-dataviz-4-latam-4.png" width="100%" />
 
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field = "deaths", y.label = "Deaths", min.cases = 1)
 ```
 
-<img src="man/figures/README-dataviz-latam-5.png" width="100%" />
+<img src="man/figures/README-dataviz-4-latam-5.png" width="100%" />
 
 ``` r
 
@@ -218,35 +218,35 @@ rg$ggplotCrossSection(included.countries = latam.countries,
                        log.scale.y = FALSE)
 ```
 
-<img src="man/figures/README-dataviz-latam-6.png" width="100%" />
+<img src="man/figures/README-dataviz-4-latam-6.png" width="100%" />
 
 ``` r
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
 #> Warning: Removed 1 rows containing missing values (position_stack).
 ```
 
-<img src="man/figures/README-dataviz-top-countries-1.png" width="100%" />
+<img src="man/figures/README-dataviz-5-top-countries-1.png" width="100%" />
 
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
                                      field = "confirmed", y.label = "Confirmed", min.cases = 100)
 ```
 
-<img src="man/figures/README-dataviz-top-countries-2.png" width="100%" />
+<img src="man/figures/README-dataviz-5-top-countries-2.png" width="100%" />
 
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
                                      field = "remaining.confirmed", y.label = "Active cases", min.cases = 100)
 ```
 
-<img src="man/figures/README-dataviz-top-countries-3.png" width="100%" />
+<img src="man/figures/README-dataviz-5-top-countries-3.png" width="100%" />
 
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, field = "deaths", 
                                      y.label = "Deaths", min.cases = 1)
 ```
 
-<img src="man/figures/README-dataviz-top-countries-4.png" width="100%" />
+<img src="man/figures/README-dataviz-5-top-countries-4.png" width="100%" />
 
 ``` r
 rg$ggplotCrossSection(included.countries = international.countries,
@@ -257,35 +257,35 @@ rg$ggplotCrossSection(included.countries = international.countries,
                        log.scale.y = FALSE)
 ```
 
-<img src="man/figures/README-dataviz-top-countries-5.png" width="100%" />
+<img src="man/figures/README-dataviz-5-top-countries-5.png" width="100%" />
 
 ``` r
 rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)
 ```
 
-<img src="man/figures/README-dataviz-top-countries-inc-daily-1.png" width="100%" />
+<img src="man/figures/README-dataviz-6-top-countries-inc-daily-1.png" width="100%" />
 
 ``` r
 rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
 #> Warning: Transformation introduced infinite values in continuous y-axis
 ```
 
-<img src="man/figures/README-dataviz-top-countries-inc-daily-2.png" width="100%" />
+<img src="man/figures/README-dataviz-6-top-countries-inc-daily-2.png" width="100%" />
 
 ``` r
 rg$ggplotTopCountriesPie()
 ```
 
-<img src="man/figures/README-dataviz-top-countries-legacy-1.png" width="100%" />
+<img src="man/figures/README-dataviz-7-top-countries-legacy-1.png" width="100%" />
 
 ``` r
 rg$ggplotTopCountriesBarPlots()
 ```
 
-<img src="man/figures/README-dataviz-top-countries-legacy-2.png" width="100%" />
+<img src="man/figures/README-dataviz-7-top-countries-legacy-2.png" width="100%" />
 
 ``` r
 rg$ggplotCountriesBarGraphs(selected.country = "Argentina")
 ```
 
-<img src="man/figures/README-dataviz-top-countries-legacy-3.png" width="100%" />
+<img src="man/figures/README-dataviz-7-top-countries-legacy-3.png" width="100%" />

@@ -109,7 +109,7 @@ africa.countries <- sort(data.processor$countries$getCountries(division = "conti
 
 ```{r}
 rg$ggplotTopCountriesStackedBarDailyInc(included.countries = africa.countries,
-                                                  map.region = "Africa")
+                                                  countries.text = "Africa")
 rc$ggplotComparisonExponentialGrowth(included.countries = africa.countries, min.cases = 20)
 
 rg$ggplotCountriesLines(included.countries = africa.countries, countries.text = "Africa countries",
