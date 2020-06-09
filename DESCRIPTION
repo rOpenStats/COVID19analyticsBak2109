@@ -56,6 +56,6 @@ Collate:
   'report-lib.R'
   'test-lib.R'
   'zzz.R'
-BugReports: https://github.com/kenarab/COVID19/issues
-URL: https://github.com/kenarab/COVID19
+BugReports: https://github.com/kenarab/COVID19analytics/issues
+URL: https://github.com/kenarab/COVID19analytics
 StagedInstall: FALSE

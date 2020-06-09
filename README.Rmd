@@ -39,9 +39,6 @@ URL: http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf.
 * More visualizations included int ReportGeneratorEnhanced R6 object
 * Visualizations ReportGeneratorDataComparison compares all countries counting epidemy day 0 when confirmed cases > n (i.e. n = 100).
 
-# Consideration
-Data is still noisy because there are missing data from some regions in some days. We are working on in it.
-
 
 
 # Package
