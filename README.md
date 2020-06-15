@@ -85,31 +85,31 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [10:58:39.016]  {stage: processor-setup}
-#> INFO  [10:58:39.053] Checking required downloaded  {downloaded.max.date: 2020-06-12, daily.update.time: 21:00:00, current.datetime: 2020-06-14 1.., download.flag: TRUE}
-#> INFO  [10:58:39.707] Checking required downloaded  {downloaded.max.date: 2020-06-12, daily.update.time: 21:00:00, current.datetime: 2020-06-14 1.., download.flag: TRUE}
-#> INFO  [10:58:40.375] Checking required downloaded  {downloaded.max.date: 2020-06-12, daily.update.time: 21:00:00, current.datetime: 2020-06-14 1.., download.flag: TRUE}
-#> INFO  [10:58:40.908]  {stage: data loaded}
-#> INFO  [10:58:40.910]  {stage: data-setup}
+#> INFO  [09:43:19.214]  {stage: processor-setup}
+#> INFO  [09:43:19.256] Checking required downloaded  {downloaded.max.date: 2020-06-13, daily.update.time: 21:00:00, current.datetime: 2020-06-15 0.., download.flag: TRUE}
+#> INFO  [09:43:19.891] Checking required downloaded  {downloaded.max.date: 2020-06-13, daily.update.time: 21:00:00, current.datetime: 2020-06-15 0.., download.flag: TRUE}
+#> INFO  [09:43:20.408] Checking required downloaded  {downloaded.max.date: 2020-06-13, daily.update.time: 21:00:00, current.datetime: 2020-06-15 0.., download.flag: TRUE}
+#> INFO  [09:43:20.971]  {stage: data loaded}
+#> INFO  [09:43:20.973]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [10:58:40.912] Executing transform 
-#> INFO  [10:58:41.005] Executing consolidate 
-#> INFO  [10:58:43.002]  {stage: consolidated}
-#> INFO  [10:58:43.004] Executing standarize 
-#> INFO  [10:58:43.588] gathering DataModel 
-#> INFO  [10:58:43.589]  {stage: datamodel-setup}
+#> INFO  [09:43:21.070] Executing transform 
+#> INFO  [09:43:21.070] Executing consolidate 
+#> INFO  [09:43:23.146]  {stage: consolidated}
+#> INFO  [09:43:23.147] Executing standarize 
+#> INFO  [09:43:23.780] gathering DataModel 
+#> INFO  [09:43:23.781]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [10:58:43.593]  {stage: loading-aggregated-data-model}
+#> INFO  [09:43:23.785]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [10:58:45.567]  {stage: calculating-rates}
-#> INFO  [10:58:45.749]  {stage: making-data-comparison}
-#> INFO  [10:58:52.518]  {stage: applying-missing-values-method}
-#> INFO  [10:58:52.519]  {stage: Starting first imputation}
-#> INFO  [10:58:52.537]  {stage: calculating-rates}
-#> INFO  [10:58:52.784]  {stage: making-data-comparison-2}
-#> INFO  [10:59:00.027]  {stage: calculating-top-countries}
-#> INFO  [10:59:00.067]  {stage: processed}
+#> INFO  [09:43:26.094]  {stage: calculating-rates}
+#> INFO  [09:43:26.369]  {stage: making-data-comparison}
+#> INFO  [09:43:34.105]  {stage: applying-missing-values-method}
+#> INFO  [09:43:34.108]  {stage: Starting first imputation}
+#> INFO  [09:43:34.121]  {stage: calculating-rates}
+#> INFO  [09:43:34.523]  {stage: making-data-comparison-2}
+#> INFO  [09:43:42.634]  {stage: calculating-top-countries}
+#> INFO  [09:43:42.676]  {stage: processed}
 
 current.date <- max(data.processor$getData()$date)
 
@@ -136,16 +136,16 @@ latam.countries <- sort(c("Mexico",
 #> # Groups:   country [10]
 #>    country   date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
 #>    <chr>     <date>              <dbl>         <int>     <int>  <int>      <int>
-#>  1 US        2020-06-13          0.012         25540   2074526 115436        767
-#>  2 Brazil    2020-06-13          0.026         21704    850514  42720        892
-#>  3 India     2020-06-13          0.039         11458    308993   8884        386
-#>  4 Russia    2020-06-13          0.017          8697    519458   6819        114
-#>  5 Chile     2020-06-13          0.04           6509    167355   3101        231
-#>  6 Pakistan  2020-06-13          0.051          6472    132405   2551         88
-#>  7 Peru      2020-06-13          0.028          5961    220749   6308        220
-#>  8 South Af… 2020-06-13          0.062          3809     65736   1423         69
-#>  9 Mexico    2020-06-13          0.025          3494    142690  16872        424
-#> 10 Saudi Ar… 2020-06-13          0.028          3366    123308    932         39
+#>  1 US        2020-06-14          0.009         19532   2094058 115732        296
+#>  2 Brazil    2020-06-14          0.02          17110    867624  43332        612
+#>  3 Pakistan  2020-06-14          0.091         12073    144478   2729        178
+#>  4 India     2020-06-14          0.039         11929    320922   9195        311
+#>  5 Peru      2020-06-14          0.041          8987    229736   6688        380
+#>  6 Russia    2020-06-14          0.017          8809    528267   6938        119
+#>  7 Chile     2020-06-14          0.041          6938    174293   3323        222
+#>  8 South Af… 2020-06-14          0.065          4302     70038   1480         57
+#>  9 Saudi Ar… 2020-06-14          0.034          4233    127541    972         40
+#> 10 Mexico    2020-06-14          0.029          4147    146837  17141        269
 ```
 
 ``` r
@@ -156,18 +156,18 @@ latam.countries <- sort(c("Mexico",
   arrange(desc(deaths.inc)))[1:10,]
 #> # A tibble: 10 x 7
 #> # Groups:   country [10]
-#>    country   date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
-#>    <chr>     <date>              <dbl>         <int>     <int>  <int>      <int>
-#>  1 Brazil    2020-06-13          0.026         21704    850514  42720        892
-#>  2 US        2020-06-13          0.012         25540   2074526 115436        767
-#>  3 Mexico    2020-06-13          0.025          3494    142690  16872        424
-#>  4 India     2020-06-13          0.039         11458    308993   8884        386
-#>  5 Chile     2020-06-13          0.04           6509    167355   3101        231
-#>  6 Peru      2020-06-13          0.028          5961    220749   6308        220
-#>  7 United K… 2020-06-13          0.005          1426    295828  41747        181
-#>  8 Russia    2020-06-13          0.017          8697    519458   6819        114
-#>  9 Pakistan  2020-06-13          0.051          6472    132405   2551         88
-#> 10 Italy     2020-06-13          0.001           346    236651  34301         78
+#>    country  date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
+#>    <chr>    <date>              <dbl>         <int>     <int>  <int>      <int>
+#>  1 Brazil   2020-06-14          0.02          17110    867624  43332        612
+#>  2 Peru     2020-06-14          0.041          8987    229736   6688        380
+#>  3 India    2020-06-14          0.039         11929    320922   9195        311
+#>  4 US       2020-06-14          0.009         19532   2094058 115732        296
+#>  5 Mexico   2020-06-14          0.029          4147    146837  17141        269
+#>  6 Chile    2020-06-14          0.041          6938    174293   3323        222
+#>  7 Pakistan 2020-06-14          0.091         12073    144478   2729        178
+#>  8 Russia   2020-06-14          0.017          8809    528267   6938        119
+#>  9 Iran     2020-06-14          0.013          2472    187427   8837        107
+#> 10 Egypt    2020-06-14          0.038          1618     44598   1575         91
 ```
 
 ``` r
