@@ -122,6 +122,9 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    },
    curate = function(countries = NULL){
     logger <- getLogger(self)
+    if (self$checkValidTransition(state.expected = "curated")){
+      stop("Processor already curated")
+    }
     self$checkValidTransition(state.expected = "datamodel-setup")
     dates <- self$data.provider$getDates()
     range(dates)
@@ -177,7 +180,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
     }
     self$changeState("calculating-top-countries")
     self$calculateTopCountries()
-    self$changeState("processed")
+    self$changeState("curated")
     self
    },
    makeDataComparison = function(){

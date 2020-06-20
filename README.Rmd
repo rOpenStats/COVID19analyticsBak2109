@@ -64,7 +64,8 @@ devtools::install_github("rOpenStats/COVID19analytics", build_opts = NULL)
 
 ```{r, libraries}
 library(COVID19analytics) 
-library(dplyr) 
+library(dplyr)
+library(knitr)
 
 ```
 
@@ -94,20 +95,20 @@ latam.countries <- sort(c("Mexico",
 
 ```{r, top-countries-confirmed-inc}
 # Top 10 daily cases confirmed increment
-(data.processor$getData() %>%
+kable((data.processor$getData() %>%
   filter(date == current.date) %>%
   select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
   arrange(desc(confirmed.inc)) %>%
-  filter(confirmed >=10))[1:10,]
+  filter(confirmed >=10))[1:10,])
 ```
 
 
 ```{r, top-countries-confirmed-deaths}
 # Top 10 daily deaths increment
-(data.processor$getData() %>%
+kable((data.processor$getData() %>%
   filter(date == current.date) %>%
   select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
-  arrange(desc(deaths.inc)))[1:10,]
+  arrange(desc(deaths.inc)))[1:10,])
 ```
 
 ```{r, dataviz-4-latam}
