@@ -156,7 +156,8 @@ kenarab
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$checkValidTransition(
   state.expected = "datamodel-setup",
-  fail.on.error = TRUE
+  fail.on.error = TRUE,
+  only.check = TRUE
 )}\if{html}{\out{</div>}}
 }
 

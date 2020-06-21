@@ -204,7 +204,8 @@ getPackagePrefix <- function(){
 #' getEnv
 #' @author kenarab
 #' @export
-getEnv <- function(variable.name, package.prefix = getPackagePrefix(),  fail.on.empty = TRUE, env.file = "~/.Renviron", call.counter = 0){
+getEnv <- function(variable.name, package.prefix = getPackagePrefix(),
+                   fail.on.empty = TRUE, env.file = "~/.Renviron", call.counter = 0){
   prefixed.variable.name <- paste(package.prefix, variable.name, sep ="")
   ret <- Sys.getenv(prefixed.variable.name)
   if (nchar(ret) == 0){
@@ -215,9 +216,10 @@ getEnv <- function(variable.name, package.prefix = getPackagePrefix(),  fail.on.
                     call.counter = call.counter + 1)
     }
     else{
-      stop(paste("Must configure variable", prefixed.variable.name, " in", env.file))
+      if (fail.on.empty){
+        stop(paste("Must configure variable", prefixed.variable.name, " in", env.file))
+      }
     }
-
   }
   ret
 }

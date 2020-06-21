@@ -109,7 +109,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
      self$data.model <- self$data.provider$getDataModel()
      self$changeState("datamodel-setup")
    },
-   checkValidTransition = function(state.expected = "datamodel-setup", fail.on.error = TRUE){
+   checkValidTransition = function(state.expected = "datamodel-setup", fail.on.error = TRUE, only.check = TRUE){
      logger <- getLogger(self)
      error <- ""
      if (state.expected != self$state){
@@ -120,7 +120,9 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
          stop(error)
        }
        else{
-         logger$error(error)
+         if (!only.check){
+           logger$error(error)
+         }
        }
      }
      nchar(error) == 0

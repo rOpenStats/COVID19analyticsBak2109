@@ -505,12 +505,29 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
    }
    ))
 
+#' getCredits
+#' @author kenarab
+#'@noRd
+getCredits <- function(add.original = TRUE){
+  original.author <- "@ken4rab"
+  #getSys()
+  user.defined.authors <- getEnv("credits", fail.on.empty = FALSE)
+  if (nchar(user.defined.authors) > 0){
+    ret <- user.defined.authors
+    if (add.original){
+      ret <- paste(ret, original.author)
+    }
+  }else{
+    ret <- original.author
+  }
+  ret
+}
 
-
-#'
+#' getCitationNote
+#' @author kenarab
 #'@noRd
 getCitationNote <- function(add.date = TRUE, report.date, data.provider){
-  credits <- "@ken4rab"
+  credits <- getCredits()
   ret <- paste("credits: ", credits)
   if (add.date){
     ret <- paste(ret, report.date)

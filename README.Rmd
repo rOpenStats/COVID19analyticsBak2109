@@ -60,10 +60,15 @@ Install the R package using the following commands on the R console:
 devtools::install_github("rOpenStats/COVID19analytics", build_opts = NULL)
 ```
 
+First configurate environment variables with your preferred configurations in `~/.Renviron`. COVID19analytics_data_dir is mandatory while COVID19analytics_credits can be configured if you want to publish your own research.
 
-```
+```.Renviron
 COVID19analytics_data_dir = "~/.R/COVID19analytics"
+# If you want to generate your own reports
+COVID19analytics_credits = "@youralias"
 ```
+
+
     
 # How to use it
 
