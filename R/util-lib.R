@@ -6,10 +6,12 @@
 #' @export
 createDataDir <- function(){
  download.flag <- TRUE
- if (!dir.exists(data.dir)){
-  prompt.value <- readline(prompt = paste("Just to create dir ", data.dir, ". Agree [y/n]?:", sep = ""))
+ env.data.dir <- getEnv("data_dir")
+
+ if (!dir.exists(env.data.dir)){
+  prompt.value <- readline(prompt = paste("Just to create dir ", env.data.dir, ". Agree [y/n]?:", sep = ""))
   if (tolower(prompt.value) %in% c("y", "yes")){
-   dir.create(data.dir, showWarnings = FALSE, recursive = TRUE)
+   dir.create(env.data.dir, showWarnings = FALSE, recursive = TRUE)
 
   }
   else{
@@ -28,13 +30,14 @@ createDataDir <- function(){
 #' @noRd
 #' @export
 copyPNG2package <- function(current.date = Sys.Date()){
-  data.dir.files <- dir(data.dir)
-  data.dir.files <- data.dir.files[grep("\\.png", data.dir.files)]
-  data.dir.files <- data.dir.files[grep(as.character(current.date), data.dir.files)]
-  for (cf in data.dir.files){
+  env.data.dir <- getEnv("data_dir")
+  env.data.dir.files <- dir(env.data.dir)
+  env.data.dir.files <- env.data.dir.files[grep("\\.png", env.data.dir.files)]
+  env.data.dir.files <- env.data.dir.files[grep(as.character(current.date), env.data.dir.files)]
+  for (cf in env.data.dir.files){
     dest.filename <- cf
     dest.filename <- gsub(paste("-", current.date, sep = ""), "", dest.filename)
-    file.copy(file.path(data.dir, cf), file.path("inst/extdata/", dest.filename))
+    file.copy(file.path(env.data.dir, cf), file.path("inst/extdata/", dest.filename))
   }
 }
 
@@ -110,6 +113,7 @@ getLogger <- function(r6.object){
 #' @author kenarab
 #' @export
 typeCheck <- function(object, class.name){
+  #TODO improve it using inherits
   stopifnot(class(object)[[1]] == class.name)
 }
 
@@ -190,6 +194,35 @@ getPackageDir <- function(){
 }
 
 
+#' getPackagePrefix
+#' @author kenarab
+#' @export
+getPackagePrefix <- function(){
+  "COVID19analytics_"
+}
+
+#' getEnv
+#' @author kenarab
+#' @export
+getEnv <- function(variable.name, package.prefix = getPackagePrefix(),  fail.on.empty = TRUE, env.file = "~/.Renviron", call.counter = 0){
+  prefixed.variable.name <- paste(package.prefix, variable.name, sep ="")
+  ret <- Sys.getenv(prefixed.variable.name)
+  if (nchar(ret) == 0){
+    if (call.counter == 0){
+      readRenviron(env.file)
+      ret <- getEnv(variable.name = variable.name, package.prefix = package.prefix,
+                    fail.on.empty = fail.on.empty, env.file = env.file,
+                    call.counter = call.counter + 1)
+    }
+    else{
+      stop(paste("Must configure variable", prefixed.variable.name, " in", env.file))
+    }
+
+  }
+  ret
+}
+
+
 #' generateSticker
 #' @noRd
 generateSticker <- function(){
@@ -249,3 +282,5 @@ generateSticker <- function(){
           filename="man/figures/COVID19analytics.png")
 
 }
+
+

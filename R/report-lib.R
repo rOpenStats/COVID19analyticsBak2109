@@ -510,7 +510,8 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
 #'
 #'@noRd
 getCitationNote <- function(add.date = TRUE, report.date, data.provider){
-  ret <- "credit @ken4rab"
+  credits <- "@ken4rab"
+  ret <- paste("credits: ", credits)
   if (add.date){
     ret <- paste(ret, report.date)
   }

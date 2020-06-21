@@ -109,11 +109,21 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
      self$data.model <- self$data.provider$getDataModel()
      self$changeState("datamodel-setup")
    },
-   checkValidTransition = function(state.expected = "datamodel-setup"){
+   checkValidTransition = function(state.expected = "datamodel-setup", fail.on.error = TRUE){
+     logger <- getLogger(self)
+     error <- ""
      if (state.expected != self$state){
-       stop(paste("Invalid state", self$state, "for running curate.", state.expected, "was expected"))
+       error <- paste("Invalid state", self$state, "for running curate.", state.expected, "was expected")
      }
-     TRUE
+     if (nchar(error) > 0){
+       if (fail.on.error){
+         stop(error)
+       }
+       else{
+         logger$error(error)
+       }
+     }
+     nchar(error) == 0
    },
    changeState = function(new.state){
      logger <- getLogger(self)
@@ -122,7 +132,7 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
    },
    curate = function(countries = NULL){
     logger <- getLogger(self)
-    if (self$checkValidTransition(state.expected = "curated")){
+    if (self$checkValidTransition(state.expected = "curated", fail.on.error = FALSE)){
       stop("Processor already curated")
     }
     self$checkValidTransition(state.expected = "datamodel-setup")

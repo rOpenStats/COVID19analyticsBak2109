@@ -60,13 +60,27 @@ Install the R package using the following commands on the R console:
 devtools::install_github("rOpenStats/COVID19analytics", build_opts = NULL)
 ```
 
+
+```
+COVID19analytics_data_dir = "~/.R/COVID19analytics"
+```
+    
 # How to use it
 
 ```{r, libraries}
 library(COVID19analytics) 
 library(dplyr)
 library(knitr)
+```
 
+
+```{r, log-config}
+log.dir <- file.path(getEnv("data_dir"), "logs")
+dir.create(log.dir, recursive = TRUE, showWarnings = FALSE)
+log.file <- file.path(log.dir, "covid19analytics.log")
+lgr::get_logger("root")$add_appender(AppenderFile$new(log.file))
+lgr::threshold("info", lgr::get_logger("root"))
+lgr::threshold("info", lgr::get_logger("COVID19ARCurator"))
 ```
 
 ```{r, load-processor}

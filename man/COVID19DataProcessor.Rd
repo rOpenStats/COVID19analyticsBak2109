@@ -42,7 +42,11 @@ kenarab
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$new(provider.id, missing.values.model.id)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$new(
+  provider.id,
+  missing.values.model.id,
+  force.download = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 }
@@ -150,7 +154,10 @@ kenarab
 \if{latex}{\out{\hypertarget{method-checkValidTransition}{}}}
 \subsection{Method \code{checkValidTransition()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$checkValidTransition(state.expected = "datamodel-setup")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{COVID19DataProcessor$checkValidTransition(
+  state.expected = "datamodel-setup",
+  fail.on.error = TRUE
+)}\if{html}{\out{</div>}}
 }
 
 }

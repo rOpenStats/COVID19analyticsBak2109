@@ -35,8 +35,9 @@ COVID19DataProviderOWID <- R6Class("COVID19DataProviderOWID",
      dates
    },
    loadData = function() {
+    env.data.dir <- getEnv("data_dir")
     ## load data into R
-    self$data <- readOWIDDataFile(file.path(data.dir, self$filenames[1]))
+    self$data <- readOWIDDataFile(file.path(env.data.dir, self$filenames[1]))
     self
    },
    consolidate = function(){
@@ -118,11 +119,13 @@ transformDataOWID <- function(data) {
 downloadCOVID19OWID <- function(url.path, filename, force = FALSE,
                             daily.update.time = "21:00:00",
                             archive = TRUE) {
+  env.data.dir <- getEnv("data_dir")
   logger <- lgr
+
   download.flag <- createDataDir()
   if (download.flag){
     url <- file.path(url.path, filename)
-    dest <- file.path(data.dir, filename)
+    dest <- file.path(env.data.dir, filename)
     download.flag <- !file.exists(dest) | force
     if (!download.flag & file.exists(dest)){
       current.data <- readOWIDDataFile(dest)

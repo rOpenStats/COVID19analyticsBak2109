@@ -43,9 +43,10 @@ COVID19DataProviderJHU <- R6Class("COVID19DataProviderJHU",
    },
    loadData = function() {
     ## load data into R
-    self$data.confirmed <- readJHUDataFile(file.path(data.dir, self$filenames[["confirmed"]]))
-    self$data.deaths <- readJHUDataFile(file.path(data.dir, self$filenames[["deaths"]]))
-    self$data.recovered <- readJHUDataFile(file.path(data.dir, self$filenames[["recovered"]]))
+    env.dat.dir <- getEnv("data_dir")
+    self$data.confirmed <- readJHUDataFile(file.path(env.dat.dir, self$filenames[["confirmed"]]))
+    self$data.deaths <- readJHUDataFile(file.path(env.dat.dir, self$filenames[["deaths"]]))
+    self$data.recovered <- readJHUDataFile(file.path(env.dat.dir, self$filenames[["recovered"]]))
 
     dim(self$data.confirmed)
     ## [1] 347 53
@@ -128,10 +129,11 @@ downloadCOVID19 <- function(url.path, filename, force = FALSE,
                             daily.update.time = "21:00:00",
                             archive = TRUE) {
   logger <- lgr
+  env.dat.dir <- getEnv("data_dir")
   download.flag <- createDataDir()
   if (download.flag){
     url <- file.path(url.path, filename)
-    dest <- file.path(data.dir, filename)
+    dest <- file.path(env.dat.dir, filename)
     download.flag <- !file.exists(dest) | force
     if (!download.flag & file.exists(dest)){
       current.data <- readJHUDataFile(dest)

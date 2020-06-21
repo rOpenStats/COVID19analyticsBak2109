@@ -108,8 +108,8 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
                               rate.daily = col_double(),
                               rate.inc.daily = col_double(),
                               remaining.confirmed = col_double(),
-                              death.rate.min = col_double(),
-                              death.rate.max = col_double()
+                              fatality.rate.min = col_double(),
+                              fatality.rate.max = col_double()
                             ))
                             # col_types = cols(
                             #  .default = col_double(),
@@ -167,6 +167,7 @@ COVID19TestCaseGenerator <- R6Class("COVID19TestCaseGenerator",
     expected.df <- self$readExpectedFile()
 
     processor <- self$getProcessorPreloaded()
+
     processor$curate()
     actual.df <- processor$getData()
     testthat::expect_equal(nrow(actual.df), nrow(expected.df))
