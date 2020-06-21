@@ -71,6 +71,7 @@ COVID19analytics_data_dir = "~/.R/COVID19analytics"
 library(COVID19analytics) 
 library(dplyr)
 library(knitr)
+library(lgr)
 ```
 
 
