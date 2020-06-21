@@ -508,15 +508,11 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
 #' getCredits
 #' @author kenarab
 #'@noRd
-getCredits <- function(add.original = TRUE){
+getCredits <- function(){
   original.author <- "@ken4rab"
-  #getSys()
   user.defined.authors <- getEnv("credits", fail.on.empty = FALSE)
   if (nchar(user.defined.authors) > 0){
     ret <- user.defined.authors
-    if (add.original){
-      ret <- paste(ret, original.author)
-    }
   }else{
     ret <- original.author
   }
