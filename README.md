@@ -7,18 +7,13 @@
 
 <!-- . -->
 
-This package curate (downloads, clean, consolidate, smooth) [data from
-Johns Hokpins](https://github.com/CSSEGISandData/COVID-19/) for
-analysing international outbreak of COVID-19.
+This package curate (downloads, clean, consolidate, smooth) data from
+[Johns Hokpins](https://github.com/CSSEGISandData/COVID-19/) and [Our
+world in data](https://ourworldindata.org/coronavirus) for analysing
+international outbreak of COVID-19.
 
 It includes several visualizations of the COVID-19 international
 outbreak.
-
-Yanchang Zhao, COVID-19 Data Analysis with Tidyverse and Ggplot2 -
-China. RDataMining.com, 2020.
-
-URL:
-<http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf>.
 
   - COVID19DataProcessor generates curated series
   - [visualizations](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/)
@@ -108,31 +103,31 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [22:38:49.112]  {stage: processor-setup}
-#> INFO  [22:38:49.147] Checking required downloaded  {downloaded.max.date: 2020-06-20, daily.update.time: 21:00:00, current.datetime: 2020-06-21 2.., download.flag: TRUE}
-#> INFO  [22:38:49.887] Checking required downloaded  {downloaded.max.date: 2020-06-20, daily.update.time: 21:00:00, current.datetime: 2020-06-21 2.., download.flag: TRUE}
-#> INFO  [22:38:50.376] Checking required downloaded  {downloaded.max.date: 2020-06-20, daily.update.time: 21:00:00, current.datetime: 2020-06-21 2.., download.flag: TRUE}
-#> INFO  [22:38:50.921]  {stage: data loaded}
-#> INFO  [22:38:50.923]  {stage: data-setup}
+#> INFO  [10:55:27.621]  {stage: processor-setup}
+#> INFO  [10:55:27.659] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
+#> INFO  [10:55:27.771] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
+#> INFO  [10:55:27.880] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
+#> INFO  [10:55:27.937]  {stage: data loaded}
+#> INFO  [10:55:27.938]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [22:38:50.926] Executing transform 
-#> INFO  [22:38:50.927] Executing consolidate 
-#> INFO  [22:38:52.792]  {stage: consolidated}
-#> INFO  [22:38:52.794] Executing standarize 
-#> INFO  [22:38:53.333] gathering DataModel 
-#> INFO  [22:38:53.335]  {stage: datamodel-setup}
+#> INFO  [10:55:27.941] Executing transform 
+#> INFO  [10:55:27.943] Executing consolidate 
+#> INFO  [10:55:29.882]  {stage: consolidated}
+#> INFO  [10:55:29.885] Executing standarize 
+#> INFO  [10:55:30.412] gathering DataModel 
+#> INFO  [10:55:30.414]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [22:38:53.339]  {stage: loading-aggregated-data-model}
+#> INFO  [10:55:30.418]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [22:38:55.189]  {stage: calculating-rates}
-#> INFO  [22:38:55.430]  {stage: making-data-comparison}
-#> INFO  [22:39:01.759]  {stage: applying-missing-values-method}
-#> INFO  [22:39:01.761]  {stage: Starting first imputation}
-#> INFO  [22:39:01.770]  {stage: calculating-rates}
-#> INFO  [22:39:01.985]  {stage: making-data-comparison-2}
-#> INFO  [22:39:08.148]  {stage: calculating-top-countries}
-#> INFO  [22:39:08.186]  {stage: curated}
+#> INFO  [10:55:32.308]  {stage: calculating-rates}
+#> INFO  [10:55:32.513]  {stage: making-data-comparison}
+#> INFO  [10:55:39.301]  {stage: applying-missing-values-method}
+#> INFO  [10:55:39.303]  {stage: Starting first imputation}
+#> INFO  [10:55:39.312]  {stage: calculating-rates}
+#> INFO  [10:55:39.553]  {stage: making-data-comparison-2}
+#> INFO  [10:55:45.942]  {stage: calculating-top-countries}
+#> INFO  [10:55:45.968]  {stage: curated}
 
 current.date <- max(data.processor$getData()$date)
 
@@ -159,16 +154,16 @@ kable((data.processor$getData() %>%
 
 | country      | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
 | :----------- | :--------- | -------------: | ------------: | --------: | -----: | ---------: |
-| US           | 2020-06-20 |          0.015 |         32540 |   2255119 | 119719 |        595 |
-| India        | 2020-06-20 |          0.039 |         15403 |    410451 |  13254 |        306 |
-| Russia       | 2020-06-20 |          0.014 |          7870 |    576162 |   7992 |        161 |
-| Peru         | 2020-06-20 |          0.028 |          6950 |    251338 |   7861 |        400 |
-| Chile        | 2020-06-20 |          0.023 |          5355 |    236748 |   4295 |        202 |
-| South Africa | 2020-06-20 |          0.057 |          4966 |     92681 |   1877 |         46 |
-| Pakistan     | 2020-06-20 |          0.029 |          4951 |    176617 |   3501 |        119 |
-| Mexico       | 2020-06-20 |          0.028 |          4717 |    175202 |  20781 |        387 |
-| Saudi Arabia | 2020-06-20 |          0.026 |          3941 |    154233 |   1230 |         46 |
-| Bangladesh   | 2020-06-20 |          0.031 |          3240 |    108775 |   1425 |         37 |
+| Brazil       | 2020-06-21 |          0.049 |         50428 |   1083341 |  50591 |        615 |
+| US           | 2020-06-21 |          0.011 |         24760 |   2279879 | 119969 |        250 |
+| India        | 2020-06-21 |          0.036 |         14831 |    425282 |  13699 |        445 |
+| Russia       | 2020-06-21 |          0.013 |          7717 |    583879 |   8101 |        109 |
+| Chile        | 2020-06-21 |          0.024 |          5607 |    242355 |   4479 |        184 |
+| Colombia     | 2020-06-21 |          0.085 |          5382 |     68836 |   2353 |        205 |
+| Mexico       | 2020-06-21 |          0.030 |          5343 |    180545 |  21825 |       1044 |
+| South Africa | 2020-06-21 |          0.050 |          4621 |     97302 |   1930 |         53 |
+| Pakistan     | 2020-06-21 |          0.025 |          4471 |    181088 |   3590 |         89 |
+| Bangladesh   | 2020-06-21 |          0.032 |          3531 |    112306 |   1464 |         39 |
 
 ``` r
 # Top 10 daily deaths increment
@@ -178,18 +173,18 @@ kable((data.processor$getData() %>%
   arrange(desc(deaths.inc)))[1:10,])
 ```
 
-| country        | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
-| :------------- | :--------- | -------------: | ------------: | --------: | -----: | ---------: |
-| Brazil         | 2020-06-20 |          0.000 |             0 |   1032913 |  49976 |       1022 |
-| US             | 2020-06-20 |          0.015 |         32540 |   2255119 | 119719 |        595 |
-| Peru           | 2020-06-20 |          0.028 |          6950 |    251338 |   7861 |        400 |
-| Mexico         | 2020-06-20 |          0.028 |          4717 |    175202 |  20781 |        387 |
-| India          | 2020-06-20 |          0.039 |         15403 |    410451 |  13254 |        306 |
-| Chile          | 2020-06-20 |          0.023 |          5355 |    236748 |   4295 |        202 |
-| Russia         | 2020-06-20 |          0.014 |          7870 |    576162 |   7992 |        161 |
-| United Kingdom | 2020-06-20 |          0.004 |          1295 |    304580 |  42674 |        128 |
-| Pakistan       | 2020-06-20 |          0.029 |          4951 |    176617 |   3501 |        119 |
-| Iran           | 2020-06-20 |          0.012 |          2322 |    202584 |   9507 |        115 |
+| country  | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
+| :------- | :--------- | -------------: | ------------: | --------: | -----: | ---------: |
+| Mexico   | 2020-06-21 |          0.030 |          5343 |    180545 |  21825 |       1044 |
+| Brazil   | 2020-06-21 |          0.049 |         50428 |   1083341 |  50591 |        615 |
+| India    | 2020-06-21 |          0.036 |         14831 |    425282 |  13699 |        445 |
+| US       | 2020-06-21 |          0.011 |         24760 |   2279879 | 119969 |        250 |
+| Colombia | 2020-06-21 |          0.085 |          5382 |     68836 |   2353 |        205 |
+| Chile    | 2020-06-21 |          0.024 |          5607 |    242355 |   4479 |        184 |
+| Iran     | 2020-06-21 |          0.012 |          2368 |    204952 |   9623 |        116 |
+| Russia   | 2020-06-21 |          0.013 |          7717 |    583879 |   8101 |        109 |
+| Pakistan | 2020-06-21 |          0.025 |          4471 |    181088 |   3590 |         89 |
+| Egypt    | 2020-06-21 |          0.027 |          1475 |     55233 |   2193 |         87 |
 
 ``` r
 rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries, countries.text = "Latam countries")
@@ -214,6 +209,7 @@ rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, count
 ``` r
 rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
                         field = "confirmed.inc", log.scale = TRUE)
+#> Warning: Removed 126 row(s) containing missing values (geom_path).
 ```
 
 <img src="man/figures/README-dataviz-4-latam-4.png" width="100%" />
@@ -228,10 +224,11 @@ rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field
 
 rg$ggplotCrossSection(included.countries = latam.countries,
                        field.x = "confirmed",
-                       field.y = "fatality.rate.min",
+                       field.y = "fatality.rate.max",
                        plot.description  = "Cross section Confirmed vs  Death rate min",
                        log.scale.x = TRUE,
                        log.scale.y = FALSE)
+#> Warning: Removed 126 row(s) containing missing values (geom_path).
 ```
 
 <img src="man/figures/README-dataviz-4-latam-6.png" width="100%" />
@@ -270,16 +267,18 @@ rc$ggplotComparisonExponentialGrowth(included.countries = international.countrie
 ``` r
 rg$ggplotCrossSection(included.countries = international.countries,
                        field.x = "confirmed",
-                       field.y = "fatality.rate.min",
+                       field.y = "fatality.rate.max",
                        plot.description  = "Cross section Confirmed vs Death rate min",
                        log.scale.x = TRUE,
                        log.scale.y = FALSE)
+#> Warning: Removed 90 row(s) containing missing values (geom_path).
 ```
 
 <img src="man/figures/README-dataviz-5-top-countries-5.png" width="100%" />
 
 ``` r
 rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)
+#> Warning: Removed 66 row(s) containing missing values (geom_path).
 ```
 
 <img src="man/figures/README-dataviz-6-top-countries-inc-daily-1.png" width="100%" />
@@ -287,6 +286,8 @@ rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)
 ``` r
 rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
 #> Warning: Transformation introduced infinite values in continuous y-axis
+
+#> Warning: Removed 66 row(s) containing missing values (geom_path).
 ```
 
 <img src="man/figures/README-dataviz-6-top-countries-inc-daily-2.png" width="100%" />
@@ -308,3 +309,18 @@ rg$ggplotCountriesBarGraphs(selected.country = "Argentina")
 ```
 
 <img src="man/figures/README-dataviz-7-top-countries-legacy-3.png" width="100%" />
+
+# References
+
+  - Johns Hopkins University. Retrieved from:
+    ‘<https://github.com/CSSEGISandData/COVID-19/>’ \[Online
+    Resource\]
+
+  - OurWorldInData.org. Retrieved from:
+    ‘<https://ourworldindata.org/coronavirus>’ \[Online Resource\]
+
+Yanchang Zhao, COVID-19 Data Analysis with Tidyverse and Ggplot2 -
+China. RDataMining.com, 2020.
+
+URL:
+<http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf>.

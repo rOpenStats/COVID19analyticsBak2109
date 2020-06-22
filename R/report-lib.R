@@ -53,7 +53,10 @@ ReportGenerator <- R6Class("ReportGenerator",
      coord_polar("y", start = 0) +
      xlab("") + ylab("Percentage (%)") +
      labs(title = paste0("Top 10 Countries with Most Confirmed Cases (", self$data.processor$max.date, ")")) +
-     scale_fill_brewer(name = "Country", labels = df$txt, palette = "Paired")
+     #scale_fill_brewer(name = "Country", labels = df$txt, palette = "Paired")
+     scale_fill_manual(name = "Country", labels = df$txt, values = getPackagePalette())
+
+    colors.palette <-
     ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date,
                       data.processor = self$data.processor,
                       total.colors = NULL, x.type = NULL)
@@ -222,9 +225,8 @@ setupTheme <- function(ggplot, report.date, x.values, data.processor,
     }
   }
   if (!is.null(total.colors)){
-    #, selected.palette = "Paired"
-    #colors.palette <- colorRampPalette(brewer.pal(8, selected.palette))(total.colors)
-    colors.palette <- c(brewer.pal(n = 9, name = "Set1"), brewer.pal(n = 8, name = "Set2"), brewer.pal(n = 12, name = "Set3"))
+    colors.palette <- getPackagePalette()
+
     if ( total.colors > length(colors.palette)){
       colors.palette <- colorRampPalette(colors.palette)(total.colors)
     }
@@ -257,17 +259,31 @@ setupTheme <- function(ggplot, report.date, x.values, data.processor,
   ggplot
 }
 
+#' getPackagePalette
+#' @import RColorBrewer
+#' @export
+getPackagePalette <- function(){
+  #Removed yellow colors which are confusing
+  c(brewer.pal(n = 9, name = "Set1")[-6], brewer.pal(n = 8, name = "Set2"), brewer.pal(n = 12, name = "Set3")[-2])
+}
+
+
+#' ReportGeneratorEnhanced
 #' New dataviz for reportGenerator by
 #' @author kenarab
 #' @import magrittr
 #' @import forcats
+#' @import ggrepel
+#' @import magrittr
 #' @export
 ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
  inherit = ReportGenerator,
-
    public = list(
-     initialize = function(data.processor){
+     ma.n = NA,
+     initialize = function(data.processor, ma.n = 7){
        super$initialize(data.processor = data.processor)
+       self$ma.n <- ma.n
+       self
      },
      ggplotTopCountriesStackedBarDailyInc = function(included.countries, excluded.countries = "World",
                                                      countries.text = "Top countries"){
@@ -322,14 +338,14 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
                                      field = "confirmed.inc",
                                      field.description  = "Daily new Confirmed Cases",
                                      log.scale = FALSE,
-                                        min.confirmed = 100){
+                                     show.legend = FALSE,
+                                     min.confirmed = 100){
 
        data.long <- as.data.frame(self$data.processor$getData())
        data.long %<>%  #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
          filter(confirmed >= min.confirmed) %>%
          filter(confirmed.inc > 0)
        data.long <- data.long[, c("country", "date", field)] %>% gather(key = type, value = count, -c(country, date))
-
 
        plot.title <- paste(field.description, "in", countries.text, " \nwith > ", min.confirmed, " confirmed")
        y.label <- field
@@ -340,6 +356,29 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        ## set factor levels to show them in a desirable order
        data.long %<>% mutate(type = factor(type, c("confirmed.inc")))
        x.values <- sort(unique(data.long$date))
+
+       data.calculate <- data.long %>%
+         group_by(country) %>%
+         summarise(observations = n()) %>%
+         filter(observations >= self$ma.n) %>%
+         arrange(observations)
+       data.long %<>% inner_join(data.calculate, by = "country")
+       nrow(data.long)
+       data.long %<>% group_by(country) %>% mutate(count.smoothed = runMean(count, self$ma.n))
+
+       ## cases by type
+       df <- data.long %>% filter(country %in% included.countries)
+       unique(df$country)
+
+       # df %<>%
+       #   mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
+       self$report.date <- max(self$data.processor$getData()$date)
+
+       df.last <- df %>% group_by(country) %>%
+         summarize(date = max(date))
+
+       df.last %<>% inner_join(df %>% select(country, date, count, count.smoothed), by = c("country", "date"))
+       df.last %<>% mutate(country.count = paste(country,"(", count, ")", sep = ""))
 
        ## cases by type
        df <- data.long %>% filter(country %in% included.countries)
@@ -352,8 +391,17 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
 
        ret <- df %>% filter(country != "World") %>%
          ggplot(aes(x = date, y = count, color = country)) +
-         geom_line() + xlab("Date") + ylab(y.label) +
+         geom_point(aes(y = count), size = 0.3, show.legend = show.legend) +
+         geom_line(aes(y = count.smoothed), show.legend = show.legend) +
+         xlab("Date") + ylab(y.label) +
          labs(title = plot.title)
+       ret <- ret + geom_text_repel(data = df.last,
+                                    aes(x = date, y = count.smoothed,
+                                        color = country, label = country.count),
+                                    size = 2, family = "mono",
+                                    nudge_x = 5, direction = "y", hjust = 0,
+                                    segment.size = 0.1,
+                                    show.legend = show.legend)
        ret <- self$getXLabelsTheme(ret, x.values)
        ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date,
                          data.processor = self$data.processor,
@@ -383,7 +431,8 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
                                      plot.description  = "Cross section Confirmed vs  Death rate min",
                                      log.scale.x = TRUE,
                                      log.scale.y = FALSE,
-                                     min.confirmed = 100){
+                                     min.confirmed = 100,
+                                     show.legend = FALSE){
 
        data.long <- as.data.frame(self$data.processor$getData())
        data.long %<>%  #select(c(country, date, confirmed, remaining.confirmed, recovered, deaths, confirmed.inc)) %>%
@@ -391,7 +440,9 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          filter(confirmed.inc > 0)
        self$report.date <- max(data.long$date)
 
-       data.long <- data.long[, c("country", field.x, field.y)]
+       data.long <- data.long %>% select_at(c("country", field.x, field.y))
+
+
        head(data.long)
        data.long %<>% gather(key = type, value = count, -c("country", field.x))
        head(data.long)
@@ -417,6 +468,22 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        data.long %<>% mutate(type = factor(type, c(field.y)))
        x.values <- data.long[, field.x]
 
+
+       #debug
+       data.long <<- data.long
+       field.x <<- field.x
+
+       #stop("Under construction")
+       data.calculate <- data.long %>%
+         group_by(country) %>%
+         summarise(observations = n()) %>%
+         filter(observations >= self$ma.n) %>%
+         arrange(observations)
+       data.long %<>% inner_join(data.calculate, by = "country")
+       nrow(data.long)
+       data.long %<>% group_by(country) %>% mutate(count.smoothed = runMean(count, self$ma.n))
+
+
        ## cases by type
        df <- data.long %>% filter(country %in% included.countries)
        df <- df %>% filter(!country %in% excluded.countries)
@@ -425,10 +492,31 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
          mutate(country = country %>% factor(levels = c(countries.object$countries))) %>%
          mutate(country = fct_reorder(country, desc(count)))
 
+       df %<>% mutate(count = round(count, 4))
+       #debug
+
+       df.last <- df %>% group_by(country) %>%
+         summarise(across(starts_with(c(field.x, "count", "count.smoothed")),  list(last = last), .names = "{col}"))
+
+       #df.last %<>% inner_join(df %>% select_at(c("country", field.x, "count", "count.smoothed")), by = c("country", field.x))
+       df.last %<>% mutate(country.count = paste(country," (", count, ")", sep = ""))
+
+
        ret <- df %>% filter(country != "World") %>%
          ggplot(aes_string(x = field.x, y = "count", color = "country")) +
-         geom_line() + xlab(label.x) + ylab(label.y) +
+         geom_point(aes(y = count), size = 0.3, show.legend = show.legend) +
+         geom_line(aes(y = count.smoothed), show.legend = show.legend) +
+         xlab(label.x) + ylab(label.y) +
          labs(title = plot.title)
+
+       ret <- ret + geom_text_repel(data = df.last,
+                                    aes_string(x = field.x, y = "count.smoothed",
+                                        color = "country", label = "country.count"),
+                                    size = 2, family = "mono",
+                                    nudge_x = 5, direction = "y", hjust = 0,
+                                    segment.size = 0.1,
+                                    show.legend = show.legend)
+
        ret <- setupTheme(ret, report.date = self$report.date,
                          x.values = df[, field.x], x.type = "field.x",
                          data.processor = self$data.processor,
@@ -501,17 +589,19 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      df.last <- df %>% group_by(country) %>%
                   summarize(epidemy.day = max(epidemy.day))
 
-     df.last %<>% inner_join(df %>% select(country, epidemy.day, count), by = c("country", "epidemy.day"))
+     df.last %<>% inner_join(df %>% select(country, epidemy.day, count, count.smoothed), by = c("country", "epidemy.day"))
+     df.last %<>% mutate(country.count = paste(country,"(", count, ")", sep = ""))
+
      ret <- df %>% filter(country != "World") %>%
        ggplot(aes(x = epidemy.day, color = country)) +
        #ggplot(aes(x = epidemy.day, y = count, color = country)) +
-       geom_point(aes(y = count), size = 0.5, show.legend = show.legend) +
+       geom_point(aes(y = count), size = 0.3, show.legend = show.legend) +
        geom_line(aes(y = count.smoothed), show.legend = show.legend) +
        xlab(paste("Epidemy day (0 when ", field, " >=", min.cases, ")")) + ylab(y.label) +
        labs(title = plot.title)
      ret <- ret + geom_text_repel(data = df.last,
-                            aes(x = epidemy.day, y = count,
-                                color = country, label = country),
+                            aes(x = epidemy.day, y = count.smoothed,
+                                color = country, label = country.count),
                             size = 2, family = "mono",
                             nudge_x = 5, direction = "y", hjust = 0,
                             segment.size = 0.1,

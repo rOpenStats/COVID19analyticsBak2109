@@ -24,15 +24,12 @@ knitr::opts_chunk$set(
 
 
 
-This package curate (downloads, clean, consolidate, smooth) [data from Johns Hokpins](https://github.com/CSSEGISandData/COVID-19/) for analysing international outbreak of COVID-19. 
+This package curate (downloads, clean, consolidate, smooth) data from [Johns Hokpins](https://github.com/CSSEGISandData/COVID-19/) and [Our world in data](https://ourworldindata.org/coronavirus) for analysing international outbreak of COVID-19. 
  
 It includes several visualizations of the COVID-19 international outbreak.
 
 
 
-Yanchang Zhao, COVID-19 Data Analysis with Tidyverse and Ggplot2 - China. RDataMining.com, 2020.
-
-URL: http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf.
 
 * COVID19DataProcessor generates curated series
 * [visualizations](https://www.r-bloggers.com/coronavirus-data-analysis-with-r-tidyverse-and-ggplot2/) by [Yanchang Zhao](https://www.r-bloggers.com/author/yanchang-zhao/) are included in ReportGenerator R6 object 
@@ -143,7 +140,7 @@ rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field
 
 rg$ggplotCrossSection(included.countries = latam.countries,
                        field.x = "confirmed",
-                       field.y = "fatality.rate.min",
+                       field.y = "fatality.rate.max",
                        plot.description  = "Cross section Confirmed vs  Death rate min",
                        log.scale.x = TRUE,
                        log.scale.y = FALSE)
@@ -161,7 +158,7 @@ rc$ggplotComparisonExponentialGrowth(included.countries = international.countrie
                                      y.label = "Deaths", min.cases = 1)
 rg$ggplotCrossSection(included.countries = international.countries,
                        field.x = "confirmed",
-                       field.y = "fatality.rate.min",
+                       field.y = "fatality.rate.max",
                        plot.description  = "Cross section Confirmed vs Death rate min",
                        log.scale.x = TRUE,
                        log.scale.y = FALSE)
@@ -181,5 +178,15 @@ rg$ggplotTopCountriesBarPlots()
 rg$ggplotCountriesBarGraphs(selected.country = "Argentina")
 ```
 
+
+# References
+
+* Johns Hopkins University. Retrieved from: ‘https://github.com/CSSEGISandData/COVID-19/’ [Online Resource]
+
+* OurWorldInData.org. Retrieved from: ‘https://ourworldindata.org/coronavirus’ [Online Resource]
+
+Yanchang Zhao, COVID-19 Data Analysis with Tidyverse and Ggplot2 - China. RDataMining.com, 2020.
+
+URL: http://www.rdatamining.com/docs/Coronavirus-data-analysis-china.pdf.
 
 

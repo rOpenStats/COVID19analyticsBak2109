@@ -2,10 +2,13 @@
 % Please edit documentation in R/report-lib.R
 \name{ReportGeneratorEnhanced}
 \alias{ReportGeneratorEnhanced}
-\title{New dataviz for reportGenerator by}
+\title{ReportGeneratorEnhanced
+New dataviz for reportGenerator by}
 \description{
+ReportGeneratorEnhanced
 New dataviz for reportGenerator by
 
+ReportGeneratorEnhanced
 New dataviz for reportGenerator by
 }
 \author{
@@ -43,7 +46,7 @@ kenarab
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorEnhanced$new(data.processor)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorEnhanced$new(data.processor, ma.n = 7)}\if{html}{\out{</div>}}
 }
 
 }
@@ -72,6 +75,7 @@ kenarab
   field = "confirmed.inc",
   field.description = "Daily new Confirmed Cases",
   log.scale = FALSE,
+  show.legend = FALSE,
   min.confirmed = 100
 )}\if{html}{\out{</div>}}
 }
@@ -93,7 +97,8 @@ kenarab
   plot.description = "Cross section Confirmed vs  Death rate min",
   log.scale.x = TRUE,
   log.scale.y = FALSE,
-  min.confirmed = 100
+  min.confirmed = 100,
+  show.legend = FALSE
 )}\if{html}{\out{</div>}}
 }
 
