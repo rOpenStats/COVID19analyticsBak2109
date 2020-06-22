@@ -103,31 +103,31 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [10:55:27.621]  {stage: processor-setup}
-#> INFO  [10:55:27.659] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
-#> INFO  [10:55:27.771] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
-#> INFO  [10:55:27.880] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
-#> INFO  [10:55:27.937]  {stage: data loaded}
-#> INFO  [10:55:27.938]  {stage: data-setup}
+#> INFO  [11:30:30.575]  {stage: processor-setup}
+#> INFO  [11:30:30.611] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
+#> INFO  [11:30:30.717] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
+#> INFO  [11:30:30.809] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
+#> INFO  [11:30:30.864]  {stage: data loaded}
+#> INFO  [11:30:30.866]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [10:55:27.941] Executing transform 
-#> INFO  [10:55:27.943] Executing consolidate 
-#> INFO  [10:55:29.882]  {stage: consolidated}
-#> INFO  [10:55:29.885] Executing standarize 
-#> INFO  [10:55:30.412] gathering DataModel 
-#> INFO  [10:55:30.414]  {stage: datamodel-setup}
+#> INFO  [11:30:30.869] Executing transform 
+#> INFO  [11:30:30.870] Executing consolidate 
+#> INFO  [11:30:32.795]  {stage: consolidated}
+#> INFO  [11:30:32.797] Executing standarize 
+#> INFO  [11:30:33.355] gathering DataModel 
+#> INFO  [11:30:33.357]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [10:55:30.418]  {stage: loading-aggregated-data-model}
+#> INFO  [11:30:33.361]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [10:55:32.308]  {stage: calculating-rates}
-#> INFO  [10:55:32.513]  {stage: making-data-comparison}
-#> INFO  [10:55:39.301]  {stage: applying-missing-values-method}
-#> INFO  [10:55:39.303]  {stage: Starting first imputation}
-#> INFO  [10:55:39.312]  {stage: calculating-rates}
-#> INFO  [10:55:39.553]  {stage: making-data-comparison-2}
-#> INFO  [10:55:45.942]  {stage: calculating-top-countries}
-#> INFO  [10:55:45.968]  {stage: curated}
+#> INFO  [11:30:35.154]  {stage: calculating-rates}
+#> INFO  [11:30:35.350]  {stage: making-data-comparison}
+#> INFO  [11:30:41.645]  {stage: applying-missing-values-method}
+#> INFO  [11:30:41.647]  {stage: Starting first imputation}
+#> INFO  [11:30:41.655]  {stage: calculating-rates}
+#> INFO  [11:30:41.875]  {stage: making-data-comparison-2}
+#> INFO  [11:30:48.024]  {stage: calculating-top-countries}
+#> INFO  [11:30:48.050]  {stage: curated}
 
 current.date <- max(data.processor$getData()$date)
 
@@ -188,6 +188,7 @@ kable((data.processor$getData() %>%
 
 ``` r
 rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries, countries.text = "Latam countries")
+#> Warning: Removed 144 rows containing missing values (position_stack).
 ```
 
 <img src="man/figures/README-dataviz-4-latam-1.png" width="100%" />
@@ -235,7 +236,7 @@ rg$ggplotCrossSection(included.countries = latam.countries,
 
 ``` r
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
-#> Warning: Removed 1 rows containing missing values (position_stack).
+#> Warning: Removed 67 rows containing missing values (position_stack).
 ```
 
 <img src="man/figures/README-dataviz-5-top-countries-1.png" width="100%" />

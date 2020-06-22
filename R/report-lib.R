@@ -54,7 +54,7 @@ ReportGenerator <- R6Class("ReportGenerator",
      xlab("") + ylab("Percentage (%)") +
      labs(title = paste0("Top 10 Countries with Most Confirmed Cases (", self$data.processor$max.date, ")")) +
      #scale_fill_brewer(name = "Country", labels = df$txt, palette = "Paired")
-     scale_fill_manual(name = "Country", labels = df$txt, values = getPackagePalette())
+     scale_fill_manual(name = "Country", labels = df$txt, values = getPackagePalette(kind = "series"))
 
     colors.palette <-
     ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date,
@@ -183,6 +183,8 @@ ReportGenerator <- R6Class("ReportGenerator",
 setupTheme <- function(ggplot, report.date, x.values, data.processor,
                        total.colors, x.type = "dates", base.size = 6,
                        log.scale.y = FALSE, log.scale.x = FALSE){
+  bg.color <- getPackagePalette(kind = "bg")
+  #ggplot <- ggplot + theme(panel.background  = element_rect(fill = bg.color))
   apply.log.x.scale <- TRUE
   if (!is.null(x.type)){
     apply.log.x.scale <- FALSE
@@ -225,7 +227,7 @@ setupTheme <- function(ggplot, report.date, x.values, data.processor,
     }
   }
   if (!is.null(total.colors)){
-    colors.palette <- getPackagePalette()
+    colors.palette <- getPackagePalette(kind = "series")
 
     if ( total.colors > length(colors.palette)){
       colors.palette <- colorRampPalette(colors.palette)(total.colors)
@@ -234,7 +236,7 @@ setupTheme <- function(ggplot, report.date, x.values, data.processor,
       colors.palette <- colors.palette[seq_len(total.colors)]
     }
 
-    ggplot <- ggplot +
+    ggplot <- ggplot() +
       #scale_fill_brewer(palette = selected.palette)
       scale_fill_manual(values = colors.palette) +
       scale_color_manual(values = colors.palette)
@@ -248,7 +250,9 @@ setupTheme <- function(ggplot, report.date, x.values, data.processor,
     theme(legend.title = element_blank(),
           #TODO caption size is not working. Fix it
           plot.caption = element_text(size = 5),
-          axis.text.x = element_text(angle = 90)) +
+          axis.text.x = element_text(angle = 90)
+          #plot.background  = element_rect(fill = bg.color)
+          ) +
     labs(caption = getCitationNote(report.date = report.date, data.provider = data.processor$getDataProvider()))
   if (log.scale.y){
     ggplot <- ggplot + scale_y_log10(labels = comma)
@@ -262,9 +266,15 @@ setupTheme <- function(ggplot, report.date, x.values, data.processor,
 #' getPackagePalette
 #' @import RColorBrewer
 #' @export
-getPackagePalette <- function(){
-  #Removed yellow colors which are confusing
-  c(brewer.pal(n = 9, name = "Set1")[-6], brewer.pal(n = 8, name = "Set2"), brewer.pal(n = 12, name = "Set3")[-2])
+getPackagePalette <- function(kind = "series"){
+  if (kind == "series"){
+    #Removed yellow colors which are confusing
+    ret <- c(brewer.pal(n = 9, name = "Set1")[-6], brewer.pal(n = 8, name = "Set2"), brewer.pal(n = 12, name = "Set3")[-2])
+  }
+  if (kind == "bg"){
+    ret <- brewer.pal(n = 9, name = "Blues")[2]
+  }
+  ret
 }
 
 
