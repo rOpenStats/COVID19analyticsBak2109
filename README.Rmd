@@ -136,6 +136,8 @@ rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, count
                                      field = "remaining.confirmed", y.label = "Active cases", min.cases = 100)
 rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
                         field = "confirmed.inc", log.scale = TRUE)
+rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
+                        field = "rate.inc.daily", log.scale = TRUE)
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field = "deaths", y.label = "Deaths", min.cases = 1)
 
 rg$ggplotCrossSection(included.countries = latam.countries,

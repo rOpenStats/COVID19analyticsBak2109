@@ -4,7 +4,7 @@
 \alias{getPackagePalette}
 \title{getPackagePalette}
 \usage{
-getPackagePalette()
+getPackagePalette(kind = "series")
 }
 \description{
 getPackagePalette

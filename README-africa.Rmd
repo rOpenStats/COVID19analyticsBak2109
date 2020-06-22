@@ -84,7 +84,7 @@ rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
 
 top.countries <- data.processor$top.countries
 international.countries <- unique(c(data.processor$top.countries,
-                                    "Japan", "Singapore", "Korea, South"))
+                                    "China", "Japan", "Singapore", "Korea, South"))
 africa.countries <- sort(data.processor$countries$getCountries(division = "continent", name = "Africa"))
 
 ```
@@ -127,13 +127,13 @@ rc$ggplotComparisonExponentialGrowth(included.countries = international.countrie
 ```
 
 
-```{r, dataviz-6-top-countries-inc-daily}}
+```{r, dataviz-6-top-countries-inc-daily}
 rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)
 rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
 ```
 
 
-```{r, dataviz-7-top-countries-inc-legacy}}
+```{r, dataviz-7-top-countries-inc-legacy}
 rg$ggplotTopCountriesPie()
 rg$ggplotTopCountriesBarPlots()
 rg$ggplotCountriesBarGraphs(selected.country = "Ethiopia")

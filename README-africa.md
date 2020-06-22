@@ -88,31 +88,31 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [12:07:37.399]  {stage: processor-setup}
-#> INFO  [12:07:37.443] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
-#> INFO  [12:07:37.573] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
-#> INFO  [12:07:37.600] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
-#> INFO  [12:07:37.749]  {stage: data loaded}
-#> INFO  [12:07:37.751]  {stage: data-setup}
+#> INFO  [16:30:11.111]  {stage: processor-setup}
+#> INFO  [16:30:11.149] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
+#> INFO  [16:30:11.261] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
+#> INFO  [16:30:11.286] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
+#> INFO  [16:30:11.428]  {stage: data loaded}
+#> INFO  [16:30:11.429]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [12:07:37.753] Executing transform 
-#> INFO  [12:07:37.754] Executing consolidate 
-#> INFO  [12:07:39.700]  {stage: consolidated}
-#> INFO  [12:07:39.701] Executing standarize 
-#> INFO  [12:07:40.233] gathering DataModel 
-#> INFO  [12:07:40.234]  {stage: datamodel-setup}
+#> INFO  [16:30:11.431] Executing transform 
+#> INFO  [16:30:11.433] Executing consolidate 
+#> INFO  [16:30:13.409]  {stage: consolidated}
+#> INFO  [16:30:13.410] Executing standarize 
+#> INFO  [16:30:13.933] gathering DataModel 
+#> INFO  [16:30:13.934]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [12:07:40.238]  {stage: loading-aggregated-data-model}
+#> INFO  [16:30:13.938]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [12:07:42.061]  {stage: calculating-rates}
-#> INFO  [12:07:42.281]  {stage: making-data-comparison}
-#> INFO  [12:07:48.778]  {stage: applying-missing-values-method}
-#> INFO  [12:07:48.779]  {stage: Starting first imputation}
-#> INFO  [12:07:48.789]  {stage: calculating-rates}
-#> INFO  [12:07:49.033]  {stage: making-data-comparison-2}
-#> INFO  [12:07:55.262]  {stage: calculating-top-countries}
-#> INFO  [12:07:55.289]  {stage: curated}
+#> INFO  [16:30:15.807]  {stage: calculating-rates}
+#> INFO  [16:30:16.017]  {stage: making-data-comparison}
+#> INFO  [16:30:22.477]  {stage: applying-missing-values-method}
+#> INFO  [16:30:22.478]  {stage: Starting first imputation}
+#> INFO  [16:30:22.486]  {stage: calculating-rates}
+#> INFO  [16:30:22.720]  {stage: making-data-comparison-2}
+#> INFO  [16:30:29.144]  {stage: calculating-top-countries}
+#> INFO  [16:30:29.170]  {stage: curated}
 
 current.date <- max(data.processor$getData()$date)
 
@@ -122,7 +122,7 @@ rc <- ReportGeneratorDataComparison$new(data.processor = data.processor)
 
 top.countries <- data.processor$top.countries
 international.countries <- unique(c(data.processor$top.countries,
-                                    "Japan", "Singapore", "Korea, South"))
+                                    "China", "Japan", "Singapore", "Korea, South"))
 africa.countries <- sort(data.processor$countries$getCountries(division = "continent", name = "Africa"))
 ```
 
@@ -211,6 +211,7 @@ rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
                                                min.cases = 100)
+#> Warning: Removed 2 row(s) containing missing values (geom_path).
 ```
 
 <img src="man/figures/README-africa-dataviz-5-top-countries-2.png" width="100%" />
@@ -220,7 +221,7 @@ rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)
 #> Warning: Removed 66 row(s) containing missing values (geom_path).
 ```
 
-<img src="man/figures/README-africa-dataviz-6-top-countries-inc-daily}-1.png" width="100%" />
+<img src="man/figures/README-africa-dataviz-6-top-countries-inc-daily-1.png" width="100%" />
 
 ``` r
 rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
@@ -229,22 +230,22 @@ rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
 #> Warning: Removed 66 row(s) containing missing values (geom_path).
 ```
 
-<img src="man/figures/README-africa-dataviz-6-top-countries-inc-daily}-2.png" width="100%" />
+<img src="man/figures/README-africa-dataviz-6-top-countries-inc-daily-2.png" width="100%" />
 
 ``` r
 rg$ggplotTopCountriesPie()
 ```
 
-<img src="man/figures/README-africa-dataviz-7-top-countries-inc-legacy}-1.png" width="100%" />
+<img src="man/figures/README-africa-dataviz-7-top-countries-inc-legacy-1.png" width="100%" />
 
 ``` r
 rg$ggplotTopCountriesBarPlots()
 ```
 
-<img src="man/figures/README-africa-dataviz-7-top-countries-inc-legacy}-2.png" width="100%" />
+<img src="man/figures/README-africa-dataviz-7-top-countries-inc-legacy-2.png" width="100%" />
 
 ``` r
 rg$ggplotCountriesBarGraphs(selected.country = "Ethiopia")
 ```
 
-<img src="man/figures/README-africa-dataviz-7-top-countries-inc-legacy}-3.png" width="100%" />
+<img src="man/figures/README-africa-dataviz-7-top-countries-inc-legacy-3.png" width="100%" />

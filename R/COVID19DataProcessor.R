@@ -233,12 +233,12 @@ COVID19DataProcessor <- R6Class("COVID19DataProcessor",
                           deaths.inc = ifelse(date == day1, NA, deaths - lag(deaths, n = 1)),
                           recovered.inc = ifelse(date == day1, NA, recovered - lag(recovered, n = 1)))
     ## death rate based on total deaths and cured cases
-    self$data.agg %<>% mutate(rate.upper = (100 * deaths / (deaths + recovered)) %>% round(2))
+    self$data.agg %<>% mutate(rate.upper = (100 * deaths / (deaths + recovered)) %>% round(4))
     ## lower bound: death rate based on total confirmed cases
-    self$data.agg %<>% mutate(rate.lower = (100 * deaths / confirmed) %>% round(2))
+    self$data.agg %<>% mutate(rate.lower = (100 * deaths / confirmed) %>% round(4))
     ## death rate based on the number of death/cured on every single day
-    self$data.agg %<>% mutate(rate.daily = (100 * deaths.inc / (deaths.inc + recovered.inc)) %>% round(3))
-    self$data.agg %<>% mutate(rate.inc.daily = (confirmed.inc / (confirmed - confirmed.inc)) %>% round(3))
+    self$data.agg %<>% mutate(rate.daily = (100 * deaths.inc / (deaths.inc + recovered.inc)) %>% round(4))
+    self$data.agg %<>% mutate(rate.inc.daily = (confirmed.inc / (confirmed - confirmed.inc)) %>% round(4))
 
     self$data.agg %<>% mutate(remaining.confirmed = (confirmed - deaths - recovered))
     self$data.agg %<>% mutate(fatality.rate.min = (deaths / confirmed))
