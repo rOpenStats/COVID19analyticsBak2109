@@ -108,31 +108,31 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [16:38:19.921]  {stage: processor-setup}
-#> INFO  [16:38:19.969] Checking required downloaded  {downloaded.max.date: 2020-06-20, daily.update.time: 21:00:00, current.datetime: 2020-06-21 1.., download.flag: FALSE}
-#> INFO  [16:38:20.063] Checking required downloaded  {downloaded.max.date: 2020-06-20, daily.update.time: 21:00:00, current.datetime: 2020-06-21 1.., download.flag: FALSE}
-#> INFO  [16:38:20.094] Checking required downloaded  {downloaded.max.date: 2020-06-20, daily.update.time: 21:00:00, current.datetime: 2020-06-21 1.., download.flag: FALSE}
-#> INFO  [16:38:20.169]  {stage: data loaded}
-#> INFO  [16:38:20.171]  {stage: data-setup}
+#> INFO  [22:38:49.112]  {stage: processor-setup}
+#> INFO  [22:38:49.147] Checking required downloaded  {downloaded.max.date: 2020-06-20, daily.update.time: 21:00:00, current.datetime: 2020-06-21 2.., download.flag: TRUE}
+#> INFO  [22:38:49.887] Checking required downloaded  {downloaded.max.date: 2020-06-20, daily.update.time: 21:00:00, current.datetime: 2020-06-21 2.., download.flag: TRUE}
+#> INFO  [22:38:50.376] Checking required downloaded  {downloaded.max.date: 2020-06-20, daily.update.time: 21:00:00, current.datetime: 2020-06-21 2.., download.flag: TRUE}
+#> INFO  [22:38:50.921]  {stage: data loaded}
+#> INFO  [22:38:50.923]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [16:38:20.175] Executing transform 
-#> INFO  [16:38:20.176] Executing consolidate 
-#> INFO  [16:38:22.448]  {stage: consolidated}
-#> INFO  [16:38:22.452] Executing standarize 
-#> INFO  [16:38:23.058] gathering DataModel 
-#> INFO  [16:38:23.060]  {stage: datamodel-setup}
+#> INFO  [22:38:50.926] Executing transform 
+#> INFO  [22:38:50.927] Executing consolidate 
+#> INFO  [22:38:52.792]  {stage: consolidated}
+#> INFO  [22:38:52.794] Executing standarize 
+#> INFO  [22:38:53.333] gathering DataModel 
+#> INFO  [22:38:53.335]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [16:38:23.065]  {stage: loading-aggregated-data-model}
+#> INFO  [22:38:53.339]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [16:38:25.141]  {stage: calculating-rates}
-#> INFO  [16:38:25.366]  {stage: making-data-comparison}
-#> INFO  [16:38:32.975]  {stage: applying-missing-values-method}
-#> INFO  [16:38:32.977]  {stage: Starting first imputation}
-#> INFO  [16:38:32.987]  {stage: calculating-rates}
-#> INFO  [16:38:33.229]  {stage: making-data-comparison-2}
-#> INFO  [16:38:40.457]  {stage: calculating-top-countries}
-#> INFO  [16:38:40.485]  {stage: curated}
+#> INFO  [22:38:55.189]  {stage: calculating-rates}
+#> INFO  [22:38:55.430]  {stage: making-data-comparison}
+#> INFO  [22:39:01.759]  {stage: applying-missing-values-method}
+#> INFO  [22:39:01.761]  {stage: Starting first imputation}
+#> INFO  [22:39:01.770]  {stage: calculating-rates}
+#> INFO  [22:39:01.985]  {stage: making-data-comparison-2}
+#> INFO  [22:39:08.148]  {stage: calculating-top-countries}
+#> INFO  [22:39:08.186]  {stage: curated}
 
 current.date <- max(data.processor$getData()$date)
 
@@ -246,6 +246,7 @@ rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
                                      field = "confirmed", y.label = "Confirmed", min.cases = 100)
+#> Warning: Removed 2 row(s) containing missing values (geom_path).
 ```
 
 <img src="man/figures/README-dataviz-5-top-countries-2.png" width="100%" />
@@ -253,6 +254,7 @@ rc$ggplotComparisonExponentialGrowth(included.countries = international.countrie
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
                                      field = "remaining.confirmed", y.label = "Active cases", min.cases = 100)
+#> Warning: Removed 2 row(s) containing missing values (geom_path).
 ```
 
 <img src="man/figures/README-dataviz-5-top-countries-3.png" width="100%" />
@@ -260,6 +262,7 @@ rc$ggplotComparisonExponentialGrowth(included.countries = international.countrie
 ``` r
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, field = "deaths", 
                                      y.label = "Deaths", min.cases = 1)
+#> Warning: Removed 2 row(s) containing missing values (geom_path).
 ```
 
 <img src="man/figures/README-dataviz-5-top-countries-4.png" width="100%" />

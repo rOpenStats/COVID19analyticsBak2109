@@ -443,6 +443,7 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
 #' @import scales
 #' @import TTR
 #' @import ggrepel
+#' @import magrittr
 #' @export
 ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
  public = list(
@@ -498,10 +499,9 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      self$report.date <- max(self$data.processor$getData()$date)
 
      df.last <- df %>% group_by(country) %>%
-                  summarize(last.epidemy.day = max(epidemy.day),
-                            max.count = max(count))
+                  summarize(epidemy.day = max(epidemy.day))
 
-
+     df.last %<>% inner_join(df %>% select(country, epidemy.day, count), by = c("country", "epidemy.day"))
      ret <- df %>% filter(country != "World") %>%
        ggplot(aes(x = epidemy.day, color = country)) +
        #ggplot(aes(x = epidemy.day, y = count, color = country)) +
@@ -510,7 +510,7 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
        xlab(paste("Epidemy day (0 when ", field, " >=", min.cases, ")")) + ylab(y.label) +
        labs(title = plot.title)
      ret <- ret + geom_text_repel(data = df.last,
-                            aes(x = last.epidemy.day, y = max.count,
+                            aes(x = epidemy.day, y = count,
                                 color = country, label = country),
                             size = 2, family = "mono",
                             nudge_x = 5, direction = "y", hjust = 0,
