@@ -107,7 +107,7 @@ africa.countries <- sort(data.processor$countries$getCountries(division = "conti
   arrange(desc(deaths.inc)))[1:10,]
 ```
 
-```{r}
+```{r, dataviz-4-africa-countries}
 rg$ggplotTopCountriesStackedBarDailyInc(included.countries = africa.countries,
                                                   countries.text = "Africa")
 rc$ggplotComparisonExponentialGrowth(included.countries = africa.countries, min.cases = 20)
@@ -120,26 +120,22 @@ rc$ggplotComparisonExponentialGrowth(included.countries = africa.countries,
 ```
 
 
-```{r}
+```{r, dataviz-5-top-countries}
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
                                                min.cases = 100)
 ```
 
 
-```{r}
+```{r, dataviz-6-top-countries-inc-daily}}
 rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)
 rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
 ```
 
 
-```{r}
+```{r, dataviz-7-top-countries-inc-legacy}}
 rg$ggplotTopCountriesPie()
 rg$ggplotTopCountriesBarPlots()
-```
-
-
-```{r}
 rg$ggplotCountriesBarGraphs(selected.country = "Ethiopia")
 ```
 
