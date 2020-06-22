@@ -299,17 +299,28 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
 
        ## set factor levels to show them in a desirable order
        data.long %<>% mutate(type = factor(type, c("confirmed.inc")))
+
+       data.calculate <- data.long %>%
+         group_by(country) %>%
+         summarise(observations = n()) %>%
+         filter(observations >= self$ma.n) %>%
+         arrange(observations)
+       data.long %<>% inner_join(data.calculate, by = "country")
+       nrow(data.long)
+       data.long %<>% group_by(country) %>% mutate(count.smoothed = runMean(count, self$ma.n))
+
        ## cases by type
        df <- data.long %>% filter(country %in% included.countries)
        df <- df %>% filter(!country %in% excluded.countries)
+       df %<>% group_by(country) %>% mutate(max.count = max(count))
        df %<>%
          mutate(country = country %>% factor(levels = c(included.countries))) %>%
-         mutate(country = fct_reorder(country, desc(count)))
+         mutate(country = fct_reorder(country, desc(max.count)))
        x.values <- sort(unique(data.long$date))
 
        self$report.date <- max(df$date)
        ret <- df %>% filter(country != "World") %>%
-         ggplot(aes(x = date, y = count, fill = country)) +
+         ggplot(aes(x = date, y = count.smoothed, fill = country)) +
          geom_bar(stat = "identity") + xlab("Date") + ylab("Count") +
          labs(title = plot.title)
        #ret <- self$getXLabelsTheme(ret, x.values)
@@ -375,18 +386,18 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        self$report.date <- max(self$data.processor$getData()$date)
 
        df.last <- df %>% group_by(country) %>%
-         summarize(date = max(date))
+         summarise(across(starts_with(c("date", "count", "count.smoothed")),  list(last = last), .names = "{col}"))
 
-       df.last %<>% inner_join(df %>% select(country, date, count, count.smoothed), by = c("country", "date"))
        df.last %<>% mutate(country.count = paste(country,"(", count, ")", sep = ""))
 
        ## cases by type
        df <- data.long %>% filter(country %in% included.countries)
        df <- df %>% filter(!country %in% excluded.countries)
        countries.object <- self$data.processor$getCountries()
+       df %<>% group_by(country) %>% mutate(max.count = max(count))
        df %<>%
          mutate(country = country %>% factor(levels = c(countries.object$countries))) %>%
-         mutate(country = fct_reorder(country, desc(count)))
+         mutate(country = fct_reorder(country, desc(max.count)))
        self$report.date <- max(df$date)
 
        ret <- df %>% filter(country != "World") %>%
@@ -488,9 +499,10 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
        df <- data.long %>% filter(country %in% included.countries)
        df <- df %>% filter(!country %in% excluded.countries)
        countries.object <- self$data.processor$getCountries()
+       df %<>% group_by(country) %>% mutate(max.count = max(count))
        df %<>%
          mutate(country = country %>% factor(levels = c(countries.object$countries))) %>%
-         mutate(country = fct_reorder(country, desc(count)))
+         mutate(country = fct_reorder(country, desc(max.count)))
 
        df %<>% mutate(count = round(count, 4))
        #debug
@@ -579,8 +591,9 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      ## cases by type
      df <- data.long %>% filter(country %in% included.countries)
      unique(df$country)
+     df %<>% group_by(country) %>% mutate(max.count = max(count))
      df <- df %>% filter(count >= min.cases) %>%
-           mutate(country = fct_reorder(country, desc(count)))
+           mutate(country = fct_reorder(country, desc(max.count)))
 
      # df %<>%
      #   mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
