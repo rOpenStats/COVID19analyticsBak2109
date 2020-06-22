@@ -184,6 +184,7 @@ setupTheme <- function(ggplot, report.date, x.values, data.processor,
                        total.colors, x.type = "dates", base.size = 6,
                        log.scale.y = FALSE, log.scale.x = FALSE){
   bg.color <- getPackagePalette(kind = "bg")
+  # TODO setup panel.background including break and minor breaks
   #ggplot <- ggplot + theme(panel.background  = element_rect(fill = bg.color))
   apply.log.x.scale <- TRUE
   if (!is.null(x.type)){
@@ -236,7 +237,7 @@ setupTheme <- function(ggplot, report.date, x.values, data.processor,
       colors.palette <- colors.palette[seq_len(total.colors)]
     }
 
-    ggplot <- ggplot() +
+    ggplot <- ggplot +
       #scale_fill_brewer(palette = selected.palette)
       scale_fill_manual(values = colors.palette) +
       scale_color_manual(values = colors.palette)
