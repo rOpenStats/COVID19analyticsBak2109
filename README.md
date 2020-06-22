@@ -52,12 +52,13 @@ devtools::install_github("rOpenStats/COVID19analytics", build_opts = NULL)
 First configurate environment variables with your preferred
 configurations in `~/.Renviron`. COVID19analytics\_data\_dir is
 mandatory while COVID19analytics\_credits can be configured if you want
-to publish your own research.
+to publish your own research with space separated alias. Mention
+previous authors where corresponding
 
 ``` .renviron
 COVID19analytics_data_dir = "~/.R/COVID19analytics"
 # If you want to generate your own reports
-COVID19analytics_credits = "@youralias"
+COVID19analytics_credits = "@alias1 @alias2 @aliasn"
 ```
 
 # How to use it
@@ -107,32 +108,31 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [16:12:19.730]  {stage: processor-setup}
-#> INFO  [16:12:19.792] Checking required downloaded  {downloaded.max.date: 2020-06-20, daily.update.time: 21:00:00, current.datetime: 2020-06-21 1.., download.flag: FALSE}
-#> INFO  [16:12:19.896] Checking required downloaded  {downloaded.max.date: 2020-06-20, daily.update.time: 21:00:00, current.datetime: 2020-06-21 1.., download.flag: FALSE}
-#> INFO  [16:12:19.935] Checking required downloaded  {downloaded.max.date: 2020-06-20, daily.update.time: 21:00:00, current.datetime: 2020-06-21 1.., download.flag: FALSE}
-#> INFO  [16:12:20.001]  {stage: data loaded}
-#> INFO  [16:12:20.004]  {stage: data-setup}
+#> INFO  [16:38:19.921]  {stage: processor-setup}
+#> INFO  [16:38:19.969] Checking required downloaded  {downloaded.max.date: 2020-06-20, daily.update.time: 21:00:00, current.datetime: 2020-06-21 1.., download.flag: FALSE}
+#> INFO  [16:38:20.063] Checking required downloaded  {downloaded.max.date: 2020-06-20, daily.update.time: 21:00:00, current.datetime: 2020-06-21 1.., download.flag: FALSE}
+#> INFO  [16:38:20.094] Checking required downloaded  {downloaded.max.date: 2020-06-20, daily.update.time: 21:00:00, current.datetime: 2020-06-21 1.., download.flag: FALSE}
+#> INFO  [16:38:20.169]  {stage: data loaded}
+#> INFO  [16:38:20.171]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [16:12:20.007] Executing transform 
-#> INFO  [16:12:20.009] Executing consolidate 
-#> INFO  [16:12:22.493]  {stage: consolidated}
-#> INFO  [16:12:22.495] Executing standarize 
-#> INFO  [16:12:23.168] gathering DataModel 
-#> INFO  [16:12:23.170]  {stage: datamodel-setup}
+#> INFO  [16:38:20.175] Executing transform 
+#> INFO  [16:38:20.176] Executing consolidate 
+#> INFO  [16:38:22.448]  {stage: consolidated}
+#> INFO  [16:38:22.452] Executing standarize 
+#> INFO  [16:38:23.058] gathering DataModel 
+#> INFO  [16:38:23.060]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> ERROR [16:12:23.173] Invalid state datamodel-setup for running curate. curated was expected 
-#> INFO  [16:12:23.178]  {stage: loading-aggregated-data-model}
+#> INFO  [16:38:23.065]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [16:12:25.483]  {stage: calculating-rates}
-#> INFO  [16:12:25.759]  {stage: making-data-comparison}
-#> INFO  [16:12:34.574]  {stage: applying-missing-values-method}
-#> INFO  [16:12:34.577]  {stage: Starting first imputation}
-#> INFO  [16:12:34.591]  {stage: calculating-rates}
-#> INFO  [16:12:34.865]  {stage: making-data-comparison-2}
-#> INFO  [16:12:44.932]  {stage: calculating-top-countries}
-#> INFO  [16:12:44.964]  {stage: curated}
+#> INFO  [16:38:25.141]  {stage: calculating-rates}
+#> INFO  [16:38:25.366]  {stage: making-data-comparison}
+#> INFO  [16:38:32.975]  {stage: applying-missing-values-method}
+#> INFO  [16:38:32.977]  {stage: Starting first imputation}
+#> INFO  [16:38:32.987]  {stage: calculating-rates}
+#> INFO  [16:38:33.229]  {stage: making-data-comparison-2}
+#> INFO  [16:38:40.457]  {stage: calculating-top-countries}
+#> INFO  [16:38:40.485]  {stage: curated}
 
 current.date <- max(data.processor$getData()$date)
 

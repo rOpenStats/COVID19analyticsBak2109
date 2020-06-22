@@ -441,20 +441,25 @@ ReportGeneratorEnhanced <- R6Class("ReportGeneratorEnhanced",
 #' New dataviz for reportGenerator by
 #' @author kenarab
 #' @import scales
+#' @import TTR
+#' @import ggrepel
 #' @export
 ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
  public = list(
    data.processor = NA,
+   ma.n = NA,
    report.date = NA,
-   initialize = function(data.processor){
+   initialize = function(data.processor, ma.n = 3){
      self$data.processor <- data.processor
+     self$ma.n <- ma.n
      self
    },
    ggplotComparisonExponentialGrowth = function(included.countries,
                                                 field = "confirmed",
                                                 y.label = "Confirmed Cases",
                                                 countries.text = "Top countries",
-                                                min.cases = 100){
+                                                min.cases = 100,
+                                                show.legend = FALSE){
      data.comparison <- self$data.processor$data.comparison
      data.comparison$buildData(field = field, base.min.cases = min.cases)
      data.comparison.df <- as.data.frame(data.comparison$data.compared)
@@ -468,6 +473,20 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
 
      ## set factor levels to show them in a desirable order
      data.long %<>% mutate(type = factor(type, c(field)))
+
+
+     #debug
+     #data.long <<- data.long
+     #field <<-field
+     data.calculate <- data.long %>%
+       group_by(country) %>%
+       summarise(observations = n()) %>%
+       filter(observations >= self$ma.n) %>%
+       arrange(observations)
+     data.long %<>% inner_join(data.calculate, by = "country")
+     nrow(data.long)
+     data.long %<>% group_by(country) %>% mutate(count.smoothed = runMean(count, self$ma.n))
+
      ## cases by type
      df <- data.long %>% filter(country %in% included.countries)
      unique(df$country)
@@ -478,12 +497,25 @@ ReportGeneratorDataComparison <- R6Class("ReportGeneratorDataComparison",
      #   mutate(country=country %>% factor(levels=c(self$data.processor$top.countries)))
      self$report.date <- max(self$data.processor$getData()$date)
 
+     df.last <- df %>% group_by(country) %>%
+                  summarize(last.epidemy.day = max(epidemy.day),
+                            max.count = max(count))
+
 
      ret <- df %>% filter(country != "World") %>%
-       ggplot(aes(x = epidemy.day, y = count, color = country)) +
+       ggplot(aes(x = epidemy.day, color = country)) +
        #ggplot(aes(x = epidemy.day, y = count, color = country)) +
-       geom_line() + xlab(paste("Epidemy day (0 when ", field, " >=", min.cases, ")")) + ylab(y.label) +
+       geom_point(aes(y = count), size = 0.5, show.legend = show.legend) +
+       geom_line(aes(y = count.smoothed), show.legend = show.legend) +
+       xlab(paste("Epidemy day (0 when ", field, " >=", min.cases, ")")) + ylab(y.label) +
        labs(title = plot.title)
+     ret <- ret + geom_text_repel(data = df.last,
+                            aes(x = last.epidemy.day, y = max.count,
+                                color = country, label = country),
+                            size = 2, family = "mono",
+                            nudge_x = 5, direction = "y", hjust = 0,
+                            segment.size = 0.1,
+                            show.legend = show.legend)
      ret <- self$getXLabelsTheme(ret, x.values)
      # ret <- ret +
      #   theme(legend.title=element_blank(),

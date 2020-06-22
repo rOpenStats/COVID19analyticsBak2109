@@ -25,7 +25,7 @@ kenarab
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorDataComparison$new(data.processor)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ReportGeneratorDataComparison$new(data.processor, ma.n = 3)}\if{html}{\out{</div>}}
 }
 
 }
@@ -39,7 +39,8 @@ kenarab
   field = "confirmed",
   y.label = "Confirmed Cases",
   countries.text = "Top countries",
-  min.cases = 100
+  min.cases = 100,
+  show.legend = FALSE
 )}\if{html}{\out{</div>}}
 }
 
