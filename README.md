@@ -103,31 +103,31 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [09:39:58.082]  {stage: processor-setup}
-#> INFO  [09:39:58.123] Checking required downloaded  {downloaded.max.date: 2020-06-22, daily.update.time: 21:00:00, current.datetime: 2020-06-24 0.., download.flag: TRUE}
-#> INFO  [09:39:58.915] Checking required downloaded  {downloaded.max.date: 2020-06-22, daily.update.time: 21:00:00, current.datetime: 2020-06-24 0.., download.flag: TRUE}
-#> INFO  [09:39:59.733] Checking required downloaded  {downloaded.max.date: 2020-06-22, daily.update.time: 21:00:00, current.datetime: 2020-06-24 0.., download.flag: TRUE}
-#> INFO  [09:40:00.477]  {stage: data loaded}
-#> INFO  [09:40:00.479]  {stage: data-setup}
+#> INFO  [01:02:52.486]  {stage: processor-setup}
+#> INFO  [01:02:52.530] Checking required downloaded  {downloaded.max.date: 2020-06-23, daily.update.time: 21:00:00, current.datetime: 2020-06-25 0.., download.flag: TRUE}
+#> INFO  [01:02:53.291] Checking required downloaded  {downloaded.max.date: 2020-06-23, daily.update.time: 21:00:00, current.datetime: 2020-06-25 0.., download.flag: TRUE}
+#> INFO  [01:02:54.044] Checking required downloaded  {downloaded.max.date: 2020-06-23, daily.update.time: 21:00:00, current.datetime: 2020-06-25 0.., download.flag: TRUE}
+#> INFO  [01:02:54.753]  {stage: data loaded}
+#> INFO  [01:02:54.756]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [09:40:00.483] Executing transform 
-#> INFO  [09:40:00.485] Executing consolidate 
-#> INFO  [09:40:02.947]  {stage: consolidated}
-#> INFO  [09:40:02.949] Executing standarize 
-#> INFO  [09:40:03.554] gathering DataModel 
-#> INFO  [09:40:03.556]  {stage: datamodel-setup}
+#> INFO  [01:02:54.761] Executing transform 
+#> INFO  [01:02:54.763] Executing consolidate 
+#> INFO  [01:02:56.699]  {stage: consolidated}
+#> INFO  [01:02:56.700] Executing standarize 
+#> INFO  [01:02:57.231] gathering DataModel 
+#> INFO  [01:02:57.233]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [09:40:03.560]  {stage: loading-aggregated-data-model}
+#> INFO  [01:02:57.237]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [09:40:06.081]  {stage: calculating-rates}
-#> INFO  [09:40:06.296]  {stage: making-data-comparison}
-#> INFO  [09:40:13.997]  {stage: applying-missing-values-method}
-#> INFO  [09:40:13.998]  {stage: Starting first imputation}
-#> INFO  [09:40:14.007]  {stage: calculating-rates}
-#> INFO  [09:40:14.258]  {stage: making-data-comparison-2}
-#> INFO  [09:40:22.725]  {stage: calculating-top-countries}
-#> INFO  [09:40:22.760]  {stage: curated}
+#> INFO  [01:02:59.110]  {stage: calculating-rates}
+#> INFO  [01:02:59.312]  {stage: making-data-comparison}
+#> INFO  [01:03:06.432]  {stage: applying-missing-values-method}
+#> INFO  [01:03:06.434]  {stage: Starting first imputation}
+#> INFO  [01:03:06.445]  {stage: calculating-rates}
+#> INFO  [01:03:06.664]  {stage: making-data-comparison-2}
+#> INFO  [01:03:13.107]  {stage: calculating-top-countries}
+#> INFO  [01:03:13.133]  {stage: curated}
 
 current.date <- max(data.processor$getData()$date)
 
