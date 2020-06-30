@@ -133,7 +133,7 @@ smoothSerie <- function(serie.name, serie, n){
 
 
 #' @description
-#' New dataviz for reportGenerator by
+#' Countries object
 #' @author kenarab
 #' @import countrycode
 #' @import dplyr
