@@ -103,31 +103,31 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [08:20:27.378]  {stage: processor-setup}
-#> INFO  [08:20:27.426] Checking required downloaded  {downloaded.max.date: 2020-07-07, daily.update.time: 21:00:00, current.datetime: 2020-07-09 0.., download.flag: TRUE}
-#> INFO  [08:20:28.342] Checking required downloaded  {downloaded.max.date: 2020-07-07, daily.update.time: 21:00:00, current.datetime: 2020-07-09 0.., download.flag: TRUE}
-#> INFO  [08:20:29.512] Checking required downloaded  {downloaded.max.date: 2020-07-07, daily.update.time: 21:00:00, current.datetime: 2020-07-09 0.., download.flag: TRUE}
-#> INFO  [08:20:30.426]  {stage: data loaded}
-#> INFO  [08:20:30.427]  {stage: data-setup}
+#> INFO  [08:33:18.932]  {stage: processor-setup}
+#> INFO  [08:33:18.982] Checking required downloaded  {downloaded.max.date: 2020-07-08, daily.update.time: 21:00:00, current.datetime: 2020-07-10 0.., download.flag: TRUE}
+#> INFO  [08:33:20.339] Checking required downloaded  {downloaded.max.date: 2020-07-08, daily.update.time: 21:00:00, current.datetime: 2020-07-10 0.., download.flag: TRUE}
+#> INFO  [08:33:21.356] Checking required downloaded  {downloaded.max.date: 2020-07-08, daily.update.time: 21:00:00, current.datetime: 2020-07-10 0.., download.flag: TRUE}
+#> INFO  [08:33:22.267]  {stage: data loaded}
+#> INFO  [08:33:22.270]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [08:20:30.430] Executing transform 
-#> INFO  [08:20:30.433] Executing consolidate 
-#> INFO  [08:20:33.211]  {stage: consolidated}
-#> INFO  [08:20:33.214] Executing standarize 
-#> INFO  [08:20:33.818] gathering DataModel 
-#> INFO  [08:20:33.820]  {stage: datamodel-setup}
+#> INFO  [08:33:22.273] Executing transform 
+#> INFO  [08:33:22.275] Executing consolidate 
+#> INFO  [08:33:24.638]  {stage: consolidated}
+#> INFO  [08:33:24.640] Executing standarize 
+#> INFO  [08:33:25.232] gathering DataModel 
+#> INFO  [08:33:25.234]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [08:20:33.825]  {stage: loading-aggregated-data-model}
+#> INFO  [08:33:25.238]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [08:20:35.780]  {stage: calculating-rates}
-#> INFO  [08:20:35.989]  {stage: making-data-comparison}
-#> INFO  [08:20:42.994]  {stage: applying-missing-values-method}
-#> INFO  [08:20:42.996]  {stage: Starting first imputation}
-#> INFO  [08:20:43.005]  {stage: calculating-rates}
-#> INFO  [08:20:43.298]  {stage: making-data-comparison-2}
-#> INFO  [08:20:50.965]  {stage: calculating-top-countries}
-#> INFO  [08:20:50.996]  {stage: curated}
+#> INFO  [08:33:27.025]  {stage: calculating-rates}
+#> INFO  [08:33:27.221]  {stage: making-data-comparison}
+#> INFO  [08:33:33.017]  {stage: applying-missing-values-method}
+#> INFO  [08:33:33.019]  {stage: Starting first imputation}
+#> INFO  [08:33:33.027]  {stage: calculating-rates}
+#> INFO  [08:33:33.245]  {stage: making-data-comparison-2}
+#> INFO  [08:33:40.618]  {stage: calculating-top-countries}
+#> INFO  [08:33:40.641]  {stage: curated}
 
 current.date <- max(data.processor$getData()$date)
 
@@ -154,16 +154,16 @@ kable((data.processor$getData() %>%
 
 | country      | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
 | :----------- | :--------- | -------------: | ------------: | --------: | -----: | ---------: |
-| US           | 2020-07-08 |         0.0196 |         58601 |   3054699 | 132300 |        820 |
-| Brazil       | 2020-07-08 |         0.0267 |         44571 |   1713160 |  67964 |       1223 |
-| India        | 2020-07-08 |         0.0335 |         24879 |    767296 |  21129 |        487 |
-| South Africa | 2020-07-08 |         0.0408 |          8810 |    224665 |   3602 |        100 |
-| Mexico       | 2020-07-08 |         0.0261 |          6995 |    275003 |  32796 |        782 |
-| Russia       | 2020-07-08 |         0.0094 |          6534 |    699749 |  10650 |        172 |
-| Colombia     | 2020-07-08 |         0.0350 |          4213 |    124494 |   4606 |        154 |
-| Peru         | 2020-07-08 |         0.0117 |          3633 |    312911 |  11133 |        181 |
-| Argentina    | 2020-07-08 |         0.0432 |          3604 |     87030 |   1694 |         50 |
-| Bangladesh   | 2020-07-08 |         0.0207 |          3489 |    172134 |   2197 |         46 |
+| US           | 2020-07-09 |         0.0207 |         63247 |   3117946 | 133290 |        990 |
+| Brazil       | 2020-07-09 |         0.0249 |         42619 |   1755779 |  69184 |       1220 |
+| India        | 2020-07-09 |         0.0345 |         26506 |    793802 |  21604 |        475 |
+| South Africa | 2020-07-09 |         0.0609 |         13674 |    238339 |   3720 |        118 |
+| Mexico       | 2020-07-09 |         0.0265 |          7280 |    282283 |  33526 |        730 |
+| Russia       | 2020-07-09 |         0.0093 |          6491 |    706240 |  10826 |        176 |
+| Colombia     | 2020-07-09 |         0.0333 |          4144 |    128638 |   4791 |        185 |
+| Kazakhstan   | 2020-07-09 |         0.0722 |          3688 |     54747 |    264 |          0 |
+| Argentina    | 2020-07-09 |         0.0421 |          3663 |     90693 |   1720 |         26 |
+| Peru         | 2020-07-09 |         0.0113 |          3537 |    316448 |  11314 |        181 |
 
 ``` r
 # Top 10 daily deaths increment
@@ -173,18 +173,18 @@ kable((data.processor$getData() %>%
   arrange(desc(deaths.inc)))[1:10,])
 ```
 
-| country        | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
-| :------------- | :--------- | -------------: | ------------: | --------: | -----: | ---------: |
-| Brazil         | 2020-07-08 |         0.0267 |         44571 |   1713160 |  67964 |       1223 |
-| US             | 2020-07-08 |         0.0196 |         58601 |   3054699 | 132300 |        820 |
-| Mexico         | 2020-07-08 |         0.0261 |          6995 |    275003 |  32796 |        782 |
-| India          | 2020-07-08 |         0.0335 |         24879 |    767296 |  21129 |        487 |
-| Peru           | 2020-07-08 |         0.0117 |          3633 |    312911 |  11133 |        181 |
-| Russia         | 2020-07-08 |         0.0094 |          6534 |    699749 |  10650 |        172 |
-| Colombia       | 2020-07-08 |         0.0350 |          4213 |    124494 |   4606 |        154 |
-| Iran           | 2020-07-08 |         0.0110 |          2691 |    248379 |  12084 |        153 |
-| Chile          | 2020-07-08 |         0.0069 |          2064 |    303083 |   6573 |        139 |
-| United Kingdom | 2020-07-08 |         0.0022 |           637 |    288511 |  44602 |        126 |
+| country      | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
+| :----------- | :--------- | -------------: | ------------: | --------: | -----: | ---------: |
+| Brazil       | 2020-07-09 |         0.0249 |         42619 |   1755779 |  69184 |       1220 |
+| US           | 2020-07-09 |         0.0207 |         63247 |   3117946 | 133290 |        990 |
+| Mexico       | 2020-07-09 |         0.0265 |          7280 |    282283 |  33526 |        730 |
+| India        | 2020-07-09 |         0.0345 |         26506 |    793802 |  21604 |        475 |
+| Iran         | 2020-07-09 |         0.0084 |          2079 |    250458 |  12305 |        221 |
+| Colombia     | 2020-07-09 |         0.0333 |          4144 |    128638 |   4791 |        185 |
+| Peru         | 2020-07-09 |         0.0113 |          3537 |    316448 |  11314 |        181 |
+| Russia       | 2020-07-09 |         0.0093 |          6491 |    706240 |  10826 |        176 |
+| South Africa | 2020-07-09 |         0.0609 |         13674 |    238339 |   3720 |        118 |
+| Chile        | 2020-07-09 |         0.0103 |          3133 |    306216 |   6682 |        109 |
 
 ``` r
 rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries, countries.text = "Latam countries")
