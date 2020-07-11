@@ -88,31 +88,31 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [16:30:11.111]  {stage: processor-setup}
-#> INFO  [16:30:11.149] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
-#> INFO  [16:30:11.261] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
-#> INFO  [16:30:11.286] Checking required downloaded  {downloaded.max.date: 2020-06-21, daily.update.time: 21:00:00, current.datetime: 2020-06-22 1.., download.flag: FALSE}
-#> INFO  [16:30:11.428]  {stage: data loaded}
-#> INFO  [16:30:11.429]  {stage: data-setup}
+#> INFO  [11:52:38.490]  {stage: processor-setup}
+#> INFO  [11:52:38.539] Checking required downloaded  {downloaded.max.date: 2020-07-10, daily.update.time: 21:00:00, current.datetime: 2020-07-11 1.., download.flag: FALSE}
+#> INFO  [11:52:38.749] Checking required downloaded  {downloaded.max.date: 2020-07-10, daily.update.time: 21:00:00, current.datetime: 2020-07-11 1.., download.flag: FALSE}
+#> INFO  [11:52:38.776] Checking required downloaded  {downloaded.max.date: 2020-07-10, daily.update.time: 21:00:00, current.datetime: 2020-07-11 1.., download.flag: FALSE}
+#> INFO  [11:52:38.845]  {stage: data loaded}
+#> INFO  [11:52:38.847]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [16:30:11.431] Executing transform 
-#> INFO  [16:30:11.433] Executing consolidate 
-#> INFO  [16:30:13.409]  {stage: consolidated}
-#> INFO  [16:30:13.410] Executing standarize 
-#> INFO  [16:30:13.933] gathering DataModel 
-#> INFO  [16:30:13.934]  {stage: datamodel-setup}
+#> INFO  [11:52:38.849] Executing transform 
+#> INFO  [11:52:38.850] Executing consolidate 
+#> INFO  [11:52:41.220]  {stage: consolidated}
+#> INFO  [11:52:41.221] Executing standarize 
+#> INFO  [11:52:41.848] gathering DataModel 
+#> INFO  [11:52:41.849]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [16:30:13.938]  {stage: loading-aggregated-data-model}
+#> INFO  [11:52:41.854]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [16:30:15.807]  {stage: calculating-rates}
-#> INFO  [16:30:16.017]  {stage: making-data-comparison}
-#> INFO  [16:30:22.477]  {stage: applying-missing-values-method}
-#> INFO  [16:30:22.478]  {stage: Starting first imputation}
-#> INFO  [16:30:22.486]  {stage: calculating-rates}
-#> INFO  [16:30:22.720]  {stage: making-data-comparison-2}
-#> INFO  [16:30:29.144]  {stage: calculating-top-countries}
-#> INFO  [16:30:29.170]  {stage: curated}
+#> INFO  [11:52:44.005]  {stage: calculating-rates}
+#> INFO  [11:52:44.248]  {stage: making-data-comparison}
+#> INFO  [11:52:50.910]  {stage: applying-missing-values-method}
+#> INFO  [11:52:50.912]  {stage: Starting first imputation}
+#> INFO  [11:52:50.922]  {stage: calculating-rates}
+#> INFO  [11:52:51.149]  {stage: making-data-comparison-2}
+#> INFO  [11:52:56.902]  {stage: calculating-top-countries}
+#> INFO  [11:52:56.921]  {stage: curated}
 
 current.date <- max(data.processor$getData()$date)
 
@@ -133,20 +133,27 @@ africa.countries <- sort(data.processor$countries$getCountries(division = "conti
   select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
   arrange(desc(confirmed.inc)) %>%
   filter(confirmed >=10))[1:10,]
+#> Warning: `...` is not empty.
+#> 
+#> We detected these problematic arguments:
+#> * `needs_dots`
+#> 
+#> These dots only exist to allow future extensions and should be empty.
+#> Did you misspecify an argument?
 #> # A tibble: 10 x 7
 #> # Groups:   country [10]
 #>    country   date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
 #>    <chr>     <date>              <dbl>         <int>     <int>  <int>      <int>
-#>  1 Brazil    2020-06-21          0.049         50428   1083341  50591        615
-#>  2 US        2020-06-21          0.011         24760   2279879 119969        250
-#>  3 India     2020-06-21          0.036         14831    425282  13699        445
-#>  4 Russia    2020-06-21          0.013          7717    583879   8101        109
-#>  5 Chile     2020-06-21          0.024          5607    242355   4479        184
-#>  6 Colombia  2020-06-21          0.085          5382     68836   2353        205
-#>  7 Mexico    2020-06-21          0.03           5343    180545  21825       1044
-#>  8 South Af… 2020-06-21          0.05           4621     97302   1930         53
-#>  9 Pakistan  2020-06-21          0.025          4471    181088   3590         89
-#> 10 Banglade… 2020-06-21          0.032          3531    112306   1464         39
+#>  1 US        2020-07-10         0.0214         66627   3184573 134092        802
+#>  2 Brazil    2020-07-10         0.0257         45048   1800827  70398       1214
+#>  3 India     2020-07-10         0.0342         27114    820916  22123        519
+#>  4 South Af… 2020-07-10         0.0518         12348    250687   3860        140
+#>  5 Mexico    2020-07-10         0.0244          6891    289174  34191        665
+#>  6 Russia    2020-07-10         0.0094          6623    712863  11000        174
+#>  7 Colombia  2020-07-10         0.0415          5335    133973   4985        194
+#>  8 Argentina 2020-07-10         0.0371          3367     94060   1774         54
+#>  9 Peru      2020-07-10         0.0101          3198    319646  11500        186
+#> 10 Saudi Ar… 2020-07-10         0.0141          3159    226486   2151         51
 ```
 
 ``` r
@@ -155,20 +162,27 @@ africa.countries <- sort(data.processor$countries$getCountries(division = "conti
   filter(date == current.date) %>%
   select(country, date, rate.inc.daily, confirmed.inc, confirmed, deaths, deaths.inc) %>%
   arrange(desc(deaths.inc)))[1:10,]
+#> Warning: `...` is not empty.
+#> 
+#> We detected these problematic arguments:
+#> * `needs_dots`
+#> 
+#> These dots only exist to allow future extensions and should be empty.
+#> Did you misspecify an argument?
 #> # A tibble: 10 x 7
 #> # Groups:   country [10]
-#>    country  date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
-#>    <chr>    <date>              <dbl>         <int>     <int>  <int>      <int>
-#>  1 Mexico   2020-06-21          0.03           5343    180545  21825       1044
-#>  2 Brazil   2020-06-21          0.049         50428   1083341  50591        615
-#>  3 India    2020-06-21          0.036         14831    425282  13699        445
-#>  4 US       2020-06-21          0.011         24760   2279879 119969        250
-#>  5 Colombia 2020-06-21          0.085          5382     68836   2353        205
-#>  6 Chile    2020-06-21          0.024          5607    242355   4479        184
-#>  7 Iran     2020-06-21          0.012          2368    204952   9623        116
-#>  8 Russia   2020-06-21          0.013          7717    583879   8101        109
-#>  9 Pakistan 2020-06-21          0.025          4471    181088   3590         89
-#> 10 Egypt    2020-06-21          0.027          1475     55233   2193         87
+#>    country   date       rate.inc.daily confirmed.inc confirmed deaths deaths.inc
+#>    <chr>     <date>              <dbl>         <int>     <int>  <int>      <int>
+#>  1 Brazil    2020-07-10         0.0257         45048   1800827  70398       1214
+#>  2 US        2020-07-10         0.0214         66627   3184573 134092        802
+#>  3 Mexico    2020-07-10         0.0244          6891    289174  34191        665
+#>  4 India     2020-07-10         0.0342         27114    820916  22123        519
+#>  5 Colombia  2020-07-10         0.0415          5335    133973   4985        194
+#>  6 Peru      2020-07-10         0.0101          3198    319646  11500        186
+#>  7 Russia    2020-07-10         0.0094          6623    712863  11000        174
+#>  8 Iran      2020-07-10         0.009           2262    252720  12447        142
+#>  9 South Af… 2020-07-10         0.0518         12348    250687   3860        140
+#> 10 Chile     2020-07-10         0.01            3058    309274   6781         99
 ```
 
 ``` r
@@ -189,7 +203,7 @@ rc$ggplotComparisonExponentialGrowth(included.countries = africa.countries, min.
 
 rg$ggplotCountriesLines(included.countries = africa.countries, countries.text = "Africa countries",
                         field = "confirmed.inc", log.scale = TRUE)
-#> Warning: Removed 276 row(s) containing missing values (geom_path).
+#> Warning: Removed 288 row(s) containing missing values (geom_path).
 ```
 
 <img src="man/figures/README-africa-dataviz-4-africa-countries-3.png" width="100%" />
