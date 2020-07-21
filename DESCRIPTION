@@ -18,7 +18,8 @@ Suggests:
     knitr,
     rmarkdown,
     testthat, 
-    reprex
+    reprex,
+    hexSticker
 VignetteBuilder: knitr
 Depends: R (>= 3.5.0)
 Imports: magrittr,
