@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 
 
 
-This package curate (downloads, clean, consolidate, smooth) data from [Johns Hokpins](https://github.com/CSSEGISandData/COVID-19/) and [Our world in data](https://ourworldindata.org/coronavirus) for analysing international outbreak of COVID-19. 
+This package curate (downloads, clean, consolidate, smooth) data from [Johns Hopkins](https://github.com/CSSEGISandData/COVID-19/) and [Our world in data](https://ourworldindata.org/coronavirus) for analysing international outbreak of COVID-19. 
  
 It includes several visualizations of the COVID-19 international outbreak.
 
