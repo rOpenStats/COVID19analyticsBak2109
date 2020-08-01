@@ -9,7 +9,7 @@ COVID19analytics
 <!-- . -->
 
 This package curate (downloads, clean, consolidate, smooth) data from
-[Johns Hokpins](https://github.com/CSSEGISandData/COVID-19/) and [Our
+[Johns Hopkins](https://github.com/CSSEGISandData/COVID-19/) and [Our
 world in data](https://ourworldindata.org/coronavirus) for analysing
 international outbreak of COVID-19.
 
@@ -98,31 +98,31 @@ How to use it
 
     #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
     dummy <- data.processor$setupData()
-    #> INFO  [08:56:02.404]  {stage: processor-setup}
-    #> INFO  [08:56:02.456] Checking required downloaded  {downloaded.max.date: 2020-07-30, daily.update.time: 21:00:00, current.datetime: 2020-08-01 0.., download.flag: TRUE}
-    #> INFO  [08:56:03.483] Checking required downloaded  {downloaded.max.date: 2020-07-30, daily.update.time: 21:00:00, current.datetime: 2020-08-01 0.., download.flag: TRUE}
-    #> INFO  [08:56:04.365] Checking required downloaded  {downloaded.max.date: 2020-07-30, daily.update.time: 21:00:00, current.datetime: 2020-08-01 0.., download.flag: TRUE}
-    #> INFO  [08:56:05.133]  {stage: data loaded}
-    #> INFO  [08:56:05.135]  {stage: data-setup}
+    #> INFO  [08:58:26.641]  {stage: processor-setup}
+    #> INFO  [08:58:26.712] Checking required downloaded  {downloaded.max.date: 2020-07-31, daily.update.time: 21:00:00, current.datetime: 2020-08-01 0.., download.flag: FALSE}
+    #> INFO  [08:58:26.907] Checking required downloaded  {downloaded.max.date: 2020-07-31, daily.update.time: 21:00:00, current.datetime: 2020-08-01 0.., download.flag: FALSE}
+    #> INFO  [08:58:26.936] Checking required downloaded  {downloaded.max.date: 2020-07-31, daily.update.time: 21:00:00, current.datetime: 2020-08-01 0.., download.flag: FALSE}
+    #> INFO  [08:58:27.014]  {stage: data loaded}
+    #> INFO  [08:58:27.017]  {stage: data-setup}
     dummy <- data.processor$transform()
-    #> INFO  [08:56:05.139] Executing transform 
-    #> INFO  [08:56:05.140] Executing consolidate 
-    #> INFO  [08:56:08.388]  {stage: consolidated}
-    #> INFO  [08:56:08.392] Executing standarize 
-    #> INFO  [08:56:09.381] gathering DataModel 
-    #> INFO  [08:56:09.384]  {stage: datamodel-setup}
+    #> INFO  [08:58:27.020] Executing transform 
+    #> INFO  [08:58:27.022] Executing consolidate 
+    #> INFO  [08:58:29.753]  {stage: consolidated}
+    #> INFO  [08:58:29.754] Executing standarize 
+    #> INFO  [08:58:30.402] gathering DataModel 
+    #> INFO  [08:58:30.403]  {stage: datamodel-setup}
     # Curate is the process made by missing values method
     dummy <- data.processor$curate()
-    #> INFO  [08:56:09.390]  {stage: loading-aggregated-data-model}
+    #> INFO  [08:58:30.409]  {stage: loading-aggregated-data-model}
     #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-    #> INFO  [08:56:11.830]  {stage: calculating-rates}
-    #> INFO  [08:56:12.104]  {stage: making-data-comparison}
-    #> INFO  [08:56:19.186]  {stage: applying-missing-values-method}
-    #> INFO  [08:56:19.189]  {stage: Starting first imputation}
-    #> INFO  [08:56:19.197]  {stage: calculating-rates}
-    #> INFO  [08:56:19.674]  {stage: making-data-comparison-2}
-    #> INFO  [08:56:26.741]  {stage: calculating-top-countries}
-    #> INFO  [08:56:26.765]  {stage: curated}
+    #> INFO  [08:58:32.323]  {stage: calculating-rates}
+    #> INFO  [08:58:32.526]  {stage: making-data-comparison}
+    #> INFO  [08:58:38.203]  {stage: applying-missing-values-method}
+    #> INFO  [08:58:38.205]  {stage: Starting first imputation}
+    #> INFO  [08:58:38.213]  {stage: calculating-rates}
+    #> INFO  [08:58:38.438]  {stage: making-data-comparison-2}
+    #> INFO  [08:58:44.391]  {stage: calculating-top-countries}
+    #> INFO  [08:58:44.409]  {stage: curated}
 
     current.date <- max(data.processor$getData()$date)
 
