@@ -7,7 +7,7 @@ before_install:
   - tlmgr install index
   - sudo apt-get -y install libudunits2-dev # For units package
   - sudo apt-get -y install libmagick++-dev # For magick package dependence in hexSticker suggest
-  - sudo apt-get -y libfribidi-dev  # For textshaping package
+  - sudo apt-get -y install libfribidi-dev  # For textshaping package
 before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
 r_packages:
   - covr
