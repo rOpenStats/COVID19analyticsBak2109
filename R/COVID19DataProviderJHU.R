@@ -37,7 +37,6 @@ COVID19DataProviderJHU <- R6Class("COVID19DataProviderJHU",
    getDates = function(){
      #n.col <- ncol(self$data.confirmed)
      ## get dates from column names
-     #dates <- names(self$data.confirmed)[5:n.col] %>% substr(2, 8) %>% mdy()
      dates <- sort(unique(self$data$date))
      dates
    },
@@ -93,7 +92,7 @@ transformDataJHUCountry <- function(data) {
   ## convert from wide to long format
   data %<>% gather(key=date, value=count, -country)
   ## convert from character to date
-  data %<>% mutate(date = date %>% substr(2,8) %>% mdy())
+  data %<>% mutate(date = getDateFromJHUColumn(date))
   ## aggregate by country
   data %<>% group_by(country, date) %>% summarise(count=sum(count)) %>% as.data.frame()
   return(data)
@@ -113,10 +112,17 @@ transformDataJHU <- function(data) {
   # TODO reimplement with pivot_longer
   #data %<>% pivot_longer(key=date, value=count, -country )
   ## convert from character to date
-  data %<>% mutate(date = date %>% substr(2,8) %>% mdy())
+  data %<>% mutate(date = getDateFromJHUColumn(date))
   ## aggregate by country
   data %<>% group_by(country,province.state, lat, long, date) %>% summarise(count=sum(count)) %>% as.data.frame()
   return(data)
+}
+
+
+getDateFromJHUColumn <- function(column.dates.text){
+  regexp.field.name <- "X([0-9]{2}\\.[0-9]{2}\\.[0-9]{2})"
+  column.dates.text <- vapply(column.dates.text, FUN = function(x){gsub(regexp.field.name, "\\1", x)}, FUN.VALUE = character(1))
+  column.dates.text %>% mdy()
 }
 
 
@@ -138,9 +144,7 @@ downloadCOVID19 <- function(url.path, filename, force = FALSE,
     if (!download.flag & file.exists(dest)){
       current.data <- readJHUDataFile(dest)
       max.date.col <- names(current.data)[ncol(current.data)]
-      regexp.field.name <- "X([0-9]{2}\\.[0-9]{2}\\.[0-9]{2})"
-      max.date.col <- gsub(regexp.field.name, "\\1", max.date.col)
-      max.date <- max.date.col %>% mdy()
+      max.date <- getDateFromJHUColumn(max.date.col)
       current.datetime <- Sys.time()
       current.date <- as.Date(current.datetime, tz = Sys.timezone())
       current.time <- format(current.datetime, format = "%H:%M:%S")
