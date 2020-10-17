@@ -138,12 +138,12 @@ downloadCOVID19 <- function(url.path, filename, force = FALSE,
     if (!download.flag & file.exists(dest)){
       current.data <- readJHUDataFile(dest)
       max.date.col <- names(current.data)[ncol(current.data)]
-      max.date <- max.date.col %>% substr(2,8) %>% mdy()
+      regexp.field.name <- "X([0-9]{2}\\.[0-9]{2}\\.[0-9]{2})"
+      max.date.col <- gsub(regexp.field.name, "\\1", max.date.col)
+      max.date <- max.date.col %>% mdy()
       current.datetime <- Sys.time()
       current.date <- as.Date(current.datetime, tz = Sys.timezone())
       current.time <- format(current.datetime, format = "%H:%M:%S")
-
-
       if (max.date < current.date - 1 | (max.date < current.date & current.time >= daily.update.time)){
         download.flag <- TRUE
       }
