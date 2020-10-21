@@ -228,6 +228,7 @@ getEnv <- function(variable.name, package.prefix = getPackagePrefix(),
 #' generateSticker
 #' @noRd
 generateSticker <- function(){
+  #library(hexSticker)
   data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity", missing.values = "imputation")
   dummy <- data.processor$setupData()
   dummy <- data.processor$transform()
@@ -267,14 +268,15 @@ generateSticker <- function(){
                                   brewer.pal(n = 8, name = "Set2"),
                                   brewer.pal(n = 12, name = "Set3")),
     ) +
-    scale_y_log10(labels = comma)
+  #  scale_y_log10(labels = comma)
+    scale_y_log10(labels = NULL)
   p <- p + theme_void() + theme_transparent()
 
   sticker(p, package = "COVID19analytics",
           p_color = brewer.pal(n = 11, name = "PiYG")[11],
           p_size = 5, p_y = 0.6,
           #p_family = "Courier new",
-          s_x= 1, s_y= 1.1, s_width=1.3, s_height=1.4,
+          s_x= 1, s_y= 1, s_width=1.3, s_height=1.4,
           #h_fill = "white",
           h_fill = brewer.pal(n = 7, name = "PiYG")[5],
           url = "https://github.com/rOpenStats/COVID19analytics",
