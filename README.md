@@ -94,31 +94,31 @@ previous authors where corresponding
 
     #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
     dummy <- data.processor$setupData()
-    #> INFO  [08:51:57.363]  {stage: processor-setup}
-    #> INFO  [08:51:57.471] Checking required downloaded  {downloaded.max.date: 2020-10-24, daily.update.time: 21:00:00, current.datetime: 2020-10-25 08:51:57, download.flag: FALSE}
-    #> INFO  [08:51:57.745] Checking required downloaded  {downloaded.max.date: 2020-10-24, daily.update.time: 21:00:00, current.datetime: 2020-10-25 08:51:57, download.flag: FALSE}
-    #> INFO  [08:51:57.808] Checking required downloaded  {downloaded.max.date: 2020-10-24, daily.update.time: 21:00:00, current.datetime: 2020-10-25 08:51:57, download.flag: FALSE}
-    #> INFO  [08:51:57.935]  {stage: data loaded}
-    #> INFO  [08:51:57.938]  {stage: data-setup}
+    #> INFO  [09:11:10.597]  {stage: processor-setup}
+    #> INFO  [09:11:10.669] Checking required downloaded  {downloaded.max.date: 2020-10-24, daily.update.time: 21:00:00, current.datetime: 2020-10-25 09:11:10, download.flag: FALSE}
+    #> INFO  [09:11:10.855] Checking required downloaded  {downloaded.max.date: 2020-10-24, daily.update.time: 21:00:00, current.datetime: 2020-10-25 09:11:10, download.flag: FALSE}
+    #> INFO  [09:11:10.901] Checking required downloaded  {downloaded.max.date: 2020-10-24, daily.update.time: 21:00:00, current.datetime: 2020-10-25 09:11:10, download.flag: FALSE}
+    #> INFO  [09:11:11.019]  {stage: data loaded}
+    #> INFO  [09:11:11.022]  {stage: data-setup}
     dummy <- data.processor$transform()
-    #> INFO  [08:51:57.943] Executing transform 
-    #> INFO  [08:51:57.945] Executing consolidate 
-    #> INFO  [08:52:06.361]  {stage: consolidated}
-    #> INFO  [08:52:06.363] Executing standarize 
-    #> INFO  [08:52:07.431] gathering DataModel 
-    #> INFO  [08:52:07.434]  {stage: datamodel-setup}
+    #> INFO  [09:11:11.025] Executing transform 
+    #> INFO  [09:11:11.027] Executing consolidate 
+    #> INFO  [09:11:18.072]  {stage: consolidated}
+    #> INFO  [09:11:18.074] Executing standarize 
+    #> INFO  [09:11:19.082] gathering DataModel 
+    #> INFO  [09:11:19.084]  {stage: datamodel-setup}
     # Curate is the process made by missing values method
     dummy <- data.processor$curate()
-    #> INFO  [08:52:07.441]  {stage: loading-aggregated-data-model}
+    #> INFO  [09:11:19.089]  {stage: loading-aggregated-data-model}
     #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-    #> INFO  [08:52:09.834]  {stage: calculating-rates}
-    #> INFO  [08:52:10.096]  {stage: making-data-comparison}
-    #> INFO  [08:52:18.002]  {stage: applying-missing-values-method}
-    #> INFO  [08:52:18.004]  {stage: Starting first imputation}
-    #> INFO  [08:52:18.013]  {stage: calculating-rates}
-    #> INFO  [08:52:18.349]  {stage: making-data-comparison-2}
-    #> INFO  [08:52:28.782]  {stage: calculating-top-countries}
-    #> INFO  [08:52:28.812]  {stage: curated}
+    #> INFO  [09:11:21.141]  {stage: calculating-rates}
+    #> INFO  [09:11:21.379]  {stage: making-data-comparison}
+    #> INFO  [09:11:28.100]  {stage: applying-missing-values-method}
+    #> INFO  [09:11:28.102]  {stage: Starting first imputation}
+    #> INFO  [09:11:28.111]  {stage: calculating-rates}
+    #> INFO  [09:11:28.380]  {stage: making-data-comparison-2}
+    #> INFO  [09:11:35.129]  {stage: calculating-top-countries}
+    #> INFO  [09:11:35.150]  {stage: curated}
 
     current.date <- max(data.processor$getData()$date)
 
@@ -187,11 +187,27 @@ previous authors where corresponding
 
 <img src="man/figures/README-dataviz-4-latam-3.png" width="100%" />
 
+    rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field = "deaths", y.label = "Deaths", min.cases = 1)
+
+<img src="man/figures/README-dataviz-4-latam-4.png" width="100%" />
+
+
+    rg$ggplotCrossSection(included.countries = latam.countries,
+                           field.x = "confirmed",
+                           field.y = "fatality.rate.max",
+                           plot.description  = "Cross section Confirmed vs  Death rate min",
+                           log.scale.x = TRUE,
+                           log.scale.y = FALSE)
+    #> Warning: Removed 132 row(s) containing missing values (geom_path).
+
+<img src="man/figures/README-dataviz-4-latam-5.png" width="100%" />
+
+
     rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
                             field = "confirmed.inc", log.scale = TRUE)
     #> Warning: Removed 132 row(s) containing missing values (geom_path).
 
-<img src="man/figures/README-dataviz-4-latam-4.png" width="100%" />
+<img src="man/figures/README-dataviz-6-latam-inc-daily-1.png" width="100%" />
 
     rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
                             field = "deaths.inc", log.scale = TRUE)
@@ -204,51 +220,36 @@ previous authors where corresponding
     #> Warning: Removed 2 rows containing missing values (geom_point).
     #> Warning: Removed 132 row(s) containing missing values (geom_path).
 
-<img src="man/figures/README-dataviz-4-latam-5.png" width="100%" />
+<img src="man/figures/README-dataviz-6-latam-inc-daily-2.png" width="100%" />
 
     rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
                             field = "rate.inc.daily", log.scale = TRUE)
     #> Warning: Removed 132 row(s) containing missing values (geom_path).
 
-<img src="man/figures/README-dataviz-4-latam-6.png" width="100%" />
-
-    rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field = "deaths", y.label = "Deaths", min.cases = 1)
-
-<img src="man/figures/README-dataviz-4-latam-7.png" width="100%" />
-
-
-    rg$ggplotCrossSection(included.countries = latam.countries,
-                           field.x = "confirmed",
-                           field.y = "fatality.rate.max",
-                           plot.description  = "Cross section Confirmed vs  Death rate min",
-                           log.scale.x = TRUE,
-                           log.scale.y = FALSE)
-    #> Warning: Removed 132 row(s) containing missing values (geom_path).
-
-<img src="man/figures/README-dataviz-4-latam-8.png" width="100%" />
+<img src="man/figures/README-dataviz-6-latam-inc-daily-3.png" width="100%" />
 
     rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
     #> Warning: Removed 67 rows containing missing values (position_stack).
 
-<img src="man/figures/README-dataviz-5-top-countries-1.png" width="100%" />
+<img src="man/figures/README-dataviz-7-top-countries-1.png" width="100%" />
 
     rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
                                          field = "confirmed", y.label = "Confirmed", min.cases = 100)
     #> Warning: Removed 2 row(s) containing missing values (geom_path).
 
-<img src="man/figures/README-dataviz-5-top-countries-2.png" width="100%" />
+<img src="man/figures/README-dataviz-7-top-countries-2.png" width="100%" />
 
     rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
                                          field = "remaining.confirmed", y.label = "Active cases", min.cases = 100)
     #> Warning: Removed 2 row(s) containing missing values (geom_path).
 
-<img src="man/figures/README-dataviz-5-top-countries-3.png" width="100%" />
+<img src="man/figures/README-dataviz-7-top-countries-3.png" width="100%" />
 
     rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, field = "deaths", 
                                          y.label = "Deaths", min.cases = 1)
     #> Warning: Removed 2 row(s) containing missing values (geom_path).
 
-<img src="man/figures/README-dataviz-5-top-countries-4.png" width="100%" />
+<img src="man/figures/README-dataviz-7-top-countries-4.png" width="100%" />
 
     rg$ggplotCrossSection(included.countries = international.countries,
                            field.x = "confirmed",
@@ -258,12 +259,12 @@ previous authors where corresponding
                            log.scale.y = FALSE)
     #> Warning: Removed 90 row(s) containing missing values (geom_path).
 
-<img src="man/figures/README-dataviz-5-top-countries-5.png" width="100%" />
+<img src="man/figures/README-dataviz-7-top-countries-5.png" width="100%" />
 
     rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)
     #> Warning: Removed 66 row(s) containing missing values (geom_path).
 
-<img src="man/figures/README-dataviz-6-top-countries-inc-daily-1.png" width="100%" />
+<img src="man/figures/README-dataviz-8-top-countries-inc-daily-1.png" width="100%" />
 
     rg$ggplotCountriesLines(field = "deaths.inc", log.scale = TRUE)
     #> Warning in self$trans$transform(x): NaNs produced
@@ -273,26 +274,26 @@ previous authors where corresponding
     #> Warning: Removed 4 rows containing missing values (geom_point).
     #> Warning: Removed 66 row(s) containing missing values (geom_path).
 
-<img src="man/figures/README-dataviz-6-top-countries-inc-daily-2.png" width="100%" />
+<img src="man/figures/README-dataviz-8-top-countries-inc-daily-2.png" width="100%" />
 
     rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
     #> Warning: Transformation introduced infinite values in continuous y-axis
 
     #> Warning: Removed 66 row(s) containing missing values (geom_path).
 
-<img src="man/figures/README-dataviz-6-top-countries-inc-daily-3.png" width="100%" />
+<img src="man/figures/README-dataviz-8-top-countries-inc-daily-3.png" width="100%" />
 
     rg$ggplotTopCountriesPie()
 
-<img src="man/figures/README-dataviz-7-top-countries-legacy-1.png" width="100%" />
+<img src="man/figures/README-dataviz-9-top-countries-legacy-1.png" width="100%" />
 
     rg$ggplotTopCountriesBarPlots()
 
-<img src="man/figures/README-dataviz-7-top-countries-legacy-2.png" width="100%" />
+<img src="man/figures/README-dataviz-9-top-countries-legacy-2.png" width="100%" />
 
     rg$ggplotCountriesBarGraphs(selected.country = "Argentina")
 
-<img src="man/figures/README-dataviz-7-top-countries-legacy-3.png" width="100%" />
+<img src="man/figures/README-dataviz-9-top-countries-legacy-3.png" width="100%" />
 
 # References
 
