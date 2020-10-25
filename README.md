@@ -3,8 +3,7 @@
 
 <img src="man/figures/COVID19analytics.png" height="139" align="right" />
 
-COVID19analytics
-================
+# COVID19analytics
 
 <!-- . -->
 
@@ -24,8 +23,7 @@ outbreak.
 -   Visualizations ReportGeneratorDataComparison compares all countries
     counting epidemy day 0 when confirmed cases &gt; n (i.e. n = 100).
 
-Package
-=======
+# Package
 
 <!-- badges: start -->
 
@@ -37,8 +35,7 @@ Package
 
 <!-- badges: end -->
 
-How to get started (Development version)
-========================================
+# How to get started (Development version)
 
 Install the R package using the following commands on the R console:
 
@@ -55,8 +52,7 @@ previous authors where corresponding
     # If you want to generate your own reports
     COVID19analytics_credits = "@alias1 @alias2 @aliasn"
 
-How to use it
-=============
+# How to use it
 
     library(COVID19analytics) 
     #> Warning: replacing previous import 'ggplot2::Layout' by 'lgr::Layout' when
@@ -98,31 +94,31 @@ How to use it
 
     #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
     dummy <- data.processor$setupData()
-    #> INFO  [09:23:46.152]  {stage: processor-setup}
-    #> INFO  [09:23:46.230] Checking required downloaded  {downloaded.max.date: 2020-10-21, daily.update.time: 21:00:00, current.datetime: 2020-10-23 09:23:46, download.flag: TRUE}
-    #> INFO  [09:23:47.161] Checking required downloaded  {downloaded.max.date: 2020-10-21, daily.update.time: 21:00:00, current.datetime: 2020-10-23 09:23:47, download.flag: TRUE}
-    #> INFO  [09:23:48.044] Checking required downloaded  {downloaded.max.date: 2020-10-21, daily.update.time: 21:00:00, current.datetime: 2020-10-23 09:23:48, download.flag: TRUE}
-    #> INFO  [09:23:48.975]  {stage: data loaded}
-    #> INFO  [09:23:48.977]  {stage: data-setup}
+    #> INFO  [08:51:57.363]  {stage: processor-setup}
+    #> INFO  [08:51:57.471] Checking required downloaded  {downloaded.max.date: 2020-10-24, daily.update.time: 21:00:00, current.datetime: 2020-10-25 08:51:57, download.flag: FALSE}
+    #> INFO  [08:51:57.745] Checking required downloaded  {downloaded.max.date: 2020-10-24, daily.update.time: 21:00:00, current.datetime: 2020-10-25 08:51:57, download.flag: FALSE}
+    #> INFO  [08:51:57.808] Checking required downloaded  {downloaded.max.date: 2020-10-24, daily.update.time: 21:00:00, current.datetime: 2020-10-25 08:51:57, download.flag: FALSE}
+    #> INFO  [08:51:57.935]  {stage: data loaded}
+    #> INFO  [08:51:57.938]  {stage: data-setup}
     dummy <- data.processor$transform()
-    #> INFO  [09:23:48.981] Executing transform 
-    #> INFO  [09:23:48.982] Executing consolidate 
-    #> INFO  [09:23:56.214]  {stage: consolidated}
-    #> INFO  [09:23:56.216] Executing standarize 
-    #> INFO  [09:23:57.092] gathering DataModel 
-    #> INFO  [09:23:57.094]  {stage: datamodel-setup}
+    #> INFO  [08:51:57.943] Executing transform 
+    #> INFO  [08:51:57.945] Executing consolidate 
+    #> INFO  [08:52:06.361]  {stage: consolidated}
+    #> INFO  [08:52:06.363] Executing standarize 
+    #> INFO  [08:52:07.431] gathering DataModel 
+    #> INFO  [08:52:07.434]  {stage: datamodel-setup}
     # Curate is the process made by missing values method
     dummy <- data.processor$curate()
-    #> INFO  [09:23:57.099]  {stage: loading-aggregated-data-model}
+    #> INFO  [08:52:07.441]  {stage: loading-aggregated-data-model}
     #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-    #> INFO  [09:23:59.426]  {stage: calculating-rates}
-    #> INFO  [09:23:59.645]  {stage: making-data-comparison}
-    #> INFO  [09:24:06.709]  {stage: applying-missing-values-method}
-    #> INFO  [09:24:06.711]  {stage: Starting first imputation}
-    #> INFO  [09:24:06.718]  {stage: calculating-rates}
-    #> INFO  [09:24:06.962]  {stage: making-data-comparison-2}
-    #> INFO  [09:24:14.335]  {stage: calculating-top-countries}
-    #> INFO  [09:24:14.355]  {stage: curated}
+    #> INFO  [08:52:09.834]  {stage: calculating-rates}
+    #> INFO  [08:52:10.096]  {stage: making-data-comparison}
+    #> INFO  [08:52:18.002]  {stage: applying-missing-values-method}
+    #> INFO  [08:52:18.004]  {stage: Starting first imputation}
+    #> INFO  [08:52:18.013]  {stage: calculating-rates}
+    #> INFO  [08:52:18.349]  {stage: making-data-comparison-2}
+    #> INFO  [08:52:28.782]  {stage: calculating-top-countries}
+    #> INFO  [08:52:28.812]  {stage: curated}
 
     current.date <- max(data.processor$getData()$date)
 
@@ -146,16 +142,16 @@ How to use it
 
 | country        | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
 |:---------------|:-----------|---------------:|--------------:|----------:|-------:|-----------:|
-| US             | 2020-10-22 |         0.0086 |         71671 |   8407702 | 223032 |        856 |
-| India          | 2020-10-22 |         0.0071 |         54366 |   7761312 | 117306 |        690 |
-| France         | 2020-10-22 |         0.0416 |         41622 |   1041991 |  34237 |        162 |
-| Brazil         | 2020-10-22 |         0.0047 |         24858 |   5323630 | 155900 |        497 |
-| United Kingdom | 2020-10-22 |         0.0268 |         21257 |    813451 |  44437 |        189 |
-| Spain          | 2020-10-22 |         0.0209 |         20986 |   1026281 |  34521 |        155 |
-| Belgium        | 2020-10-22 |         0.0661 |         16746 |    270132 |  10588 |         49 |
-| Argentina      | 2020-10-22 |         0.0157 |         16325 |   1053650 |  27957 |        438 |
-| Italy          | 2020-10-22 |         0.0358 |         16078 |    465726 |  36968 |        136 |
-| Russia         | 2020-10-22 |         0.0109 |         15704 |   1453923 |  25072 |        286 |
+| US             | 2020-10-24 |         0.0099 |         83718 |   8575177 | 224889 |        914 |
+| India          | 2020-10-24 |         0.0064 |         50129 |   7864811 | 118534 |        578 |
+| Brazil         | 2020-10-24 |         0.0050 |         26979 |   5380635 | 156903 |        432 |
+| United Kingdom | 2020-10-24 |         0.0276 |         23033 |    857043 |  44835 |        174 |
+| Italy          | 2020-10-24 |         0.0405 |         19640 |    504509 |  37210 |        151 |
+| Belgium        | 2020-10-24 |         0.0616 |         17709 |    305409 |  10737 |         79 |
+| Russia         | 2020-10-24 |         0.0111 |         16260 |   1487260 |  25647 |        294 |
+| Poland         | 2020-10-24 |         0.0597 |         13628 |    241946 |   4351 |        179 |
+| Czechia        | 2020-10-24 |         0.0523 |         12474 |    250797 |   2077 |        106 |
+| Argentina      | 2020-10-24 |         0.0112 |         11968 |   1081336 |  28613 |        275 |
 
     # Top 10 daily deaths increment
     kable((data.processor$getData() %>%
@@ -165,16 +161,16 @@ How to use it
 
 | country        | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
 |:---------------|:-----------|---------------:|--------------:|----------:|-------:|-----------:|
-| US             | 2020-10-22 |         0.0086 |         71671 |   8407702 | 223032 |        856 |
-| India          | 2020-10-22 |         0.0071 |         54366 |   7761312 | 117306 |        690 |
-| Brazil         | 2020-10-22 |         0.0047 |         24858 |   5323630 | 155900 |        497 |
-| Argentina      | 2020-10-22 |         0.0157 |         16325 |   1053650 |  27957 |        438 |
-| Iran           | 2020-10-22 |         0.0100 |          5471 |    550757 |  31650 |        304 |
-| Russia         | 2020-10-22 |         0.0109 |         15704 |   1453923 |  25072 |        286 |
-| United Kingdom | 2020-10-22 |         0.0268 |         21257 |    813451 |  44437 |        189 |
-| Colombia       | 2020-10-22 |         0.0088 |          8673 |    990373 |  29637 |        173 |
-| Poland         | 2020-10-22 |         0.0598 |         12107 |    214686 |   4019 |        168 |
-| France         | 2020-10-22 |         0.0416 |         41622 |   1041991 |  34237 |        162 |
+| US             | 2020-10-24 |         0.0099 |         83718 |   8575177 | 224889 |        914 |
+| India          | 2020-10-24 |         0.0064 |         50129 |   7864811 | 118534 |        578 |
+| Brazil         | 2020-10-24 |         0.0050 |         26979 |   5380635 | 156903 |        432 |
+| Mexico         | 2020-10-24 |         0.0068 |          6025 |    886800 |  88743 |        431 |
+| Iran           | 2020-10-24 |         0.0104 |          5814 |    562705 |  32320 |        335 |
+| Russia         | 2020-10-24 |         0.0111 |         16260 |   1487260 |  25647 |        294 |
+| Argentina      | 2020-10-24 |         0.0112 |         11968 |   1081336 |  28613 |        275 |
+| Colombia       | 2020-10-24 |         0.0088 |          8769 |   1007711 |  30000 |        198 |
+| Poland         | 2020-10-24 |         0.0597 |         13628 |    241946 |   4351 |        179 |
+| United Kingdom | 2020-10-24 |         0.0276 |         23033 |    857043 |  44835 |        174 |
 
     rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries, countries.text = "Latam countries")
     #> Warning: Removed 144 rows containing missing values (position_stack).
@@ -198,14 +194,27 @@ How to use it
 <img src="man/figures/README-dataviz-4-latam-4.png" width="100%" />
 
     rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
-                            field = "rate.inc.daily", log.scale = TRUE)
+                            field = "deaths.inc", log.scale = TRUE)
+    #> Warning in self$trans$transform(x): NaNs produced
+    #> Warning: Transformation introduced infinite values in continuous y-axis
+    #> Warning in self$trans$transform(x): NaNs produced
+    #> Warning: Transformation introduced infinite values in continuous y-axis
+
+    #> Warning: Transformation introduced infinite values in continuous y-axis
+    #> Warning: Removed 2 rows containing missing values (geom_point).
     #> Warning: Removed 132 row(s) containing missing values (geom_path).
 
 <img src="man/figures/README-dataviz-4-latam-5.png" width="100%" />
 
-    rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field = "deaths", y.label = "Deaths", min.cases = 1)
+    rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
+                            field = "rate.inc.daily", log.scale = TRUE)
+    #> Warning: Removed 132 row(s) containing missing values (geom_path).
 
 <img src="man/figures/README-dataviz-4-latam-6.png" width="100%" />
+
+    rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field = "deaths", y.label = "Deaths", min.cases = 1)
+
+<img src="man/figures/README-dataviz-4-latam-7.png" width="100%" />
 
 
     rg$ggplotCrossSection(included.countries = latam.countries,
@@ -216,7 +225,7 @@ How to use it
                            log.scale.y = FALSE)
     #> Warning: Removed 132 row(s) containing missing values (geom_path).
 
-<img src="man/figures/README-dataviz-4-latam-7.png" width="100%" />
+<img src="man/figures/README-dataviz-4-latam-8.png" width="100%" />
 
     rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
     #> Warning: Removed 67 rows containing missing values (position_stack).
@@ -256,12 +265,22 @@ How to use it
 
 <img src="man/figures/README-dataviz-6-top-countries-inc-daily-1.png" width="100%" />
 
+    rg$ggplotCountriesLines(field = "deaths.inc", log.scale = TRUE)
+    #> Warning in self$trans$transform(x): NaNs produced
+    #> Warning: Transformation introduced infinite values in continuous y-axis
+
+    #> Warning: Transformation introduced infinite values in continuous y-axis
+    #> Warning: Removed 4 rows containing missing values (geom_point).
+    #> Warning: Removed 66 row(s) containing missing values (geom_path).
+
+<img src="man/figures/README-dataviz-6-top-countries-inc-daily-2.png" width="100%" />
+
     rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
     #> Warning: Transformation introduced infinite values in continuous y-axis
 
     #> Warning: Removed 66 row(s) containing missing values (geom_path).
 
-<img src="man/figures/README-dataviz-6-top-countries-inc-daily-2.png" width="100%" />
+<img src="man/figures/README-dataviz-6-top-countries-inc-daily-3.png" width="100%" />
 
     rg$ggplotTopCountriesPie()
 
@@ -275,8 +294,7 @@ How to use it
 
 <img src="man/figures/README-dataviz-7-top-countries-legacy-3.png" width="100%" />
 
-References
-==========
+# References
 
 -   Johns Hopkins University. Retrieved from:
     ‘<a href="https://github.com/CSSEGISandData/COVID-19/" class="uri">https://github.com/CSSEGISandData/COVID-19/</a>’

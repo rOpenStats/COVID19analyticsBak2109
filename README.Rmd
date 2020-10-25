@@ -134,10 +134,6 @@ rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, count
                                      field = "confirmed", y.label = "Confirmed", min.cases = 100)
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, countries.text = "Latam countries",   
                                      field = "remaining.confirmed", y.label = "Active cases", min.cases = 100)
-rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
-                        field = "confirmed.inc", log.scale = TRUE)
-rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
-                        field = "rate.inc.daily", log.scale = TRUE)
 rc$ggplotComparisonExponentialGrowth(included.countries = latam.countries, field = "deaths", y.label = "Deaths", min.cases = 1)
 
 rg$ggplotCrossSection(included.countries = latam.countries,
@@ -148,9 +144,20 @@ rg$ggplotCrossSection(included.countries = latam.countries,
                        log.scale.y = FALSE)
  
 ```
+```{r, dataviz-6-latam-inc-daily}
+
+rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
+                        field = "confirmed.inc", log.scale = TRUE)
+rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
+                        field = "deaths.inc", log.scale = TRUE)
+rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "Latam countries",
+                        field = "rate.inc.daily", log.scale = TRUE)
+```
 
 
-```{r, dataviz-5-top-countries}
+
+
+```{r, dataviz-7-top-countries}
 rg$ggplotTopCountriesStackedBarDailyInc(top.countries)
 rc$ggplotComparisonExponentialGrowth(included.countries = international.countries, 
                                      field = "confirmed", y.label = "Confirmed", min.cases = 100)
@@ -168,13 +175,14 @@ rg$ggplotCrossSection(included.countries = international.countries,
 ```
 
 
-```{r, dataviz-6-top-countries-inc-daily}
+```{r, dataviz-8-top-countries-inc-daily}
 rg$ggplotCountriesLines(field = "confirmed.inc", log.scale = TRUE)
+rg$ggplotCountriesLines(field = "deaths.inc", log.scale = TRUE)
 rg$ggplotCountriesLines(field = "rate.inc.daily", log.scale = TRUE)
 ```
 
 
-```{r, dataviz-7-top-countries-legacy}
+```{r, dataviz-9-top-countries-legacy}
 rg$ggplotTopCountriesPie()
 rg$ggplotTopCountriesBarPlots()
 rg$ggplotCountriesBarGraphs(selected.country = "Argentina")
