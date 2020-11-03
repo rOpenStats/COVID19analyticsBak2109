@@ -31,7 +31,7 @@ COVID19DataProviderJHU <- R6Class("COVID19DataProviderJHU",
     url.path <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
 
     bin <- lapply(self$filenames, FUN = function(...){
-     downloadCOVID19(url.path = url.path, force = self$force.download, ...)
+     downloadJHUCOVID19(url.path = url.path, force = self$force.download, ...)
     })
    },
    getDates = function(){
@@ -120,7 +120,7 @@ transformDataJHU <- function(data) {
 
 
 getDateFromJHUColumn <- function(column.dates.text){
-  regexp.field.name <- "X([0-9]{2}\\.[0-9]{2}\\.[0-9]{2})"
+  regexp.field.name <- "X([0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2})"
   ret <- vapply(column.dates.text, FUN = function(x){gsub(regexp.field.name, "\\1", x)}, FUN.VALUE = character(1))
   ret <- ret %>% mdy()
   ret
@@ -132,7 +132,7 @@ getDateFromJHUColumn <- function(column.dates.text){
 #' @importFrom utils download.file
 #' @export
 #' @author kenarab
-downloadCOVID19 <- function(url.path, filename, force = FALSE,
+downloadJHUCOVID19 <- function(url.path, filename, force.download = FALSE,
                             daily.update.time = "21:00:00",
                             archive = TRUE) {
   logger <- lgr
@@ -141,7 +141,7 @@ downloadCOVID19 <- function(url.path, filename, force = FALSE,
   if (download.flag){
     url <- file.path(url.path, filename)
     dest <- file.path(env.dat.dir, filename)
-    download.flag <- !file.exists(dest) | force
+    download.flag <- !file.exists(dest) | force.download
     if (!download.flag & file.exists(dest)){
       current.data <- readJHUDataFile(dest)
       max.date.col <- names(current.data)[ncol(current.data)]
