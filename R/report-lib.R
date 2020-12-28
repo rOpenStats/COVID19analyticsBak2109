@@ -102,7 +102,7 @@ ReportGenerator <- R6Class("ReportGenerator",
     top.countries <- self$data.processor$top.countries
     if (!(selected.country %in% top.countries)) {
      top.countries %<>% setdiff("Others") %>% c(selected.country)
-     df <- data.long %>% filter(country %in% top.countries) %<>%
+     df <- data.long %>% filter(country %in% top.countries) %>%
       mutate(country = country %>% factor(levels = c(top.countries)))
     }
     else{
