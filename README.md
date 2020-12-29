@@ -103,31 +103,31 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [16:16:50.958]  {stage: processor-setup}
-#> INFO  [16:16:51.030] Checking required downloaded  {downloaded.max.date: 2020-12-27, daily.update.time: 21:00:00, current.datetime: 2020-12-28 16:16:51, download.flag: FALSE}
-#> INFO  [16:16:51.244] Checking required downloaded  {downloaded.max.date: 2020-12-27, daily.update.time: 21:00:00, current.datetime: 2020-12-28 16:16:51, download.flag: FALSE}
-#> INFO  [16:16:51.295] Checking required downloaded  {downloaded.max.date: 2020-12-27, daily.update.time: 21:00:00, current.datetime: 2020-12-28 16:16:51, download.flag: FALSE}
-#> INFO  [16:16:51.429]  {stage: data loaded}
-#> INFO  [16:16:51.431]  {stage: data-setup}
+#> INFO  [07:54:29.387]  {stage: processor-setup}
+#> INFO  [07:54:29.471] Checking required downloaded  {downloaded.max.date: 2020-12-28, daily.update.time: 21:00:00, current.datetime: 2020-12-29 07:54:29, download.flag: FALSE}
+#> INFO  [07:54:29.681] Checking required downloaded  {downloaded.max.date: 2020-12-28, daily.update.time: 21:00:00, current.datetime: 2020-12-29 07:54:29, download.flag: FALSE}
+#> INFO  [07:54:29.732] Checking required downloaded  {downloaded.max.date: 2020-12-28, daily.update.time: 21:00:00, current.datetime: 2020-12-29 07:54:29, download.flag: FALSE}
+#> INFO  [07:54:29.872]  {stage: data loaded}
+#> INFO  [07:54:29.874]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [16:16:51.434] Executing transform 
-#> INFO  [16:16:51.436] Executing consolidate 
-#> INFO  [16:17:00.027]  {stage: consolidated}
-#> INFO  [16:17:00.028] Executing standarize 
-#> INFO  [16:17:01.132] gathering DataModel 
-#> INFO  [16:17:01.134]  {stage: datamodel-setup}
+#> INFO  [07:54:29.877] Executing transform 
+#> INFO  [07:54:29.878] Executing consolidate 
+#> INFO  [07:54:38.925]  {stage: consolidated}
+#> INFO  [07:54:38.927] Executing standarize 
+#> INFO  [07:54:40.010] gathering DataModel 
+#> INFO  [07:54:40.012]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [16:17:01.139]  {stage: loading-aggregated-data-model}
+#> INFO  [07:54:40.018]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [16:17:03.041]  {stage: calculating-rates}
-#> INFO  [16:17:03.208]  {stage: making-data-comparison}
-#> INFO  [16:17:09.514]  {stage: applying-missing-values-method}
-#> INFO  [16:17:09.517]  {stage: Starting first imputation}
-#> INFO  [16:17:09.524]  {stage: calculating-rates}
-#> INFO  [16:17:09.794]  {stage: making-data-comparison-2}
-#> INFO  [16:17:16.141]  {stage: calculating-top-countries}
-#> INFO  [16:17:16.159]  {stage: curated}
+#> INFO  [07:54:41.875]  {stage: calculating-rates}
+#> INFO  [07:54:42.047]  {stage: making-data-comparison}
+#> INFO  [07:54:48.496]  {stage: applying-missing-values-method}
+#> INFO  [07:54:48.499]  {stage: Starting first imputation}
+#> INFO  [07:54:48.508]  {stage: calculating-rates}
+#> INFO  [07:54:48.709]  {stage: making-data-comparison-2}
+#> INFO  [07:54:55.458]  {stage: calculating-top-countries}
+#> INFO  [07:54:55.478]  {stage: curated}
 
 current.date <- max(data.processor$getData()$date)
 
@@ -154,16 +154,16 @@ kable((data.processor$getData() %>%
 
 | country        | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
 |:---------------|:-----------|---------------:|--------------:|----------:|-------:|-----------:|
-| US             | 2020-12-27 |         0.0079 |        150092 |  19132726 | 333118 |       1209 |
-| United Kingdom | 2020-12-27 |         0.0144 |         32493 |   2295228 |  70860 |        347 |
-| Russia         | 2020-12-27 |         0.0093 |         27849 |   3019972 |  54080 |        541 |
-| India          | 2020-12-27 |         0.0020 |         20021 |  10207871 | 147901 |        279 |
-| Brazil         | 2020-12-27 |         0.0025 |         18479 |   7484285 | 191139 |        344 |
-| Turkey         | 2020-12-27 |         0.0067 |         14205 |   2147578 |  19878 |        254 |
-| Germany        | 2020-12-27 |         0.0075 |         12399 |   1658639 |  30297 |        351 |
-| Colombia       | 2020-12-27 |         0.0061 |          9594 |   1594497 |  42171 |        228 |
-| South Africa   | 2020-12-27 |         0.0096 |          9502 |   1004413 |  26735 |        214 |
-| Netherlands    | 2020-12-27 |         0.0119 |          9102 |    774009 |  11090 |         28 |
+| US             | 2020-12-28 |         0.0088 |        168817 |  19301543 | 334836 |       1718 |
+| United Kingdom | 2020-12-28 |         0.0181 |         41460 |   2336688 |  71217 |        357 |
+| Russia         | 2020-12-28 |         0.0091 |         27363 |   3047335 |  54559 |        479 |
+| Spain          | 2020-12-28 |         0.0132 |         24462 |   1879413 |  50122 |        298 |
+| Brazil         | 2020-12-28 |         0.0027 |         20548 |   7504833 | 191570 |        431 |
+| India          | 2020-12-28 |         0.0016 |         16432 |  10224303 | 148153 |        252 |
+| Turkey         | 2020-12-28 |         0.0071 |         15197 |   2162775 |  20135 |        257 |
+| Germany        | 2020-12-28 |         0.0084 |         14004 |   1672643 |  31145 |        848 |
+| Switzerland    | 2020-12-28 |         0.0236 |         10087 |    438284 |   7362 |        152 |
+| Colombia       | 2020-12-28 |         0.0058 |          9310 |   1603807 |  42374 |        203 |
 
 ``` r
 # Top 10 daily deaths increment
@@ -175,16 +175,16 @@ kable((data.processor$getData() %>%
 
 | country        | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
 |:---------------|:-----------|---------------:|--------------:|----------:|-------:|-----------:|
-| US             | 2020-12-27 |         0.0079 |        150092 |  19132726 | 333118 |       1209 |
-| Russia         | 2020-12-27 |         0.0093 |         27849 |   3019972 |  54080 |        541 |
-| Mexico         | 2020-12-27 |         0.0045 |          6217 |   1383434 | 122426 |        400 |
-| Germany        | 2020-12-27 |         0.0075 |         12399 |   1658639 |  30297 |        351 |
-| United Kingdom | 2020-12-27 |         0.0144 |         32493 |   2295228 |  70860 |        347 |
-| Brazil         | 2020-12-27 |         0.0025 |         18479 |   7484285 | 191139 |        344 |
-| Italy          | 2020-12-27 |         0.0044 |          8937 |   2047696 |  71925 |        305 |
-| India          | 2020-12-27 |         0.0020 |         20021 |  10207871 | 147901 |        279 |
-| Turkey         | 2020-12-27 |         0.0067 |         14205 |   2147578 |  19878 |        254 |
-| Indonesia      | 2020-12-27 |         0.0092 |          6528 |    713365 |  21237 |        243 |
+| US             | 2020-12-28 |         0.0088 |        168817 |  19301543 | 334836 |       1718 |
+| Germany        | 2020-12-28 |         0.0084 |         14004 |   1672643 |  31145 |        848 |
+| Russia         | 2020-12-28 |         0.0091 |         27363 |   3047335 |  54559 |        479 |
+| Italy          | 2020-12-28 |         0.0042 |          8581 |   2056277 |  72370 |        445 |
+| Brazil         | 2020-12-28 |         0.0027 |         20548 |   7504833 | 191570 |        431 |
+| Mexico         | 2020-12-28 |         0.0043 |          5996 |   1389430 | 122855 |        429 |
+| France         | 2020-12-28 |         0.0012 |          3106 |   2619616 |  63235 |        368 |
+| United Kingdom | 2020-12-28 |         0.0181 |         41460 |   2336688 |  71217 |        357 |
+| South Africa   | 2020-12-28 |         0.0074 |          7458 |   1011871 |  27071 |        336 |
+| Spain          | 2020-12-28 |         0.0132 |         24462 |   1879413 |  50122 |        298 |
 
 ``` r
 rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries, countries.text = "Latam countries")
