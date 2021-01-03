@@ -120,7 +120,7 @@ transformDataJHU <- function(data) {
 
 
 getDateFromJHUColumn <- function(column.dates.text){
-  regexp.field.name <- "X([0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2})"
+  regexp.field.name <- "X([0-9]{1,2}\\.[0-9]{1,2}\\.[0-9]{1,2})"
   ret <- vapply(column.dates.text, FUN = function(x){gsub(regexp.field.name, "\\1", x)}, FUN.VALUE = character(1))
   ret <- ret %>% mdy()
   ret
