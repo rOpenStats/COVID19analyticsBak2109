@@ -103,32 +103,32 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [07:50:40.644]  {stage: processor-setup}
-#> INFO  [07:50:40.766] Checking required downloaded  {downloaded.max.date: 2021-03-01, daily.update.time: 21:00:00, current.datetime: 2021-03-03 07:50:40, download.flag: TRUE}
-#> INFO  [07:50:41.856] Checking required downloaded  {downloaded.max.date: 2021-03-01, daily.update.time: 21:00:00, current.datetime: 2021-03-03 07:50:41, download.flag: TRUE}
-#> INFO  [07:50:42.795] Checking required downloaded  {downloaded.max.date: 2021-03-01, daily.update.time: 21:00:00, current.datetime: 2021-03-03 07:50:42, download.flag: TRUE}
-#> INFO  [07:50:44.533]  {stage: data loaded}
-#> INFO  [07:50:44.535]  {stage: data-setup}
+#> INFO  [08:09:15.242]  {stage: processor-setup}
+#> INFO  [08:09:15.377] Checking required downloaded  {downloaded.max.date: 2021-03-02, daily.update.time: 21:00:00, current.datetime: 2021-03-04 08:09:15, download.flag: TRUE}
+#> INFO  [08:09:16.244] Checking required downloaded  {downloaded.max.date: 2021-03-02, daily.update.time: 21:00:00, current.datetime: 2021-03-04 08:09:16, download.flag: TRUE}
+#> INFO  [08:09:17.061] Checking required downloaded  {downloaded.max.date: 2021-03-02, daily.update.time: 21:00:00, current.datetime: 2021-03-04 08:09:17, download.flag: TRUE}
+#> INFO  [08:09:17.988]  {stage: data loaded}
+#> INFO  [08:09:17.992]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [07:50:44.540] Executing transform 
-#> INFO  [07:50:44.543] Executing consolidate 
-#> INFO  [07:51:00.600]  {stage: consolidated}
-#> INFO  [07:51:00.602] Executing standarize 
-#> INFO  [07:51:02.947] gathering DataModel 
-#> INFO  [07:51:02.949]  {stage: datamodel-setup}
+#> INFO  [08:09:17.997] Executing transform 
+#> INFO  [08:09:17.999] Executing consolidate 
+#> INFO  [08:09:34.514]  {stage: consolidated}
+#> INFO  [08:09:34.517] Executing standarize 
+#> INFO  [08:09:36.412] gathering DataModel 
+#> INFO  [08:09:36.413]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [07:51:02.959]  {stage: loading-aggregated-data-model}
+#> INFO  [08:09:36.420]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: Micronesia
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [07:51:06.546]  {stage: calculating-rates}
-#> INFO  [07:51:06.822]  {stage: making-data-comparison}
-#> INFO  [07:51:16.594]  {stage: applying-missing-values-method}
-#> INFO  [07:51:16.596]  {stage: Starting first imputation}
-#> INFO  [07:51:16.606]  {stage: calculating-rates}
-#> INFO  [07:51:16.868]  {stage: making-data-comparison-2}
-#> INFO  [07:51:27.157]  {stage: calculating-top-countries}
-#> INFO  [07:51:27.180]  {stage: curated}
+#> INFO  [08:09:39.259]  {stage: calculating-rates}
+#> INFO  [08:09:39.431]  {stage: making-data-comparison}
+#> INFO  [08:09:46.863]  {stage: applying-missing-values-method}
+#> INFO  [08:09:46.865]  {stage: Starting first imputation}
+#> INFO  [08:09:46.872]  {stage: calculating-rates}
+#> INFO  [08:09:47.058]  {stage: making-data-comparison-2}
+#> INFO  [08:09:54.523]  {stage: calculating-top-countries}
+#> INFO  [08:09:54.541]  {stage: curated}
 
 current.date <- max(data.processor$getData()$date)
 
@@ -155,16 +155,16 @@ kable((data.processor$getData() %>%
 
 | country | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
 |:--------|:-----------|---------------:|--------------:|----------:|-------:|-----------:|
-| Brazil  | 2021-03-02 |         0.0057 |         59925 |  10646926 | 257361 |       1641 |
-| US      | 2021-03-02 |         0.0019 |         55071 |  28719552 | 516581 |       1924 |
-| France  | 2021-03-02 |         0.0060 |         22872 |   3843241 |  87373 |        418 |
-| Italy   | 2021-03-02 |         0.0058 |         17063 |   2955434 |  98288 |        343 |
-| India   | 2021-03-02 |         0.0013 |         14989 |  11139516 | 157346 |         98 |
-| Czechia | 2021-03-02 |         0.0098 |         12191 |   1252242 |  20701 |        232 |
-| Turkey  | 2021-03-02 |         0.0044 |         11837 |   2723316 |  28706 |         68 |
-| Sweden  | 2021-03-02 |         0.0180 |         11804 |    669113 |  12882 |         56 |
-| Russia  | 2021-03-02 |         0.0025 |         10441 |   4220291 |  85458 |        433 |
-| Iran    | 2021-03-02 |         0.0052 |          8495 |   1648174 |  60267 |         86 |
+| Brazil  | 2021-03-03 |         0.0067 |         71704 |  10718630 | 259271 |       1910 |
+| US      | 2021-03-03 |         0.0023 |         65909 |  28759980 | 518453 |       2468 |
+| France  | 2021-03-03 |         0.0070 |         26903 |   3870144 |  87695 |        322 |
+| Italy   | 2021-03-03 |         0.0071 |         20840 |   2976274 |  98635 |        347 |
+| India   | 2021-03-03 |         0.0016 |         17407 |  11156923 | 157435 |         89 |
+| Czechia | 2021-03-03 |         0.0134 |         16816 |   1269058 |  20941 |        240 |
+| Poland  | 2021-03-03 |         0.0091 |         15698 |   1735406 |  44360 |        352 |
+| Turkey  | 2021-03-03 |         0.0042 |         11520 |   2734836 |  28771 |         65 |
+| Germany | 2021-03-03 |         0.0044 |         10852 |   2472913 |  71285 |        359 |
+| Russia  | 2021-03-03 |         0.0025 |         10416 |   4230707 |  85901 |        443 |
 
 ``` r
 # Top 10 daily deaths increment
@@ -176,16 +176,16 @@ kable((data.processor$getData() %>%
 
 | country        | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
 |:---------------|:-----------|---------------:|--------------:|----------:|-------:|-----------:|
-| US             | 2021-03-02 |         0.0019 |         55071 |  28719552 | 516581 |       1924 |
-| Brazil         | 2021-03-02 |         0.0057 |         59925 |  10646926 | 257361 |       1641 |
-| Mexico         | 2021-03-02 |         0.0038 |          7913 |   2097194 | 187187 |       1035 |
-| Russia         | 2021-03-02 |         0.0025 |         10441 |   4220291 |  85458 |        433 |
-| France         | 2021-03-02 |         0.0060 |         22872 |   3843241 |  87373 |        418 |
-| Germany        | 2021-03-02 |         0.0026 |          6492 |   2462061 |  70926 |        412 |
-| Peru           | 2021-03-02 |         0.0064 |          8492 |   1338297 |  46894 |        400 |
-| Italy          | 2021-03-02 |         0.0058 |         17063 |   2955434 |  98288 |        343 |
-| United Kingdom | 2021-03-02 |         0.0015 |          6411 |   4200700 | 123530 |        343 |
-| Czechia        | 2021-03-02 |         0.0098 |         12191 |   1252242 |  20701 |        232 |
+| US             | 2021-03-03 |         0.0023 |         65909 |  28759980 | 518453 |       2468 |
+| Brazil         | 2021-03-03 |         0.0067 |         71704 |  10718630 | 259271 |       1910 |
+| Mexico         | 2021-03-03 |         0.0037 |          7793 |   2104987 | 188044 |        857 |
+| United Kingdom | 2021-03-03 |         0.0015 |          6420 |   4207120 | 124017 |        487 |
+| Spain          | 2021-03-03 |         0.0020 |          6137 |   3136321 |  70247 |        446 |
+| Russia         | 2021-03-03 |         0.0025 |         10416 |   4230707 |  85901 |        443 |
+| Germany        | 2021-03-03 |         0.0044 |         10852 |   2472913 |  71285 |        359 |
+| Poland         | 2021-03-03 |         0.0091 |         15698 |   1735406 |  44360 |        352 |
+| Italy          | 2021-03-03 |         0.0071 |         20840 |   2976274 |  98635 |        347 |
+| France         | 2021-03-03 |         0.0070 |         26903 |   3870144 |  87695 |        322 |
 
 ``` r
 rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries, countries.text = "Latam countries")
