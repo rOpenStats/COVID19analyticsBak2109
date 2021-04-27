@@ -103,32 +103,32 @@ data.processor <- COVID19DataProcessor$new(provider = "JohnsHopkingsUniversity",
 
 #dummy <- data.processor$preprocess() is setupData + transform is the preprocess made by data provider
 dummy <- data.processor$setupData()
-#> INFO  [09:01:36.389]  {stage: processor-setup}
-#> INFO  [09:01:36.508] Checking required downloaded  {downloaded.max.date: 2021-04-24, daily.update.time: 21:00:00, current.datetime: 2021-04-26 09:01:36, download.flag: TRUE}
-#> INFO  [09:01:37.354] Checking required downloaded  {downloaded.max.date: 2021-04-24, daily.update.time: 21:00:00, current.datetime: 2021-04-26 09:01:37, download.flag: TRUE}
-#> INFO  [09:01:38.272] Checking required downloaded  {downloaded.max.date: 2021-04-24, daily.update.time: 21:00:00, current.datetime: 2021-04-26 09:01:38, download.flag: TRUE}
-#> INFO  [09:01:39.131]  {stage: data loaded}
-#> INFO  [09:01:39.133]  {stage: data-setup}
+#> INFO  [09:22:06.411]  {stage: processor-setup}
+#> INFO  [09:22:06.502] Checking required downloaded  {downloaded.max.date: 2021-04-25, daily.update.time: 21:00:00, current.datetime: 2021-04-27 09:22:06, download.flag: TRUE}
+#> INFO  [09:22:07.825] Checking required downloaded  {downloaded.max.date: 2021-04-25, daily.update.time: 21:00:00, current.datetime: 2021-04-27 09:22:07, download.flag: TRUE}
+#> INFO  [09:22:08.751] Checking required downloaded  {downloaded.max.date: 2021-04-25, daily.update.time: 21:00:00, current.datetime: 2021-04-27 09:22:08, download.flag: TRUE}
+#> INFO  [09:22:10.217]  {stage: data loaded}
+#> INFO  [09:22:10.219]  {stage: data-setup}
 dummy <- data.processor$transform()
-#> INFO  [09:01:39.136] Executing transform 
-#> INFO  [09:01:39.137] Executing consolidate 
-#> INFO  [09:01:52.007]  {stage: consolidated}
-#> INFO  [09:01:52.008] Executing standarize 
-#> INFO  [09:01:53.502] gathering DataModel 
-#> INFO  [09:01:53.504]  {stage: datamodel-setup}
+#> INFO  [09:22:10.222] Executing transform 
+#> INFO  [09:22:10.224] Executing consolidate 
+#> INFO  [09:22:23.113]  {stage: consolidated}
+#> INFO  [09:22:23.116] Executing standarize 
+#> INFO  [09:22:24.607] gathering DataModel 
+#> INFO  [09:22:24.609]  {stage: datamodel-setup}
 # Curate is the process made by missing values method
 dummy <- data.processor$curate()
-#> INFO  [09:01:53.511]  {stage: loading-aggregated-data-model}
+#> INFO  [09:22:24.614]  {stage: loading-aggregated-data-model}
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: Micronesia
 #> Warning in countrycode(x, origin = "country.name", destination = "continent"): Some values were not matched unambiguously: MS Zaandam
-#> INFO  [09:01:55.756]  {stage: calculating-rates}
-#> INFO  [09:01:55.919]  {stage: making-data-comparison}
-#> INFO  [09:02:03.137]  {stage: applying-missing-values-method}
-#> INFO  [09:02:03.140]  {stage: Starting first imputation}
-#> INFO  [09:02:03.147]  {stage: calculating-rates}
-#> INFO  [09:02:03.356]  {stage: making-data-comparison-2}
-#> INFO  [09:02:10.463]  {stage: calculating-top-countries}
-#> INFO  [09:02:10.480]  {stage: curated}
+#> INFO  [09:22:26.963]  {stage: calculating-rates}
+#> INFO  [09:22:27.146]  {stage: making-data-comparison}
+#> INFO  [09:22:34.768]  {stage: applying-missing-values-method}
+#> INFO  [09:22:34.771]  {stage: Starting first imputation}
+#> INFO  [09:22:34.781]  {stage: calculating-rates}
+#> INFO  [09:22:35.021]  {stage: making-data-comparison-2}
+#> INFO  [09:22:42.439]  {stage: calculating-top-countries}
+#> INFO  [09:22:42.458]  {stage: curated}
 
 current.date <- max(data.processor$getData()$date)
 
@@ -153,18 +153,18 @@ kable((data.processor$getData() %>%
   filter(confirmed >=10))[1:10,])
 ```
 
-| country   | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
-|:----------|:-----------|---------------:|--------------:|----------:|-------:|-----------:|
-| India     | 2021-04-25 |         0.0208 |        352991 |  17313163 | 195123 |       2812 |
-| Turkey    | 2021-04-25 |         0.0084 |         38553 |   4629969 |  38358 |        347 |
-| Brazil    | 2021-04-25 |         0.0023 |         32572 |  14340787 | 390797 |       1305 |
-| US        | 2021-04-25 |         0.0010 |         32065 |  32077178 | 572200 |        279 |
-| France    | 2021-04-25 |         0.0044 |         24465 |   5559121 | 103017 |        145 |
-| Iran      | 2021-04-25 |         0.0081 |         19165 |   2396204 |  69574 |        454 |
-| Colombia  | 2021-04-25 |         0.0062 |         17190 |   2774464 |  71351 |        465 |
-| Germany   | 2021-04-25 |         0.0047 |         15399 |   3306692 |  81671 |         61 |
-| Argentina | 2021-04-25 |         0.0053 |         15012 |   2860884 |  61644 |        170 |
-| Italy     | 2021-04-25 |         0.0033 |         13157 |   3962674 | 119238 |        217 |
+| country     | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
+|:------------|:-----------|---------------:|--------------:|----------:|-------:|-----------:|
+| India       | 2021-04-26 |         0.0187 |        323023 |  17636186 | 197894 |       2771 |
+| US          | 2021-04-26 |         0.0015 |         47691 |  32124869 | 572674 |        474 |
+| Turkey      | 2021-04-26 |         0.0081 |         37312 |   4667281 |  38711 |        353 |
+| Brazil      | 2021-04-26 |         0.0020 |         28636 |  14369423 | 391936 |       1139 |
+| Iran        | 2021-04-26 |         0.0088 |         21026 |   2417230 |  70070 |        496 |
+| Spain       | 2021-04-26 |         0.0057 |         19852 |   3488469 |  77738 |        147 |
+| Argentina   | 2021-04-26 |         0.0066 |         18793 |   2879677 |  62087 |        443 |
+| Colombia    | 2021-04-26 |         0.0046 |         12839 |   2787303 |  71799 |        448 |
+| Philippines | 2021-04-26 |         0.0089 |          8905 |   1006428 |  16853 |         70 |
+| Russia      | 2021-04-26 |         0.0018 |          8681 |   4717321 | 106783 |        349 |
 
 ``` r
 # Top 10 daily deaths increment
@@ -174,18 +174,18 @@ kable((data.processor$getData() %>%
   arrange(desc(deaths.inc)))[1:10,])
 ```
 
-| country  | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
-|:---------|:-----------|---------------:|--------------:|----------:|-------:|-----------:|
-| India    | 2021-04-25 |         0.0208 |        352991 |  17313163 | 195123 |       2812 |
-| Brazil   | 2021-04-25 |         0.0023 |         32572 |  14340787 | 390797 |       1305 |
-| Colombia | 2021-04-25 |         0.0062 |         17190 |   2774464 |  71351 |        465 |
-| Iran     | 2021-04-25 |         0.0081 |         19165 |   2396204 |  69574 |        454 |
-| Turkey   | 2021-04-25 |         0.0084 |         38553 |   4629969 |  38358 |        347 |
-| Russia   | 2021-04-25 |         0.0018 |          8652 |   4708640 | 106434 |        326 |
-| Peru     | 2021-04-25 |         0.0042 |          7425 |   1761575 |  59724 |        284 |
-| US       | 2021-04-25 |         0.0010 |         32065 |  32077178 | 572200 |        279 |
-| Ukraine  | 2021-04-25 |         0.0039 |          8058 |   2079200 |  44121 |        237 |
-| Italy    | 2021-04-25 |         0.0033 |         13157 |   3962674 | 119238 |        217 |
+| country   | date       | rate.inc.daily | confirmed.inc | confirmed | deaths | deaths.inc |
+|:----------|:-----------|---------------:|--------------:|----------:|-------:|-----------:|
+| India     | 2021-04-26 |         0.0187 |        323023 |  17636186 | 197894 |       2771 |
+| Brazil    | 2021-04-26 |         0.0020 |         28636 |  14369423 | 391936 |       1139 |
+| Iran      | 2021-04-26 |         0.0088 |         21026 |   2417230 |  70070 |        496 |
+| US        | 2021-04-26 |         0.0015 |         47691 |  32124869 | 572674 |        474 |
+| Colombia  | 2021-04-26 |         0.0046 |         12839 |   2787303 |  71799 |        448 |
+| Argentina | 2021-04-26 |         0.0066 |         18793 |   2879677 |  62087 |        443 |
+| France    | 2021-04-26 |         0.0011 |          5959 |   5565080 | 103415 |        398 |
+| Turkey    | 2021-04-26 |         0.0081 |         37312 |   4667281 |  38711 |        353 |
+| Russia    | 2021-04-26 |         0.0018 |          8681 |   4717321 | 106783 |        349 |
+| Germany   | 2021-04-26 |         0.0018 |          5961 |   3312653 |  82009 |        338 |
 
 ``` r
 rg$ggplotTopCountriesStackedBarDailyInc(included.countries = latam.countries, countries.text = "Latam countries")
@@ -257,7 +257,7 @@ rg$ggplotCountriesLines(included.countries = latam.countries, countries.text = "
 #> Warning: Transformation introduced infinite values in continuous y-axis
 
 #> Warning: Removed 144 row(s) containing missing values (geom_path).
-#> Warning: ggrepel: 3 unlabeled data points (too many overlaps). Consider
+#> Warning: ggrepel: 1 unlabeled data points (too many overlaps). Consider
 #> increasing max.overlaps
 ```
 
