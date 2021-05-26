@@ -56,7 +56,7 @@ ReportGenerator <- R6Class("ReportGenerator",
      #scale_fill_brewer(name = "Country", labels = df$txt, palette = "Paired")
      scale_fill_manual(name = "Country", labels = df$txt, values = getPackagePalette(kind = "series"))
 
-    colors.palette <-
+    #colors.palette <-
     ret <- setupTheme(ret, report.date = self$report.date, x.values = df$date,
                       data.processor = self$data.processor,
                       total.colors = NULL, x.type = NULL)
