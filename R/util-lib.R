@@ -102,7 +102,7 @@ getLogger <- function(r6.object){
   else{
     ret.class <- class(ret)[[1]]
     if (ret.class == "logical"){
-      stop(paste("Class", class, "needs to initialize logger: self$logger <- genLogger(self)"))
+      stop(paste("Class", ret.class, "needs to initialize logger: self$logger <- genLogger(self)"))
     }
   }
   ret
