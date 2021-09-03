@@ -91,9 +91,6 @@ genLogger <- function(r6.object){
 #' @author kenarab
 #' @export
 getLogger <- function(r6.object){
-  #debug
-  #r6.object <<- r6.object
-  #TODO check if not a better solution
   ret <- r6.object$logger
   if (is.null(ret)){
     class <- class(r6.object)[[1]]
